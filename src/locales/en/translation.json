@@ -17,7 +17,10 @@
   "books": {
     "heading": "Books",
     "backHome": "← Nithun Manoharan",
-    "introFull": "When I first thought about what to write about myself, this felt like a natural place to start. Let me share some of the books that have left a strong impression on me.\n\nThe list might seem generic since these are all popular authors, but there's a reason they're so popular.",
+    "introFull": [
+      "When I first thought about what to write about myself, this felt like a natural place to start. Let me share some of the books that have left a strong impression on me.",
+      "The list might seem generic since these are all popular authors, but there's a reason they're so popular."
+    ],
     "items": [
       {
         "author": "J.R.R. Tolkien – The Hobbit, The Lord of the Rings, The Silmarillion",

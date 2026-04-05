@@ -5,7 +5,7 @@ export default function BooksPage() {
   const { t } = useTranslation()
 
   const items = t('books.items', { returnObjects: true })
-  const introParagraphs = t('books.introFull', { returnObjects: true }).split('\n\n')
+  const introParagraphs = t('books.introFull', { returnObjects: true })
 
   return (
     <div className="px-6 py-16 max-w-3xl mx-auto w-full">

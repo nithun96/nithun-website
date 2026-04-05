@@ -17,7 +17,10 @@
   "books": {
     "heading": "Bøker",
     "backHome": "← Nithun Manoharan",
-    "introFull": "Når jeg først skulle skrive noe om meg, så er dette et naturlig sted å starte. La meg dele noen av bøkene som har gjort et sterkt inntrykk på meg.\n\nListen virker kanskje generisk på en måte siden disse alle er populære forfattere, men det er en grunn til at disse forfatterne er så populære.",
+    "introFull": [
+      "Når jeg først skulle skrive noe om meg, så er dette et naturlig sted å starte. La meg dele noen av bøkene som har gjort et sterkt inntrykk på meg.",
+      "Listen virker kanskje generisk på en måte siden disse alle er populære forfattere, men det er en grunn til at disse forfatterne er så populære."
+    ],
     "items": [
       {
         "author": "J.R.R. Tolkien – Hobbiten, Ringenes Herre, The Silmarillion",

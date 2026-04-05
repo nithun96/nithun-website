@@ -12,6 +12,7 @@
     <link rel="canonical" href="https://nithunmanoharan.com" />
     <link rel="alternate" hreflang="en" href="https://nithunmanoharan.com" />
     <link rel="alternate" hreflang="no" href="https://nithunmanoharan.com" />
+    <link rel="alternate" hreflang="x-default" href="https://nithunmanoharan.com" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -48,6 +49,14 @@
     </script>
   </head>
   <body>
+    <script>
+      (function () {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

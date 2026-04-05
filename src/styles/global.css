@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-serif: 'Lora', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    background-color: #f5f2ee;
+  }
+
+  html.dark {
+    background-color: #18181b;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+  }
+}

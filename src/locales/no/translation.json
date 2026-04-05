@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "books": "Bøker",
+    "contact": "Kontakt",
+    "toggleTheme": "Bytt tema",
+    "toggleLang": "English"
+  },
+  "hero": {
+    "name": "Nithun Manoharan",
+    "tagline": "Lever barndomsdrømmen, ved å jobbe med kunstig intelligens.",
+    "rambleHeading": "Litt Rabling",
+    "intro": [
+      "Jeg jobber med kunstig intelligens i Oslo som produktsjef, og derfor kan jeg ærlig si at jeg brukte KI (eller AI) for å lage denne nettsiden. Men da kan man lure på hva annet som er AI på denne nettsiden, men hverken bildet eller teksten er AI. Som et bevis på det, så holder LLM-modellene (AI-modellene) litt bedre struktur enn det jeg har nå. Om meg ellers, så spiller jeg videospill (og brettspill hvis anledningen tilbyr seg), leser bøker og har for mye skjermtid, noe som jeg antar er vanlig for folk i dag. I tillegg så er jeg frivillig på en ungdomsklubb siden jeg føler at jeg gjør noe faktisk produktivt i motsetning til de fleste andre hobbyer jeg driver med.",
+      "Jeg startet opp dette som en del av et lite hobbyprosjekt for å lære meg noe av det litt tekniske, men jeg ser ikke for meg at jeg skal stoppe her og vil fortsette å oppdatere både denne nettsiden og kanskje legge til andre prosjekter jeg jobber med. Det blir spennende!"
+    ]
+  },
+  "books": {
+    "heading": "Bøker",
+    "backHome": "← Nithun Manoharan",
+    "introFull": "Når jeg først skulle skrive noe om meg, så er dette et naturlig sted å starte. La meg dele noen av bøkene som har gjort et sterkt inntrykk på meg.\n\nListen virker kanskje generisk på en måte siden disse alle er populære forfattere, men det er en grunn til at disse forfatterne er så populære.",
+    "items": [
+      {
+        "author": "J.R.R. Tolkien – Hobbiten, Ringenes Herre, The Silmarillion",
+        "paragraphs": [
+          "Hobbiten er kanskje favorittboken min noensinne, til tross for at det er noe veldig \"enkelt\" ved den. Den er kort, konsis og veldig godt skrevet. Det er rett og slett noe koselig ved den, og er fort gjort å lese flere ganger.",
+          "Ringenes Herre er ikke langt bak blant favorittene, og jeg har lest serien på nytt nå nylig (04.04.2026). Man kan ikke nevne bøkene uten å nevne filmene. Og jeg synes det er interessant hvor lite fokus det er på all slossingen, som i motsetning er nesten hovedfokus i filmene. Det tror jeg gjør bøkene enda bedre for min del, selv om filmene er veldig gode de også. De har bare hver sin sjarm.",
+          "Silmarillion må også nevnes, siden det er rett og slett så mange gode fortellinger i en bok. Det er kanskje den mest undervurderte delen av hva Tolkien har skrevet, selv om den kanskje ikke var utgitt som en bok av ham selv. Uansett, så anbefales det. Spesielt hvis man utelukker den første delen som heter Ainulindalë. Jeg husker at jeg ga opp første gangen jeg leste den som tenåring, basert på hvor tung akkurat introen er. Men kjemper man seg gjennom det, så er det absolutt til å anbefale."
+        ]
+      },
+      {
+        "author": "Robert Jordan – The Wheel of Time",
+        "text": "Tidshjulet, som det fint heter på norsk, er også en av mine favorittbokserier. Det er ganske naturlig at denne er på listen basert på forfatteren ovenfor. Det er en flott serie, til tross for at det går litt tregt en periode. Men sånn er det bare når det er opp til 14 bøker, pluss New Spring da. Det sier i hvert fall noe om hvor mye jeg likte det, ettersom jeg har lest bøkene flere ganger, og det blir nok ikke siste gang heller."
+      },
+      {
+        "author": "Brandon Sanderson",
+        "textBefore": "Her kan jeg ikke nevne én enkelt serie, ettersom jeg har lest minst tre ulike og likt alle:",
+        "series": ["Mistborn", "Steelheart", "The Stormlight Archive (ikke alle ferdig siden seriene bare fortsetter)"],
+        "textAfter": "Jeg leste bøkene hans da jeg hadde litt bedre tid og ventet en kort periode på neste bok. Det varte ikke lenge, og han skriver nå raskere enn jeg klarer å lese. Målet er å ta ham igjen, men jeg ville ikke tatt det veddemålet med mindre jeg kunne jobbe fulltid med å lese bøkene. Det som er imponerende, er kvaliteten på det som blir skrevet, til tross for hurtigheten på å skrive. Her kunne forfatterne av Game of Thrones og Kingkiller Chronicles tatt noen notater av Brandon Sanderson."
+      },
+      {
+        "author": "Eiichiro Oda – One Piece",
+        "text": "Kommer."
+      }
+    ]
+  },
+  "footer": {
+    "lastUpdated": "Sist oppdatert:"
+  }
+}

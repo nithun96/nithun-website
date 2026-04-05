@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "books": "Books",
+    "contact": "Contact",
+    "toggleTheme": "Toggle theme",
+    "toggleLang": "Norsk"
+  },
+  "hero": {
+    "name": "Nithun Manoharan",
+    "tagline": "Living my childhood dream, working with artificial intelligence.",
+    "rambleHeading": "Short Ramble",
+    "intro": [
+      "I work with artificial intelligence in Oslo as a Product Manager, which is why I can honestly say that I used AI to make this website. But one might wonder what else is AI on this site – neither the photo nor the text is. As proof of that, the LLM models (AI models) tend to have slightly better structure than what I have here. Otherwise, I play video games (and board games when the occasion calls for it), read books and have too much screen time, which I assume is pretty normal these days. I also volunteer at a youth club, since it feels like I'm actually doing something productive compared to most other hobbies I have.",
+      "I started this as part of a small hobby project to learn a bit of the more technical side of things, but I don't see myself stopping here. I'll continue updating this site and maybe I'll also add other projects I'm working on. Should be fun!"
+    ]
+  },
+  "books": {
+    "heading": "Books",
+    "backHome": "← Nithun Manoharan",
+    "introFull": "When I first thought about what to write about myself, this felt like a natural place to start. Let me share some of the books that have left a strong impression on me.\n\nThe list might seem generic since these are all popular authors, but there's a reason they're so popular.",
+    "items": [
+      {
+        "author": "J.R.R. Tolkien – The Hobbit, The Lord of the Rings, The Silmarillion",
+        "paragraphs": [
+          "The Hobbit is perhaps my favourite book of all time, despite there being something very \"simple\" about it. It's short, concise and very well written. There's just something cosy about it, and it's easy to read multiple times.",
+          "The Lord of the Rings is not far behind among my favourites, and I recently reread the series (04.04.2026). You can't really mention the books without mentioning the films. I find it interesting how little focus there is on the actual fighting in the books, in contrast with the films. I think that makes the books even better for my part, though the films are very good as well. They just each have their own charm.",
+          "The Silmarillion also deserves a mention, since there are simply so many great stories in one book. It's perhaps the most underrated part of what Tolkien wrote, even if it wasn't published as a book by him personally. Either way, I'd recommend it, especially if you skip the first section called Ainulindalë. I remember giving up the first time I read it as a teenager, based on how dense the intro is. But if you push through it, it's absolutely worth it. I have to start the extended stories that are published as their own books (The Children of Húrin etc.)"
+        ]
+      },
+      {
+        "author": "Robert Jordan – The Wheel of Time",
+        "text": "It's quite natural that this one is on the list given the author above. It's a great series, despite being a bit slow at times. But that's just how it is when there are up to 14 books, plus New Spring. It at least says something about how much I enjoyed it, since I've read the series multiple times, and it probably won't be the last time either. I also have to mention the show, which I greatly liked. The fact that they cancelled it at the season where it really proved that it was able to do something great, was a real shame. Which is why I will probably boycott Amazon Prime, small as that may be."
+      },
+      {
+        "author": "Brandon Sanderson",
+        "textBefore": "Here I can't single out one series, since I've read at least three different ones (and some of the one-offs) and enjoyed all of them:",
+        "series": ["Mistborn", "Steelheart", "The Stormlight Archive (not all finished since the series just keep going)"],
+        "textAfter": "I read his books when I had a bit more free time. And at one point I was fully caught up and waiting for the next one. That didn't last long, because he just writes faster than I read (or spend time reading). The goal is to catch up, but I wouldn't take that bet unless I could work full time reading books. What's impressive is the quality of what's being written, despite the speed at which he writes. The authors of Game of Thrones and The Kingkiller Chronicle could take some notes from Brandon Sanderson."
+      },
+      {
+        "author": "Eiichiro Oda – One Piece",
+        "text": "To be added."
+      }
+    ]
+  },
+  "footer": {
+    "lastUpdated": "Last updated:"
+  }
+}

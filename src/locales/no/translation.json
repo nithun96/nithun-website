@@ -1,6 +1,7 @@
 {
   "nav": {
     "books": "Bøker",
+    "blog": "Blogg",
     "contact": "Kontakt",
     "toggleTheme": "Bytt tema",
     "toggleLang": "English"
@@ -41,6 +42,14 @@
         "textAfter": "Jeg leste bøkene hans da jeg hadde litt bedre tid og ventet en kort periode på neste bok. Det varte ikke lenge, og han skriver nå raskere enn jeg klarer å lese. Målet er å ta ham igjen, men jeg ville ikke tatt det veddemålet med mindre jeg kunne jobbe fulltid med å lese bøkene. Det som er imponerende, er kvaliteten på det som blir skrevet, til tross for hurtigheten på å skrive. Her kunne forfatterne av Game of Thrones og Kingkiller Chronicles tatt noen notater av Brandon Sanderson."
       }
     ]
+  },
+  "blog": {
+    "heading": "Blogg",
+    "backHome": "← Nithun Manoharan",
+    "backToBlog": "← Blogg",
+    "intro": "Innimellom skriver jeg om ting jeg synes er verdt å si noe om.",
+    "empty": "Ingenting her ennå — kom tilbake snart.",
+    "notFound": "Innlegget ble ikke funnet."
   },
   "footer": {
     "lastUpdated": "Sist oppdatert:"

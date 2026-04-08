@@ -1,6 +1,7 @@
 {
   "nav": {
     "books": "Books",
+    "blog": "Blog",
     "contact": "Contact",
     "toggleTheme": "Toggle theme",
     "toggleLang": "Norsk"
@@ -41,6 +42,14 @@
         "textAfter": "I read his books when I had a bit more free time. And at one point I was fully caught up and waiting for the next one. That didn't last long, because he just writes faster than I read (or spend time reading). The goal is to catch up, but I wouldn't take that bet unless I could work full time reading books. What's impressive is the quality of what's being written, despite the speed at which he writes. The authors of Game of Thrones and The Kingkiller Chronicle could take some notes from Brandon Sanderson."
       }
     ]
+  },
+  "blog": {
+    "heading": "Blog",
+    "backHome": "← Nithun Manoharan",
+    "backToBlog": "← Blog",
+    "intro": "Occasional writing on things I find worth saying something about.",
+    "empty": "Nothing here yet — check back soon.",
+    "notFound": "Post not found."
   },
   "footer": {
     "lastUpdated": "Last updated:"

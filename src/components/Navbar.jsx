@@ -16,6 +16,9 @@ export default function Navbar() {
           <Link to="/books" className="text-sm hover:underline underline-offset-4 active:opacity-40 transition-opacity">
             {t('nav.books')}
           </Link>
+          <Link to="/blog" className="text-sm hover:underline underline-offset-4 active:opacity-40 transition-opacity">
+            {t('nav.blog')}
+          </Link>
           <a href="#footer" className="text-sm hover:underline underline-offset-4 active:opacity-40 transition-opacity">
             {t('nav.contact')}
           </a>

@@ -3,23 +3,23 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://nithunmanoharan.com</loc>
-    <lastmod>2026-04-05</lastmod>
+    <loc>https://nithun.no</loc>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nithunmanoharan.com"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://nithunmanoharan.com"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithunmanoharan.com"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no"/>
   </url>
 
   <url>
-    <loc>https://nithunmanoharan.com/books</loc>
-    <lastmod>2026-04-05</lastmod>
+    <loc>https://nithun.no/books</loc>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nithunmanoharan.com/books"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://nithunmanoharan.com/books"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithunmanoharan.com/books"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/books"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/books"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/books"/>
   </url>
 
 </urlset>

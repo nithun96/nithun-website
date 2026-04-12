@@ -138,16 +138,17 @@ nithun-website/
 
 ## Deployment (Hetzner)
 
-To deploy changes, run these two commands in order:
+To deploy changes, use the deploy script with a commit message:
 
 ```
-npm run build
-scp -r dist/* root@204.168.209.150:/var/www/nithun-website/dist/
+./deploy.sh "Your commit message"
 ```
 
-No other configuration needed.
+This will build, upload to the server, and push to GitHub in one command.
 
-**Important:** After every change session, remind Nithun to run these two commands to deploy to the live server.
+The site is live at **nithun.no** (primary domain). Traffic from nithunmanoharan.com automatically redirects to nithun.no.
+
+**Important:** After every change session, run `./deploy.sh` with a descriptive commit message to deploy to the live server.
 
 ---
 

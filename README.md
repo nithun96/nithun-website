@@ -1,6 +1,6 @@
 # nithunmanoharan.com — Personal Website (v1)
 
-Personal website for Nithun Manoharan. Built as a hobby project to learn modern frontend development, and to establish a personal presence online. Live at [nithunmanoharan.com](https://nithunmanoharan.com).
+Personal website for Nithun Manoharan. Built as a hobby project to learn modern frontend development, and to establish a personal presence online. Live at [nithun.no](https://nithun.no).
 
 ---
 
@@ -129,7 +129,7 @@ This will in order:
 2. Upload `dist/` to the Hetzner VPS via `scp`
 3. Commit and push all changes to GitHub
 
-Nginx on the server serves the `dist/` folder with `try_files` so React Router's client-side routes (like `/books`) work on direct URL access or page refresh. Security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Content-Security-Policy) are configured in the Nginx config.
+Nginx on the server serves the `dist/` folder with `try_files` so React Router's client-side routes (like `/books`) work on direct URL access or page refresh. Security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Content-Security-Policy) are configured in the Nginx config. Traffic from nithunmanoharan.com is automatically redirected to nithun.no.
 
 ---
 

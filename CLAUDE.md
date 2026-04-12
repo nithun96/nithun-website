@@ -114,24 +114,35 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 ## Folder Structure
 
 ```
-nithun-website/
+Website Project/
+├── index.html              # Entry point — SEO, Open Graph, JSON-LD, dark mode init script
+├── vite.config.js          # Vite config — plugins, build date injection (__BUILD_DATE__)
+├── deploy.sh               # Deploy: build → scp to server → git commit + push
+├── scripts/
+│   └── generate-sitemap.js # Auto-generates public/sitemap.xml with today's date at build time
 ├── public/
-│   └── index.html          # SEO meta tags, JSON-LD schema go here
-├── src/
-│   ├── components/         # Reusable UI components (Navbar, Footer, etc.)
-│   ├── sections/           # Page sections (Hero, Books, Contact, etc.)
-│   ├── locales/
-│   │   ├── en/
-│   │   │   └── translation.json
-│   │   └── no/
-│   │       └── translation.json
-│   ├── styles/             # Global styles or Tailwind config overrides
-│   ├── App.jsx
-│   └── main.jsx
-├── CLAUDE.md               # This file
-├── tailwind.config.js
-├── vite.config.js
-└── package.json
+│   ├── favicon.svg         # Custom NM favicon
+│   ├── sitemap.xml         # Generated at build time — do not edit manually
+│   └── images/
+│       └── nithun.jpeg     # Profile photo (optimised)
+└── src/
+    ├── main.jsx            # Bootstrap — BrowserRouter + i18n init
+    ├── App.jsx             # Root layout — Navbar, Routes, Footer
+    ├── i18n.js             # i18next config — EN/NO, language detection
+    ├── styles/
+    │   └── global.css      # Tailwind import, dark mode variant, font variables
+    ├── components/
+    │   ├── Navbar.jsx      # Navigation bar
+    │   ├── Footer.jsx      # Footer with social links and build date
+    │   ├── ThemeToggle.jsx # Dark/light toggle with SVG icons
+    │   └── LangToggle.jsx  # EN/NO language toggle
+    ├── sections/
+    │   └── Hero.jsx        # Home page — photo, name, tagline, intro
+    ├── pages/
+    │   └── BooksPage.jsx   # /books — author entries with three rendering modes
+    └── locales/
+        ├── en/translation.json
+        └── no/translation.json
 ```
 
 ---
@@ -165,23 +176,25 @@ The site is live at **nithun.no** (primary domain). Traffic from nithunmanoharan
 
 ## What NOT to Do
 
-- Do not add complex animations or JS interactions in v1
 - Do not turn this into a CV or resume
-- Do not use hardcoded text – everything goes through i18n from day one
-- Do not use Create React App – we use Vite
-- Do not over-engineer – this is a personal site, keep it simple and clean
+- Do not use hardcoded text — everything goes through i18n
+- Do not use Create React App — we use Vite
+- Do not over-engineer — this is a personal site, keep it simple and clean
 
 ---
 
-## Current Status
+## Current Status (v1 complete)
 
 - [x] Project scaffolded (Vite + React + Tailwind)
-- [x] i18n configured
-- [x] Dark/light theme toggle working
-- [ ] Hero section done
-- [ ] Books & Music section done
-- [ ] Contact section done
-- [ ] SEO meta tags and JSON-LD added
-- [ ] Deployed to Hetzner
-- [ ] Domain pointed to server
-- [ ] SSL active
+- [x] i18n configured (EN + NO)
+- [x] Dark/light theme toggle (no flash on load)
+- [x] Hero section with photo, tagline, intro
+- [x] Books subpage (/books) with structured author entries
+- [x] Footer with social icon links and build date
+- [x] SEO meta tags, Open Graph, JSON-LD schema, sitemap (auto-generated)
+- [x] WCAG AA accessibility basics
+- [x] Security headers on Nginx
+- [x] Deployed to Hetzner VPS
+- [x] Live at nithun.no (redirect from nithunmanoharan.com)
+- [x] SSL active (Let's Encrypt)
+- [x] Git repository on GitHub

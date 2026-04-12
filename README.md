@@ -95,6 +95,38 @@ Contains LinkedIn and GitHub SVG icon links (with `aria-label` for accessibility
 ### Translations (`locales/`)
 All user-facing text lives in `en/translation.json` and `no/translation.json`. Nothing is hardcoded in JSX. The structure mirrors the component hierarchy: `nav.*`, `hero.*`, `books.*`, `footer.*`.
 
+#### Adding or editing a string
+
+1. Open both `src/locales/en/translation.json` and `src/locales/no/translation.json`
+2. Add the same key in both files with the appropriate translation
+3. Use the key in JSX with `const { t } = useTranslation()` and `{t('your.key')}`
+
+#### Adding a new language
+
+1. Create `src/locales/de/translation.json` (or whichever language code)
+2. Copy the structure from `en/translation.json` and translate all values
+3. In `src/i18n.js`, import the file and add it to the `resources` object
+4. Update `LangToggle.jsx` to cycle through the new language
+5. Add a `hreflang` tag for the new language in `index.html`
+
+#### Translation file structure
+
+Values can be one of three types depending on what the component needs:
+
+| Type | When to use | Example key |
+|---|---|---|
+| `string` | Single line of text | `nav.books`, `hero.tagline` |
+| `string[]` | Multiple paragraphs rendered in a loop | `hero.intro`, `books.introFull` |
+| `object[]` | Structured data with multiple fields | `books.items` |
+
+**`books.items`** entries support three shapes (all handled by `BooksPage.jsx`):
+
+```json
+{ "author": "…", "text": "…" }
+{ "author": "…", "paragraphs": ["…", "…", "…"] }
+{ "author": "…", "textBefore": "…", "series": ["…", "…"], "textAfter": "…" }
+```
+
 ### SEO (`index.html`)
 - `<title>` and `<meta name="description">` for Google
 - `<link rel="canonical">` and `<link rel="sitemap">` 
@@ -145,6 +177,6 @@ Nginx on the server serves the `dist/` folder with `try_files` so React Router's
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
 - [x] Security headers on Nginx
 - [x] Deployed to Hetzner VPS
-- [x] Domain pointed to server (nithunmanoharan.com)
+- [x] Domain pointed to server (nithun.no, redirect fra nithunmanoharan.com)
 - [x] SSL active (Let's Encrypt)
 - [x] Git repository on GitHub

@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <nav aria-label="Main navigation" className="border-b border-zinc-200 dark:border-zinc-700 bg-[#ede9e4] dark:bg-zinc-800">
       <div className="flex items-center justify-between px-6 py-4 max-w-3xl mx-auto w-full">
-        <Link to="/" className="font-serif text-lg font-semibold tracking-tight">
+        <Link to="/" className="font-serif text-lg font-semibold tracking-tight hover:text-amber-600 dark:hover:text-amber-400 transition-colors duration-200">
           NM
         </Link>
         <div className="flex items-center gap-4">

@@ -8,7 +8,9 @@
   "hero": {
     "name": "Nithun Manoharan",
     "tagline": "Lever barndomsdrømmen, ved å jobbe med kunstig intelligens.",
-    "intro": "Til daglig så jobber jeg med IT som produktsjef, men på denne siden så vil jeg vise frem hva jeg bygger i fritiden, med en god dose hjelp fra AI. Jeg vil også se om jeg får skrevet litt for å få ut alle mine tanker om både realitet og fiksjon."
+    "location": "Oslo, Norge",
+    "intro": "Til daglig så jobber jeg som produktsjef innen IT, men på denne siden så vil jeg vise hva jeg bygger i fritiden, med en sunn dose hjelp fra AI. Jeg vil også slippe ut litt av kreativiteten min skrive litt om både realiteten (blogger) og fiksjon (fortellinger og muligens mer).",
+    "teaser": "Det beste er på vei. Snart"
   },
   "books": {
     "heading": "Bøker",

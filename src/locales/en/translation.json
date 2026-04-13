@@ -8,7 +8,9 @@
   "hero": {
     "name": "Nithun Manoharan",
     "tagline": "Living my childhood dream, working with artificial intelligence.",
-    "intro": "In my daily life I work in IT as a product manager, but on this site I will show you what I'm building in my free time, with a healthy dose of AI. I also want to let out my creative spirit and write my thoughts on both reality and fiction."
+    "location": "Oslo, Norway",
+    "intro": "In my daily life I work in IT as a product manager, but on this site I will show you what I'm building in my free time, with a healthy dose of AI. I also want to let out my creative spirit and write my thoughts on both reality and fiction.",
+    "teaser": "The best is yet to come. Soon"
   },
   "books": {
     "heading": "Books",

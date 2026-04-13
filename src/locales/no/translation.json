@@ -8,11 +8,7 @@
   "hero": {
     "name": "Nithun Manoharan",
     "tagline": "Lever barndomsdrømmen, ved å jobbe med kunstig intelligens.",
-    "rambleHeading": "Litt Rabling",
-    "intro": [
-      "Jeg jobber med kunstig intelligens i Oslo som produktsjef, og derfor kan jeg ærlig si at jeg brukte KI (eller AI) for å lage denne nettsiden. Men da kan man lure på hva annet som er AI på denne nettsiden, men hverken bildet eller teksten er AI. Som et bevis på det, så holder LLM-modellene (AI-modellene) litt bedre struktur enn det jeg har nå. Om meg ellers, så spiller jeg videospill (og brettspill hvis anledningen tilbyr seg), leser bøker og har for mye skjermtid, noe som jeg antar er vanlig for folk i dag. I tillegg så er jeg frivillig på en ungdomsklubb siden jeg føler at jeg gjør noe faktisk produktivt i motsetning til de fleste andre hobbyer jeg driver med.",
-      "Jeg startet opp dette som en del av et lite hobbyprosjekt for å lære meg noe av det litt tekniske, men jeg ser ikke for meg at jeg skal stoppe her og vil fortsette å oppdatere både denne nettsiden og kanskje legge til andre prosjekter jeg jobber med. Det blir spennende!"
-    ]
+    "intro": "Til daglig så jobber jeg med IT som produktsjef, men på denne siden så vil jeg vise frem hva jeg bygger i fritiden, med en god dose hjelp fra AI. Jeg vil også se om jeg får skrevet litt for å få ut alle mine tanker om både realitet og fiksjon."
   },
   "books": {
     "heading": "Bøker",

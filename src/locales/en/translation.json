@@ -8,11 +8,7 @@
   "hero": {
     "name": "Nithun Manoharan",
     "tagline": "Living my childhood dream, working with artificial intelligence.",
-    "rambleHeading": "Short Ramble",
-    "intro": [
-      "I work with artificial intelligence in Oslo as a Product Manager, which is why I can honestly say that I used AI to make this website. But one might wonder what else is AI on this site – neither the photo nor the text is. As proof of that, the LLM models (AI models) tend to have slightly better structure than what I have here. Otherwise, I play video games (and board games when the occasion calls for it), read books and have too much screen time, which I assume is pretty normal these days. I also volunteer at a youth club, since it feels like I'm actually doing something productive compared to most other hobbies I have.",
-      "I started this as part of a small hobby project to learn a bit of the more technical side of things, but I don't see myself stopping here. I'll continue updating this site and maybe I'll also add other projects I'm working on. Should be fun!"
-    ]
+    "intro": "In my daily life I work in IT as a product manager, but on this site I will show you what I'm building in my free time, with a healthy dose of AI. I also want to let out my creative spirit and write my thoughts on both reality and fiction."
   },
   "books": {
     "heading": "Books",

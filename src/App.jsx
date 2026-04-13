@@ -16,12 +16,7 @@ export default function App() {
       <Navbar />
       <main id="main-content">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Hero />
-            }
-          />
+          <Route path="/" element={<Hero />} />
           <Route path="/books" element={<BooksPage />} />
         </Routes>
       </main>

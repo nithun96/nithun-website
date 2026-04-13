@@ -65,10 +65,7 @@ Every page shares the same shell: `Navbar` at the top, a `<main>` block in the m
 A hidden skip-to-content link sits at the very top for keyboard/screen reader accessibility.
 
 ### Navigation (`Navbar.jsx`)
-- **NM logo** — links back to `/`
-- **Books** — React Router `<Link>` to `/books` (client-side navigation, no page reload)
-- **Contact** — plain `href="#footer"` that scrolls to the footer anchor
-- **LangToggle** and **ThemeToggle** on the right
+Sticky (`position: sticky, top: 0`) with `backdrop-blur-md` and 80% opacity background — gives a frosted glass effect when scrolling. Contains only the NM logo, LangToggle, and ThemeToggle. Books and Contact links removed pending future sections.
 
 ### Theme (`ThemeToggle.jsx`)
 Toggles a `.dark` class on the `<html>` element. The preference is saved to `localStorage` and restored on page load. Tailwind's dark mode is configured to respond to this class (not the system `prefers-color-scheme` media query) via a custom variant in `global.css`.
@@ -79,7 +76,7 @@ To prevent a flash of light mode on load, `index.html` contains an inline script
 Calls `i18n.changeLanguage()` to switch between `en` and `no`. Also updates `document.documentElement.lang` so the HTML `lang` attribute stays correct for screen readers and SEO. Language detection on first visit reads from `localStorage`, then browser settings.
 
 ### Home page (`Hero.jsx`)
-Reads all text from the translation file. The intro is an array of strings, each rendered as its own paragraph. The "Short Ramble" / "Litt Rabling" heading sits above the intro block.
+Reads all text from the translation file. Renders a circular photo with a subtle ring, the name as `<h1>`, a location line with a pin icon, the intro paragraph, and a small italic teaser line. Photo and name fade in first (80ms), then text (400ms) via CSS opacity + translateY transitions.
 
 ### Books page (`BooksPage.jsx`)
 Reads the `books.items` array from the translation file. Each item can have one of three shapes, which the component handles:
@@ -115,8 +112,8 @@ Values can be one of three types depending on what the component needs:
 
 | Type | When to use | Example key |
 |---|---|---|
-| `string` | Single line of text | `nav.books`, `hero.tagline` |
-| `string[]` | Multiple paragraphs rendered in a loop | `hero.intro`, `books.introFull` |
+| `string` | Single line of text | `hero.location`, `hero.intro`, `hero.teaser` |
+| `string[]` | Multiple paragraphs rendered in a loop | `books.introFull` |
 | `object[]` | Structured data with multiple fields | `books.items` |
 
 **`books.items`** entries support three shapes (all handled by `BooksPage.jsx`):

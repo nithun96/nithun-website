@@ -1,13 +1,13 @@
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import matter from 'gray-matter'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { parseFrontmatter } from '../lib/parseFrontmatter'
 
 const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
 
 const posts = Object.values(rawFiles).map(raw => {
-  const { data, content } = matter(raw)
+  const { data, content } = parseFrontmatter(raw)
   return { ...data, content }
 })
 

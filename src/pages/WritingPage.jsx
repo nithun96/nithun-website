@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import matter from 'gray-matter'
+import { parseFrontmatter } from '../lib/parseFrontmatter'
 
 const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
 
 const posts = Object.values(rawFiles)
   .map(raw => {
-    const { data, content } = matter(raw)
+    const { data, content } = parseFrontmatter(raw)
     return { ...data, content }
   })
   .sort((a, b) => new Date(b.date) - new Date(a.date))

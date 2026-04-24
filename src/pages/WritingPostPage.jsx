@@ -2,13 +2,13 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { parseFrontmatter } from '../lib/parseFrontmatter'
+import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
 
 const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
 
-const posts = Object.values(rawFiles).map(raw => {
+const posts = Object.entries(rawFiles).map(([path, raw]) => {
   const { data, content } = parseFrontmatter(raw)
-  return { ...data, content }
+  return { ...data, slug: slugFromPath(path), content }
 })
 
 function formatDate(dateStr, locale) {

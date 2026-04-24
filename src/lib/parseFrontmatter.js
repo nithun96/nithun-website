@@ -1,3 +1,8 @@
+export function slugFromPath(path) {
+  const filename = path.split('/').pop().replace(/\.md$/, '')
+  return filename.replace(/^\d{4}-\d{2}-/, '')
+}
+
 export function parseFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
   if (!match) return { data: {}, content: raw }

@@ -1,7 +1,6 @@
 ---
 title: "Lorem Ipsum"
 date: "2026-04-20"
-slug: "on-attention"
 summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 mastodon: ""
 ---

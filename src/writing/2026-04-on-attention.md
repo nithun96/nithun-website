@@ -1,43 +1,25 @@
 ---
-title: "On Attention"
+title: "Lorem Ipsum"
 date: "2026-04-20"
 slug: "on-attention"
-summary: "We live in an age of infinite content and shrinking focus. A few thoughts on what it actually means to pay attention — and why it might be the most valuable thing you can do."
+summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 mastodon: ""
 ---
 
-There is a moment, usually sometime after midnight, when I realize I have been scrolling for forty minutes without reading a single thing.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-Not skimming. Not half-reading. Just scrolling. The words pass in front of my eyes like scenery from a train window — present, then gone, leaving no impression.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-I don't think this is unique to me.
+## Sed ut perspiciatis
 
-## The cost of fractured attention
+Unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
 
-We talk about attention as if it's a limited resource, which it is. But I think we underestimate how much of it we give away for free — and how little we get back.
+Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
 
-The feed is not designed to be read. It is designed to be consumed. There is a difference. Reading requires you to hold something in your mind long enough to react to it. Consumption requires only that you keep moving.
+## At vero eos
 
-The problem is that most of what we call "staying informed" today is really just consumption dressed up in the language of engagement.
+Et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
 
-## What paying attention actually looks like
+Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio.
 
-I read a book recently — a physical book, which feels like a statement now — and I noticed something. My mind kept trying to leave. It would read a sentence and immediately reach for a next thing that wasn't there. It took about forty pages before it settled.
-
-Forty pages to remember how to read.
-
-I don't say this to be dramatic. I say it because I think it's important to notice. Attention is a skill. And like most skills, it atrophies when you stop using it.
-
-The things I remember most clearly — books, conversations, places — are the things I was actually present for. Not recording, not multitasking, not half-there. Present.
-
-## A small experiment
-
-For the last few weeks, I've been trying something simple: one thing at a time.
-
-One tab. One task. One conversation without checking my phone.
-
-It sounds obvious. It is obvious. And it is harder than it sounds.
-
-But on the days it works, I notice something. Things feel more real. Problems get solved. Ideas connect. The day has a shape to it.
-
-I'm not sure that's a coincidence.
+Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.

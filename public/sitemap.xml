@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://nithun.no</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no"/>
@@ -14,12 +14,22 @@
 
   <url>
     <loc>https://nithun.no/books</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/books"/>
     <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/books"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/books"/>
+  </url>
+
+  <url>
+    <loc>https://nithun.no/writing</loc>
+    <lastmod>2026-04-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/writing"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/writing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/writing"/>
   </url>
 
 </urlset>

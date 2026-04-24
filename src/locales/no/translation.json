@@ -40,6 +40,12 @@
       }
     ]
   },
+  "writing": {
+    "heading": "Skriverier",
+    "backWriting": "← Skriverier",
+    "noDate": "Udatert",
+    "conversation": "Bli med i samtalen →"
+  },
   "footer": {
     "lastUpdated": "Sist oppdatert:"
   }

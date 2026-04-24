@@ -29,6 +29,16 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/books"/>
   </url>
 
+  <url>
+    <loc>https://nithun.no/writing</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/writing"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/writing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/writing"/>
+  </url>
+
 </urlset>
 `
 

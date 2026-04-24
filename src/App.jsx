@@ -3,6 +3,8 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
 import BooksPage from './pages/BooksPage'
+import WritingPage from './pages/WritingPage'
+import WritingPostPage from './pages/WritingPostPage'
 
 export default function App() {
   return (
@@ -18,6 +20,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/books" element={<BooksPage />} />
+          <Route path="/writing" element={<WritingPage />} />
+          <Route path="/writing/:slug" element={<WritingPostPage />} />
         </Routes>
       </main>
       <Footer />

@@ -40,6 +40,12 @@
       }
     ]
   },
+  "writing": {
+    "heading": "Writing",
+    "backWriting": "← Writing",
+    "noDate": "Undated",
+    "conversation": "Join the conversation →"
+  },
   "footer": {
     "lastUpdated": "Last updated:"
   }

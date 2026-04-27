@@ -48,5 +48,35 @@
   },
   "footer": {
     "lastUpdated": "Last updated:"
+  },
+  "silence": {
+    "navLink": "Silence",
+    "heading": "Deafening Silence",
+    "intro": "Gentle noise to help quiet tinnitus through sound enrichment.",
+    "guidance": "Based on Tinnitus Retraining Therapy (TRT) principles: set the volume so the sound sits just below the level of your tinnitus — not to mask it completely. The goal is habituation over time, not suppression.",
+    "soundType": "Sound type",
+    "sounds": {
+      "white": "White",
+      "pink": "Pink",
+      "brown": "Brown",
+      "rain": "Rain"
+    },
+    "soundDescriptions": {
+      "white": "All frequencies equally",
+      "pink": "Softer, more natural",
+      "brown": "Deep, low rumble",
+      "rain": "Three-layer synthesis"
+    },
+    "play": "Play",
+    "pause": "Pause",
+    "volume": "Volume",
+    "sleepTimer": "Sleep timer",
+    "timerOff": "Off",
+    "timerMinutes": "{{minutes}} min",
+    "timerActive": "Stops in {{remaining}}",
+    "cancelTimer": "Cancel",
+    "donationHeading": "Support hearing health",
+    "donationIntro": "If this tool helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and aligned with hearing-loss and tinnitus research.",
+    "backHome": "← Nithun Manoharan"
   }
 }

@@ -48,5 +48,35 @@
   },
   "footer": {
     "lastUpdated": "Sist oppdatert:"
+  },
+  "silence": {
+    "navLink": "Stillhet",
+    "heading": "Øredøvende stillhet",
+    "intro": "Behagelig støy for å hjelpe med tinnitus gjennom lydberikning.",
+    "guidance": "Basert på prinsipper fra Tinnitus Retraining Therapy (TRT): still inn volumet slik at lyden er rett under nivået på tinnitussen din — ikke for å maskere den fullstendig. Målet er habituering over tid, ikke undertrykking.",
+    "soundType": "Lydtype",
+    "sounds": {
+      "white": "Hvit",
+      "pink": "Rosa",
+      "brown": "Brun",
+      "rain": "Regn"
+    },
+    "soundDescriptions": {
+      "white": "Alle frekvenser likt",
+      "pink": "Mykere, mer naturlig",
+      "brown": "Dyp, lav dur",
+      "rain": "Trelags syntese"
+    },
+    "play": "Spill",
+    "pause": "Pause",
+    "volume": "Volum",
+    "sleepTimer": "Søvntimer",
+    "timerOff": "Av",
+    "timerMinutes": "{{minutes}} min",
+    "timerActive": "Stopper om {{remaining}}",
+    "cancelTimer": "Avbryt",
+    "donationHeading": "Støtt hørselhelse",
+    "donationIntro": "Hvis dette verktøyet hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
+    "backHome": "← Nithun Manoharan"
   }
 }

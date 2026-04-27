@@ -5,6 +5,7 @@ import Hero from './sections/Hero'
 import BooksPage from './pages/BooksPage'
 import WritingPage from './pages/WritingPage'
 import WritingPostPage from './pages/WritingPostPage'
+import SilencePage from './pages/SilencePage'
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/books" element={<BooksPage />} />
           <Route path="/writing" element={<WritingPage />} />
           <Route path="/writing/:slug" element={<WritingPostPage />} />
+          <Route path="/silence" element={<SilencePage />} />
         </Routes>
       </main>
       <Footer />

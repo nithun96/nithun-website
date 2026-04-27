@@ -16,6 +16,9 @@ export default function Navbar() {
           <Link to="/writing" className="text-sm hover:underline underline-offset-4 active:opacity-40 transition-opacity">
             {t('writing.heading')}
           </Link>
+          <Link to="/silence" className="text-sm hover:underline underline-offset-4 active:opacity-40 transition-opacity">
+            {t('silence.navLink')}
+          </Link>
           <LangToggle />
           <ThemeToggle />
         </div>

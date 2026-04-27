@@ -1,0 +1,40 @@
+{
+  "_note": "Contributions of further regional charity options — especially from Asia — are welcome via pull request. Please verify organisational credibility and focus on hearing-loss or tinnitus research/advocacy before submitting.",
+  "list": [
+    {
+      "id": "hlf",
+      "name": "Hørselsforbundet",
+      "country": "NO",
+      "url": "https://www.hlf.no/",
+      "description": "Norway's national hearing organisation"
+    },
+    {
+      "id": "efhoh",
+      "name": "EFHOH",
+      "country": "EU",
+      "url": "https://efhoh.org/",
+      "description": "European Federation of Hard of Hearing People"
+    },
+    {
+      "id": "tinnitus-uk",
+      "name": "Tinnitus UK",
+      "country": "GB",
+      "url": "https://tinnitus.org.uk/",
+      "description": "UK's national tinnitus charity"
+    },
+    {
+      "id": "hhf",
+      "name": "Hearing Health Foundation",
+      "country": "US",
+      "url": "https://hearinghealthfoundation.org/",
+      "description": "Largest US nonprofit funder of hearing research"
+    },
+    {
+      "id": "ifhoh",
+      "name": "IFHOH",
+      "country": "GLOBAL",
+      "url": "https://www.ifhoh.org/",
+      "description": "International Federation of Hard of Hearing People"
+    }
+  ]
+}

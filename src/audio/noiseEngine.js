@@ -20,60 +20,62 @@ const DROP_SPIKE_PROB      = 0.00003 // per-sample probability of a drop impulse
 const DROP_SPIKE_PEAK      = 0.15    // maximum gain boost from a single spike
 const DROP_SPIKE_DECAY     = 0.9997  // per-sample exponential decay of spike
 
-// ── Note on ScriptProcessorNode ──────────────────────────────────────────────
-// ScriptProcessorNode is deprecated in favour of AudioWorklet. It is used here
-// because AudioWorklet requires a separate registered module file, which adds
-// meaningful complexity with Vite's module system. Replace with AudioWorklet
-// when moving to the Capacitor app if background-thread performance matters.
+// ── Buffer durations — longer reduces audible loop artefacts, costs more RAM ─
+const WHITE_BUF_SECS = 3   // white noise has no correlation; 3 s is ample
+const PINK_BUF_SECS  = 8   // longer to reduce audible low-freq loop artefacts
+const BROWN_BUF_SECS = 20  // longest: random walk produces long-range correlation
 
-// ── Noise generator factories ────────────────────────────────────────────────
-// Each factory closes over its own filter state, so multiple instances running
-// simultaneously (as in rain's three-layer mix) cannot corrupt each other.
+// ── Noise buffer generators ───────────────────────────────────────────────────
+// Pre-fill an AudioBuffer with the requested noise type, then loop it via
+// AudioBufferSourceNode. This is universally reliable on mobile browsers,
+// unlike ScriptProcessorNode which has known firing issues on Firefox Android.
+//
+// The spike modulator in the rain synthesis still uses ScriptProcessorNode
+// because it drives an AudioParam (gain modulation), not an audio output — it
+// is retained per design, and its absence on problematic browsers only removes
+// texture variation without silencing the rain layers.
 
-function makeWhiteNode(ctx) {
-  const node = ctx.createScriptProcessor(4096, 1, 1)
-  node.onaudioprocess = (e) => {
-    const out = e.outputBuffer.getChannelData(0)
-    for (let i = 0; i < out.length; i++) out[i] = Math.random() * 2 - 1
-  }
-  return node
-}
+function makeNoiseBuffer(ctx, type, seconds) {
+  const length = Math.ceil(ctx.sampleRate * seconds)
+  const buffer = ctx.createBuffer(1, length, ctx.sampleRate)
+  const data = buffer.getChannelData(0)
 
-function makePinkNode(ctx) {
-  // Paul Kellet IIR filter — real-time approximation of 1/f (pink) spectrum.
-  // State is local to each instance so concurrent uses do not interfere.
-  let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0
-  const node = ctx.createScriptProcessor(4096, 1, 1)
-  node.onaudioprocess = (e) => {
-    const out = e.outputBuffer.getChannelData(0)
-    for (let i = 0; i < out.length; i++) {
+  if (type === 'white') {
+    for (let i = 0; i < length; i++) data[i] = Math.random() * 2 - 1
+
+  } else if (type === 'pink') {
+    // Paul Kellet IIR filter — approximates 1/f spectrum offline
+    let b0=0, b1=0, b2=0, b3=0, b4=0, b5=0, b6=0
+    for (let i = 0; i < length; i++) {
       const w = Math.random() * 2 - 1
       b0 = 0.99886 * b0 + w * 0.0555179
       b1 = 0.99332 * b1 + w * 0.0750759
       b2 = 0.96900 * b2 + w * 0.1538520
       b3 = 0.86650 * b3 + w * 0.3104856
       b4 = 0.55000 * b4 + w * 0.5329522
-      b5 = -0.7616 * b5 - w * 0.0168980
-      out[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11
+      b5 = -0.7616  * b5 - w * 0.0168980
+      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11
       b6 = w * 0.115926
     }
-  }
-  return node
-}
 
-function makeBrownNode(ctx) {
-  // Leaky integrator: integrates white noise with a small leak to prevent
-  // DC drift. State is local to each instance.
-  let last = 0
-  const node = ctx.createScriptProcessor(4096, 1, 1)
-  node.onaudioprocess = (e) => {
-    const out = e.outputBuffer.getChannelData(0)
-    for (let i = 0; i < out.length; i++) {
+  } else if (type === 'brown') {
+    // Leaky integrator (random walk with leak to prevent DC drift)
+    let last = 0
+    for (let i = 0; i < length; i++) {
       const w = Math.random() * 2 - 1
       last = (last + 0.02 * w) / 1.02
-      out[i] = last * 3.5
+      data[i] = last * 3.5
     }
   }
+
+  return buffer
+}
+
+function makeLoopingSource(ctx, buffer) {
+  const node = ctx.createBufferSource()
+  node.buffer = buffer
+  node.loop = true
+  node.start(0)
   return node
 }
 
@@ -83,8 +85,8 @@ function buildRainNodes(ctx, masterGain) {
   const nodes = []  // every node created here goes into this list for clean teardown
 
   // ─ Layer 1: Base rain body ───────────────────────────────────────────────
-  // White noise → BPF (1500 Hz, Q 2) → gain(RAIN_BODY_GAIN) → master
-  const bodySource = makeWhiteNode(ctx)
+  // White noise buffer → BPF (1500 Hz, Q 2) → gain(RAIN_BODY_GAIN) → master
+  const bodySource = makeLoopingSource(ctx, makeNoiseBuffer(ctx, 'white', WHITE_BUF_SECS))
   const bodyFilter = ctx.createBiquadFilter()
   bodyFilter.type = 'bandpass'
   bodyFilter.frequency.value = 1500
@@ -97,8 +99,8 @@ function buildRainNodes(ctx, masterGain) {
   nodes.push(bodySource, bodyFilter, bodyGain)
 
   // ─ Layer 2: Low rumble ───────────────────────────────────────────────────
-  // Brown noise → LPF (150 Hz) → gain(RAIN_RUMBLE_GAIN) → master
-  const rumbleSource = makeBrownNode(ctx)
+  // Brown noise buffer → LPF (150 Hz) → gain(RAIN_RUMBLE_GAIN) → master
+  const rumbleSource = makeLoopingSource(ctx, makeNoiseBuffer(ctx, 'brown', BROWN_BUF_SECS))
   const rumbleFilter = ctx.createBiquadFilter()
   rumbleFilter.type = 'lowpass'
   rumbleFilter.frequency.value = 150
@@ -111,18 +113,19 @@ function buildRainNodes(ctx, masterGain) {
   nodes.push(rumbleSource, rumbleFilter, rumbleGain)
 
   // ─ Layer 3: Drop texture ─────────────────────────────────────────────────
-  // Pink noise → HPF (2500 Hz) → LFO-modulated gain → master
+  // Pink noise buffer → HPF (2500 Hz) → LFO-modulated gain → master
   //
   // Three modulators are summed into dropGain.gain (Web Audio API adds audio-rate
   // signals to the AudioParam's .value):
   //   • Slow LFO  — gentle overall swell
   //   • Fast LFO  — faster drop-patter rhythm
-  //   • Spike gen — rare random impulses simulating individual drops
+  //   • Spike gen — rare random impulses simulating individual drops (ScriptProcessorNode;
+  //                 if absent on a browser, only texture variation is lost, not audibility)
   //
   // Base gain RAIN_DROP_GAIN = 0.30; LFO depths are small enough that gain
   // stays positive (minimum ≈ 0.30 − 0.06 − 0.04 = 0.20).
 
-  const dropSource = makePinkNode(ctx)
+  const dropSource = makeLoopingSource(ctx, makeNoiseBuffer(ctx, 'pink', PINK_BUF_SECS))
   const dropFilter = ctx.createBiquadFilter()
   dropFilter.type = 'highpass'
   dropFilter.frequency.value = 2500
@@ -154,8 +157,7 @@ function buildRainNodes(ctx, masterGain) {
   nodes.push(fastLFO, fastDepth)
 
   // Irregular spike generator — ScriptProcessorNode outputting a non-negative
-  // signal that is added to dropGain.gain at audio rate, creating the uneven
-  // pattering of individual drops landing.
+  // signal added to dropGain.gain at audio rate, simulating individual drops.
   let spikeEnv = 0
   const spikeNode = ctx.createScriptProcessor(4096, 1, 1)
   spikeNode.onaudioprocess = (e) => {
@@ -212,6 +214,7 @@ export function createNoiseEngine() {
   function stopSource() {
     if (sourceNode) {
       try { sourceNode.disconnect() } catch (_) {}
+      try { sourceNode.stop() } catch (_) {}
       sourceNode = null
     }
     for (const node of rainNodes) {
@@ -237,8 +240,9 @@ export function createNoiseEngine() {
     if (type === 'rain') {
       rainNodes = buildRainNodes(audioContext, gainNode)
     } else {
-      const makers = { white: makeWhiteNode, pink: makePinkNode, brown: makeBrownNode }
-      sourceNode = makers[type](audioContext)
+      const secs = { white: WHITE_BUF_SECS, pink: PINK_BUF_SECS, brown: BROWN_BUF_SECS }
+      const buffer = makeNoiseBuffer(audioContext, type, secs[type])
+      sourceNode = makeLoopingSource(audioContext, buffer)
       sourceNode.connect(gainNode)
     }
 

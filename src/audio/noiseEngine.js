@@ -205,8 +205,19 @@ export function createNoiseEngine() {
     }
   }
 
-  async function resumeContext() {
-    if (audioContext.state === 'suspended') await audioContext.resume()
+  // Must be called synchronously inside a user-gesture handler.
+  // Creates the context if needed, plays the iOS Safari unlock pattern
+  // (a silent 1-sample buffer), and calls resume() without awaiting — keeping
+  // this function synchronous so it stays inside the browser's gesture-activation
+  // window that iOS Safari requires for AudioContext use.
+  function activateContext() {
+    ensureContext()
+    const unlockBuf = audioContext.createBuffer(1, 1, 22050)
+    const unlockSrc = audioContext.createBufferSource()
+    unlockSrc.buffer = unlockBuf
+    unlockSrc.connect(audioContext.destination)
+    unlockSrc.start(0)
+    audioContext.resume()  // intentionally not awaited
   }
 
   // ─── Source management ──────────────────────────────────────────────────────
@@ -224,15 +235,45 @@ export function createNoiseEngine() {
     rainNodes = []
   }
 
+  // ─── Test tone ──────────────────────────────────────────────────────────────
+  // Plays a 50 ms, low-volume sine tone to verify the AudioContext is genuinely
+  // active. Calls onFailure 200 ms later if the context is still suspended.
+
+  function playTestTone(onFailure) {
+    try {
+      const osc = audioContext.createOscillator()
+      const g = audioContext.createGain()
+      g.gain.value = 0.05
+      osc.type = 'sine'
+      osc.frequency.value = 440
+      osc.connect(g)
+      g.connect(audioContext.destination)
+      osc.start(audioContext.currentTime)
+      osc.stop(audioContext.currentTime + 0.05)
+    } catch (_) {
+      onFailure?.()
+      return
+    }
+    setTimeout(() => {
+      if (audioContext && audioContext.state !== 'running') onFailure?.()
+    }, 200)
+  }
+
   // ─── Public API ─────────────────────────────────────────────────────────────
 
   /**
    * Start playback. Stops any current source first.
+   *
+   * Synchronous by design: AudioContext creation, the iOS unlock pattern, and
+   * all AudioBufferSourceNode.start() calls happen in the same event-loop task
+   * as the originating user gesture — satisfying iOS Safari's strict requirement.
+   *
    * @param {'white'|'pink'|'brown'|'rain'} type
+   * @param {function} [onAudioError]  Called if the AudioContext fails to start
    */
-  async function play(type) {
-    ensureContext()
-    await resumeContext()
+  function play(type, onAudioError) {
+    const wasRunning = audioContext?.state === 'running'
+    activateContext()   // sync: create context + iOS unlock + resume()
     stopSource()
     clearSleepTimer()
     currentType = type
@@ -248,6 +289,11 @@ export function createNoiseEngine() {
 
     gainNode.gain.value = userVolume
     isPlaying = true
+
+    // Only verify on first start — skip when switching sounds mid-session
+    if (!wasRunning && onAudioError) {
+      playTestTone(onAudioError)
+    }
   }
 
   /** Set master volume. Range 0–1. */
@@ -272,6 +318,16 @@ export function createNoiseEngine() {
     gainNode = null
     isPlaying = false
     currentType = null
+  }
+
+  /**
+   * Resume the AudioContext if iOS suspended it (e.g. after backgrounding the tab).
+   * Safe to call at any time; no-ops if the context is already running or absent.
+   */
+  function resumeIfSuspended() {
+    if (audioContext && audioContext.state === 'suspended') {
+      audioContext.resume()
+    }
   }
 
   // ─── Sleep timer ────────────────────────────────────────────────────────────
@@ -328,5 +384,5 @@ export function createNoiseEngine() {
   function getIsPlaying()   { return isPlaying }
   function getCurrentType() { return currentType }
 
-  return { play, setVolume, pause, stop, setSleepTimer, cancelSleepTimer, getIsPlaying, getCurrentType }
+  return { play, setVolume, pause, stop, setSleepTimer, cancelSleepTimer, getIsPlaying, getCurrentType, resumeIfSuspended }
 }

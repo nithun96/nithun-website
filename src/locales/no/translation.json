@@ -77,6 +77,7 @@
     "cancelTimer": "Avbryt",
     "donationHeading": "Støtt hørselhelse",
     "donationIntro": "Hvis dette verktøyet hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
+    "audioError": "Lyden startet ikke. Trykk Spill igjen.",
     "backHome": "← Nithun Manoharan"
   }
 }

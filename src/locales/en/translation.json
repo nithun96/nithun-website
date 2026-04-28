@@ -77,6 +77,7 @@
     "cancelTimer": "Cancel",
     "donationHeading": "Support hearing health",
     "donationIntro": "If this tool helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and aligned with hearing-loss and tinnitus research.",
+    "audioError": "Audio couldn't start. Please tap Play again.",
     "backHome": "← Nithun Manoharan"
   }
 }

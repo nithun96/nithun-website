@@ -49,6 +49,7 @@ export default function SilencePage() {
   const [volume, setVolume] = useState(0.35)
   const [timerMinutes, setTimerMinutes] = useState(0)
   const [timerRemaining, setTimerRemaining] = useState(null)
+  const [audioError, setAudioError] = useState(false)
 
   function getEngine() {
     if (!engineRef.current) engineRef.current = createNoiseEngine()
@@ -77,12 +78,16 @@ export default function SilencePage() {
     }
   }
 
-  // Re-acquire wake lock when the page becomes visible again (e.g. after
-  // the user switches apps and comes back while still playing)
+  // Resume the AudioContext when the page becomes visible again — iOS suspends
+  // AudioContexts on backgrounding and they must be explicitly resumed.
+  // Also re-acquire the wake lock if playback is still active.
   useEffect(() => {
     const onVisibilityChange = async () => {
-      if (document.visibilityState === 'visible' && isPlaying && !wakeLockRef.current) {
-        await acquireWakeLock()
+      if (document.visibilityState === 'visible') {
+        engineRef.current?.resumeIfSuspended()
+        if (isPlaying && !wakeLockRef.current) {
+          await acquireWakeLock()
+        }
       }
     }
     document.addEventListener('visibilitychange', onVisibilityChange)
@@ -99,13 +104,19 @@ export default function SilencePage() {
   }, [])
 
   // ─── Playback control ──────────────────────────────────────────────────────
+  // startEngine is synchronous so that engine.play() — which creates the
+  // AudioContext, runs the iOS unlock pattern, and calls source.start() — all
+  // happen within the same event-loop task as the originating user gesture.
+  // iOS Safari requires this: any await before AudioContext use breaks the
+  // gesture-activation window and results in silent playback.
 
-  const startEngine = useCallback(async (type) => {
+  const startEngine = useCallback((type) => {
     const engine = getEngine()
-    await engine.play(type)
+    engine.play(type, () => setAudioError(true))
     engine.setVolume(volume)
     setIsPlaying(true)
-    await acquireWakeLock()
+    setAudioError(false)
+    acquireWakeLock()  // async, but wake lock is not audio — safe to fire-and-forget
 
     if (timerMinutes > 0) {
       engine.setSleepTimer(
@@ -120,21 +131,22 @@ export default function SilencePage() {
     }
   }, [volume, timerMinutes])
 
-  const handlePlayPause = useCallback(async () => {
+  const handlePlayPause = useCallback(() => {
     if (isPlaying) {
       getEngine().pause()
       setIsPlaying(false)
       setTimerRemaining(null)
+      setAudioError(false)
       releaseWakeLock()
     } else {
-      await startEngine(selectedSound)
+      startEngine(selectedSound)
     }
   }, [isPlaying, selectedSound, startEngine])
 
-  const handleSoundSelect = useCallback(async (type) => {
+  const handleSoundSelect = useCallback((type) => {
     setSelectedSound(type)
     if (isPlaying) {
-      await startEngine(type)
+      startEngine(type)
     }
   }, [isPlaying, startEngine])
 
@@ -220,7 +232,7 @@ export default function SilencePage() {
       </fieldset>
 
       {/* Play / pause */}
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-6">
         <button
           onClick={handlePlayPause}
           aria-label={isPlaying ? t('silence.pause') : t('silence.play')}
@@ -233,6 +245,18 @@ export default function SilencePage() {
           {isPlaying ? <PauseIcon /> : <PlayIcon />}
         </button>
       </div>
+
+      {/* Audio error */}
+      {audioError && (
+        <div
+          role="alert"
+          className="mb-6 px-4 py-3 rounded-lg border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-950/30 max-w-sm mx-auto text-center"
+        >
+          <p className="text-sm text-red-700 dark:text-red-300">
+            {t('silence.audioError')}
+          </p>
+        </div>
+      )}
 
       {/* Volume */}
       <div className="mb-8 max-w-sm">

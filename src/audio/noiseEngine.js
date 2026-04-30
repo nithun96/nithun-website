@@ -194,6 +194,10 @@ export function createNoiseEngine() {
   let sleepIntervalId = null
   let preFadeVolume = 0
 
+  // Incremented on every play() call; lets deferred startSources() detect if it
+  // was superseded by a subsequent play() or cancelled by pause()/stop().
+  let playId = 0
+
   // ─── Context ────────────────────────────────────────────────────────────────
 
   function ensureContext() {
@@ -256,7 +260,7 @@ export function createNoiseEngine() {
     }
     setTimeout(() => {
       if (audioContext && audioContext.state !== 'running') onFailure?.()
-    }, 200)
+    }, 500)
   }
 
   // ─── Public API ─────────────────────────────────────────────────────────────
@@ -264,9 +268,11 @@ export function createNoiseEngine() {
   /**
    * Start playback. Stops any current source first.
    *
-   * Synchronous by design: AudioContext creation, the iOS unlock pattern, and
-   * all AudioBufferSourceNode.start() calls happen in the same event-loop task
-   * as the originating user gesture — satisfying iOS Safari's strict requirement.
+   * AudioContext creation, the iOS unlock pattern, and resume() are all called
+   * synchronously within the originating user gesture — satisfying iOS Safari's
+   * strict requirement. Source nodes are started immediately if the context is
+   * already running, or deferred via resume().then() on first play (iOS starts
+   * the context in suspended state and resume() is asynchronous).
    *
    * @param {'white'|'pink'|'brown'|'rain'} type
    * @param {function} [onAudioError]  Called if the AudioContext fails to start
@@ -278,13 +284,30 @@ export function createNoiseEngine() {
     clearSleepTimer()
     currentType = type
 
-    if (type === 'rain') {
-      rainNodes = buildRainNodes(audioContext, gainNode)
+    const thisPlayId = ++playId
+
+    // Build and wire the source nodes. Called immediately when the context is
+    // already running, or deferred via resume().then() on iOS where the context
+    // starts suspended and resume() is asynchronous.
+    function startSources() {
+      if (thisPlayId !== playId) return  // superseded by a later play/pause/stop
+      if (!audioContext || audioContext.state === 'closed') return
+      if (type === 'rain') {
+        rainNodes = buildRainNodes(audioContext, gainNode)
+      } else {
+        const secs = { white: WHITE_BUF_SECS, pink: PINK_BUF_SECS, brown: BROWN_BUF_SECS }
+        const buffer = makeNoiseBuffer(audioContext, type, secs[type])
+        sourceNode = makeLoopingSource(audioContext, buffer)
+        sourceNode.connect(gainNode)
+      }
+    }
+
+    if (audioContext.state === 'running') {
+      startSources()
     } else {
-      const secs = { white: WHITE_BUF_SECS, pink: PINK_BUF_SECS, brown: BROWN_BUF_SECS }
-      const buffer = makeNoiseBuffer(audioContext, type, secs[type])
-      sourceNode = makeLoopingSource(audioContext, buffer)
-      sourceNode.connect(gainNode)
+      // resume() was already called inside activateContext(); calling it again is
+      // idempotent and gives us a promise we can chain on.
+      audioContext.resume().then(startSources)
     }
 
     gainNode.gain.value = userVolume
@@ -304,6 +327,7 @@ export function createNoiseEngine() {
 
   /** Pause playback (keeps AudioContext alive for fast resume). */
   function pause() {
+    playId++  // cancel any deferred startSources from a pending resume()
     clearSleepTimer()
     stopSource()
     isPlaying = false
@@ -311,6 +335,7 @@ export function createNoiseEngine() {
 
   /** Stop playback and release the AudioContext entirely. */
   function stop() {
+    playId++  // cancel any deferred startSources from a pending resume()
     clearSleepTimer()
     stopSource()
     if (audioContext && audioContext.state !== 'closed') audioContext.close()

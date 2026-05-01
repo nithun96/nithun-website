@@ -84,7 +84,8 @@
     "cancelTimer":  "Cancel",
     "donationHeading": "Support hearing health",
     "donationIntro":   "If this tool helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and focused on hearing loss and tinnitus research.",
-    "audioError": "Audio couldn't start. Please tap Play again."
+    "audioError": "Audio couldn't start. Please tap Play again.",
+    "iosMuteNote": "If you hear no sound, check that your mute switch is off. On iPhone, the side switch may silence audio even when volume is up."
   },
   "footer": {
     "lastUpdated": "Last updated:",

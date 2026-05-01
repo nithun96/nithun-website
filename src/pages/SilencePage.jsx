@@ -35,6 +35,8 @@ const SHELL = {
   margin: '0 auto',
 }
 
+const isIOS = typeof navigator !== 'undefined' && /iPhone|iPad/.test(navigator.userAgent)
+
 export default function SilencePage() {
   const { t } = useTranslation()
   const engineRef = useRef(null)
@@ -203,6 +205,13 @@ export default function SilencePage() {
             )
           })}
         </div>
+
+        {/* iOS mute switch note */}
+        {isIOS && (
+          <p style={{ fontSize: 12, color: 'var(--fgm)', lineHeight: 1.6, maxWidth: 400, marginBottom: 24 }}>
+            {t('silence.iosMuteNote')}
+          </p>
+        )}
 
         {/* Audio error */}
         {audioError && (

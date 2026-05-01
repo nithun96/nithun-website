@@ -84,7 +84,8 @@
     "cancelTimer":  "Avbryt",
     "donationHeading": "Støtt hørselhelse",
     "donationIntro":   "Hvis dette verktøyet hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
-    "audioError": "Lyden startet ikke. Trykk Spill igjen."
+    "audioError": "Lyden startet ikke. Trykk Spill igjen.",
+    "iosMuteNote": "Hører du ingen lyd, sjekk at lydavbryterknappen er av. På iPhone kan sideknappen dempe lyden selv om volumet er skrudd opp."
   },
   "footer": {
     "lastUpdated": "Sist oppdatert:",

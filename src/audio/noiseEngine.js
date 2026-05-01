@@ -207,6 +207,21 @@ export function createNoiseEngine() {
   // was superseded by a subsequent play() or cancelled by pause()/stop().
   let playId = 0
 
+  // iOS audio session fix — forces playback category so hardware mute switch
+  // does not silence the audio. Required for tinnitus/sleep therapy use case
+  // where the user expects audio to play regardless of mute switch state.
+  let iosAudioEl = null
+  function forceIOSPlaybackCategory() {
+    if (iosAudioEl) return
+    if (typeof Audio === 'undefined') return
+    const audio = new Audio()
+    audio.src = 'data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAABIADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV6urq6urq6urq6urq6urq6urq6urq6urq6ur///////////////////////////////////////////////8AAAAATGF2YzU4LjU0AAAAAAAAAAAAAAAAJAAAAAAAAAAAASDs90hvAAAAAAAAAAAAAAAAAAAA//OEZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcgCampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqa//////////////////////////////////////////////////////////////////8AAAAATGF2YzU4LjU0AAAAAAAAAAAAAAAAJAAAAAAAAAAAABN+3HQAAAAAAAAAAAAAAAA=='
+    audio.loop = true
+    audio.volume = 0.001
+    audio.play().catch(() => {})
+    iosAudioEl = audio
+  }
+
   // ─── Context ────────────────────────────────────────────────────────────────
 
   function ensureContext() {
@@ -287,6 +302,7 @@ export function createNoiseEngine() {
    * @param {function} [onAudioError]  Called if the AudioContext fails to start
    */
   function play(type, onAudioError) {
+    forceIOSPlaybackCategory()  // iOS: elevate audio session to playback category (ignores mute switch)
     const wasRunning = audioContext?.state === 'running'
     activateContext()   // sync: create context + iOS unlock + resume()
     stopSource()

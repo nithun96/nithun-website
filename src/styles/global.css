@@ -180,12 +180,8 @@ body::before {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-  .hero-portrait {
-    order: -1;  /* portrait above text on mobile */
-  }
   .hero-portrait > div {
-    max-width: 140px;
-    margin: 0;
+    max-width: 120px;
   }
 }
 
@@ -194,12 +190,20 @@ body::before {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
+
+/* On mobile: stack teasers with consistent padding — no staircase */
 @media (max-width: 600px) {
   .hero-teasers {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+  }
+  .hero-teasers > a {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid color-mix(in oklch, var(--fg) 8%, transparent);
   }
   .hero-teasers > a:last-child {
-    grid-column: 1 / -1;
+    border-bottom: none;
   }
 }
 

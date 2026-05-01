@@ -166,6 +166,32 @@ body::before {
   box-shadow: 0 0 0 3px var(--bg2);
 }
 
+/* ── Hero layout ───────────────────────────────────────────── */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 48px;
+  align-items: start;
+  padding-top: clamp(64px, 10vh, 120px);
+  padding-bottom: clamp(48px, 8vh, 96px);
+}
+@media (max-width: 640px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-teasers {
+  border-top: 1px solid color-mix(in oklch, var(--fg) 8%, transparent);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 600px) {
+  .hero-teasers {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── Shelf cover spine colours ─────────────────────────────── */
 .shelf-card:nth-child(8n+1) .shelf-spine { background: color-mix(in oklch, var(--dusty) 55%, transparent); }
 .shelf-card:nth-child(8n+2) .shelf-spine { background: color-mix(in oklch, var(--stone) 55%, transparent); }

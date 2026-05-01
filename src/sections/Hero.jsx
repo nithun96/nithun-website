@@ -19,17 +19,7 @@ export default function Hero() {
   return (
     <div className="page-enter" style={SHELL}>
       {/* ── Hero grid ─────────────────────────────────────────── */}
-      <div
-        style={{
-          paddingTop: 'clamp(64px, 10vh, 120px)',
-          paddingBottom: 'clamp(48px, 8vh, 96px)',
-          display: 'grid',
-          gridTemplateColumns: '1fr 220px',
-          gap: 48,
-          alignItems: 'start',
-        }}
-        className="max-[640px]:grid-cols-1"
-      >
+      <div className="hero-grid">
         {/* Text column */}
         <div>
           <h1
@@ -93,15 +83,15 @@ export default function Hero() {
         </div>
 
         {/* Portrait column */}
-        <div className="flex flex-col items-end max-[640px]:order-first max-[640px]:items-start">
+        <div className="flex flex-col items-end">
           <div
             style={{
-              width: 200,
-              height: 240,
+              width: '100%',
+              maxWidth: 200,
+              aspectRatio: '5/6',
               borderRadius: 2,
               overflow: 'hidden',
               background: 'var(--bg2)',
-              flexShrink: 0,
             }}
           >
             <img
@@ -114,14 +104,7 @@ export default function Hero() {
       </div>
 
       {/* ── Section teasers ───────────────────────────────────── */}
-      <div
-        style={{
-          borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-        }}
-        className="max-[600px]:grid-cols-1"
-      >
+      <div className="hero-teasers">
         {SECTION_TEASERS.map(({ key, path, accent }, i) => (
           <Link
             key={key}

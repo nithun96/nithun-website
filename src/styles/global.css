@@ -168,21 +168,8 @@ body::before {
 
 /* ── Hero layout ───────────────────────────────────────────── */
 .hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 48px;
-  align-items: start;
   padding-top: clamp(64px, 10vh, 120px);
   padding-bottom: clamp(48px, 8vh, 96px);
-}
-@media (max-width: 640px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .hero-portrait > div {
-    max-width: 120px;
-  }
 }
 
 .hero-teasers {

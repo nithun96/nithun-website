@@ -82,25 +82,6 @@ export default function Hero() {
           </blockquote>
         </div>
 
-        {/* Portrait column */}
-        <div className="hero-portrait flex flex-col items-end">
-          <div
-            style={{
-              width: '100%',
-              maxWidth: 200,
-              aspectRatio: '5/6',
-              borderRadius: 2,
-              overflow: 'hidden',
-              background: 'var(--bg2)',
-            }}
-          >
-            <img
-              src="/images/nithun.jpeg"
-              alt="Nithun Manoharan"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
-            />
-          </div>
-        </div>
       </div>
 
       {/* ── Section teasers ───────────────────────────────────── */}

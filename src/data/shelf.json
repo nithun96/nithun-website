@@ -1,11 +1,101 @@
 {
   "books": [
-    { "title": "The Hobbit",               "author": "J.R.R. Tolkien", "isbn": "9780261102217", "year": 1937, "status": "finished", "meta": "" },
-    { "title": "Lorem Ipsum Dolor",        "author": "Sit Amet",                                              "status": "current",  "meta": "" },
-    { "title": "Consectetur Adipiscing",   "author": "Sed Do Eiusmod",                                        "status": "finished", "meta": "2024" },
-    { "title": "Tempor Incididunt",        "author": "Ut Labore",                                             "status": "finished", "meta": "2023" },
-    { "title": "Dolore Magna Aliqua",      "author": "Ut Enim Ad",                                            "status": "finished", "meta": "2023" },
-    { "title": "Ad Minim Veniam",          "author": "Quis Nostrud",                                          "status": "want",     "meta": "" }
+    { "title": "The Hobbit",                                          "author": "J.R.R. Tolkien",      "isbn": "9780261102217", "year": 1937, "status": "finished" },
+    { "title": "The Fellowship of the Ring",                          "author": "J.R.R. Tolkien",      "status": "finished" },
+    { "title": "The Two Towers",                                      "author": "J.R.R. Tolkien",      "status": "finished" },
+    { "title": "The Return of the King",                              "author": "J.R.R. Tolkien",      "status": "finished" },
+    { "title": "The Silmarillion",                                    "author": "J.R.R. Tolkien",      "status": "finished" },
+
+    { "title": "New Spring",                                          "author": "Robert Jordan",       "status": "finished", "meta": "WoT #0" },
+    { "title": "The Eye of the World",                                "author": "Robert Jordan",       "status": "finished", "meta": "WoT #1" },
+    { "title": "The Great Hunt",                                      "author": "Robert Jordan",       "status": "finished", "meta": "WoT #2" },
+    { "title": "The Dragon Reborn",                                   "author": "Robert Jordan",       "status": "finished", "meta": "WoT #3" },
+    { "title": "The Shadow Rising",                                   "author": "Robert Jordan",       "status": "finished", "meta": "WoT #4" },
+    { "title": "The Fires of Heaven",                                 "author": "Robert Jordan",       "status": "finished", "meta": "WoT #5" },
+    { "title": "Lord of Chaos",                                       "author": "Robert Jordan",       "status": "finished", "meta": "WoT #6" },
+    { "title": "A Crown of Swords",                                   "author": "Robert Jordan",       "status": "finished", "meta": "WoT #7" },
+    { "title": "The Path of Daggers",                                 "author": "Robert Jordan",       "status": "finished", "meta": "WoT #8" },
+    { "title": "Winter's Heart",                                      "author": "Robert Jordan",       "status": "finished", "meta": "WoT #9" },
+    { "title": "Crossroads of Twilight",                              "author": "Robert Jordan",       "status": "finished", "meta": "WoT #10" },
+    { "title": "Knife of Dreams",                                     "author": "Robert Jordan",       "status": "finished", "meta": "WoT #11" },
+    { "title": "The Gathering Storm",                                 "author": "Brandon Sanderson",   "status": "finished", "meta": "WoT #12" },
+    { "title": "Towers of Midnight",                                  "author": "Brandon Sanderson",   "status": "finished", "meta": "WoT #13" },
+    { "title": "A Memory of Light",                                   "author": "Brandon Sanderson",   "status": "finished", "meta": "WoT #14" },
+
+    { "title": "The Final Empire",                                    "author": "Brandon Sanderson",   "status": "finished", "meta": "Mistborn #1" },
+    { "title": "The Well of Ascension",                               "author": "Brandon Sanderson",   "status": "finished", "meta": "Mistborn #2" },
+    { "title": "The Hero of Ages",                                    "author": "Brandon Sanderson",   "status": "finished", "meta": "Mistborn #3" },
+
+    { "title": "The Way of Kings",                                    "author": "Brandon Sanderson",   "status": "finished", "meta": "Stormlight #1" },
+    { "title": "Words of Radiance",                                   "author": "Brandon Sanderson",   "status": "finished", "meta": "Stormlight #2" },
+
+    { "title": "Elantris",                                            "author": "Brandon Sanderson",   "status": "finished" },
+    { "title": "Warbreaker",                                          "author": "Brandon Sanderson",   "status": "finished" },
+    { "title": "The Rithmatist",                                      "author": "Brandon Sanderson",   "status": "finished" },
+    { "title": "Steelheart",                                          "author": "Brandon Sanderson",   "status": "finished" },
+
+    { "title": "The Amulet of Samarkand",                             "author": "Jonathan Stroud",     "status": "finished", "meta": "Bartimaeus #1" },
+    { "title": "The Golem's Eye",                                     "author": "Jonathan Stroud",     "status": "finished", "meta": "Bartimaeus #2" },
+    { "title": "Ptolemy's Gate",                                      "author": "Jonathan Stroud",     "status": "finished", "meta": "Bartimaeus #3" },
+
+    { "title": "The Way of Shadows",                                  "author": "Brent Weeks",         "status": "finished", "meta": "Night Angel #1" },
+    { "title": "Shadow's Edge",                                       "author": "Brent Weeks",         "status": "finished", "meta": "Night Angel #2" },
+    { "title": "Beyond the Shadows",                                  "author": "Brent Weeks",         "status": "finished", "meta": "Night Angel #3" },
+
+    { "title": "The Black Prism",                                     "author": "Brent Weeks",         "status": "finished", "meta": "Lightbringer #1" },
+
+    { "title": "The Blade Itself",                                    "author": "Joe Abercrombie",     "status": "finished", "meta": "First Law #1" },
+    { "title": "Before They Are Hanged",                              "author": "Joe Abercrombie",     "status": "finished", "meta": "First Law #2" },
+    { "title": "Last Argument of Kings",                              "author": "Joe Abercrombie",     "status": "finished", "meta": "First Law #3" },
+
+    { "title": "A Game of Thrones",                                   "author": "George R.R. Martin",  "status": "finished", "meta": "ASOIAF #1" },
+    { "title": "A Clash of Kings",                                    "author": "George R.R. Martin",  "status": "finished", "meta": "ASOIAF #2" },
+    { "title": "A Storm of Swords",                                   "author": "George R.R. Martin",  "status": "finished", "meta": "ASOIAF #3" },
+    { "title": "A Feast for Crows",                                   "author": "George R.R. Martin",  "status": "finished", "meta": "ASOIAF #4" },
+    { "title": "A Dance with Dragons",                                "author": "George R.R. Martin",  "status": "finished", "meta": "ASOIAF #5" },
+
+    { "title": "The Name of the Wind",                                "author": "Patrick Rothfuss",    "status": "finished", "meta": "Kingkiller #1" },
+    { "title": "The Wise Man's Fear",                                 "author": "Patrick Rothfuss",    "status": "finished", "meta": "Kingkiller #2" },
+
+    { "title": "Gardens of the Moon",                                 "author": "Steven Erikson",      "status": "finished", "meta": "Malazan #1" },
+    { "title": "Deadhouse Gates",                                     "author": "Steven Erikson",      "status": "finished", "meta": "Malazan #2" },
+
+    { "title": "Skammarens dotter",                                   "author": "Lene Kaaberbøl",      "status": "finished", "meta": "Skammar #1" },
+    { "title": "Skammarteiknet",                                      "author": "Lene Kaaberbøl",      "status": "finished", "meta": "Skammar #2" },
+    { "title": "Slangens gåve",                                       "author": "Lene Kaaberbøl",      "status": "finished", "meta": "Skammar #3" },
+    { "title": "Skammarkrigen",                                       "author": "Lene Kaaberbøl",      "status": "finished", "meta": "Skammar #4" },
+
+    { "title": "Artemis Fowl",                                        "author": "Eoin Colfer",         "status": "finished", "meta": "Artemis Fowl #1" },
+    { "title": "The Arctic Incident",                                 "author": "Eoin Colfer",         "status": "finished", "meta": "Artemis Fowl #2" },
+    { "title": "The Eternity Code",                                   "author": "Eoin Colfer",         "status": "finished", "meta": "Artemis Fowl #3" },
+
+    { "title": "The Chronicles of Narnia",                            "author": "C.S. Lewis",          "status": "finished", "meta": "#1–7" },
+
+    { "title": "Of Blood and Honor",                                  "author": "Chris Metzen",        "status": "finished", "meta": "Warcraft" },
+    { "title": "Lord of the Clans",                                   "author": "Christie Golden",     "status": "finished", "meta": "Warcraft" },
+    { "title": "The Last Guardian",                                   "author": "Jeff Grubb",          "status": "finished", "meta": "Warcraft" },
+    { "title": "War of the Ancients: The Well of Eternity",           "author": "Richard A. Knaak",    "status": "finished", "meta": "Warcraft" },
+    { "title": "War of the Ancients: The Demon Soul",                 "author": "Richard A. Knaak",    "status": "finished", "meta": "Warcraft" },
+    { "title": "War of the Ancients: The Sundering",                  "author": "Richard A. Knaak",    "status": "finished", "meta": "Warcraft" },
+    { "title": "Rise of the Horde",                                   "author": "Christie Golden",     "status": "finished", "meta": "Warcraft" },
+    { "title": "Beyond the Dark Portal",                              "author": "Aaron Rosenberg",     "status": "finished", "meta": "Warcraft" },
+    { "title": "Arthas: Rise of the Lich King",                       "author": "Christie Golden",     "status": "finished", "meta": "Warcraft" },
+    { "title": "The Shattering",                                      "author": "Christie Golden",     "status": "finished", "meta": "Warcraft" },
+    { "title": "Stormrage",                                           "author": "Richard A. Knaak",    "status": "finished", "meta": "Warcraft" },
+    { "title": "Dawn of the Aspects",                                 "author": "Richard A. Knaak",    "status": "finished", "meta": "Warcraft" },
+
+    { "title": "Sofies verden",                                       "author": "Jostein Gaarder",     "status": "finished" },
+    { "title": "The Alchemist",                                       "author": "Paulo Coelho",        "status": "finished" },
+    { "title": "A Brief History of Time",                             "author": "Stephen Hawking",     "status": "finished" },
+    { "title": "Empire in Black and Gold",                            "author": "Adrian Tchaikovsky",  "status": "finished" },
+
+    { "title": "Harry Potter and the Philosopher's Stone",            "author": "J.K. Rowling",        "status": "finished", "meta": "HP #1" },
+    { "title": "Harry Potter and the Chamber of Secrets",             "author": "J.K. Rowling",        "status": "finished", "meta": "HP #2" },
+    { "title": "Harry Potter and the Prisoner of Azkaban",            "author": "J.K. Rowling",        "status": "finished", "meta": "HP #3" },
+    { "title": "Harry Potter and the Goblet of Fire",                 "author": "J.K. Rowling",        "status": "finished", "meta": "HP #4" },
+    { "title": "Harry Potter and the Order of the Phoenix",           "author": "J.K. Rowling",        "status": "finished", "meta": "HP #5" },
+    { "title": "Harry Potter and the Half-Blood Prince",              "author": "J.K. Rowling",        "status": "finished", "meta": "HP #6" },
+    { "title": "Harry Potter and the Deathly Hallows",                "author": "J.K. Rowling",        "status": "finished", "meta": "HP #7" }
   ],
   "series": [
     { "title": "Lorem Ipsum",            "sub": "Dolor TV",        "status": "current",  "meta": "S2" },

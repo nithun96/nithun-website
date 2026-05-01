@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
+import { getCoverByISBN, getCoverByTitle } from '../utils/openLibrary'
 
 const CATEGORIES = ['books', 'series', 'games']
 const STATUSES   = ['all', 'current', 'finished', 'want']
@@ -19,6 +20,116 @@ const SHELL = {
   maxWidth: 'calc(780px + 160px)',
   margin: '0 auto',
 }
+
+// ── Book card with Open Library cover fetch ───────────────────────────────────
+
+function BookCard({ book, index }) {
+  const { t } = useTranslation()
+  const [imageUrl, setImageUrl] = useState(null)
+  const [imageOk,  setImageOk]  = useState(false)
+
+  useEffect(() => {
+    if (book.isbn) {
+      getCoverByISBN(book.isbn).then(setImageUrl)
+    } else if (book.author) {
+      getCoverByTitle(book.title, book.author).then(setImageUrl)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <div className="shelf-card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {/* Cover */}
+      <div
+        style={{
+          width: '100%',
+          aspectRatio: COVER_RATIOS.books,
+          background: 'var(--bg2)',
+          borderRadius: 3,
+          border: '1px solid color-mix(in oklch, var(--fg) 6%, transparent)',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'flex-start',
+          padding: '10px 10px 10px 18px',
+          transition: 'border-color 0.2s',
+          cursor: 'default',
+        }}
+        onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 16%, transparent)'}
+        onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 6%, transparent)'}
+      >
+        {/* Spine — fades out when cover loads */}
+        <div
+          className="shelf-spine"
+          style={{
+            position: 'absolute',
+            left: 0, top: 0, bottom: 0,
+            width: 4,
+            borderRadius: '2px 0 0 2px',
+            opacity: imageOk ? 0 : 1,
+            transition: 'opacity 0.3s ease',
+          }}
+        />
+        {/* Placeholder title — fades out when cover loads */}
+        <span style={{
+          fontSize: 9,
+          fontFamily: 'monospace',
+          color: 'var(--fgm)',
+          letterSpacing: '0.06em',
+          lineHeight: 1.7,
+          position: 'relative',
+          opacity: imageOk ? 0 : 1,
+          transition: 'opacity 0.3s ease',
+        }}>
+          {book.title}
+        </span>
+        {/* Cover image — rendered only once URL resolves; fades in on load */}
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt={book.title}
+            loading="lazy"
+            onLoad={e => {
+              if (e.currentTarget.naturalWidth < 10) setImageOk(false)
+              else setImageOk(true)
+            }}
+            onError={() => setImageOk(false)}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: imageOk ? 1 : 0,
+              transition: 'opacity 0.3s ease',
+              display: 'block',
+            }}
+          />
+        )}
+      </div>
+      {/* Meta */}
+      <div style={{ fontFamily: 'Georgia, serif', fontSize: 13, color: 'var(--fg2)', lineHeight: 1.4 }}>
+        {book.title}
+      </div>
+      <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{book.author}</div>
+      <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 4 }}>
+        <span
+          style={{
+            display: 'inline-block',
+            width: 5, height: 5,
+            borderRadius: '50%',
+            background: DOT_COLORS[book.status],
+            flexShrink: 0,
+          }}
+        />
+        {t(`shelf.statusLabels.${book.status}`)}
+        {book.year ? ` · ${book.year}` : book.meta ? ` · ${book.meta}` : ''}
+      </div>
+    </div>
+  )
+}
+
+// ── Shelf page ────────────────────────────────────────────────────────────────
 
 export default function ShelfPage() {
   const { t } = useTranslation()
@@ -118,60 +229,61 @@ export default function ShelfPage() {
             {t('shelf.empty')}
           </div>
         ) : filtered.map((item, i) => (
-          <div key={i} className="shelf-card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {/* Cover */}
-            <div
-              style={{
-                width: '100%',
-                aspectRatio: COVER_RATIOS[cat],
-                background: 'var(--bg2)',
-                borderRadius: 3,
-                border: '1px solid color-mix(in oklch, var(--fg) 6%, transparent)',
-                position: 'relative',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'flex-start',
-                padding: '10px 10px 10px 18px',
-                transition: 'border-color 0.2s',
-                cursor: 'default',
-              }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 16%, transparent)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 6%, transparent)'}
-            >
-              {/* Spine */}
+          cat === 'books' ? (
+            <BookCard key={i} book={item} index={i} />
+          ) : (
+            <div key={i} className="shelf-card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               <div
-                className="shelf-spine"
                 style={{
-                  position: 'absolute',
-                  left: 0, top: 0, bottom: 0,
-                  width: 4,
-                  borderRadius: '2px 0 0 2px',
+                  width: '100%',
+                  aspectRatio: COVER_RATIOS[cat],
+                  background: 'var(--bg2)',
+                  borderRadius: 3,
+                  border: '1px solid color-mix(in oklch, var(--fg) 6%, transparent)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  justifyContent: 'flex-start',
+                  padding: '10px 10px 10px 18px',
+                  transition: 'border-color 0.2s',
+                  cursor: 'default',
                 }}
-              />
-              <span style={{ fontSize: 9, fontFamily: 'monospace', color: 'var(--fgm)', letterSpacing: '0.06em', lineHeight: 1.7, position: 'relative' }}>
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 16%, transparent)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 6%, transparent)'}
+              >
+                <div
+                  className="shelf-spine"
+                  style={{
+                    position: 'absolute',
+                    left: 0, top: 0, bottom: 0,
+                    width: 4,
+                    borderRadius: '2px 0 0 2px',
+                  }}
+                />
+                <span style={{ fontSize: 9, fontFamily: 'monospace', color: 'var(--fgm)', letterSpacing: '0.06em', lineHeight: 1.7, position: 'relative' }}>
+                  {item.title}
+                </span>
+              </div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 13, color: 'var(--fg2)', lineHeight: 1.4 }}>
                 {item.title}
-              </span>
+              </div>
+              <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{item.sub}</div>
+              <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: 5, height: 5,
+                    borderRadius: '50%',
+                    background: DOT_COLORS[item.status],
+                    flexShrink: 0,
+                  }}
+                />
+                {t(`shelf.statusLabels.${item.status}`)}
+                {item.meta ? ` · ${item.meta}` : ''}
+              </div>
             </div>
-            {/* Meta */}
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 13, color: 'var(--fg2)', lineHeight: 1.4 }}>
-              {item.title}
-            </div>
-            <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{item.sub}</div>
-            <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span
-                style={{
-                  display: 'inline-block',
-                  width: 5, height: 5,
-                  borderRadius: '50%',
-                  background: DOT_COLORS[item.status],
-                  flexShrink: 0,
-                }}
-              />
-              {t(`shelf.statusLabels.${item.status}`)}
-              {item.meta ? ` · ${item.meta}` : ''}
-            </div>
-          </div>
+          )
         ))}
       </div>
     </div>

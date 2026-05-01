@@ -1,11 +1,11 @@
 {
   "books": [
-    { "title": "Lorem Ipsum Dolor",          "sub": "Sit Amet",           "status": "current",  "meta": "" },
-    { "title": "Consectetur Adipiscing Elit", "sub": "Sed Do Eiusmod",     "status": "finished", "meta": "2024" },
-    { "title": "Tempor Incididunt",           "sub": "Ut Labore",          "status": "finished", "meta": "2023" },
-    { "title": "Dolore Magna Aliqua",         "sub": "Ut Enim Ad",         "status": "finished", "meta": "2023" },
-    { "title": "Ad Minim Veniam",             "sub": "Quis Nostrud",       "status": "finished", "meta": "2022" },
-    { "title": "Exercitation Ullamco",        "sub": "Laboris Nisi Ut",    "status": "want",     "meta": "" }
+    { "title": "The Hobbit",               "author": "J.R.R. Tolkien", "isbn": "9780261102217", "year": 1937, "status": "finished", "meta": "" },
+    { "title": "Lorem Ipsum Dolor",        "author": "Sit Amet",                                              "status": "current",  "meta": "" },
+    { "title": "Consectetur Adipiscing",   "author": "Sed Do Eiusmod",                                        "status": "finished", "meta": "2024" },
+    { "title": "Tempor Incididunt",        "author": "Ut Labore",                                             "status": "finished", "meta": "2023" },
+    { "title": "Dolore Magna Aliqua",      "author": "Ut Enim Ad",                                            "status": "finished", "meta": "2023" },
+    { "title": "Ad Minim Veniam",          "author": "Quis Nostrud",                                          "status": "want",     "meta": "" }
   ],
   "series": [
     { "title": "Lorem Ipsum",            "sub": "Dolor TV",        "status": "current",  "meta": "S2" },

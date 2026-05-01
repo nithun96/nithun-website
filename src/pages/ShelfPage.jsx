@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
-import { getCoverByISBN, getCoverByTitle } from '../utils/openLibrary'
+import { getBookCover } from '../utils/bookCovers'
 
 const CATEGORIES = ['books', 'games', 'tv']
 const STATUSES   = ['all', 'current', 'finished', 'want']
@@ -30,19 +30,15 @@ function BookCard({ book, index }) {
   const fallbackAttempted = useRef(false)
 
   useEffect(() => {
-    if (book.isbn) {
-      getCoverByISBN(book.isbn).then(setImageUrl)
-    } else if (book.author) {
-      getCoverByTitle(book.title, book.author).then(setImageUrl)
-    }
+    getBookCover(book.title, book.author, book.isbn || null).then(setImageUrl)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // When the ISBN cover 404s/503s or returns Open Library's 1px placeholder,
-  // fall back to the search API which uses a stable cover_i ID.
-  function tryTitleFallback() {
-    if (fallbackAttempted.current || !book.author) return
+  // Called when the initial cover 404s or returns a 1px placeholder.
+  // Already tried both sources in getBookCover, so this just prevents retry loops.
+  function tryFallback() {
+    if (fallbackAttempted.current) return
     fallbackAttempted.current = true
-    getCoverByTitle(book.title, book.author).then(url => { if (url) setImageUrl(url) })
+    // Both sources have been exhausted by the initial call
   }
 
   const bookMeta = book.number != null ? `#${book.number}` : book.note || ''
@@ -98,10 +94,10 @@ function BookCard({ book, index }) {
             alt={book.title}
             loading="lazy"
             onLoad={e => {
-              if (e.currentTarget.naturalWidth < 10) tryTitleFallback()
+              if (e.currentTarget.naturalWidth < 10) tryFallback()
               else setImageOk(true)
             }}
-            onError={tryTitleFallback}
+            onError={tryFallback}
             style={{
               position: 'absolute',
               inset: 0,

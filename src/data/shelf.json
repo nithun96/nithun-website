@@ -1,0 +1,24 @@
+{
+  "books": [
+    { "title": "Lorem Ipsum Dolor",          "sub": "Sit Amet",           "status": "current",  "meta": "" },
+    { "title": "Consectetur Adipiscing Elit", "sub": "Sed Do Eiusmod",     "status": "finished", "meta": "2024" },
+    { "title": "Tempor Incididunt",           "sub": "Ut Labore",          "status": "finished", "meta": "2023" },
+    { "title": "Dolore Magna Aliqua",         "sub": "Ut Enim Ad",         "status": "finished", "meta": "2023" },
+    { "title": "Ad Minim Veniam",             "sub": "Quis Nostrud",       "status": "finished", "meta": "2022" },
+    { "title": "Exercitation Ullamco",        "sub": "Laboris Nisi Ut",    "status": "want",     "meta": "" }
+  ],
+  "series": [
+    { "title": "Lorem Ipsum",            "sub": "Dolor TV",        "status": "current",  "meta": "S2" },
+    { "title": "Sit Amet Series",        "sub": "Consectetur TV+", "status": "finished", "meta": "3 seasons" },
+    { "title": "Adipiscing Elit",        "sub": "Eiusmod+",        "status": "finished", "meta": "2 seasons" },
+    { "title": "Tempor Incididunt",      "sub": "Labore TV",       "status": "finished", "meta": "4 seasons" },
+    { "title": "Dolore Magna",           "sub": "Aliqua+",         "status": "want",     "meta": "" }
+  ],
+  "games": [
+    { "title": "Lorem Ipsum",            "sub": "PC",              "status": "current",  "meta": "~12 hrs in" },
+    { "title": "Dolor Sit Amet",         "sub": "PC",              "status": "finished", "meta": "38 hrs" },
+    { "title": "Consectetur",            "sub": "PlayStation",     "status": "finished", "meta": "25 hrs" },
+    { "title": "Adipiscing Elit",        "sub": "PC",              "status": "finished", "meta": "18 hrs" },
+    { "title": "Eiusmod Tempor",         "sub": "PC",              "status": "want",     "meta": "" }
+  ]
+}

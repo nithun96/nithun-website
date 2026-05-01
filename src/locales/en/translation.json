@@ -1,83 +1,93 @@
 {
   "nav": {
-    "books": "Books",
-    "contact": "Contact",
+    "writing":     "Writing",
+    "silence":     "Silence",
+    "shelf":       "Shelf",
     "toggleTheme": "Toggle theme",
-    "toggleLang": "Norsk"
+    "toggleLang":  "Norsk"
   },
   "hero": {
-    "name": "Nithun Manoharan",
-    "tagline": "Living my childhood dream, working with artificial intelligence.",
+    "name":     "Nithun Manoharan",
     "location": "Oslo, Norway",
-    "intro": "In my daily life I work in IT as a product manager, but on this site I will show you what I'm building in my free time, with a healthy dose of AI. I also want to let out my creative spirit and write my thoughts on both reality and fiction. No promises as of yet.",
-    "teaser": "The best is yet to come. Soon"
-  },
-  "books": {
-    "heading": "Books",
-    "backHome": "← Nithun Manoharan",
-    "introFull": [
-      "When I first thought about what to write about myself, this felt like a natural place to start. Let me share some of the books that have left a strong impression on me.",
-      "The list might seem generic since these are all popular authors, but there's a reason they're so popular."
-    ],
-    "items": [
-      {
-        "author": "J.R.R. Tolkien – The Hobbit, The Lord of the Rings, The Silmarillion",
-        "paragraphs": [
-          "The Hobbit is perhaps my favourite book of all time, despite there being something very \"simple\" about it. It's short, concise and very well written. There's just something cosy about it, and it's easy to read multiple times.",
-          "The Lord of the Rings is not far behind among my favourites, and I recently reread the series (04.04.2026). You can't really mention the books without mentioning the films. I find it interesting how little focus there is on the actual fighting in the books, in contrast with the films. I think that makes the books even better for my part, though the films are very good as well. They just each have their own charm.",
-          "The Silmarillion also deserves a mention, since there are simply so many great stories in one book. It's perhaps the most underrated part of what Tolkien wrote, even if it wasn't published as a book by him personally. Either way, I'd recommend it, especially if you skip the first section called Ainulindalë. I remember giving up the first time I read it as a teenager, based on how dense the intro is. But if you push through it, it's absolutely worth it. I have to start the extended stories that are published as their own books (The Children of Húrin etc.)"
-        ]
+    "intro":    "In my daily life I work in IT as a product manager, but on this site I will show you what I'm building in my free time, with a healthy dose of AI. I also want to let out my creative spirit and write my thoughts on both reality and fiction. No promises as of yet.",
+    "teaser":   "The best is yet to come. Soon™",
+    "teasers": {
+      "writing": {
+        "label": "Writing",
+        "title": "Essays & commentary",
+        "desc":  "On technology, society, and things worth slowing down for."
       },
-      {
-        "author": "Robert Jordan – The Wheel of Time",
-        "text": "It's quite natural that this one is on the list given the author above. It's a great series, despite being a bit slow at times. But that's just how it is when there are up to 14 books, plus New Spring. It at least says something about how much I enjoyed it, since I've read the series multiple times, and it probably won't be the last time either. I also have to mention the show, which I greatly liked. The fact that they cancelled it at the season where it really proved that it was able to do something great, was a real shame. Which is why I will probably boycott Amazon Prime, small as that may be."
+      "silence": {
+        "label": "Silence",
+        "title": "A tinnitus sound tool",
+        "desc":  "Four carefully chosen sounds for quiet and sleep."
       },
-      {
-        "author": "Brandon Sanderson",
-        "textBefore": "Here I can't single out one series, since I've read at least three different ones (and some of the one-offs) and enjoyed all of them:",
-        "series": ["Mistborn", "Steelheart", "The Stormlight Archive (not all finished since the series just keep going)"],
-        "textAfter": "I read his books when I had a bit more free time. And at one point I was fully caught up and waiting for the next one. That didn't last long, because he just writes faster than I read (or spend time reading). The goal is to catch up, but I wouldn't take that bet unless I could work full time reading books. What's impressive is the quality of what's being written, despite the speed at which he writes. The authors of Game of Thrones and The Kingkiller Chronicle could take some notes from Brandon Sanderson."
+      "shelf": {
+        "label": "Shelf",
+        "title": "Books, series, games",
+        "desc":  "A personal log of what's been worth the time."
       }
-    ]
+    }
   },
   "writing": {
-    "heading": "Writing",
-    "backWriting": "← Writing",
-    "noDate": "Undated",
-    "conversation": "Join the conversation →"
+    "heading":      "Writing",
+    "subtitle":     "Essays, commentary, and the occasional observation.",
+    "backWriting":  "Writing",
+    "noDate":       "Undated",
+    "conversation": "Join the conversation on Mastodon"
   },
-  "footer": {
-    "lastUpdated": "Last updated:"
+  "shelf": {
+    "heading":  "Shelf",
+    "subtitle": "Books, series, and games — a personal log of what's been worth the time.",
+    "tabs": {
+      "books":  "Books",
+      "series": "Series",
+      "games":  "Games"
+    },
+    "filters": {
+      "all":      "All",
+      "current":  "Currently",
+      "finished": "Finished",
+      "want":     "Want to"
+    },
+    "statusLabels": {
+      "current":  "Currently",
+      "finished": "Finished",
+      "want":     "Want to"
+    },
+    "empty": "Nothing here yet."
   },
   "silence": {
-    "navLink": "Silence",
-    "heading": "Deafening Silence",
-    "intro": "Gentle noise to help quiet tinnitus through sound enrichment.",
+    "navLink":  "Silence",
+    "heading":  "Silence",
+    "subtitle": "A small tool for tinnitus and sleep. Tap a sound to play; adjust to your preference.",
     "guidance": "Based on Tinnitus Retraining Therapy (TRT) principles: set the volume so the sound sits just below the level of your tinnitus — not to mask it completely. The goal is habituation over time, not suppression.",
-    "soundType": "Sound type",
     "sounds": {
-      "white": "White",
-      "pink": "Pink",
-      "brown": "Brown",
-      "rain": "Rain"
+      "brown": "Brown Noise",
+      "pink":  "Pink Noise",
+      "rain":  "Rain",
+      "ocean": "Ocean"
     },
     "soundDescriptions": {
-      "white": "All frequencies equally",
-      "pink": "Softer, more natural",
-      "brown": "Deep, low rumble",
-      "rain": "Three-layer synthesis"
+      "brown": "Deep, grounding rumble",
+      "pink":  "Balanced, natural hiss",
+      "rain":  "Soft rainfall, synthesised",
+      "ocean": "Steady waves, gentle"
     },
-    "play": "Play",
-    "pause": "Pause",
-    "volume": "Volume",
-    "sleepTimer": "Sleep timer",
-    "timerOff": "Off",
+    "play":         "Play",
+    "pause":        "Pause",
+    "volume":       "Volume",
+    "sleepTimer":   "Sleep timer",
+    "timerOff":     "Off",
     "timerMinutes": "{{minutes}} min",
-    "timerActive": "Stops in {{remaining}}",
-    "cancelTimer": "Cancel",
+    "timerActive":  "Stops in {{remaining}}",
+    "cancelTimer":  "Cancel",
     "donationHeading": "Support hearing health",
-    "donationIntro": "If this tool helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and aligned with hearing-loss and tinnitus research.",
-    "audioError": "Audio couldn't start. Please tap Play again.",
-    "backHome": "← Nithun Manoharan"
+    "donationIntro":   "If this tool helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and focused on hearing loss and tinnitus research.",
+    "audioError": "Audio couldn't start. Please tap Play again."
+  },
+  "footer": {
+    "lastUpdated": "Last updated:",
+    "license":     "CC BY-NC 4.0"
   }
 }

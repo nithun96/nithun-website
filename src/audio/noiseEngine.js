@@ -24,6 +24,7 @@ const DROP_SPIKE_DECAY     = 0.9997  // per-sample exponential decay of spike
 const WHITE_BUF_SECS = 3   // white noise has no correlation; 3 s is ample
 const PINK_BUF_SECS  = 8   // longer to reduce audible low-freq loop artefacts
 const BROWN_BUF_SECS = 20  // longest: random walk produces long-range correlation
+const OCEAN_BUF_SECS = 12  // slow sine envelope cycle — 12 s captures ~1 wave period
 
 // ── Noise buffer generators ───────────────────────────────────────────────────
 // Pre-fill an AudioBuffer with the requested noise type, then loop it via
@@ -65,6 +66,14 @@ function makeNoiseBuffer(ctx, type, seconds) {
       const w = Math.random() * 2 - 1
       last = (last + 0.02 * w) / 1.02
       data[i] = last * 3.5
+    }
+
+  } else if (type === 'ocean') {
+    // White noise gated by a slow sine envelope (~0.08 Hz) — simulates wave rhythm
+    const waveRad = 2 * Math.PI * 0.08 / ctx.sampleRate
+    for (let i = 0; i < length; i++) {
+      const envelope = Math.sin(i * waveRad) * 0.4 + 0.6  // oscillates 0.2 – 1.0
+      data[i] = (Math.random() * 2 - 1) * envelope * 0.55
     }
   }
 
@@ -295,7 +304,7 @@ export function createNoiseEngine() {
       if (type === 'rain') {
         rainNodes = buildRainNodes(audioContext, gainNode)
       } else {
-        const secs = { white: WHITE_BUF_SECS, pink: PINK_BUF_SECS, brown: BROWN_BUF_SECS }
+        const secs = { white: WHITE_BUF_SECS, pink: PINK_BUF_SECS, brown: BROWN_BUF_SECS, ocean: OCEAN_BUF_SECS }
         const buffer = makeNoiseBuffer(audioContext, type, secs[type])
         sourceNode = makeLoopingSource(audioContext, buffer)
         sourceNode.connect(gainNode)

@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import { getCoverByISBN, getCoverByTitle } from '../utils/openLibrary'
 
-const CATEGORIES = ['books', 'series', 'games']
+const CATEGORIES = ['books', 'games', 'tv']
 const STATUSES   = ['all', 'current', 'finished', 'want']
 
-const TAB_ACCENTS  = { books: 'var(--wheat)', series: 'var(--dusty)', games: 'var(--sage)' }
-const COVER_RATIOS = { books: '2/3', series: '3/4', games: '4/3' }
+const TAB_ACCENTS  = { books: 'var(--wheat)', games: 'var(--sage)', tv: 'var(--dusty)' }
+const COVER_RATIOS = { books: '2/3', games: '3/4', tv: '2/3' }
 
 const DOT_COLORS = {
   current:  'var(--sage)',
@@ -37,14 +37,15 @@ function BookCard({ book, index }) {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Called when the ISBN cover 404s, 503s, or returns Open Library's 1px placeholder.
-  // Falls back to the search API (cover_i), which uses a stable cover ID rather than
-  // an edition-specific path that may not be indexed or temporarily unavailable.
+  // When the ISBN cover 404s/503s or returns Open Library's 1px placeholder,
+  // fall back to the search API which uses a stable cover_i ID.
   function tryTitleFallback() {
     if (fallbackAttempted.current || !book.author) return
     fallbackAttempted.current = true
     getCoverByTitle(book.title, book.author).then(url => { if (url) setImageUrl(url) })
   }
+
+  const bookMeta = book.number != null ? `#${book.number}` : book.note || ''
 
   return (
     <div className="shelf-card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -68,7 +69,6 @@ function BookCard({ book, index }) {
         onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 16%, transparent)'}
         onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 6%, transparent)'}
       >
-        {/* Spine — fades out when cover loads */}
         <div
           className="shelf-spine"
           style={{
@@ -80,7 +80,6 @@ function BookCard({ book, index }) {
             transition: 'opacity 0.3s ease',
           }}
         />
-        {/* Placeholder title — fades out when cover loads */}
         <span style={{
           fontSize: 9,
           fontFamily: 'monospace',
@@ -93,7 +92,6 @@ function BookCard({ book, index }) {
         }}>
           {book.title}
         </span>
-        {/* Cover image — rendered only once URL resolves; fades in on load */}
         {imageUrl && (
           <img
             src={imageUrl}
@@ -123,17 +121,9 @@ function BookCard({ book, index }) {
       </div>
       <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{book.author}</div>
       <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 4 }}>
-        <span
-          style={{
-            display: 'inline-block',
-            width: 5, height: 5,
-            borderRadius: '50%',
-            background: DOT_COLORS[book.status],
-            flexShrink: 0,
-          }}
-        />
+        <span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: DOT_COLORS[book.status], flexShrink: 0 }} />
         {t(`shelf.statusLabels.${book.status}`)}
-        {book.year ? ` · ${book.year}` : book.meta ? ` · ${book.meta}` : ''}
+        {bookMeta ? ` · ${bookMeta}` : ''}
       </div>
     </div>
   )
@@ -169,7 +159,6 @@ export default function ShelfPage() {
         {CATEGORIES.map(c => (
           <button
             key={c}
-            data-cat={c}
             onClick={() => { setCat(c); setStatus('all') }}
             style={{
               fontSize: 13,
@@ -226,16 +215,7 @@ export default function ShelfPage() {
         }}
       >
         {filtered.length === 0 ? (
-          <div
-            style={{
-              gridColumn: '1 / -1',
-              padding: '48px 0',
-              fontFamily: 'Georgia, serif',
-              fontStyle: 'italic',
-              fontSize: 15,
-              color: 'var(--fgm)',
-            }}
-          >
+          <div style={{ gridColumn: '1 / -1', padding: '48px 0', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 15, color: 'var(--fgm)' }}>
             {t('shelf.empty')}
           </div>
         ) : filtered.map((item, i) => (
@@ -262,15 +242,7 @@ export default function ShelfPage() {
                 onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 16%, transparent)'}
                 onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 6%, transparent)'}
               >
-                <div
-                  className="shelf-spine"
-                  style={{
-                    position: 'absolute',
-                    left: 0, top: 0, bottom: 0,
-                    width: 4,
-                    borderRadius: '2px 0 0 2px',
-                  }}
-                />
+                <div className="shelf-spine" style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, borderRadius: '2px 0 0 2px' }} />
                 <span style={{ fontSize: 9, fontFamily: 'monospace', color: 'var(--fgm)', letterSpacing: '0.06em', lineHeight: 1.7, position: 'relative' }}>
                   {item.title}
                 </span>
@@ -278,19 +250,13 @@ export default function ShelfPage() {
               <div style={{ fontFamily: 'Georgia, serif', fontSize: 13, color: 'var(--fg2)', lineHeight: 1.4 }}>
                 {item.title}
               </div>
-              <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{item.sub}</div>
+              <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>
+                {item.platform || item.category}
+              </div>
               <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: 5, height: 5,
-                    borderRadius: '50%',
-                    background: DOT_COLORS[item.status],
-                    flexShrink: 0,
-                  }}
-                />
+                <span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: DOT_COLORS[item.status], flexShrink: 0 }} />
                 {t(`shelf.statusLabels.${item.status}`)}
-                {item.meta ? ` · ${item.meta}` : ''}
+                {item.note ? ` · ${item.note}` : ''}
               </div>
             </div>
           )

@@ -40,9 +40,9 @@
     "heading":  "Shelf",
     "subtitle": "Books, series, and games — a personal log of what's been worth the time.",
     "tabs": {
-      "books":  "Books",
-      "series": "Series",
-      "games":  "Games"
+      "books": "Books",
+      "games": "Games",
+      "tv":    "TV & Anime"
     },
     "filters": {
       "all":      "All",

@@ -40,9 +40,9 @@
     "heading":  "Hylle",
     "subtitle": "Bøker, serier og spill — en personlig logg over hva som har vært verdt tiden.",
     "tabs": {
-      "books":  "Bøker",
-      "series": "Serier",
-      "games":  "Spill"
+      "books": "Bøker",
+      "games": "Spill",
+      "tv":    "TV og anime"
     },
     "filters": {
       "all":      "Alle",

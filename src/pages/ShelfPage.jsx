@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import { getCoverByISBN, getCoverByTitle } from '../utils/openLibrary'
@@ -27,6 +27,7 @@ function BookCard({ book, index }) {
   const { t } = useTranslation()
   const [imageUrl, setImageUrl] = useState(null)
   const [imageOk,  setImageOk]  = useState(false)
+  const fallbackAttempted = useRef(false)
 
   useEffect(() => {
     if (book.isbn) {
@@ -35,6 +36,15 @@ function BookCard({ book, index }) {
       getCoverByTitle(book.title, book.author).then(setImageUrl)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Called when the ISBN cover 404s, 503s, or returns Open Library's 1px placeholder.
+  // Falls back to the search API (cover_i), which uses a stable cover ID rather than
+  // an edition-specific path that may not be indexed or temporarily unavailable.
+  function tryTitleFallback() {
+    if (fallbackAttempted.current || !book.author) return
+    fallbackAttempted.current = true
+    getCoverByTitle(book.title, book.author).then(url => { if (url) setImageUrl(url) })
+  }
 
   return (
     <div className="shelf-card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -90,10 +100,10 @@ function BookCard({ book, index }) {
             alt={book.title}
             loading="lazy"
             onLoad={e => {
-              if (e.currentTarget.naturalWidth < 10) setImageOk(false)
+              if (e.currentTarget.naturalWidth < 10) tryTitleFallback()
               else setImageOk(true)
             }}
-            onError={() => setImageOk(false)}
+            onError={tryTitleFallback}
             style={{
               position: 'absolute',
               inset: 0,

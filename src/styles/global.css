@@ -178,6 +178,14 @@ body::before {
 @media (max-width: 640px) {
   .hero-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .hero-portrait {
+    order: -1;  /* portrait above text on mobile */
+  }
+  .hero-portrait > div {
+    max-width: 140px;
+    margin: 0;
   }
 }
 
@@ -188,7 +196,10 @@ body::before {
 }
 @media (max-width: 600px) {
   .hero-teasers {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-teasers > a:last-child {
+    grid-column: 1 / -1;
   }
 }
 

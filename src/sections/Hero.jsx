@@ -83,7 +83,7 @@ export default function Hero() {
         </div>
 
         {/* Portrait column */}
-        <div className="flex flex-col items-end">
+        <div className="hero-portrait flex flex-col items-end">
           <div
             style={{
               width: '100%',

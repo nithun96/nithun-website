@@ -200,22 +200,28 @@ body::before {
   to   { opacity: 1; }
 }
 
-/* Wrapper gives positioning context for the tooltip and expands
-   the click/tap target to at least 24×24px via a centred pseudo-element,
-   without affecting surrounding text layout. */
+/* Wrapper gives positioning context for the absolute-positioned tooltip.
+   display: inline (not inline-block) keeps it fully in the text flow
+   so it never creates a block box that breaks the surrounding line. */
 .fn-marker {
   position: relative;
-  display: inline-block;
+  display: inline;
   cursor: pointer;
 }
-.fn-marker::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 24px;
-  height: 24px;
-  transform: translate(-50%, -50%);
+
+/* The sup itself carries the hit-target expansion via negative margin +
+   padding (a classic tap-target trick). line-height: 0 is the critical
+   mobile fix — it prevents the superscript from inflating its line box
+   and pushing text onto a new line. */
+sup[data-footnote] {
+  display: inline;
+  vertical-align: super;
+  line-height: 0;
+  font-size: 10px;
+  position: relative;
+  cursor: pointer;
+  margin: -8px;
+  padding: 8px;
 }
 
 /* ── Donate section inline links ──────────────────────────── */

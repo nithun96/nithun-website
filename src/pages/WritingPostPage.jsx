@@ -99,15 +99,17 @@ function FootnoteMarker({ number, type, text }) {
       onMouseLeave={handleLeave}
     >
       <sup
+        data-footnote={number}
         aria-label={`Footnote ${number}: ${text}`}
         style={{
           fontSize: 10,
           color: supColor,
-          borderBottom: `1px dotted ${supColor}`,
+          textDecorationLine: 'underline',
+          textDecorationStyle: 'dotted',
+          textDecorationColor: supColor,
           fontStyle: 'normal',
-          lineHeight: 1,
           userSelect: 'none',
-          transition: 'color 0.15s ease, border-color 0.15s ease',
+          transition: 'color 0.15s ease',
         }}
       >
         {number}

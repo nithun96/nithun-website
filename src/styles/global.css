@@ -194,6 +194,12 @@ body::before {
   }
 }
 
+/* ── Footnote tooltip fade-in ──────────────────────────────── */
+@keyframes fn-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* ── Donate section inline links ──────────────────────────── */
 .hero-donate-link {
   color: var(--fg2);

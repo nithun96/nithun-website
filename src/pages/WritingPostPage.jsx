@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useCallback, createContext, useContext } from 'react'
+import { useState, useRef, useMemo, useCallback, useEffect, createContext, useContext } from 'react'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
@@ -28,8 +28,8 @@ const SHELL = {
 }
 
 // ── Footnote context ──────────────────────────────────────────────────────────
-// Shares activeFootnote and onToggle with FootnoteMarker without recreating
-// the react-markdown components map on every state change.
+// Shares activeFootnote (mobile) and onToggle with FootnoteMarker instances
+// without recreating the react-markdown components map on each state change.
 
 const FootnoteCtx = createContext(null)
 
@@ -37,21 +37,48 @@ const FootnoteCtx = createContext(null)
 
 function FootnoteMarker({ number, type, text }) {
   const { activeFootnote, onToggle } = useContext(FootnoteCtx)
-  const [showTooltip, setShowTooltip] = useState(false)
+  const [hovering, setHovering] = useState(false)
+  const [pinned, setPinned] = useState(false)
   const [below, setBelow] = useState(false)
   const wrapRef = useRef(null)
+  const hideTimer = useRef(null)
 
-  // Detect whether the primary pointer supports hover (i.e. desktop).
-  // On touch-only devices this is false, so we show inline expansion instead.
+  // True when primary pointer supports hover (desktop). Touch-only devices
+  // skip tooltips entirely and use the inline tap-to-expand instead.
   const hasHover = useMemo(
     () => typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches,
     []
   )
 
-  const isActive = activeFootnote === number
+  useEffect(() => () => clearTimeout(hideTimer.current), [])
 
-  const calloutStyle = {
-    display: 'block',
+  const isActiveMobile = activeFootnote === number
+  const showPanel = hasHover && (hovering || pinned)
+  const supColor = pinned ? 'var(--fg2)' : 'var(--fgm)'
+
+  function handleEnter() {
+    if (!hasHover) return
+    clearTimeout(hideTimer.current)
+    const rect = wrapRef.current?.getBoundingClientRect()
+    setBelow(rect ? rect.top < 120 : false)
+    setHovering(true)
+  }
+
+  function handleLeave() {
+    if (!hasHover) return
+    // 200ms grace period so the tooltip doesn't vanish on a brief mouse exit
+    hideTimer.current = setTimeout(() => setHovering(false), 200)
+  }
+
+  function handleClick() {
+    if (hasHover) {
+      setPinned(prev => !prev)
+    } else {
+      onToggle(number)
+    }
+  }
+
+  const calloutBase = {
     background: 'var(--bg2)',
     border: '1px solid color-mix(in oklch, var(--fg) 10%, transparent)',
     ...(type === 'wry' ? { borderLeft: '2px solid var(--stone)' } : {}),
@@ -64,38 +91,38 @@ function FootnoteMarker({ number, type, text }) {
   }
 
   return (
-    <span ref={wrapRef} style={{ position: 'relative', display: 'inline-block' }}>
+    <span
+      ref={wrapRef}
+      className="fn-marker"
+      onClick={handleClick}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
       <sup
         aria-label={`Footnote ${number}: ${text}`}
         style={{
           fontSize: 10,
-          color: 'var(--fgm)',
-          cursor: 'pointer',
-          borderBottom: '1px dotted var(--fgm)',
+          color: supColor,
+          borderBottom: `1px dotted ${supColor}`,
           fontStyle: 'normal',
           lineHeight: 1,
+          userSelect: 'none',
+          transition: 'color 0.15s ease, border-color 0.15s ease',
         }}
-        onClick={() => { if (!hasHover) onToggle(number) }}
-        onMouseEnter={() => {
-          if (!hasHover) return
-          const rect = wrapRef.current?.getBoundingClientRect()
-          setBelow(rect ? rect.top < 120 : false)
-          setShowTooltip(true)
-        }}
-        onMouseLeave={() => setShowTooltip(false)}
       >
         {number}
       </sup>
 
-      {/* Screen-reader text — always in the DOM so assistive tech can read it */}
+      {/* Screen-reader text — always present so assistive tech can read it */}
       <span className="sr-only">Footnote {number}: {text}</span>
 
-      {/* Desktop: hover tooltip */}
-      {hasHover && showTooltip && (
+      {/* Desktop: hover tooltip or pinned panel — visually identical */}
+      {showPanel && (
         <span
           role="tooltip"
           style={{
-            ...calloutStyle,
+            ...calloutBase,
+            display: 'block',
             position: 'absolute',
             [below ? 'top' : 'bottom']: 'calc(100% + 6px)',
             left: '50%',
@@ -107,25 +134,25 @@ function FootnoteMarker({ number, type, text }) {
             animation: 'fn-fade 0.15s ease',
           }}
         >
-          <span style={{ color: 'var(--wheat)', marginRight: 6 }}>[{number}]</span>
+          <span style={{ color: 'var(--wheat)', marginRight: 6, fontStyle: 'normal' }}>[{number}]</span>
           {text}
         </span>
       )}
 
-      {/* Mobile: tap-to-expand inline panel */}
+      {/* Mobile: tap-to-expand inline panel (only one open at a time via context) */}
       {!hasHover && (
         <span
-          aria-hidden={!isActive}
+          aria-hidden={!isActiveMobile}
           style={{
             display: 'block',
-            maxHeight: isActive ? 300 : 0,
+            maxHeight: isActiveMobile ? 300 : 0,
             overflow: 'hidden',
-            opacity: isActive ? 1 : 0,
+            opacity: isActiveMobile ? 1 : 0,
             transition: 'max-height 0.25s ease, opacity 0.2s ease',
           }}
         >
-          <span style={{ ...calloutStyle, display: 'block', marginTop: 8, marginBottom: 4 }}>
-            <span style={{ color: 'var(--wheat)', marginRight: 6 }}>[{number}]</span>
+          <span style={{ ...calloutBase, display: 'block', marginTop: 8, marginBottom: 4 }}>
+            <span style={{ color: 'var(--wheat)', marginRight: 6, fontStyle: 'normal' }}>[{number}]</span>
             {text}
           </span>
         </span>
@@ -145,15 +172,16 @@ export default function WritingPostPage() {
 
   const { body, footnotes } = useMemo(
     () => (post ? parseFootnotes(post.content) : { body: '', footnotes: [] }),
-    [post?.content]  // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [post?.content]
   )
 
   const handleToggle = useCallback((num) => {
     setActiveFootnote(prev => prev === num ? null : num)
   }, [])
 
-  // Build component overrides once per post — FootnoteCtx handles active state
-  // so this map doesn't need to re-create when a footnote is toggled.
+  // Build component overrides once per post. FootnoteCtx carries the active
+  // state so this map stays stable across footnote toggles.
   const mdComponents = useMemo(() => ({
     p: ({ children }) => <p style={{ marginBottom: '1.5em' }}>{children}</p>,
     h2: ({ children }) => (

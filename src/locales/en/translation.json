@@ -60,8 +60,8 @@
   },
   "silence": {
     "navLink":  "Silence",
-    "heading":  "Silence",
-    "subtitle": "A small tool for tinnitus and sleep. Tap a sound to play; adjust to your preference.",
+    "heading":  "Deafening Silence",
+    "subtitle": "Deafening Silence is a small tool for tinnitus sound therapy. Tap a sound to play; adjust to your preference.",
     "guidance": "Based on Tinnitus Retraining Therapy (TRT) principles: set the volume so the sound sits just below the level of your tinnitus — not to mask it completely. The goal is habituation over time, not suppression.",
     "sounds": {
       "brown": "Brown Noise",
@@ -84,7 +84,7 @@
     "timerActive":  "Stops in {{remaining}}",
     "cancelTimer":  "Cancel",
     "donationHeading": "Support hearing health",
-    "donationIntro":   "If this tool helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and focused on hearing loss and tinnitus research.",
+    "donationIntro":   "If Deafening Silence helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and focused on hearing loss and tinnitus research.",
     "audioError": "Audio couldn't start. Please tap Play again.",
     "iosMuteNote": "If you hear no sound, check that your mute switch is off. On iPhone, the side switch may silence audio even when volume is up."
   },

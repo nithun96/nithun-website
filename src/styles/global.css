@@ -194,10 +194,28 @@ body::before {
   }
 }
 
-/* ── Footnote tooltip fade-in ──────────────────────────────── */
+/* ── Footnote marker + tooltip ─────────────────────────────── */
 @keyframes fn-fade {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+/* Wrapper gives positioning context for the tooltip and expands
+   the click/tap target to at least 24×24px via a centred pseudo-element,
+   without affecting surrounding text layout. */
+.fn-marker {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.fn-marker::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
 }
 
 /* ── Donate section inline links ──────────────────────────── */

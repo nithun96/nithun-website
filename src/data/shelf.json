@@ -162,7 +162,14 @@
   ],
 
   "tv": [
-    {"title": "Severance", "status": "finished"},
-    {"title": "Star Trek: The Next Generation", "status": "finished"}
+    {"title": "One Piece",            "category": "Anime",   "status": "finished"},
+    {"title": "Death Note",           "category": "Anime",   "status": "finished"},
+    {"title": "Jujutsu Kaisen",       "category": "Anime",   "status": "finished"},
+    {"title": "Yakitate!! Japan",     "category": "Anime",   "status": "finished"},
+    {"title": "Sky Castle",           "category": "K-Drama", "status": "finished"},
+    {"title": "Heroes",               "category": "Drama",   "status": "finished"},
+    {"title": "Brooklyn Nine-Nine",   "category": "Comedy",  "status": "finished"},
+    {"title": "Severance",                      "category": "Drama",  "status": "want"},
+    {"title": "Star Trek: The Next Generation", "category": "Sci-Fi", "status": "want"}
   ]
 }

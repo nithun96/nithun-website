@@ -60,8 +60,8 @@
   },
   "silence": {
     "navLink":  "Stillhet",
-    "heading":  "Stillhet",
-    "subtitle": "Et lite verktøy for tinnitus og søvn. Trykk på en lyd for å spille av; juster etter eget ønske.",
+    "heading":  "Deafening Silence",
+    "subtitle": "Deafening Silence er et lite verktøy for tinnituslydterapi. Trykk på en lyd for å spille av; juster etter eget ønske.",
     "guidance": "Basert på prinsipper fra Tinnitus Retraining Therapy (TRT): still inn volumet slik at lyden er rett under nivået på tinnitussen din — ikke for å maskere den fullstendig. Målet er habituering over tid, ikke undertrykking.",
     "sounds": {
       "brown": "Brun støy",
@@ -84,7 +84,7 @@
     "timerActive":  "Stopper om {{remaining}}",
     "cancelTimer":  "Avbryt",
     "donationHeading": "Støtt hørselhelse",
-    "donationIntro":   "Hvis dette verktøyet hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
+    "donationIntro":   "Hvis Deafening Silence hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
     "audioError": "Lyden startet ikke. Trykk Spill igjen.",
     "iosMuteNote": "Hører du ingen lyd, sjekk at lydavbryterknappen er av. På iPhone kan sideknappen dempe lyden selv om volumet er skrudd opp."
   },

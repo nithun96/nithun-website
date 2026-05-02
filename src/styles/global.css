@@ -194,6 +194,15 @@ body::before {
   }
 }
 
+/* ── Donate section inline links ──────────────────────────── */
+.hero-donate-link {
+  color: var(--fg2);
+  text-decoration: none;
+}
+.hero-donate-link:hover {
+  text-decoration: underline;
+}
+
 /* ── Shelf cover spine colours ─────────────────────────────── */
 .shelf-card:nth-child(8n+1) .shelf-spine { background: color-mix(in oklch, var(--dusty) 55%, transparent); }
 .shelf-card:nth-child(8n+2) .shelf-spine { background: color-mix(in oklch, var(--stone) 55%, transparent); }

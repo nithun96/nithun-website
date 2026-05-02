@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 const SHELL = {
   padding: '0 clamp(24px, 5vw, 80px)',
@@ -85,7 +85,7 @@ export default function Hero() {
       </div>
 
       {/* ── Section teasers ───────────────────────────────────── */}
-      <div className="hero-teasers">
+      <div className="hero-teasers" id="section-teasers">
         {SECTION_TEASERS.map(({ key, path, accent }, i) => (
           <Link
             key={key}
@@ -131,6 +131,26 @@ export default function Hero() {
             </div>
           </Link>
         ))}
+      </div>
+      {/* ── Donate nudge ──────────────────────────────────────── */}
+      <div style={{
+        marginTop: 48,
+        paddingTop: 24,
+        borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
+        paddingBottom: 64,
+      }}>
+        <p style={{ fontSize: 13, color: 'var(--fgm)', fontWeight: 300, lineHeight: 1.7, maxWidth: 640, margin: 0 }}>
+        <Trans
+          i18nKey="hero.donate"
+          components={[
+            <a href="https://www.rodekors.no/"        className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://legerutengrenser.no/"     className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.spire.no/"            className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.utviklingsfondet.no/" className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <Link to="/silence"                        className="hero-donate-link" />,
+          ]}
+        />
+        </p>
       </div>
     </div>
   )

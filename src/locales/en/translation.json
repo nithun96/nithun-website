@@ -9,8 +9,9 @@
   "hero": {
     "name":     "Nithun Manoharan",
     "location": "Oslo, Norway",
-    "intro":    "In my daily life I work in IT as a product manager, but on this site I will show you what I'm building in my free time, with a healthy dose of AI. I also want to let out my creative spirit and write my thoughts on both reality and fiction. No promises as of yet.",
+    "intro":    "This is where I'll share what I am working on in my free time, completely unrelated to my professional life. Right now that is Deafening Silence, a tool for tinnitus sound therapy, and one that I hope to release for free as an app in the future. A shelf of books, games and TV I've enjoyed, and some of my writing — fiction or about the real world, whatever I have the time and interest for.",
     "teaser":   "The best is yet to come. Soon™",
+    "donate":   "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good like: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund (Utviklingsfondet)</3> and the <4>hearing research charities listed on the Silence page</4>.",
     "teasers": {
       "writing": {
         "label": "Writing",

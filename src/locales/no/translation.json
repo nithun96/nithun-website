@@ -9,8 +9,9 @@
   "hero": {
     "name":     "Nithun Manoharan",
     "location": "Oslo, Norge",
-    "intro":    "Til daglig så jobber jeg som produktsjef innen IT, men på denne siden så vil jeg vise hva jeg bygger i fritiden, med en sunn dose hjelp fra AI. Jeg har også som ambisjon å slippe løs litt av kreativiteten min og skrive litt om både virkeligheten og fiksjon. Jeg lover ingenting helt enda.",
+    "intro":    "Her vil jeg dele det jeg jobber med på fritiden, helt uten tilknytning til mitt profesjonelle liv. Akkurat nå er det Deafening Silence, et verktøy for tinnituslydterapi, som jeg håper å lansere gratis som en app i fremtiden. En hylle med bøker, spill og TV jeg er fan av, og noe av skrivingen min — fiksjon eller om det som skjer i den virkelige verden, hva enn jeg finner tid og interesse for.",
     "teaser":   "Det beste er på vei. Snart™",
+    "donate":   "Hvis du finner noe her nyttig, oppfordrer jeg deg til å vurdere å donere til organisasjoner som gjør en reell forskjell som: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3> og <4>hørselforskningsorganisasjonene som er nevnt på Silence-siden</4>.",
     "teasers": {
       "writing": {
         "label": "Skriverier",

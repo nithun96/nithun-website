@@ -209,19 +209,25 @@ body::before {
   cursor: pointer;
 }
 
-/* The sup itself carries the hit-target expansion via negative margin +
-   padding (a classic tap-target trick). line-height: 0 is the critical
-   mobile fix — it prevents the superscript from inflating its line box
-   and pushing text onto a new line. */
+/* line-height: 0 prevents the superscript from inflating its line box
+   and pushing surrounding text onto a new line on mobile. */
 sup[data-footnote] {
   display: inline;
   vertical-align: super;
   line-height: 0;
   font-size: 10px;
-  position: relative;
   cursor: pointer;
-  margin: -8px;
-  padding: 8px;
+}
+
+/* Expand tap target to 28×28px without affecting layout. */
+.fn-marker::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
 }
 
 /* ── Donate section inline links ──────────────────────────── */

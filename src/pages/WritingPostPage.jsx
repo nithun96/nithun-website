@@ -1,4 +1,5 @@
 import { useState, useRef, useMemo, useCallback, useEffect, createContext, useContext } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
@@ -28,12 +29,12 @@ const SHELL = {
 }
 
 // ── Footnote context ──────────────────────────────────────────────────────────
-// Shares activeFootnote (mobile) and onToggle with FootnoteMarker instances
-// without recreating the react-markdown components map on each state change.
 
 const FootnoteCtx = createContext(null)
 
-// ── FootnoteMarker ────────────────────────────────────────────────────────────
+// ── FootnoteMarker (inline superscript) ───────────────────────────────────────
+// Desktop: hover shows tooltip, click pins it open until clicked again.
+// Mobile: click updates activeFootnote in context; FootnotePanel handles display.
 
 function FootnoteMarker({ number, type, text }) {
   const { activeFootnote, onToggle } = useContext(FootnoteCtx)
@@ -43,8 +44,6 @@ function FootnoteMarker({ number, type, text }) {
   const wrapRef = useRef(null)
   const hideTimer = useRef(null)
 
-  // True when primary pointer supports hover (desktop). Touch-only devices
-  // skip tooltips entirely and use the inline tap-to-expand instead.
   const hasHover = useMemo(
     () => typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches,
     []
@@ -52,7 +51,6 @@ function FootnoteMarker({ number, type, text }) {
 
   useEffect(() => () => clearTimeout(hideTimer.current), [])
 
-  const isActiveMobile = activeFootnote === number
   const showPanel = hasHover && (hovering || pinned)
   const supColor = pinned ? 'var(--fg2)' : 'var(--fgm)'
 
@@ -115,10 +113,10 @@ function FootnoteMarker({ number, type, text }) {
         {number}
       </sup>
 
-      {/* Screen-reader text — always present so assistive tech can read it */}
+      {/* Always in the DOM for screen readers */}
       <span className="sr-only">Footnote {number}: {text}</span>
 
-      {/* Desktop: hover tooltip or pinned panel — visually identical */}
+      {/* Desktop: hover tooltip or pinned panel */}
       {showPanel && (
         <span
           role="tooltip"
@@ -140,26 +138,98 @@ function FootnoteMarker({ number, type, text }) {
           {text}
         </span>
       )}
-
-      {/* Mobile: tap-to-expand inline panel (only one open at a time via context) */}
-      {!hasHover && (
-        <span
-          aria-hidden={!isActiveMobile}
-          style={{
-            display: 'block',
-            maxHeight: isActiveMobile ? 300 : 0,
-            overflow: 'hidden',
-            opacity: isActiveMobile ? 1 : 0,
-            transition: 'max-height 0.25s ease, opacity 0.2s ease',
-          }}
-        >
-          <span style={{ ...calloutBase, display: 'block', marginTop: 8, marginBottom: 4 }}>
-            <span style={{ color: 'var(--wheat)', marginRight: 6, fontStyle: 'normal' }}>[{number}]</span>
-            {text}
-          </span>
-        </span>
-      )}
     </span>
+  )
+}
+
+// ── FootnotePanel (mobile bottom sheet) ──────────────────────────────────────
+// Portalled to document.body so it never lives inside inline text flow.
+// Slides up from the bottom when a footnote is active on touch devices.
+
+function FootnotePanel({ footnotes }) {
+  const { activeFootnote, onToggle } = useContext(FootnoteCtx)
+
+  // Keep last-seen footnote visible while the panel is sliding away
+  const lastFn = useRef(null)
+  const fn = footnotes.find(f => f.number === activeFootnote)
+  if (fn) lastFn.current = fn
+  const displayFn = fn || lastFn.current
+
+  const isOpen = !!fn
+
+  return createPortal(
+    <>
+      {/* Invisible backdrop — tap anywhere to close */}
+      <div
+        aria-hidden="true"
+        onClick={() => isOpen && onToggle(activeFootnote)}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 49,
+          display: isOpen ? 'block' : 'none',
+        }}
+      />
+
+      <div
+        role="complementary"
+        aria-live="polite"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: 'var(--bg2)',
+          borderTop: displayFn?.type === 'wry'
+            ? '2px solid var(--stone)'
+            : '1px solid color-mix(in oklch, var(--fg) 10%, transparent)',
+          padding: '20px clamp(24px, 5vw, 64px) max(28px, env(safe-area-inset-bottom))',
+          transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
+          transition: 'transform 0.25s ease',
+          zIndex: 50,
+        }}
+      >
+        <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', maxWidth: 780 }}>
+          <span style={{
+            color: 'var(--wheat)',
+            fontStyle: 'normal',
+            flexShrink: 0,
+            fontSize: 12,
+            marginTop: 2,
+          }}>
+            [{displayFn?.number}]
+          </span>
+          <p style={{
+            fontSize: 14,
+            color: 'var(--fgm)',
+            fontStyle: 'italic',
+            lineHeight: 1.65,
+            margin: 0,
+            flex: 1,
+          }}>
+            {displayFn?.text}
+          </p>
+          <button
+            onClick={() => isOpen && onToggle(activeFootnote)}
+            aria-label="Close footnote"
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--fgm)',
+              cursor: 'pointer',
+              fontSize: 14,
+              padding: '0 0 0 12px',
+              lineHeight: 1,
+              flexShrink: 0,
+              opacity: 0.5,
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </>,
+    document.body
   )
 }
 
@@ -182,8 +252,6 @@ export default function WritingPostPage() {
     setActiveFootnote(prev => prev === num ? null : num)
   }, [])
 
-  // Build component overrides once per post. FootnoteCtx carries the active
-  // state so this map stays stable across footnote toggles.
   const mdComponents = useMemo(() => ({
     p: ({ children }) => <p style={{ marginBottom: '1.5em' }}>{children}</p>,
     h2: ({ children }) => (
@@ -336,6 +404,9 @@ export default function WritingPostPage() {
           )}
         </div>
       </div>
+
+      {/* Mobile footnote panel — portalled to body, outside inline text flow */}
+      <FootnotePanel footnotes={footnotes} />
     </FootnoteCtx.Provider>
   )
 }

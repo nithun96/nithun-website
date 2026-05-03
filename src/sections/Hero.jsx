@@ -147,6 +147,7 @@ export default function Hero() {
             <a href="https://legerutengrenser.no/"     className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
             <a href="https://www.spire.no/"            className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
             <a href="https://www.utviklingsfondet.no/" className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.givewell.org/"        className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
             <Link to="/silence"                        className="hero-donate-link" />,
           ]}
         />

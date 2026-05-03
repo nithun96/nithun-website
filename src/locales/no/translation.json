@@ -11,22 +11,22 @@
     "location": "Oslo, Norge",
     "intro":    "Her vil jeg dele det jeg jobber med på fritiden, helt uten tilknytning til mitt profesjonelle liv. Akkurat nå er det Deafening Silence, et verktøy for tinnituslydterapi, som jeg håper å lansere gratis som en app i fremtiden. En hylle med bøker, spill og TV jeg er fan av, og noe av skrivingen min — fiksjon eller om det som skjer i den virkelige verden, hva enn jeg finner tid og interesse for.",
     "teaser":   "Det beste er på vei. Snart™",
-    "donate":   "Hvis du finner noe her nyttig, oppfordrer jeg deg til å vurdere å donere til organisasjoner som gjør en reell forskjell som: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3> og <4>hørselforskningsorganisasjonene som er nevnt på Silence-siden</4>.",
+    "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselforskningsorganisasjonene som er nevnt på Silence-siden</5>.",
     "teasers": {
       "writing": {
         "label": "Skriverier",
         "title": "Essays og kommentarer",
-        "desc":  "Om teknologi, samfunn og ting som er verdt å tenke nøye gjennom."
+        "desc":  "Det som er på hjertet, etter hvert som det kommer."
       },
       "silence": {
         "label": "Stillhet",
         "title": "Et tinnitus-verktøy",
-        "desc":  "Fire nøye utvalgte lyder for ro og søvn."
+        "desc":  "Bakgrunnslyder for avslapning og søvn."
       },
       "shelf": {
         "label": "Hylle",
         "title": "Bøker, serier, spill",
-        "desc":  "En personlig logg over hva som har vært verdt tiden."
+        "desc":  "En logg over det jeg er fan av."
       }
     }
   },

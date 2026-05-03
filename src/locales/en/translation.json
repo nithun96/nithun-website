@@ -11,22 +11,22 @@
     "location": "Oslo, Norway",
     "intro":    "This is where I'll share what I am working on in my free time, completely unrelated to my professional life. Right now that is Deafening Silence, a tool for tinnitus sound therapy, and one that I hope to release for free as an app in the future. A shelf of books, games and TV I've enjoyed, and some of my writing — fiction or about the real world, whatever I have the time and interest for.",
     "teaser":   "The best is yet to come. Soon™",
-    "donate":   "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good like: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund (Utviklingsfondet)</3> and the <4>hearing research charities listed on the Silence page</4>.",
+    "donate":   "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund</3>, <4>GiveWell</4> (global health), and the <5>hearing research charities listed on the Silence page</5>.",
     "teasers": {
       "writing": {
         "label": "Writing",
         "title": "Essays & commentary",
-        "desc":  "On technology, society, and things worth slowing down for."
+        "desc":  "Whatever's on my mind as we go."
       },
       "silence": {
         "label": "Silence",
         "title": "A tinnitus sound tool",
-        "desc":  "Four carefully chosen sounds for quiet and sleep."
+        "desc":  "Background sounds for relaxing and sleeping."
       },
       "shelf": {
         "label": "Shelf",
         "title": "Books, series, games",
-        "desc":  "A personal log of what's been worth the time."
+        "desc":  "A log of what I'm a fan of."
       }
     }
   },

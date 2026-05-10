@@ -1,23 +1,250 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-@layer base {
-  :root {
-    --font-serif: 'Lora', Georgia, serif;
-    --font-sans: 'Inter', system-ui, sans-serif;
-  }
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  /* Light mode */
+  --bg:    #F5F0E8;
+  --bg2:   #EDE6D8;
+  --fg:    #2A2218;
+  --fg2:   #5A5040;
+  --fgm:   #7A6E5E;
+  /* Accents — same in both modes */
+  --olive: #5C6B3A;
+  --sage:  #8FAF6E;
+  --navy:  #2C3E5C;
+  --dusty: #7090B0;
+  --stone: #C4A882;
+  --honey: #FAEDCB;
+  --wheat: #E8D49A;
+}
 
-  html {
-    font-family: var(--font-sans);
-    background-color: #f5f2ee;
-    scroll-behavior: smooth;
-  }
+.dark {
+  --bg:  #1C1A17;
+  --bg2: #2A2620;
+  --fg:  #E8DFC8;
+  --fg2: #B8B0A0;
+  --fgm: #9A8E7E;
+}
 
-  html.dark {
-    background-color: #18181b;
-  }
+/* ── Register tokens as Tailwind color utilities ───────────── */
+@theme inline {
+  --color-bg:    var(--bg);
+  --color-bg2:   var(--bg2);
+  --color-fg:    var(--fg);
+  --color-fg2:   var(--fg2);
+  --color-fgm:   var(--fgm);
+  --color-sage:  var(--sage);
+  --color-dusty: var(--dusty);
+  --color-honey: var(--honey);
+  --color-wheat: var(--wheat);
+  --color-stone: var(--stone);
+  --color-olive: var(--olive);
+  --color-navy:  var(--navy);
+}
 
-  h1, h2, h3 {
-    font-family: var(--font-serif);
+/* ── Base ──────────────────────────────────────────────────── */
+html {
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--fg);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* ── Grain overlay ─────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px;
+  z-index: 9999;
+}
+
+/* ── Page fade-up animation ────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: fadeUp 0.4s ease forwards;
+}
+
+/* ── Equaliser bars (Silence playing indicator) ────────────── */
+@keyframes soundBars {
+  0%, 100% { opacity: 0.4; transform: scaleY(0.6); }
+  50%       { opacity: 1;   transform: scaleY(1); }
+}
+.sound-bar {
+  width: 2px;
+  border-radius: 2px;
+  background: var(--sage);
+  animation: soundBars 0.8s ease infinite;
+  transform-origin: bottom;
+}
+.sound-bar:nth-child(1) { height: 8px;  animation-delay: 0s; }
+.sound-bar:nth-child(2) { height: 14px; animation-delay: 0.15s; }
+.sound-bar:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+.sound-bar:nth-child(4) { height: 6px;  animation-delay: 0.45s; }
+
+/* ── Nav links ─────────────────────────────────────────────── */
+.nav-link {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  text-decoration: none;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--link-accent, var(--fg));
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+  transform-origin: left;
+}
+.nav-link:hover { color: var(--fg); }
+.nav-link:hover::after,
+.nav-link.active::after { transform: scaleX(1); }
+.nav-link.active { color: var(--fg); }
+
+/* ── Volume slider ─────────────────────────────────────────── */
+.vol-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  background: color-mix(in oklch, var(--fg) 15%, transparent);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--fg);
+  cursor: pointer;
+  box-shadow: 0 0 0 3px var(--bg2);
+}
+.vol-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--fg);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 0 3px var(--bg2);
+}
+
+/* ── Hero layout ───────────────────────────────────────────── */
+.hero-grid {
+  padding-top: clamp(64px, 10vh, 120px);
+  padding-bottom: clamp(48px, 8vh, 96px);
+}
+
+.hero-teasers {
+  border-top: 1px solid color-mix(in oklch, var(--fg) 8%, transparent);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* On mobile: stack teasers with consistent padding — no staircase */
+@media (max-width: 600px) {
+  .hero-teasers {
+    grid-template-columns: 1fr;
+  }
+  .hero-teasers > a {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid color-mix(in oklch, var(--fg) 8%, transparent);
+  }
+  .hero-teasers > a:last-child {
+    border-bottom: none;
   }
 }
+
+/* ── Footnote marker + tooltip ─────────────────────────────── */
+@keyframes fn-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Wrapper gives positioning context for the absolute-positioned tooltip.
+   display: inline (not inline-block) keeps it fully in the text flow
+   so it never creates a block box that breaks the surrounding line. */
+.fn-marker {
+  position: relative;
+  display: inline;
+  cursor: pointer;
+}
+
+/* line-height: 0 prevents the superscript from inflating its line box
+   and pushing surrounding text onto a new line on mobile. */
+sup[data-footnote] {
+  display: inline;
+  vertical-align: super;
+  line-height: 0;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+/* Expand tap target to 28×28px without affecting layout. */
+.fn-marker::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+}
+
+/* ── Donate section inline links ──────────────────────────── */
+.hero-donate-link {
+  color: var(--fg2);
+  text-decoration: none;
+}
+.hero-donate-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Shelf cover spine colours ─────────────────────────────── */
+.shelf-card:nth-child(8n+1) .shelf-spine { background: color-mix(in oklch, var(--dusty) 55%, transparent); }
+.shelf-card:nth-child(8n+2) .shelf-spine { background: color-mix(in oklch, var(--stone) 55%, transparent); }
+.shelf-card:nth-child(8n+3) .shelf-spine { background: color-mix(in oklch, var(--sage)  55%, transparent); }
+.shelf-card:nth-child(8n+4) .shelf-spine { background: color-mix(in oklch, var(--wheat) 55%, transparent); }
+.shelf-card:nth-child(8n+5) .shelf-spine { background: color-mix(in oklch, var(--navy)  70%, transparent); }
+.shelf-card:nth-child(8n+6) .shelf-spine { background: color-mix(in oklch, var(--olive) 60%, transparent); }
+.shelf-card:nth-child(8n+7) .shelf-spine { background: color-mix(in oklch, var(--honey) 55%, transparent); }
+.shelf-card:nth-child(8n+0) .shelf-spine { background: color-mix(in oklch, var(--dusty) 35%, transparent); }

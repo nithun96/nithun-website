@@ -1,67 +1,158 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { useTranslation, Trans } from 'react-i18next'
+
+const SHELL = {
+  padding: '0 clamp(24px, 5vw, 80px)',
+  maxWidth: 'calc(780px + 160px)',
+  margin: '0 auto',
+}
+
+const SECTION_TEASERS = [
+  { key: 'writing', path: '/writing', cls: 'writing', accent: 'var(--dusty)' },
+  { key: 'silence', path: '/silence', cls: 'silence', accent: 'var(--sage)'  },
+  { key: 'shelf',   path: '/shelf',   cls: 'shelf',   accent: 'var(--honey)' },
+]
 
 export default function Hero() {
   const { t } = useTranslation()
-  const [headerVisible, setHeaderVisible] = useState(false)
-  const [textVisible, setTextVisible] = useState(false)
-
-  useEffect(() => {
-    const t1 = setTimeout(() => setHeaderVisible(true), 80)
-    const t2 = setTimeout(() => setTextVisible(true), 400)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
-  }, [])
 
   return (
-    <section className="px-6 py-24 max-w-3xl mx-auto w-full">
-      <div className="flex flex-col md:flex-row md:items-start gap-10">
-
-        {/* Photo */}
-        <div
-          className="shrink-0 transition-all duration-700 ease-out"
-          style={{ opacity: headerVisible ? 1 : 0, transform: headerVisible ? 'translateY(0)' : 'translateY(12px)' }}
-        >
-          <img
-            src="/images/nithun.jpeg"
-            alt="Nithun Manoharan"
-            width={800}
-            height={800}
-            className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover object-center ring-2 ring-zinc-300 dark:ring-zinc-600"
-          />
-        </div>
-
-        {/* Name + location + text */}
+    <div className="page-enter" style={SHELL}>
+      {/* ── Hero grid ─────────────────────────────────────────── */}
+      <div className="hero-grid">
+        {/* Text column */}
         <div>
-          <div
-            className="transition-all duration-700 ease-out"
-            style={{ opacity: headerVisible ? 1 : 0, transform: headerVisible ? 'translateY(0)' : 'translateY(12px)' }}
+          <h1
+            style={{
+              fontFamily: 'Georgia, serif',
+              fontSize: 'clamp(32px, 5vw, 52px)',
+              fontWeight: 'normal',
+              color: 'var(--fg)',
+              lineHeight: 1.15,
+              letterSpacing: '-0.01em',
+              marginBottom: 10,
+            }}
           >
-            <h1 className="text-4xl md:text-5xl font-serif font-semibold tracking-tight mb-2">
-              {t('hero.name')}
-            </h1>
-            <p className="text-sm text-zinc-400 dark:text-zinc-500 mb-6 flex items-center gap-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              {t('hero.location')}
-            </p>
-          </div>
+            {t('hero.name')}
+          </h1>
 
-          <div
-            className="transition-all duration-700 ease-out"
-            style={{ opacity: textVisible ? 1 : 0, transform: textVisible ? 'translateY(0)' : 'translateY(12px)' }}
+          <p
+            style={{
+              fontSize: 11,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: 'var(--fgm)',
+              marginBottom: 32,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
           >
-            <p className="text-base md:text-lg leading-relaxed text-zinc-600 dark:text-zinc-300">
-              {t('hero.intro')}
-            </p>
-            <p className="mt-4 text-sm italic text-zinc-400 dark:text-zinc-500">
-              {t('hero.teaser')}<sup>TM</sup>
-            </p>
-          </div>
+            <span style={{ display: 'inline-block', width: 16, height: 1, background: 'var(--fgm)', flexShrink: 0 }} />
+            {t('hero.location')}
+          </p>
+
+          <p
+            style={{
+              fontSize: 17,
+              lineHeight: 1.75,
+              color: 'var(--fg2)',
+              maxWidth: 560,
+              marginBottom: 24,
+              fontWeight: 300,
+            }}
+          >
+            {t('hero.intro')}
+          </p>
+
+          <blockquote
+            style={{
+              fontFamily: 'Georgia, serif',
+              fontSize: 15,
+              fontStyle: 'italic',
+              color: 'var(--fgm)',
+              borderLeft: '2px solid color-mix(in oklch, var(--stone) 50%, transparent)',
+              paddingLeft: 16,
+              lineHeight: 1.6,
+              maxWidth: 480,
+              margin: 0,
+            }}
+          >
+            {t('hero.teaser')}
+          </blockquote>
         </div>
 
       </div>
-    </section>
+
+      {/* ── Section teasers ───────────────────────────────────── */}
+      <div className="hero-teasers" id="section-teasers">
+        {SECTION_TEASERS.map(({ key, path, accent }, i) => (
+          <Link
+            key={key}
+            to={path}
+            style={{
+              padding: '28px 24px 28px 0',
+              borderRight: i < 2 ? '1px solid color-mix(in oklch, var(--fg) 8%, transparent)' : 'none',
+              paddingLeft: i > 0 ? 24 : 0,
+              textDecoration: 'none',
+              display: 'block',
+              transition: 'background 0.2s ease',
+            }}
+            className="group"
+          >
+            <span
+              style={{
+                fontSize: 10,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                fontWeight: 500,
+                color: accent,
+                marginBottom: 10,
+                display: 'inline-block',
+              }}
+            >
+              {t(`hero.teasers.${key}.label`)}
+            </span>
+            <div
+              style={{
+                fontFamily: 'Georgia, serif',
+                fontSize: 17,
+                color: 'var(--fg2)',
+                lineHeight: 1.4,
+                marginBottom: 8,
+                transition: 'color 0.2s ease',
+              }}
+              className="group-hover:text-fg"
+            >
+              {t(`hero.teasers.${key}.title`)}
+            </div>
+            <div style={{ fontSize: 13, color: 'var(--fgm)', lineHeight: 1.55 }}>
+              {t(`hero.teasers.${key}.desc`)}
+            </div>
+          </Link>
+        ))}
+      </div>
+      {/* ── Donate nudge ──────────────────────────────────────── */}
+      <div style={{
+        marginTop: 48,
+        paddingTop: 24,
+        borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
+        paddingBottom: 64,
+      }}>
+        <p style={{ fontSize: 13, color: 'var(--fgm)', fontWeight: 300, lineHeight: 1.7, maxWidth: 640, margin: 0 }}>
+        <Trans
+          i18nKey="hero.donate"
+          components={[
+            <a href="https://www.rodekors.no/"        className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://legerutengrenser.no/"     className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.spire.no/"            className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.utviklingsfondet.no/" className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.givewell.org/"        className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
+            <Link to="/silence"                        className="hero-donate-link" />,
+          ]}
+        />
+        </p>
+      </div>
+    </div>
   )
 }

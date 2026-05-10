@@ -1,0 +1,175 @@
+{
+  "books": [
+    {"series": "J.R.R. Tolkien",           "title": "The Hobbit",                         "author": "J.R.R. Tolkien",      "status": "finished"},
+    {"series": "J.R.R. Tolkien",           "title": "The Fellowship of the Ring",          "author": "J.R.R. Tolkien",      "status": "finished"},
+    {"series": "J.R.R. Tolkien",           "title": "The Two Towers",                      "author": "J.R.R. Tolkien",      "status": "finished"},
+    {"series": "J.R.R. Tolkien",           "title": "The Return of the King",              "author": "J.R.R. Tolkien",      "status": "finished"},
+    {"series": "J.R.R. Tolkien",           "title": "The Silmarillion",                    "author": "J.R.R. Tolkien",      "status": "finished"},
+
+    {"series": "Wheel of Time",            "title": "New Spring",                          "author": "Robert Jordan",       "number": 0,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "The Eye of the World",                "author": "Robert Jordan",       "number": 1,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "The Great Hunt",                      "author": "Robert Jordan",       "number": 2,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "The Dragon Reborn",                   "author": "Robert Jordan",       "number": 3,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "The Shadow Rising",                   "author": "Robert Jordan",       "number": 4,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "The Fires of Heaven",                 "author": "Robert Jordan",       "number": 5,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "Lord of Chaos",                       "author": "Robert Jordan",       "number": 6,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "A Crown of Swords",                   "author": "Robert Jordan",       "number": 7,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "The Path of Daggers",                 "author": "Robert Jordan",       "number": 8,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "Winter's Heart",                      "author": "Robert Jordan",       "number": 9,  "status": "finished"},
+    {"series": "Wheel of Time",            "title": "Crossroads of Twilight",              "author": "Robert Jordan",       "number": 10, "status": "finished"},
+    {"series": "Wheel of Time",            "title": "Knife of Dreams",                     "author": "Robert Jordan",       "number": 11, "status": "finished"},
+    {"series": "Wheel of Time",            "title": "The Gathering Storm",                 "author": "Brandon Sanderson",   "number": 12, "status": "finished"},
+    {"series": "Wheel of Time",            "title": "Towers of Midnight",                  "author": "Brandon Sanderson",   "number": 13, "status": "finished"},
+    {"series": "Wheel of Time",            "title": "A Memory of Light",                   "author": "Brandon Sanderson",   "number": 14, "status": "finished"},
+
+    {"series": "Mistborn",                 "title": "The Final Empire",                    "author": "Brandon Sanderson",   "number": 1, "status": "finished"},
+    {"series": "Mistborn",                 "title": "The Well of Ascension",               "author": "Brandon Sanderson",   "number": 2, "status": "finished"},
+    {"series": "Mistborn",                 "title": "The Hero of Ages",                    "author": "Brandon Sanderson",   "number": 3, "status": "finished"},
+
+    {"series": "Stormlight Archive",       "title": "The Way of Kings",                    "author": "Brandon Sanderson",   "number": 1, "status": "finished"},
+    {"series": "Stormlight Archive",       "title": "Words of Radiance",                   "author": "Brandon Sanderson",   "number": 2, "status": "finished"},
+
+    {"series": "Standalone — Sanderson",   "title": "Elantris",                            "author": "Brandon Sanderson",   "status": "finished"},
+    {"series": "Standalone — Sanderson",   "title": "Warbreaker",                          "author": "Brandon Sanderson",   "status": "finished"},
+    {"series": "Standalone — Sanderson",   "title": "The Rithmatist",                      "author": "Brandon Sanderson",   "status": "finished"},
+    {"series": "Standalone — Sanderson",   "title": "Steelheart",                          "author": "Brandon Sanderson",   "status": "finished"},
+
+    {"series": "Bartimaeus",               "title": "The Amulet of Samarkand",             "author": "Jonathan Stroud",     "number": 1, "status": "finished"},
+    {"series": "Bartimaeus",               "title": "The Golem's Eye",                     "author": "Jonathan Stroud",     "number": 2, "status": "finished"},
+    {"series": "Bartimaeus",               "title": "Ptolemy's Gate",                      "author": "Jonathan Stroud",     "number": 3, "status": "finished"},
+
+    {"series": "Night Angel",              "title": "The Way of Shadows",                  "author": "Brent Weeks",         "number": 1, "status": "finished"},
+    {"series": "Night Angel",              "title": "Shadow's Edge",                       "author": "Brent Weeks",         "number": 2, "status": "finished"},
+    {"series": "Night Angel",              "title": "Beyond the Shadows",                  "author": "Brent Weeks",         "number": 3, "status": "finished"},
+
+    {"series": "Lightbringer",             "title": "The Black Prism",                     "author": "Brent Weeks",         "number": 1, "status": "finished"},
+
+    {"series": "The First Law",            "title": "The Blade Itself",                    "author": "Joe Abercrombie",     "number": 1, "status": "finished"},
+    {"series": "The First Law",            "title": "Before They Are Hanged",              "author": "Joe Abercrombie",     "number": 2, "status": "finished"},
+    {"series": "The First Law",            "title": "Last Argument of Kings",              "author": "Joe Abercrombie",     "number": 3, "status": "finished"},
+
+    {"series": "A Song of Ice and Fire",   "title": "A Game of Thrones",                   "author": "George R.R. Martin",  "number": 1, "status": "finished"},
+    {"series": "A Song of Ice and Fire",   "title": "A Clash of Kings",                    "author": "George R.R. Martin",  "number": 2, "status": "finished"},
+    {"series": "A Song of Ice and Fire",   "title": "A Storm of Swords",                   "author": "George R.R. Martin",  "number": 3, "status": "finished"},
+    {"series": "A Song of Ice and Fire",   "title": "A Feast for Crows",                   "author": "George R.R. Martin",  "number": 4, "status": "finished"},
+    {"series": "A Song of Ice and Fire",   "title": "A Dance with Dragons",                "author": "George R.R. Martin",  "number": 5, "status": "finished"},
+
+    {"series": "Kingkiller Chronicle",     "title": "The Name of the Wind",                "author": "Patrick Rothfuss",    "number": 1, "status": "finished"},
+    {"series": "Kingkiller Chronicle",     "title": "The Wise Man's Fear",                 "author": "Patrick Rothfuss",    "number": 2, "status": "finished"},
+
+    {"series": "Malazan Book of the Fallen","title": "Gardens of the Moon",                "author": "Steven Erikson",      "number": 1, "status": "finished"},
+    {"series": "Malazan Book of the Fallen","title": "Deadhouse Gates",                    "author": "Steven Erikson",      "number": 2, "status": "finished"},
+
+    {"series": "Skammar",                  "title": "Skammarens dotter",                   "author": "Lene Kaaberbøl",      "number": 1, "status": "finished"},
+    {"series": "Skammar",                  "title": "Skammarteiknet",                      "author": "Lene Kaaberbøl",      "number": 2, "status": "finished"},
+    {"series": "Skammar",                  "title": "Slangens gåve",                       "author": "Lene Kaaberbøl",      "number": 3, "status": "finished"},
+    {"series": "Skammar",                  "title": "Skammarkrigen",                       "author": "Lene Kaaberbøl",      "number": 4, "status": "finished"},
+
+    {"series": "Artemis Fowl",             "title": "Artemis Fowl",                        "author": "Eoin Colfer",         "number": 1, "status": "finished"},
+    {"series": "Artemis Fowl",             "title": "The Arctic Incident",                 "author": "Eoin Colfer",         "number": 2, "status": "finished"},
+    {"series": "Artemis Fowl",             "title": "The Eternity Code",                   "author": "Eoin Colfer",         "number": 3, "status": "finished"},
+
+    {"series": "Chronicles of Narnia",     "title": "The Chronicles of Narnia",            "author": "C.S. Lewis",          "note": "Complete series #1–7", "status": "finished"},
+
+    {"series": "Harry Potter",             "title": "The Philosopher's Stone",             "author": "J.K. Rowling",        "number": 1, "status": "finished"},
+    {"series": "Harry Potter",             "title": "The Chamber of Secrets",              "author": "J.K. Rowling",        "number": 2, "status": "finished"},
+    {"series": "Harry Potter",             "title": "The Prisoner of Azkaban",             "author": "J.K. Rowling",        "number": 3, "status": "finished"},
+    {"series": "Harry Potter",             "title": "The Goblet of Fire",                  "author": "J.K. Rowling",        "number": 4, "status": "finished"},
+    {"series": "Harry Potter",             "title": "The Order of the Phoenix",            "author": "J.K. Rowling",        "number": 5, "status": "finished"},
+    {"series": "Harry Potter",             "title": "The Half-Blood Prince",               "author": "J.K. Rowling",        "number": 6, "status": "finished"},
+    {"series": "Harry Potter",             "title": "The Deathly Hallows",                 "author": "J.K. Rowling",        "number": 7, "status": "finished"},
+
+    {"series": "Warcraft",                 "title": "Of Blood and Honor",                  "author": "Chris Metzen",        "status": "finished"},
+    {"series": "Warcraft",                 "title": "Lord of the Clans",                   "author": "Christie Golden",     "status": "finished"},
+    {"series": "Warcraft",                 "title": "The Last Guardian",                   "author": "Jeff Grubb",          "status": "finished"},
+    {"series": "Warcraft — War of the Ancients", "title": "The Well of Eternity",          "author": "Richard A. Knaak",    "number": 1, "status": "finished"},
+    {"series": "Warcraft — War of the Ancients", "title": "The Demon Soul",                "author": "Richard A. Knaak",    "number": 2, "status": "finished"},
+    {"series": "Warcraft — War of the Ancients", "title": "The Sundering",                 "author": "Richard A. Knaak",    "number": 3, "status": "finished"},
+    {"series": "Warcraft",                 "title": "Rise of the Horde",                   "author": "Christie Golden",     "status": "finished"},
+    {"series": "Warcraft",                 "title": "Beyond the Dark Portal",              "author": "Aaron Rosenberg",     "status": "finished"},
+    {"series": "Warcraft",                 "title": "Arthas: Rise of the Lich King",       "author": "Christie Golden",     "status": "finished"},
+    {"series": "Warcraft",                 "title": "The Shattering",                      "author": "Christie Golden",     "status": "finished"},
+    {"series": "Warcraft",                 "title": "Stormrage",                           "author": "Richard A. Knaak",    "status": "finished"},
+    {"series": "Warcraft",                 "title": "Dawn of the Aspects",                 "author": "Richard A. Knaak",    "status": "finished"},
+
+    {"series": "Standalone",               "title": "Sofies verden",                       "author": "Jostein Gaarder",     "status": "finished"},
+    {"series": "Standalone",               "title": "The Alchemist",                       "author": "Paulo Coelho",        "status": "finished"},
+    {"series": "Standalone",               "title": "A Brief History of Time",             "author": "Stephen Hawking",     "status": "finished"},
+    {"series": "Standalone",               "title": "Empire in Black and Gold",            "author": "Adrian Tchaikovsky",  "status": "finished"}
+  ],
+
+  "games": [
+    {"series": "Pokémon", "title": "Pokémon Sapphire", "platform": "Game Boy Advance", "developer": "Game Freak", "genres": ["RPG"], "status": "finished"},
+    {"series": "Pokémon", "title": "Pokémon Emerald", "platform": "Game Boy Advance", "developer": "Game Freak", "genres": ["RPG"], "status": "finished"},
+    {"series": "Pokémon", "title": "Pokémon Colosseum", "platform": "GameCube", "developer": "Genius Sonority", "genres": ["RPG"], "status": "finished"},
+
+    {"series": "The Legend of Zelda", "title": "Twilight Princess", "platform": "Wii / GameCube", "developer": "Nintendo EAD", "genres": ["Action / Adventure"], "status": "finished"},
+    {"series": "The Legend of Zelda", "title": "Skyward Sword", "platform": "Wii", "developer": "Nintendo EAD", "genres": ["Action / Adventure"], "status": "finished"},
+    {"series": "The Legend of Zelda", "title": "Phantom Hourglass", "platform": "Nintendo DS", "developer": "Nintendo EAD", "genres": ["Action / Adventure", "Puzzle / Narrative"], "status": "finished"},
+    {"series": "The Legend of Zelda", "title": "Spirit Tracks", "platform": "Nintendo DS", "developer": "Nintendo EAD", "genres": ["Action / Adventure", "Puzzle / Narrative"], "status": "finished"},
+    {"series": "The Legend of Zelda", "title": "Tears of the Kingdom", "platform": "Nintendo Switch", "developer": "Nintendo EPD", "genres": ["Action / Adventure"], "status": "finished"},
+
+    {"series": "Super Mario", "title": "Super Mario Galaxy", "platform": "Wii", "developer": "Nintendo EAD Tokyo", "genres": ["Platformer"], "status": "finished"},
+    {"series": "Super Mario", "title": "Super Mario Galaxy 2", "platform": "Wii", "developer": "Nintendo EAD Tokyo", "genres": ["Platformer"], "status": "finished"},
+    {"series": "Luigi's Mansion", "title": "Luigi's Mansion", "platform": "GameCube", "developer": "Nintendo EAD", "genres": ["Action / Adventure"], "status": "finished"},
+    {"series": "Captain Toad", "title": "Captain Toad: Treasure Tracker", "platform": "Wii U / Switch", "developer": "Nintendo EAD Tokyo", "genres": ["Puzzle / Narrative"], "status": "finished"},
+
+    {"series": "Warcraft", "title": "Warcraft III: Reign of Chaos", "platform": "PC", "developer": "Blizzard Entertainment", "genres": ["Strategy / RTS"], "status": "finished"},
+    {"series": "Warcraft", "title": "Warcraft III: The Frozen Throne", "platform": "PC", "developer": "Blizzard Entertainment", "genres": ["Strategy / RTS"], "status": "finished"},
+    {"series": "World of Warcraft", "title": "World of Warcraft", "platform": "PC", "developer": "Blizzard Entertainment", "genres": ["RPG", "Multiplayer / Online"], "status": "finished"},
+    {"series": "StarCraft", "title": "StarCraft II: Wings of Liberty", "platform": "PC", "developer": "Blizzard Entertainment", "genres": ["Strategy / RTS"], "status": "finished"},
+    {"series": "StarCraft", "title": "StarCraft II: Heart of the Swarm", "platform": "PC", "developer": "Blizzard Entertainment", "genres": ["Strategy / RTS"], "status": "finished"},
+    {"series": "StarCraft", "title": "StarCraft II: Legacy of the Void", "platform": "PC", "developer": "Blizzard Entertainment", "genres": ["Strategy / RTS"], "status": "finished"},
+
+    {"series": "Mass Effect", "title": "Mass Effect", "platform": "PC / Xbox 360", "developer": "BioWare", "genres": ["RPG", "Action / Adventure"], "status": "finished"},
+    {"series": "Mass Effect", "title": "Mass Effect 2", "platform": "PC / Xbox 360", "developer": "BioWare", "genres": ["RPG", "Action / Adventure"], "status": "finished"},
+    {"series": "Dragon Age", "title": "Dragon Age: Origins", "platform": "PC", "developer": "BioWare", "genres": ["RPG"], "status": "finished"},
+    {"series": "Dragon Age", "title": "Dragon Age II", "platform": "PC", "developer": "BioWare", "genres": ["RPG"], "status": "finished"},
+
+    {"series": "Metal Gear", "title": "Metal Gear Solid 2: Sons of Liberty", "platform": "PS2", "developer": "Konami", "genres": ["Action / Adventure"], "status": "finished"},
+    {"series": "Metal Gear", "title": "Metal Gear Solid 3: Snake Eater", "platform": "PS2", "developer": "Konami", "genres": ["Action / Adventure"], "status": "finished"},
+
+    {"series": "The Witcher", "title": "The Witcher", "platform": "PC", "developer": "CD Projekt Red", "genres": ["RPG"], "status": "finished"},
+    {"series": "The Witcher", "title": "The Witcher 2: Assassins of Kings", "platform": "PC", "developer": "CD Projekt Red", "genres": ["RPG"], "status": "finished"},
+
+    {"series": "Monkey Island", "title": "The Secret of Monkey Island", "platform": "PC", "developer": "LucasArts", "genres": ["Puzzle / Narrative"], "status": "finished"},
+    {"series": "Monkey Island", "title": "Monkey Island 2: LeChuck's Revenge", "platform": "PC", "developer": "LucasArts", "genres": ["Puzzle / Narrative"], "status": "finished"},
+    {"series": "Monkey Island", "title": "The Curse of Monkey Island", "platform": "PC", "developer": "LucasArts", "genres": ["Puzzle / Narrative"], "status": "finished"},
+    {"series": "Monkey Island", "title": "Escape from Monkey Island", "platform": "PC", "developer": "LucasArts", "genres": ["Puzzle / Narrative"], "status": "finished"},
+    {"series": "Monkey Island", "title": "Tales of Monkey Island", "platform": "PC", "developer": "Telltale Games", "genres": ["Puzzle / Narrative"], "status": "finished"},
+
+    {"series": "The Walking Dead", "title": "The Walking Dead: Season One", "platform": "PC", "developer": "Telltale Games", "genres": ["Puzzle / Narrative"], "status": "finished"},
+    {"series": "The Wolf Among Us", "title": "The Wolf Among Us", "platform": "PC", "developer": "Telltale Games", "genres": ["Puzzle / Narrative"], "status": "finished"},
+
+    {"series": "Hollow Knight", "title": "Hollow Knight", "platform": "PC", "developer": "Team Cherry", "genres": ["Action / Adventure", "Platformer"], "status": "finished"},
+    {"series": "Ori", "title": "Ori and the Blind Forest", "platform": "PC", "developer": "Moon Studios", "genres": ["Platformer", "Action / Adventure"], "status": "finished"},
+    {"series": "Terraria", "title": "Terraria", "platform": "PC", "developer": "Re-Logic", "genres": ["Survival / Sandbox"], "status": "finished"},
+    {"series": "V Rising", "title": "V Rising", "platform": "PC", "developer": "Stunlock Studios", "genres": ["Survival / Sandbox", "Action / Adventure"], "status": "finished"},
+    {"series": "Braid", "title": "Braid", "platform": "PC", "developer": "Number None", "genres": ["Puzzle / Narrative", "Platformer"], "status": "finished"},
+    {"series": "Dust: An Elysian Tail", "title": "Dust: An Elysian Tail", "platform": "PC", "developer": "Humble Hearts", "genres": ["Action / Adventure", "Platformer"], "status": "finished"},
+    {"series": "FTL", "title": "FTL: Faster Than Light", "platform": "PC", "developer": "Subset Games", "genres": ["Strategy / RTS", "Survival / Sandbox"], "status": "finished"},
+    {"series": "Ghost Trick", "title": "Ghost Trick: Phantom Detective", "platform": "Nintendo DS", "developer": "Capcom", "genres": ["Puzzle / Narrative"], "status": "finished"},
+    {"series": "Reus", "title": "Reus", "platform": "PC", "developer": "Abbey Games", "genres": ["Strategy / RTS"], "status": "finished"},
+    {"series": "Subsurface Circular", "title": "Subsurface Circular", "platform": "PC", "developer": "Mike Bithell Games", "genres": ["Puzzle / Narrative"], "status": "finished"},
+    {"series": "Thomas Was Alone", "title": "Thomas Was Alone", "platform": "PC", "developer": "Mike Bithell Games", "genres": ["Puzzle / Narrative", "Platformer"], "status": "finished"},
+
+    {"series": "Call of Duty", "title": "Call of Duty: Modern Warfare 2", "platform": "PC", "developer": "Infinity Ward", "note": "2009 original", "genres": ["Multiplayer / Online"], "status": "finished"},
+    {"series": "Fall Guys", "title": "Fall Guys", "platform": "PC", "developer": "Mediatonic", "genres": ["Multiplayer / Online"], "status": "finished"},
+    {"series": "Fortnite", "title": "Fortnite", "platform": "PC", "developer": "Epic Games", "genres": ["Multiplayer / Online", "Survival / Sandbox"], "status": "finished"},
+    {"series": "Magicka", "title": "Magicka", "platform": "PC", "developer": "Arrowhead Game Studios", "genres": ["Multiplayer / Online", "Action / Adventure"], "status": "finished"},
+    {"series": "Rocket League", "title": "Rocket League", "platform": "PC", "developer": "Psyonix", "genres": ["Multiplayer / Online"], "status": "finished"},
+    {"series": "SSX", "title": "SSX 3", "platform": "PS2 / GameCube", "developer": "EA Canada", "genres": ["Multiplayer / Online"], "status": "finished"}
+  ],
+
+  "tv": [
+    {"title": "One Piece",            "category": "Anime",   "status": "finished"},
+    {"title": "Death Note",           "category": "Anime",   "status": "finished"},
+    {"title": "Jujutsu Kaisen",       "category": "Anime",   "status": "finished"},
+    {"title": "Yakitate!! Japan",     "category": "Anime",   "status": "finished"},
+    {"title": "Sky Castle",           "category": "K-Drama", "status": "finished"},
+    {"title": "Heroes",               "category": "Drama",   "status": "finished"},
+    {"title": "Brooklyn Nine-Nine",   "category": "Comedy",  "status": "finished"},
+    {"title": "Severance",                      "category": "Drama",  "status": "want"},
+    {"title": "Star Trek: The Next Generation", "category": "Sci-Fi", "status": "want"}
+  ]
+}

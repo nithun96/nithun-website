@@ -1,6 +1,6 @@
-# nithunmanoharan.com — Personal Website (v1)
+# nithun.no — Personal Website
 
-Personal website for Nithun Manoharan. Built as a hobby project to learn modern frontend development, and to establish a personal presence online. Live at [nithun.no](https://nithun.no).
+Personal website for Nithun Manoharan. Built as a hobby project to learn modern frontend development and establish a personal presence online. Live at [nithun.no](https://nithun.no).
 
 ---
 
@@ -8,7 +8,7 @@ Personal website for Nithun Manoharan. Built as a hobby project to learn modern 
 
 | Layer | Technology |
 |---|---|
-| Framework | React 19 + Vite |
+| Framework | React 19 + Vite 8 |
 | Styling | Tailwind CSS v4 |
 | Routing | React Router v7 |
 | Internationalisation | react-i18next |
@@ -19,161 +19,154 @@ Personal website for Nithun Manoharan. Built as a hobby project to learn modern 
 ## Project Structure
 
 ```
-Website Project/
-├── index.html                  # Entry point — SEO meta tags, Open Graph, JSON-LD schema, Google Fonts, dark mode init script
-├── vite.config.js              # Vite config — React plugin, Tailwind plugin, build date injection
-├── deploy.sh                   # Deploy script — build, upload to server, commit and push to GitHub
+nithun-website/
+├── index.html                      # Entry point — SEO meta, Open Graph, JSON-LD schema, dark mode init
+├── vite.config.js                  # Vite config — React plugin, Tailwind plugin, build date injection
+├── deploy.sh                       # Deploy: build → scp to server → git commit + push
+├── scripts/
+│   └── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
 ├── public/
-│   ├── favicon.svg             # Custom NM favicon
-│   ├── sitemap.xml             # Sitemap for Google (home + /books, with hreflang)
-│   └── images/
-│       └── nithun.jpeg         # Profile photo (optimised, ~65KB)
+│   ├── favicon.svg                 # Custom NM favicon
+│   └── sitemap.xml                 # Generated at build time — do not edit manually
 └── src/
-    ├── main.jsx                # App bootstrap — wraps App in BrowserRouter + StrictMode
-    ├── App.jsx                 # Root layout — Navbar, main content (routes), Footer
-    ├── i18n.js                 # i18next config — language detection, EN/NO resources
+    ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
+    ├── App.jsx                     # Root layout — Navbar, Routes, Footer
+    ├── i18n.js                     # i18next config — EN/NO, language detection
     ├── styles/
-    │   └── global.css          # Tailwind import, dark mode variant, font variables, html background
-    ├── components/             # Reusable UI pieces used across pages
-    │   ├── Navbar.jsx          # Top navigation bar
-    │   ├── Footer.jsx          # Bottom footer with social links and build date
-    │   ├── ThemeToggle.jsx     # Dark/light mode toggle
-    │   └── LangToggle.jsx      # EN/NO language toggle
-    ├── sections/               # Fragments that make up the home page
-    │   └── Hero.jsx            # Main home section — photo, name, tagline, intro text
-    ├── pages/                  # Full route-level page components
-    │   └── BooksPage.jsx       # /books — full books list with structured per-author entries
+    │   └── global.css              # Tailwind import, dark mode variant, CSS custom properties
+    ├── components/
+    │   ├── Navbar.jsx              # Navigation bar (sticky, frosted glass)
+    │   ├── Footer.jsx              # Footer with social links and build date
+    │   ├── ThemeToggle.jsx         # Dark/light toggle with SVG icons
+    │   └── LangToggle.jsx          # EN/NO language toggle
+    ├── sections/
+    │   └── Hero.jsx                # Home page — name, location, intro, teaser, section teasers
+    ├── pages/
+    │   ├── ShelfPage.jsx           # /shelf — books/games/TV with cover art and status filters
+    │   ├── SilencePage.jsx         # /silence — tinnitus noise tool with sleep timer
+    │   ├── WritingPage.jsx         # /writing — list of markdown posts
+    │   └── WritingPostPage.jsx     # /writing/:slug — individual post renderer
+    ├── audio/
+    │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
+    ├── data/
+    │   ├── shelf.json              # Shelf content — 94 books, 49 games, 2 TV entries
+    │   └── charities.json          # Charity links shown on Silence page
+    ├── lib/
+    │   └── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
+    ├── utils/
+    │   └── bookCovers.js           # Cover art — Google Books (primary), Open Library (fallback)
+    ├── writing/
+    │   └── *.md                    # Writing posts — YAML frontmatter + markdown body
     └── locales/
-        ├── en/
-        │   └── translation.json    # English strings
-        └── no/
-            └── translation.json    # Norwegian strings
+        ├── en/translation.json     # English strings
+        └── no/translation.json     # Norwegian strings
 ```
+
+---
+
+## Pages & Routes
+
+| Route | Component | Description |
+|---|---|---|
+| `/` | `Hero` | Home — name, intro, section teasers |
+| `/writing` | `WritingPage` | List of writing posts |
+| `/writing/:slug` | `WritingPostPage` | Individual writing post |
+| `/silence` | `SilencePage` | Tinnitus noise tool |
+| `/shelf` | `ShelfPage` | Books, games, TV shelf |
+| `/books` | → `/shelf` | Permanent redirect |
 
 ---
 
 ## How It Fits Together
 
 ### Startup (`main.jsx`)
-React mounts into `<div id="root">` in `index.html`. Before rendering, `i18n.js` is imported to initialise language detection. The whole app is wrapped in `BrowserRouter` so React Router can handle client-side navigation.
+React mounts into `<div id="root">` in `index.html`. `i18n.js` is imported first to initialise language detection. The app is wrapped in `BrowserRouter` for client-side navigation.
 
 ### Layout (`App.jsx`)
-Every page shares the same shell: `Navbar` at the top, a `<main>` block in the middle, and `Footer` at the bottom. The `<Routes>` inside `<main>` decides which page component to render:
-- `/` → `Hero` (home page)
-- `/books` → `BooksPage`
-
-A hidden skip-to-content link sits at the very top for keyboard/screen reader accessibility.
-
-### Navigation (`Navbar.jsx`)
-Sticky (`position: sticky, top: 0`) with `backdrop-blur-md` and 80% opacity background — gives a frosted glass effect when scrolling. Contains only the NM logo, LangToggle, and ThemeToggle. Books and Contact links removed pending future sections.
+Every page shares: `Navbar`, `<main>` with `<Routes>`, and `Footer`. A hidden skip-to-content link sits at the top for keyboard/screen reader accessibility.
 
 ### Theme (`ThemeToggle.jsx`)
-Toggles a `.dark` class on the `<html>` element. The preference is saved to `localStorage` and restored on page load. Tailwind's dark mode is configured to respond to this class (not the system `prefers-color-scheme` media query) via a custom variant in `global.css`.
-
-To prevent a flash of light mode on load, `index.html` contains an inline script that runs before React boots and applies `.dark` immediately if needed.
+Toggles a `.dark` class on `<html>`. Preference is persisted in `localStorage` and restored before React boots via an inline script in `index.html` (prevents flash of wrong theme). Tailwind's dark mode responds to this class via a custom `@custom-variant` in `global.css`.
 
 ### Language (`LangToggle.jsx`)
-Calls `i18n.changeLanguage()` to switch between `en` and `no`. Also updates `document.documentElement.lang` so the HTML `lang` attribute stays correct for screen readers and SEO. Language detection on first visit reads from `localStorage`, then browser settings.
+Calls `i18n.changeLanguage()` to switch between `en` and `no`. Updates `document.documentElement.lang` in sync for screen readers and SEO.
 
 ### Home page (`Hero.jsx`)
-Reads all text from the translation file. Renders a circular photo with a subtle ring, the name as `<h1>`, a location line with a pin icon, the intro paragraph, and a small italic teaser line. Photo and name fade in first (80ms), then text (400ms) via CSS opacity + translateY transitions.
+Renders name as `<h1>`, location line, intro paragraph, and a teaser quote. Below: three section-teaser cards linking to Writing, Silence, and Shelf.
 
-### Books page (`BooksPage.jsx`)
-Reads the `books.items` array from the translation file. Each item can have one of three shapes, which the component handles:
-- `text` — a single paragraph (Robert Jordan)
-- `paragraphs` — an array of paragraphs separated by a thin `<hr>` line (Tolkien, one paragraph per book)
-- `textBefore` + `series` + `textAfter` — intro text, a bullet list of series titles, then closing text (Brandon Sanderson)
+### Shelf (`ShelfPage.jsx`)
+Three tabs — Books, Games, TV — each filtered by status (All / Currently / Finished / Want to). Book cards fetch cover art asynchronously via `bookCovers.js`. Games and TV cards show a spine/title placeholder. Data comes from `src/data/shelf.json`.
 
-Author names are rendered as `<h2>` headings using the serif font.
+### Cover art (`utils/bookCovers.js`)
+Tries Google Books API first (no key needed); upscales thumbnail from `zoom=1` to `zoom=3`. Falls back to Open Library search (cover_i ID or ISBN). Results are cached in a `Map` for the session. Never throws; returns `null` on failure.
 
-### Footer (`Footer.jsx`)
-Contains LinkedIn and GitHub SVG icon links (with `aria-label` for accessibility) and a "Last updated" line. The date is baked in at build time via `__BUILD_DATE__` (injected by Vite's `define` in `vite.config.js`), so it always reflects when `npm run build` was last run. The "Last updated:" / "Sist oppdatert:" label is translated via i18n.
+### Silence (`SilencePage.jsx`)
+Noise tool for tinnitus and sleep. Uses `noiseEngine.js` (Web Audio API) to synthesise brown, pink, rain, and ocean sounds. Features: per-sound volume, sleep timer with fade-out, charity donation links. On iOS, a near-silent `<audio>` element is started inside the play gesture to force the "playback" audio session category — this keeps audio playing when the hardware mute switch is on.
+
+### Noise engine (`audio/noiseEngine.js`)
+Framework-agnostic Web Audio module, designed to be extractable into a standalone Capacitor mobile app. Synthesises: brown noise (lowpass-filtered white noise), pink noise (1/f approximation), rain (three blended layers with LFO modulation), and ocean (amplitude-modulated brown noise).
+
+### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
+Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, description, language). `parseFrontmatter.js` strips and parses frontmatter at build time via `import.meta.glob`. Posts are sorted by date, rendered with `react-markdown`.
 
 ### Translations (`locales/`)
-All user-facing text lives in `en/translation.json` and `no/translation.json`. Nothing is hardcoded in JSX. The structure mirrors the component hierarchy: `nav.*`, `hero.*`, `books.*`, `footer.*`.
+All user-facing text lives in `en/translation.json` and `no/translation.json`. Nothing is hardcoded in JSX.
 
-#### Adding or editing a string
-
-1. Open both `src/locales/en/translation.json` and `src/locales/no/translation.json`
-2. Add the same key in both files with the appropriate translation
-3. Use the key in JSX with `const { t } = useTranslation()` and `{t('your.key')}`
-
-#### Adding a new language
-
-1. Create `src/locales/de/translation.json` (or whichever language code)
-2. Copy the structure from `en/translation.json` and translate all values
-3. In `src/i18n.js`, import the file and add it to the `resources` object
-4. Update `LangToggle.jsx` to cycle through the new language
-5. Add a `hreflang` tag for the new language in `index.html`
-
-#### Translation file structure
-
-Values can be one of three types depending on what the component needs:
-
-| Type | When to use | Example key |
-|---|---|---|
-| `string` | Single line of text | `hero.location`, `hero.intro`, `hero.teaser` |
-| `string[]` | Multiple paragraphs rendered in a loop | `books.introFull` |
-| `object[]` | Structured data with multiple fields | `books.items` |
-
-**`books.items`** entries support three shapes (all handled by `BooksPage.jsx`):
-
-```json
-{ "author": "…", "text": "…" }
-{ "author": "…", "paragraphs": ["…", "…", "…"] }
-{ "author": "…", "textBefore": "…", "series": ["…", "…"], "textAfter": "…" }
-```
+To add or edit a string:
+1. Add the same key to both locale files
+2. Use it in JSX: `const { t } = useTranslation()` → `{t('your.key')}`
 
 ### SEO (`index.html`)
 - `<title>` and `<meta name="description">` for Google
-- `<link rel="canonical">` and `<link rel="sitemap">` 
-- `hreflang` tags for EN, NO and `x-default`
-- Open Graph tags for rich previews when sharing on LinkedIn etc.
-- JSON-LD `Person` schema for Google Knowledge Panel eligibility (includes LinkedIn and GitHub in `sameAs`)
+- `<link rel="canonical">` and `<link rel="sitemap">`
+- `hreflang` tags for EN, NO, and `x-default`
+- Open Graph tags for rich link previews
+- JSON-LD `Person` schema for Google Knowledge Panel eligibility
 
 ---
 
 ## Dark Mode
 
-Default is dark mode. Tailwind's dark mode uses the `.dark` class on `<html>`, configured with:
+Default is dark. Tailwind's dark mode uses the `.dark` class on `<html>`:
 
 ```css
 @custom-variant dark (&:where(.dark, .dark *));
 ```
 
-The html background colour is also set in CSS (not just Tailwind) to prevent a white flash when overscrolling on mobile.
+The html background colour is also set in plain CSS (not just Tailwind) to prevent a white flash on mobile overscroll.
 
 ---
 
 ## Deploy
 
-Use the deploy script, passing a commit message as an argument:
-
 ```bash
 ./deploy.sh "Your commit message"
 ```
 
-This will in order:
-1. Build the project (`npm run build`)
-2. Upload `dist/` to the Hetzner VPS via `scp`
-3. Commit and push all changes to GitHub
+In order:
+1. Builds the project (`npm run build` + sitemap generation)
+2. Uploads `dist/` to the Hetzner VPS via `scp`
+3. Commits and pushes all changes to GitHub
 
-Nginx on the server serves the `dist/` folder with `try_files` so React Router's client-side routes (like `/books`) work on direct URL access or page refresh. Security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Content-Security-Policy) are configured in the Nginx config. Traffic from nithunmanoharan.com is automatically redirected to nithun.no.
+Nginx serves `dist/` with `try_files` so React Router's client-side routes work on direct URL access. Security headers (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) are configured in Nginx. Traffic from nithunmanoharan.com redirects to nithun.no.
+
+**CSP note:** The Nginx `Content-Security-Policy` must explicitly allow external domains. Currently permitted: `https://books.google.com`, `https://covers.openlibrary.org` (img-src) and `https://www.googleapis.com`, `https://openlibrary.org` (connect-src).
 
 ---
 
-## v1 Complete
+## What's Live
 
 - [x] Project scaffolded (Vite + React + Tailwind)
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
-- [x] Hero section with photo, tagline, intro
-- [x] Books subpage (`/books`) with structured author entries
+- [x] Hero section — name, intro, section teasers
+- [x] Shelf page (`/shelf`) — 94 books with cover art, 49 games, TV entries; tabs + status filters
+- [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
+- [x] Writing page (`/writing`) — markdown posts with frontmatter, rendered with react-markdown
 - [x] Footer with social icon links and build date
-- [x] SEO meta tags, Open Graph, JSON-LD schema, sitemap
+- [x] SEO meta tags, Open Graph, JSON-LD schema, sitemap (auto-generated)
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
 - [x] Security headers on Nginx
-- [x] Deployed to Hetzner VPS
-- [x] Domain pointed to server (nithun.no, redirect fra nithunmanoharan.com)
+- [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)
 - [x] Git repository on GitHub

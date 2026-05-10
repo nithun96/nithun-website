@@ -1,52 +1,95 @@
 {
   "nav": {
-    "books": "Bøker",
-    "contact": "Kontakt",
+    "writing":     "Skriverier",
+    "silence":     "Stillhet",
+    "shelf":       "Hylle",
     "toggleTheme": "Bytt tema",
-    "toggleLang": "English"
+    "toggleLang":  "English"
   },
   "hero": {
-    "name": "Nithun Manoharan",
-    "tagline": "Lever barndomsdrømmen, ved å jobbe med kunstig intelligens.",
+    "name":     "Nithun Manoharan",
     "location": "Oslo, Norge",
-    "intro": "Til daglig så jobber jeg som produktsjef innen IT, men på denne siden så vil jeg vise hva jeg bygger i fritiden, med en sunn dose hjelp fra AI. Jeg har også som ambisjon å slippe løs litt av kreativiteten min og skrive litt om både virkeligheten og fiksjon. Jeg lover ingenting helt enda.",
-    "teaser": "Det beste er på vei. Snart"
-  },
-  "books": {
-    "heading": "Bøker",
-    "backHome": "← Nithun Manoharan",
-    "introFull": [
-      "Når jeg først skulle skrive noe om meg, så er dette et naturlig sted å starte. La meg dele noen av bøkene som har gjort et sterkt inntrykk på meg.",
-      "Listen virker kanskje generisk på en måte siden disse alle er populære forfattere, men det er en grunn til at disse forfatterne er så populære."
-    ],
-    "items": [
-      {
-        "author": "J.R.R. Tolkien – Hobbiten, Ringenes Herre, The Silmarillion",
-        "paragraphs": [
-          "Hobbiten er kanskje favorittboken min noensinne, til tross for at det er noe veldig \"enkelt\" ved den. Den er kort, konsis og veldig godt skrevet. Det er rett og slett noe koselig ved den, og er fort gjort å lese flere ganger.",
-          "Ringenes Herre er ikke langt bak blant favorittene, og jeg har lest serien på nytt nå nylig (04.04.2026). Man kan ikke nevne bøkene uten å nevne filmene. Og jeg synes det er interessant hvor lite fokus det er på all slossingen, som i motsetning er nesten hovedfokus i filmene. Det tror jeg gjør bøkene enda bedre for min del, selv om filmene er veldig gode de også. De har bare hver sin sjarm.",
-          "Silmarillion må også nevnes, siden det er rett og slett så mange gode fortellinger i en bok. Det er kanskje den mest undervurderte delen av hva Tolkien har skrevet, selv om den kanskje ikke var utgitt som en bok av ham selv. Uansett, så anbefales det. Spesielt hvis man utelukker den første delen som heter Ainulindalë. Jeg husker at jeg ga opp første gangen jeg leste den som tenåring, basert på hvor tung akkurat introen er. Men kjemper man seg gjennom det, så er det absolutt til å anbefale."
-        ]
+    "intro":    "Her vil jeg dele det jeg jobber med på fritiden, helt uten tilknytning til mitt profesjonelle liv. Akkurat nå er det Deafening Silence, et verktøy for tinnituslydterapi, som jeg håper å lansere gratis som en app i fremtiden. En hylle med bøker, spill og TV jeg er fan av, og noe av skrivingen min — fiksjon eller om det som skjer i den virkelige verden, hva enn jeg finner tid og interesse for.",
+    "teaser":   "Det beste er på vei. Snart™",
+    "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselforskningsorganisasjonene som er nevnt på Silence-siden</5>.",
+    "teasers": {
+      "writing": {
+        "label": "Skriverier",
+        "title": "Essays og kommentarer",
+        "desc":  "Det som er på hjertet, etter hvert som det kommer."
       },
-      {
-        "author": "Robert Jordan – The Wheel of Time",
-        "text": "Tidshjulet, som det fint heter på norsk, er også en av mine favorittbokserier. Det er ganske naturlig at denne er på listen basert på forfatteren ovenfor. Det er en flott serie, til tross for at det går litt tregt en periode. Men sånn er det bare når det er opp til 14 bøker, pluss New Spring da. Det sier i hvert fall noe om hvor mye jeg likte det, ettersom jeg har lest bøkene flere ganger, og det blir nok ikke siste gang heller."
+      "silence": {
+        "label": "Stillhet",
+        "title": "Et tinnitus-verktøy",
+        "desc":  "Bakgrunnslyder for avslapning og søvn."
       },
-      {
-        "author": "Brandon Sanderson",
-        "textBefore": "Her kan jeg ikke nevne én enkelt serie, ettersom jeg har lest minst tre ulike og likt alle:",
-        "series": ["Mistborn", "Steelheart", "The Stormlight Archive (ikke alle ferdig siden seriene bare fortsetter)"],
-        "textAfter": "Jeg leste bøkene hans da jeg hadde litt bedre tid og ventet en kort periode på neste bok. Det varte ikke lenge, og han skriver nå raskere enn jeg klarer å lese. Målet er å ta ham igjen, men jeg ville ikke tatt det veddemålet med mindre jeg kunne jobbe fulltid med å lese bøkene. Det som er imponerende, er kvaliteten på det som blir skrevet, til tross for hurtigheten på å skrive. Her kunne forfatterne av Game of Thrones og Kingkiller Chronicles tatt noen notater av Brandon Sanderson."
+      "shelf": {
+        "label": "Hylle",
+        "title": "Bøker, serier, spill",
+        "desc":  "En logg over det jeg er fan av."
       }
-    ]
+    }
   },
   "writing": {
-    "heading": "Skriverier",
-    "backWriting": "← Skriverier",
-    "noDate": "Udatert",
-    "conversation": "Bli med i samtalen →"
+    "heading":      "Skriverier",
+    "subtitle":     "Essays, kommentarer og enkle observasjoner.",
+    "backWriting":  "Skriverier",
+    "noDate":       "Udatert",
+    "conversation": "Bli med i samtalen på Mastodon"
+  },
+  "shelf": {
+    "heading":  "Hylle",
+    "subtitle": "Bøker, serier og spill — en personlig logg over hva som har vært verdt tiden.",
+    "tabs": {
+      "books": "Bøker",
+      "games": "Spill",
+      "tv":    "TV og anime"
+    },
+    "filters": {
+      "all":      "Alle",
+      "current":  "Leser nå",
+      "finished": "Ferdig",
+      "want":     "Vil ha"
+    },
+    "statusLabels": {
+      "current":  "Leser nå",
+      "finished": "Ferdig",
+      "want":     "Vil ha"
+    },
+    "empty": "Ingenting her ennå."
+  },
+  "silence": {
+    "navLink":  "Stillhet",
+    "heading":  "Deafening Silence",
+    "subtitle": "Deafening Silence er et lite verktøy for tinnituslydterapi. Trykk på en lyd for å spille av; juster etter eget ønske.",
+    "guidance": "Basert på prinsipper fra Tinnitus Retraining Therapy (TRT): still inn volumet slik at lyden er rett under nivået på tinnitussen din — ikke for å maskere den fullstendig. Målet er habituering over tid, ikke undertrykking.",
+    "sounds": {
+      "brown": "Brun støy",
+      "pink":  "Rosa støy",
+      "rain":  "Regn",
+      "ocean": "Hav"
+    },
+    "soundDescriptions": {
+      "brown": "Dyp, beroligende dur",
+      "pink":  "Balansert, naturlig sus",
+      "rain":  "Rolig regnfall, syntetisert",
+      "ocean": "Jevne bølger, forsiktig"
+    },
+    "play":         "Spill",
+    "pause":        "Pause",
+    "volume":       "Volum",
+    "sleepTimer":   "Søvntimer",
+    "timerOff":     "Av",
+    "timerMinutes": "{{minutes}} min",
+    "timerActive":  "Stopper om {{remaining}}",
+    "cancelTimer":  "Avbryt",
+    "donationHeading": "Støtt hørselhelse",
+    "donationIntro":   "Hvis Deafening Silence hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
+    "audioError": "Lyden startet ikke. Trykk Spill igjen.",
+    "iosMuteNote": "Hører du ingen lyd, sjekk at lydavbryterknappen er av. På iPhone kan sideknappen dempe lyden selv om volumet er skrudd opp."
   },
   "footer": {
-    "lastUpdated": "Sist oppdatert:"
+    "lastUpdated": "Sist oppdatert:",
+    "license":     "CC BY-NC 4.0"
   }
 }

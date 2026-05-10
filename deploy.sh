@@ -13,7 +13,7 @@ echo "Building..."
 npm run build
 
 echo "Uploading to server..."
-scp -r dist/* root@204.168.209.150:/var/www/nithun-website/dist/
+scp -r dist/* deploy@204.168.209.150:/var/www/nithun-website/dist/
 
 echo "Committing and pushing to GitHub..."
 git add .

@@ -114,35 +114,47 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 ## Folder Structure
 
 ```
-Website Project/
-├── index.html              # Entry point — SEO, Open Graph, JSON-LD, dark mode init script
-├── vite.config.js          # Vite config — plugins, build date injection (__BUILD_DATE__)
-├── deploy.sh               # Deploy: build → scp to server → git commit + push
+nithun-website/
+├── index.html                      # Entry point — SEO meta, Open Graph, JSON-LD, dark mode init
+├── vite.config.js                  # Vite config — React plugin, Tailwind plugin, build date injection
+├── deploy.sh                       # Deploy: build → scp to server → git commit + push
 ├── scripts/
-│   └── generate-sitemap.js # Auto-generates public/sitemap.xml with today's date at build time
+│   └── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
 ├── public/
-│   ├── favicon.svg         # Custom NM favicon
-│   ├── sitemap.xml         # Generated at build time — do not edit manually
-│   └── images/
-│       └── nithun.jpeg     # Profile photo (optimised)
+│   ├── favicon.svg                 # Custom NM favicon
+│   └── sitemap.xml                 # Generated at build time — do not edit manually
 └── src/
-    ├── main.jsx            # Bootstrap — BrowserRouter + i18n init
-    ├── App.jsx             # Root layout — Navbar, Routes, Footer
-    ├── i18n.js             # i18next config — EN/NO, language detection
+    ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
+    ├── App.jsx                     # Root layout — Navbar, Routes, Footer
+    ├── i18n.js                     # i18next config — EN/NO, language detection
     ├── styles/
-    │   └── global.css      # Tailwind import, dark mode variant, font variables
+    │   └── global.css              # Tailwind import, dark mode variant, CSS custom properties
     ├── components/
-    │   ├── Navbar.jsx      # Navigation bar
-    │   ├── Footer.jsx      # Footer with social links and build date
-    │   ├── ThemeToggle.jsx # Dark/light toggle with SVG icons
-    │   └── LangToggle.jsx  # EN/NO language toggle
+    │   ├── Navbar.jsx              # Navigation bar (sticky, frosted glass)
+    │   ├── Footer.jsx              # Footer with social links and build date
+    │   ├── ThemeToggle.jsx         # Dark/light toggle with SVG icons
+    │   └── LangToggle.jsx          # EN/NO language toggle
     ├── sections/
-    │   └── Hero.jsx        # Home page — photo, name, tagline, intro
+    │   └── Hero.jsx                # Home page — name, location, intro, teaser, section teasers
     ├── pages/
-    │   └── BooksPage.jsx   # /books — author entries with three rendering modes
+    │   ├── ShelfPage.jsx           # /shelf — books/games/TV with cover art and status filters
+    │   ├── SilencePage.jsx         # /silence — tinnitus noise tool with sleep timer
+    │   ├── WritingPage.jsx         # /writing — list of markdown posts
+    │   └── WritingPostPage.jsx     # /writing/:slug — individual post renderer
+    ├── audio/
+    │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
+    ├── data/
+    │   ├── shelf.json              # Shelf content — 94 books, 49 games, 2 TV entries
+    │   └── charities.json          # Charity links shown on Silence page
+    ├── lib/
+    │   └── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
+    ├── utils/
+    │   └── bookCovers.js           # Cover art — Google Books (primary), Open Library (fallback)
+    ├── writing/
+    │   └── *.md                    # Writing posts — YAML frontmatter + markdown body
     └── locales/
-        ├── en/translation.json
-        └── no/translation.json
+        ├── en/translation.json     # English strings
+        └── no/translation.json     # Norwegian strings
 ```
 
 ---
@@ -160,6 +172,8 @@ This will build, upload to the server, and push to GitHub in one command.
 The site is live at **nithun.no** (primary domain). Traffic from nithunmanoharan.com automatically redirects to nithun.no.
 
 **Important:** After every change session, run `./deploy.sh` with a descriptive commit message to deploy to the live server.
+
+**After every deploy:** Update `README.md` to reflect the current state of the site — pages, routes, file structure, and the "What's Live" checklist. The README is the living reference for what exists; keep it accurate.
 
 ---
 
@@ -183,18 +197,19 @@ The site is live at **nithun.no** (primary domain). Traffic from nithunmanoharan
 
 ---
 
-## Current Status (v1 complete)
+## Current Status
 
 - [x] Project scaffolded (Vite + React + Tailwind)
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
-- [x] Hero section with photo, tagline, intro
-- [x] Books subpage (/books) with structured author entries
+- [x] Hero section — name, intro, section teasers (portrait removed)
+- [x] Shelf page (`/shelf`) — 94 books with cover art, 49 games, TV entries; tabs + status filters
+- [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
+- [x] Writing page (`/writing`) — markdown posts with frontmatter, rendered with react-markdown
 - [x] Footer with social icon links and build date
 - [x] SEO meta tags, Open Graph, JSON-LD schema, sitemap (auto-generated)
-- [x] WCAG AA accessibility basics
-- [x] Security headers on Nginx
-- [x] Deployed to Hetzner VPS
-- [x] Live at nithun.no (redirect from nithunmanoharan.com)
+- [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
+- [x] Security headers on Nginx (CSP allows Google Books + Open Library)
+- [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)
 - [x] Git repository on GitHub

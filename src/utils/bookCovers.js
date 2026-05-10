@@ -42,6 +42,8 @@ async function tryGoogleBooks(title, author) {
     const data = await res.json()
     let imageUrl = data.items?.[0]?.volumeInfo?.imageLinks?.thumbnail
     if (!imageUrl) return null
+    // Google returns http:// URLs — upgrade to https to avoid mixed-content blocking
+    imageUrl = imageUrl.replace('http://', 'https://')
     // Upscale from zoom=1 to zoom=3 for better resolution
     return imageUrl.replace(/zoom=\d+/, 'zoom=3')
   } catch {

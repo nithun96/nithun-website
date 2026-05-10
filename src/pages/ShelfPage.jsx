@@ -30,7 +30,11 @@ function BookCard({ book, index }) {
   const fallbackAttempted = useRef(false)
 
   useEffect(() => {
-    getBookCover(book.title, book.author, book.isbn || null).then(setImageUrl)
+    if (book.coverUrl) {
+      setImageUrl(book.coverUrl)
+    } else {
+      getBookCover(book.title, book.author, book.isbn || null).then(setImageUrl)
+    }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Called when the initial cover 404s or returns a 1px placeholder.

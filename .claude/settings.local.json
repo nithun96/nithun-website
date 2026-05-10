@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(./deploy.sh \"Refresh homepage: new intro text, fade-in animation, remove Books and Contact from nav\")"
+      "Bash(./deploy.sh \"Refresh homepage: new intro text, fade-in animation, remove Books and Contact from nav\")",
+      "WebSearch"
     ]
   }
 }

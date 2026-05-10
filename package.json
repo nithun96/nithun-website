@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "node scripts/generate-sitemap.js && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fetch-covers": "node scripts/fetchBookCovers.js",
+    "finalise-covers": "node scripts/finaliseBookCovers.js"
   },
   "dependencies": {
     "i18next": "^26.0.3",

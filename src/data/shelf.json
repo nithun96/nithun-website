@@ -79,7 +79,6 @@
     {"series": "Harry Potter",             "title": "The Half-Blood Prince",               "author": "J.K. Rowling",        "number": 6, "status": "finished"},
     {"series": "Harry Potter",             "title": "The Deathly Hallows",                 "author": "J.K. Rowling",        "number": 7, "status": "finished"},
 
-    {"series": "Warcraft",                 "title": "Of Blood and Honor",                  "author": "Chris Metzen",        "status": "finished"},
     {"series": "Warcraft",                 "title": "Lord of the Clans",                   "author": "Christie Golden",     "status": "finished"},
     {"series": "Warcraft",                 "title": "The Last Guardian",                   "author": "Jeff Grubb",          "status": "finished"},
     {"series": "Warcraft — War of the Ancients", "title": "The Well of Eternity",          "author": "Richard A. Knaak",    "number": 1, "status": "finished"},
@@ -90,7 +89,6 @@
     {"series": "Warcraft",                 "title": "Arthas: Rise of the Lich King",       "author": "Christie Golden",     "status": "finished"},
     {"series": "Warcraft",                 "title": "The Shattering",                      "author": "Christie Golden",     "status": "finished"},
     {"series": "Warcraft",                 "title": "Stormrage",                           "author": "Richard A. Knaak",    "status": "finished"},
-    {"series": "Warcraft",                 "title": "Dawn of the Aspects",                 "author": "Richard A. Knaak",    "status": "finished"},
 
     {"series": "Standalone",               "title": "Sofies verden",                       "author": "Jostein Gaarder",     "status": "finished"},
     {"series": "Standalone",               "title": "The Alchemist",                       "author": "Paulo Coelho",        "status": "finished"},

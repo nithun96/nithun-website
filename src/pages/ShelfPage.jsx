@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import { getBookCover } from '../utils/bookCovers'
@@ -21,29 +21,12 @@ const SHELL = {
   margin: '0 auto',
 }
 
-// ── Book card with Open Library cover fetch ───────────────────────────────────
+// ── Book card ─────────────────────────────────────────────────────────────────
 
-function BookCard({ book, index }) {
+function BookCard({ book }) {
   const { t } = useTranslation()
-  const [imageUrl, setImageUrl] = useState(null)
-  const [imageOk,  setImageOk]  = useState(false)
-  const fallbackAttempted = useRef(false)
-
-  useEffect(() => {
-    if (book.coverUrl) {
-      setImageUrl(book.coverUrl)
-    } else {
-      getBookCover(book.title, book.author, book.isbn || null).then(setImageUrl)
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Called when the initial cover 404s or returns a 1px placeholder.
-  // Already tried both sources in getBookCover, so this just prevents retry loops.
-  function tryFallback() {
-    if (fallbackAttempted.current) return
-    fallbackAttempted.current = true
-    // Both sources have been exhausted by the initial call
-  }
+  const imageUrl = book.coverUrl ?? getBookCover(book.title)
+  const [imageOk, setImageOk] = useState(false)
 
   const bookMeta = book.number != null ? `#${book.number}` : book.note || ''
 
@@ -97,11 +80,8 @@ function BookCard({ book, index }) {
             src={imageUrl}
             alt={book.title}
             loading="lazy"
-            onLoad={e => {
-              if (e.currentTarget.naturalWidth < 10) tryFallback()
-              else setImageOk(true)
-            }}
-            onError={tryFallback}
+            onLoad={() => setImageOk(true)}
+            onError={() => {}}
             style={{
               position: 'absolute',
               inset: 0,
@@ -220,33 +200,26 @@ export default function ShelfPage() {
           </div>
         ) : filtered.map((item, i) => (
           cat === 'books' ? (
-            <BookCard key={i} book={item} index={i} />
+            <BookCard key={i} book={item} />
           ) : (
-            <div key={i} className="shelf-card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <div
-                style={{
-                  width: '100%',
-                  aspectRatio: COVER_RATIOS[cat],
-                  background: 'var(--bg2)',
-                  borderRadius: 3,
-                  border: '1px solid color-mix(in oklch, var(--fg) 6%, transparent)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  justifyContent: 'flex-start',
-                  padding: '10px 10px 10px 18px',
-                  transition: 'border-color 0.2s',
-                  cursor: 'default',
-                }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 16%, transparent)'}
-                onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 6%, transparent)'}
-              >
-                <div className="shelf-spine" style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, borderRadius: '2px 0 0 2px' }} />
-                <span style={{ fontSize: 9, fontFamily: 'monospace', color: 'var(--fgm)', letterSpacing: '0.06em', lineHeight: 1.7, position: 'relative' }}>
-                  {item.title}
-                </span>
-              </div>
+            <div
+              key={i}
+              className="shelf-card"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6,
+                padding: '10px 12px 10px 16px',
+                background: 'var(--bg2)',
+                borderRadius: 3,
+                border: '1px solid color-mix(in oklch, var(--fg) 6%, transparent)',
+                borderLeft: `3px solid ${TAB_ACCENTS[cat]}`,
+                transition: 'opacity 0.15s',
+                cursor: 'default',
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
               <div style={{ fontFamily: 'Georgia, serif', fontSize: 13, color: 'var(--fg2)', lineHeight: 1.4 }}>
                 {item.title}
               </div>

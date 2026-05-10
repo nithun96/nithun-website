@@ -24,3 +24,7 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# Book cover pre-fetch (generated files — not committed)
+cover-preview.html
+src/data/bookCovers.draft.json
+

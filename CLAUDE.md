@@ -177,6 +177,30 @@ The site is live at **nithun.no** (primary domain). Traffic from nithunmanoharan
 
 ---
 
+## Book Covers (Shelf Page)
+
+Covers are pre-fetched at dev-time and stored in `src/data/bookCovers.json` (committed to git). The app imports this file statically — no API calls at runtime.
+
+### Workflow (run when adding books or a cover looks wrong)
+
+1. **`npm run fetch-covers`** — queries Google Books API then Open Library for each book, validates images (width ≥ 200px), writes:
+   - `src/data/bookCovers.draft.json` (gitignored, intermediate)
+   - `cover-preview.html` (gitignored) — open in browser to review all covers visually
+2. Open `cover-preview.html`. For any cover that's wrong or missing:
+   - Add an entry to `src/data/bookCoversOverride.json` using the **exact book title** from `shelf.json`
+   - Set value to a direct image URL (string) to override, or `null` to leave the card without a cover
+3. **`npm run finalise-covers`** — merges draft + overrides → writes `src/data/bookCovers.json`
+4. Commit `src/data/bookCovers.json` and `src/data/bookCoversOverride.json`
+5. Deploy: `./deploy.sh "Update book covers"`
+
+### Google Books API key (optional but recommended)
+```
+$env:GOOGLE_BOOKS_API_KEY="your-key-here"; npm run fetch-covers
+```
+Without a key the script still works but may encounter rate limits. Get a free key at console.cloud.google.com (Books API, no billing required for reasonable use).
+
+---
+
 ## How to Work With Me (Claude Code)
 
 - I understand high-level decisions, not every line of code

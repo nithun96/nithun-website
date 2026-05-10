@@ -1,16 +1,31 @@
 const cache = new Map()
 
-/**
- * Fetch a book cover from Google Books API (primary) or Open Library (fallback).
- * No API key required. Never throws; returns null on any failure.
- * Results are cached to avoid duplicate requests.
- */
+// Limit concurrent Google Books requests to avoid 503 rate limiting
+let activeRequests = 0
+const MAX_CONCURRENT = 3
+const waitQueue = []
+
+function acquireSlot() {
+  if (activeRequests < MAX_CONCURRENT) {
+    activeRequests++
+    return Promise.resolve()
+  }
+  return new Promise(resolve => waitQueue.push(resolve))
+}
+
+function releaseSlot() {
+  activeRequests--
+  if (waitQueue.length > 0) {
+    activeRequests++
+    waitQueue.shift()()
+  }
+}
+
 export async function getBookCover(title, author, isbn = null) {
   const cacheKey = `${title}:${author}:${isbn || ''}`
   if (cache.has(cacheKey)) return cache.get(cacheKey)
 
   try {
-    // Try Google Books API first — faster and often has better thumbnails
     const googleCover = await tryGoogleBooks(title, author)
     if (googleCover) {
       cache.set(cacheKey, googleCover)
@@ -31,6 +46,7 @@ export async function getBookCover(title, author, isbn = null) {
 }
 
 async function tryGoogleBooks(title, author) {
+  await acquireSlot()
   try {
     const query = `intitle:${encodeURIComponent(title)}+inauthor:${encodeURIComponent(author)}`
     const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1`
@@ -39,11 +55,11 @@ async function tryGoogleBooks(title, author) {
     const data = await res.json()
     let imageUrl = data.items?.[0]?.volumeInfo?.imageLinks?.thumbnail
     if (!imageUrl) return null
-    // Google returns http:// URLs — upgrade to https to avoid mixed-content blocking
     imageUrl = imageUrl.replace('http://', 'https://')
-    // Upscale from zoom=1 to zoom=3 for better resolution
     return imageUrl.replace(/zoom=\d+/, 'zoom=3')
   } catch {
     return null
+  } finally {
+    releaseSlot()
   }
 }

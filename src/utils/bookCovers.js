@@ -17,13 +17,10 @@ export async function getBookCover(title, author, isbn = null) {
       return googleCover
     }
 
-    // Fall back to Open Library
-    let openLibraryCover = null
-    if (isbn) {
-      openLibraryCover = `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`
-    } else if (author) {
-      openLibraryCover = await tryOpenLibrarySearch(title, author)
-    }
+    // Fall back to direct Open Library ISBN cover (no API call, no CORS issues)
+    const openLibraryCover = isbn
+      ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`
+      : null
 
     cache.set(cacheKey, openLibraryCover)
     return openLibraryCover
@@ -46,27 +43,6 @@ async function tryGoogleBooks(title, author) {
     imageUrl = imageUrl.replace('http://', 'https://')
     // Upscale from zoom=1 to zoom=3 for better resolution
     return imageUrl.replace(/zoom=\d+/, 'zoom=3')
-  } catch {
-    return null
-  }
-}
-
-async function tryOpenLibrarySearch(title, author) {
-  try {
-    const params = new URLSearchParams({ title, author, limit: '1' })
-    const res = await fetch(`https://openlibrary.org/search.json?${params}`)
-    if (!res.ok) return null
-    const data = await res.json()
-    const doc = data.docs?.[0]
-    if (!doc) return null
-
-    if (doc.cover_i) {
-      return `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`
-    } else if (doc.isbn?.[0]) {
-      return `https://covers.openlibrary.org/b/isbn/${doc.isbn[0]}-L.jpg`
-    }
-
-    return null
   } catch {
     return null
   }

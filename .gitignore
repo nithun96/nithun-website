@@ -24,6 +24,3 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Game prototypes (local only)
-src/game/
-GAME-BRIEF.md

@@ -49,10 +49,11 @@ nithun-website/
     ├── audio/
     │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
     ├── data/
-    │   ├── shelf.json              # Shelf content — 94 books, 49 games, 2 TV entries
+    │   ├── shelf.json              # Shelf content — 94 books, 49 games, 9 TV entries
     │   └── charities.json          # Charity links shown on Silence page
     ├── lib/
-    │   └── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
+    │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
+    │   └── parseFootnotes.js       # Parses [^N: type: text] footnote syntax from post body
     ├── utils/
     │   └── bookCovers.js           # Cover art — Google Books (primary), Open Library (fallback)
     ├── writing/
@@ -104,10 +105,12 @@ Tries Google Books API first (no key needed); upscales thumbnail from `zoom=1` t
 Noise tool for tinnitus and sleep. Uses `noiseEngine.js` (Web Audio API) to synthesise brown, pink, rain, and ocean sounds. Features: per-sound volume, sleep timer with fade-out, charity donation links. On iOS, a near-silent `<audio>` element is started inside the play gesture to force the "playback" audio session category — this keeps audio playing when the hardware mute switch is on.
 
 ### Noise engine (`audio/noiseEngine.js`)
-Framework-agnostic Web Audio module, designed to be extractable into a standalone Capacitor mobile app. Synthesises: brown noise (lowpass-filtered white noise), pink noise (1/f approximation), rain (three blended layers with LFO modulation), and ocean (amplitude-modulated brown noise).
+Framework-agnostic Web Audio module, designed to be extractable into a standalone Capacitor mobile app. Synthesises: brown noise (leaky integrator random walk), pink noise (Paul Kellet IIR 1/f approximation), rain (three blended layers — bandpass white noise body, low rumble, LFO-modulated high-frequency drops), and ocean (amplitude-modulated white noise with slow sine envelope).
 
 ### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
-Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, description, language). `parseFrontmatter.js` strips and parses frontmatter at build time via `import.meta.glob`. Posts are sorted by date, rendered with `react-markdown`.
+Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date, rendered with `react-markdown` + `rehype-raw`.
+
+Footnote system: two types — `clarification` (quiet aside) and `wry` (warm left border). Desktop: hover shows tooltip, click pins it. Mobile: tap opens a bottom sheet portal rendered directly on `document.body`.
 
 ### Translations (`locales/`)
 All user-facing text lives in `en/translation.json` and `no/translation.json`. Nothing is hardcoded in JSX.
@@ -160,7 +163,7 @@ Nginx serves `dist/` with `try_files` so React Router's client-side routes work 
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Hero section — name, intro, section teasers
-- [x] Shelf page (`/shelf`) — 94 books with cover art, 49 games, TV entries; tabs + status filters
+- [x] Shelf page (`/shelf`) — 94 books with cover art, 49 games, 9 TV entries; tabs + status filters
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with frontmatter, rendered with react-markdown
 - [x] Footer with social icon links and build date

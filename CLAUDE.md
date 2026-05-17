@@ -159,6 +159,22 @@ nithun-website/
 
 ---
 
+## Fonts
+
+DM Sans is self-hosted in `public/fonts/` — **do not use Google Fonts**.
+
+Files:
+- `public/fonts/dm-sans-latin.woff2` — normal, weights 300–500, latin
+- `public/fonts/dm-sans-latin-ext.woff2` — normal, weights 300–500, latin-ext
+- `public/fonts/dm-sans-italic-latin.woff2` — italic, weights 300–500, latin
+- `public/fonts/dm-sans-italic-latin-ext.woff2` — italic, weights 300–500, latin-ext
+
+`@font-face` declarations are in `src/styles/global.css`. The Nginx CSP has `font-src 'self'` only — no external font domains allowed.
+
+If adding new weights or styles: download the WOFF2 from fonts.gstatic.com (fetch the Google Fonts CSS with a Chrome User-Agent to get WOFF2 URLs), save to `public/fonts/`, and add the corresponding `@font-face` block in `global.css`.
+
+---
+
 ## Deployment (Hetzner)
 
 To deploy changes, use the deploy script with a commit message:

@@ -59,7 +59,7 @@ export default function Navbar() {
   return (
     <nav
       aria-label="Main navigation"
-      className="sticky top-0 z-50 flex items-center justify-between h-14"
+      className="sticky top-0 z-50"
       style={{
         padding: '0 clamp(24px, 5vw, 80px)',
         background: 'var(--bg)',
@@ -71,35 +71,58 @@ export default function Navbar() {
         Skip to content
       </a>
 
-      <Link
-        to="/"
-        style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: 'var(--fg2)', letterSpacing: '0.02em', textDecoration: 'none', transition: 'color 0.2s ease' }}
-        onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
-        onMouseLeave={e => e.currentTarget.style.color = 'var(--fg2)'}
-      >
-        NM
-      </Link>
+      {/* Row 1: logo + pills */}
+      <div className="flex items-center justify-between h-14">
+        <Link
+          to="/"
+          style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: 'var(--fg2)', letterSpacing: '0.02em', textDecoration: 'none', transition: 'color 0.2s ease' }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--fg2)'}
+        >
+          NM
+        </Link>
 
-      <ul className="flex items-center gap-8 list-none m-0 p-0">
+        {/* Nav links — inline on desktop, hidden here on mobile (shown in row 2) */}
+        <ul className="hidden min-[560px]:flex items-center gap-8 list-none m-0 p-0">
+          {NAV_SECTIONS.map(({ key, path, accent }) => {
+            const isActive = pathname === path || pathname.startsWith(path + '/')
+            return (
+              <li key={key}>
+                <Link
+                  to={path}
+                  className={`nav-link${isActive ? ' active' : ''}`}
+                  style={{ '--link-accent': accent }}
+                >
+                  {t(`nav.${key}`)}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+
+        <div className="flex items-center gap-4">
+          <LangPill />
+          <ThemePill />
+        </div>
+      </div>
+
+      {/* Row 2: nav links on mobile only */}
+      <div
+        className="flex min-[560px]:hidden items-center justify-center gap-6 pb-3"
+      >
         {NAV_SECTIONS.map(({ key, path, accent }) => {
           const isActive = pathname === path || pathname.startsWith(path + '/')
           return (
-            <li key={key}>
-              <Link
-                to={path}
-                className={`nav-link${isActive ? ' active' : ''}`}
-                style={{ '--link-accent': accent }}
-              >
-                {t(`nav.${key}`)}
-              </Link>
-            </li>
+            <Link
+              key={key}
+              to={path}
+              className={`nav-link${isActive ? ' active' : ''}`}
+              style={{ '--link-accent': accent }}
+            >
+              {t(`nav.${key}`)}
+            </Link>
           )
         })}
-      </ul>
-
-      <div className="flex items-center gap-4">
-        <LangPill />
-        <ThemePill />
       </div>
     </nav>
   )

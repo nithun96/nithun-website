@@ -381,12 +381,12 @@ export default function WritingPostPage() {
         {post.spotify && post.spotify.trim() && (
           <div style={{ maxWidth: 780, marginTop: 48 }}>
             <p style={{ fontSize: 12, color: 'var(--fgm)', fontStyle: 'italic', marginBottom: 12, margin: '0 0 12px' }}>
-              Listening while writing
+              Spillelisten jeg hørte på, med noen av favorittlåtene mine:
             </p>
             <iframe
               src={`https://open.spotify.com/embed/playlist/${post.spotify.split('/').pop().split('?')[0]}`}
               width="100%"
-              height="152"
+              height="352"
               frameBorder="0"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"

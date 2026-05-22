@@ -108,9 +108,13 @@ Noise tool for tinnitus and sleep. Uses `noiseEngine.js` (Web Audio API) to synt
 Framework-agnostic Web Audio module, designed to be extractable into a standalone Capacitor mobile app. Synthesises: brown noise (leaky integrator random walk), pink noise (Paul Kellet IIR 1/f approximation), rain (three blended layers — bandpass white noise body, low rumble, LFO-modulated high-frequency drops), and ocean (amplitude-modulated white noise with slow sine envelope).
 
 ### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
-Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date, rendered with `react-markdown` + `rehype-raw`.
+Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime, language, spotify). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date, rendered with `react-markdown` + `rehype-raw`.
 
 Footnote system: two types — `clarification` (quiet aside) and `wry` (warm left border). Desktop: hover shows tooltip, click pins it. Mobile: tap opens a bottom sheet portal rendered directly on `document.body`.
+
+Language pill: each post carries a `language` field (`"en"` or `"no"`, defaults to `"en"`). Shown as a coloured pill on the list page and in the post header — NO in honey/wheat tones, EN in dusty tones.
+
+Spotify embed: if a post has a `spotify` URL in its frontmatter, an embedded Spotify iframe is rendered below the post body with the label "Listening while writing". The playlist/album/track ID is extracted from the URL at render time.
 
 ### Translations (`locales/`)
 All user-facing text lives in `en/translation.json` and `no/translation.json`. Nothing is hardcoded in JSX.
@@ -153,7 +157,7 @@ In order:
 
 Nginx serves `dist/` with `try_files` so React Router's client-side routes work on direct URL access. Security headers (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) are configured in Nginx. Traffic from nithunmanoharan.com redirects to nithun.no.
 
-**CSP note:** The Nginx `Content-Security-Policy` must explicitly allow external domains. Currently permitted: `https://books.google.com`, `https://covers.openlibrary.org` (img-src) and `https://www.googleapis.com`, `https://openlibrary.org` (connect-src).
+**CSP note:** The Nginx `Content-Security-Policy` must explicitly allow external domains. Currently permitted: `https://books.google.com`, `https://covers.openlibrary.org` (img-src); `https://www.googleapis.com`, `https://open.spotify.com` (connect-src); `https://open.spotify.com` (frame-src for Spotify embeds).
 
 ---
 

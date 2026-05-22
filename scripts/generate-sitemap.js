@@ -1,54 +1,51 @@
-import { writeFileSync } from 'fs'
+import { writeFileSync, readdirSync, readFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const today = new Date().toISOString().split('T')[0]
 
+function slugFromFilename(filename) {
+  return filename.replace(/\.md$/, '').replace(/^\d{4}-\d{2}-/, '')
+}
+
+function parseDateFromFrontmatter(raw) {
+  const match = raw.match(/^---[\s\S]*?^date:\s*["']?(\d{4}-\d{2}-\d{2})["']?/m)
+  return match ? match[1] : today
+}
+
+function urlBlock(loc, lastmod, changefreq, priority) {
+  return `
+  <url>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="${loc}"/>
+    <xhtml:link rel="alternate" hreflang="no" href="${loc}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${loc}"/>
+  </url>`
+}
+
+const writingDir = resolve(__dirname, '../src/writing')
+const postBlocks = readdirSync(writingDir)
+  .filter(f => f.endsWith('.md'))
+  .map(filename => {
+    const raw = readFileSync(resolve(writingDir, filename), 'utf-8')
+    const slug = slugFromFilename(filename)
+    const date = parseDateFromFrontmatter(raw)
+    return urlBlock(`https://nithun.no/writing/${slug}`, date, 'never', '0.6')
+  })
+  .join('')
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-  <url>
-    <loc>https://nithun.no</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no"/>
-  </url>
-
-  <url>
-    <loc>https://nithun.no/shelf</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/shelf"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/shelf"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/shelf"/>
-  </url>
-
-  <url>
-    <loc>https://nithun.no/writing</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/writing"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/writing"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/writing"/>
-  </url>
-
-  <url>
-    <loc>https://nithun.no/silence</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/silence"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/silence"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/silence"/>
-  </url>
-
+${urlBlock('https://nithun.no', today, 'monthly', '1.0')}
+${urlBlock('https://nithun.no/writing', today, 'weekly', '0.8')}
+${urlBlock('https://nithun.no/shelf', today, 'monthly', '0.7')}
+${urlBlock('https://nithun.no/silence', today, 'monthly', '0.7')}
+${postBlocks}
 </urlset>
 `
 

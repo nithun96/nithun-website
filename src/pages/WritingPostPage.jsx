@@ -22,6 +22,29 @@ function formatDate(dateStr, locale) {
   })
 }
 
+function LanguagePill({ lang }) {
+  const isNo = lang === 'no'
+  return (
+    <span style={{
+      fontSize: 10,
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase',
+      fontStyle: 'normal',
+      borderRadius: 2,
+      padding: '2px 7px',
+      background: isNo
+        ? 'color-mix(in oklch, var(--honey) 15%, transparent)'
+        : 'color-mix(in oklch, var(--dusty) 15%, transparent)',
+      border: isNo
+        ? '1px solid color-mix(in oklch, var(--honey) 40%, transparent)'
+        : '1px solid color-mix(in oklch, var(--dusty) 40%, transparent)',
+      color: isNo ? 'var(--wheat)' : 'var(--dusty)',
+    }}>
+      {isNo ? 'NO' : 'EN'}
+    </span>
+  )
+}
+
 const SHELL = {
   padding: '0 clamp(24px, 5vw, 80px)',
   maxWidth: 'calc(780px + 160px)',
@@ -326,6 +349,7 @@ export default function WritingPostPage() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 12, color: 'var(--fgm)', letterSpacing: '0.04em', flexWrap: 'wrap' }}>
             {post.date && <span>{formatDate(post.date, i18n.language)}</span>}
+            <LanguagePill lang={post.language || 'en'} />
             {post.readTime && <><span style={{ opacity: 0.4 }}>·</span><span>{post.readTime}</span></>}
             {post.tags && post.tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => (
               <span key={tag}><span style={{ opacity: 0.4, marginRight: 8 }}>·</span>{tag}</span>
@@ -352,6 +376,25 @@ export default function WritingPostPage() {
             {body}
           </ReactMarkdown>
         </div>
+
+        {/* Spotify embed */}
+        {post.spotify && post.spotify.trim() && (
+          <div style={{ maxWidth: 780, marginTop: 48 }}>
+            <p style={{ fontSize: 12, color: 'var(--fgm)', fontStyle: 'italic', marginBottom: 12, margin: '0 0 12px' }}>
+              Listening while writing
+            </p>
+            <iframe
+              src={`https://open.spotify.com/embed/playlist/${post.spotify.split('/').pop().split('?')[0]}`}
+              width="100%"
+              height="152"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              style={{ borderRadius: 4 }}
+              title="Listening while writing"
+            />
+          </div>
+        )}
 
         {/* Footer */}
         <div

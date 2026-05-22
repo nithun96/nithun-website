@@ -152,6 +152,10 @@ nithun-website/
     │   └── bookCovers.js           # Cover art — Google Books (primary), Open Library (fallback)
     ├── writing/
     │   └── *.md                    # Writing posts — YAML frontmatter + markdown body
+    │                               # Frontmatter fields:
+    │                               #   title, date, slug, summary, mastodon (all standard)
+    │                               #   language: "en" | "no" (defaults to "en" if absent)
+    │                               #   spotify: full Spotify URL (optional) — renders embed at post bottom
     └── locales/
         ├── en/translation.json     # English strings
         └── no/translation.json     # Norwegian strings
@@ -214,6 +218,16 @@ Covers are pre-fetched at dev-time and stored in `src/data/bookCovers.json` (com
 $env:GOOGLE_BOOKS_API_KEY="your-key-here"; npm run fetch-covers
 ```
 Without a key the script still works but may encounter rate limits. Get a free key at console.cloud.google.com (Books API, no billing required for reasonable use).
+
+---
+
+## Writing Posts
+
+Post frontmatter supports:
+- `language`: `"en"` or `"no"` — defaults to `"en"` if absent (backwards compatible with existing posts). Shown as a coloured pill on the list page and in the post header.
+- `spotify`: full Spotify playlist/album/track URL (optional). Renders as an embed iframe below the post body with the label "Listening while writing". The embed URL is derived by extracting the ID from the URL (everything after the last `/` and before any `?`).
+
+The `parseFrontmatter.js` parser handles all keys generically — no changes needed when adding new frontmatter fields.
 
 ---
 

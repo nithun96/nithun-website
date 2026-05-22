@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://nithun.no</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no"/>
@@ -13,18 +13,8 @@
   </url>
 
   <url>
-    <loc>https://nithun.no/shelf</loc>
-    <lastmod>2026-05-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/shelf"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/shelf"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/shelf"/>
-  </url>
-
-  <url>
     <loc>https://nithun.no/writing</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/writing"/>
@@ -33,8 +23,18 @@
   </url>
 
   <url>
+    <loc>https://nithun.no/shelf</loc>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/shelf"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/shelf"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/shelf"/>
+  </url>
+
+  <url>
     <loc>https://nithun.no/silence</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/silence"/>
@@ -42,4 +42,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/silence"/>
   </url>
 
+  <url>
+    <loc>https://nithun.no/writing/buss-for-tog</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/writing/buss-for-tog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/writing/buss-for-tog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/writing/buss-for-tog"/>
+  </url>
+  <url>
+    <loc>https://nithun.no/writing/why-are-we-here</loc>
+    <lastmod>2026-05-02</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nithun.no/writing/why-are-we-here"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://nithun.no/writing/why-are-we-here"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nithun.no/writing/why-are-we-here"/>
+  </url>
 </urlset>

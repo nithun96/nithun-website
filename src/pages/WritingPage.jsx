@@ -18,6 +18,29 @@ function formatDate(dateStr, locale) {
   })
 }
 
+function LanguagePill({ lang }) {
+  const isNo = lang === 'no'
+  return (
+    <span style={{
+      fontSize: 10,
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase',
+      fontStyle: 'normal',
+      borderRadius: 2,
+      padding: '2px 7px',
+      background: isNo
+        ? 'color-mix(in oklch, var(--honey) 15%, transparent)'
+        : 'color-mix(in oklch, var(--dusty) 15%, transparent)',
+      border: isNo
+        ? '1px solid color-mix(in oklch, var(--honey) 40%, transparent)'
+        : '1px solid color-mix(in oklch, var(--dusty) 40%, transparent)',
+      color: isNo ? 'var(--wheat)' : 'var(--dusty)',
+    }}>
+      {isNo ? 'NO' : 'EN'}
+    </span>
+  )
+}
+
 const SHELL = {
   padding: '0 clamp(24px, 5vw, 80px)',
   maxWidth: 'calc(780px + 160px)',
@@ -71,41 +94,40 @@ export default function WritingPage() {
                     {post.summary}
                   </div>
                 )}
-                {post.tags && (
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {post.tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => (
-                      <span
-                        key={tag}
-                        style={{
-                          fontSize: 10,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          color: 'var(--fgm)',
-                          border: '1px solid color-mix(in oklch, var(--fgm) 35%, transparent)',
-                          padding: '2px 7px',
-                          borderRadius: 2,
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {post.readTime && (
-                      <span
-                        style={{
-                          fontSize: 10,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          color: 'var(--fgm)',
-                          border: '1px solid color-mix(in oklch, var(--fgm) 35%, transparent)',
-                          padding: '2px 7px',
-                          borderRadius: 2,
-                        }}
-                      >
-                        {post.readTime}
-                      </span>
-                    )}
-                  </div>
-                )}
+                <div className="flex flex-wrap gap-2 mt-3" style={{ alignItems: 'center' }}>
+                  <LanguagePill lang={post.language || 'en'} />
+                  {post.tags && post.tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => (
+                    <span
+                      key={tag}
+                      style={{
+                        fontSize: 10,
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        color: 'var(--fgm)',
+                        border: '1px solid color-mix(in oklch, var(--fgm) 35%, transparent)',
+                        padding: '2px 7px',
+                        borderRadius: 2,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                  {post.readTime && (
+                    <span
+                      style={{
+                        fontSize: 10,
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        color: 'var(--fgm)',
+                        border: '1px solid color-mix(in oklch, var(--fgm) 35%, transparent)',
+                        padding: '2px 7px',
+                        borderRadius: 2,
+                      }}
+                    >
+                      {post.readTime}
+                    </span>
+                  )}
+                </div>
               </div>
             </Link>
           </li>

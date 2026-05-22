@@ -2,6 +2,7 @@
 title: "Why are we here?"
 date: "2026-05-02"
 slug: "why-are-we-here"
+language: "en"
 summary: "An introduction of sorts — why this website exists, how it was built, and whether I'll remember it after Berlin and Japan."
 mastodon: ""
 ---

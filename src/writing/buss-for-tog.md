@@ -3,7 +3,7 @@ title: "Buss for Tog"
 date: "2026-05-18"
 slug: "buss-for-tog"
 language: "no"
-summary: "Et kåseri om språkforvirring, dansk, Arsenal og en bok om å sprenge rørledninger — skrevet på bussen til Hamburg."
+summary: 'A Norwegian exclusive "kåseri" regarding language confusion, Arsenal and the book "How to Blow Up A Pipeline" by Andreas Malm.'
 mastodon: ""
 spotify: "https://open.spotify.com/playlist/05UrvbxJWbY2dv4Kow93fW"
 ---

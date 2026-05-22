@@ -59,12 +59,9 @@ export default function WritingPage() {
           borderBottom: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
         }}
       >
-        <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 'normal', color: 'var(--fg)', marginBottom: 10 }}>
+        <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 'normal', color: 'var(--fg)' }}>
           {t('writing.heading')}
         </h1>
-        <p style={{ fontSize: 14, color: 'var(--fgm)', letterSpacing: '0.03em' }}>
-          {t('writing.subtitle')}
-        </p>
       </div>
 
       {/* List */}

@@ -51,6 +51,7 @@ const NAV_SECTIONS = [
   { key: 'writing', path: '/writing', accent: 'var(--dusty)' },
   { key: 'silence', path: '/silence', accent: 'var(--sage)'  },
   { key: 'shelf',   path: '/shelf',   accent: 'var(--honey)' },
+  { key: 'about',   path: '/about',   accent: 'var(--stone)' },
 ]
 
 export default function Navbar() {

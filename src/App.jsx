@@ -6,6 +6,7 @@ import ShelfPage from './pages/ShelfPage'
 import WritingPage from './pages/WritingPage'
 import WritingPostPage from './pages/WritingPostPage'
 import SilencePage from './pages/SilencePage'
+import AboutPage from './pages/AboutPage'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/writing/:slug" element={<WritingPostPage />} />
           <Route path="/silence"       element={<SilencePage />} />
           <Route path="/shelf"         element={<ShelfPage />} />
+          <Route path="/about"         element={<AboutPage />} />
           <Route path="/books"         element={<Navigate to="/shelf" replace />} />
         </Routes>
       </main>

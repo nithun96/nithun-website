@@ -123,7 +123,8 @@ nithun-website/
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
-│   └── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
+│   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
+│   └── images/about/               # About page photos — portrait, flower field, 6 travel shots (webp)
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer
@@ -140,6 +141,7 @@ nithun-website/
     ├── sections/
     │   └── Hero.jsx                # Home page — name, location, intro, teaser, section teasers
     ├── pages/
+    │   ├── AboutPage.jsx           # /about — bio, portrait, travel photography grid
     │   ├── ShelfPage.jsx           # /shelf — books/games/TV with cover art and status filters
     │   ├── SilencePage.jsx         # /silence — tinnitus noise tool with sleep timer
     │   ├── WritingPage.jsx         # /writing — list of markdown posts
@@ -264,11 +266,12 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Shelf page (`/shelf`) — 94 books with cover art, 49 games, TV entries; tabs + status filters
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
+- [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
 - [x] Pyre branding — triangle mark in Hero subtitle and Footer, links to pyre.no
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`
 - [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
-- [x] Footer — Pyre logo + link, GitHub, CC license, build date
-- [x] Navbar — NM wordmark, two-row mobile layout, pill-style theme/lang toggles
+- [x] Footer — Pyre logo, GitHub, Instagram, CC license, build date
+- [x] Navbar — NM wordmark, two-row mobile layout, pill-style theme/lang toggles; About link added
 - [x] SEO meta tags, Open Graph, JSON-LD schema, sitemap (auto-generated)
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
 - [x] Security headers on Nginx (CSP allows Google Books + Open Library)

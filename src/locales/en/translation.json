@@ -3,6 +3,7 @@
     "writing":     "Writing",
     "silence":     "Silence",
     "shelf":       "Shelf",
+    "about":       "About",
     "toggleTheme": "Toggle theme",
     "toggleLang":  "Norsk"
   },
@@ -91,5 +92,16 @@
   "footer": {
     "lastUpdated": "Last updated:",
     "license":     "CC BY-NC 4.0"
+  },
+  "about": {
+    "eyebrow":            "About",
+    "bio1":                "I'm a Product Manager specialising in AI and Data Analytics, and a co-founder of Pyre, a Norwegian software company I run with two friends. Outside of that, I write here occasionally, built Deafening Silence as a free tool for tinnitus sound therapy, and keep a shelf of books, games and TV I've enjoyed.",
+    "bio2":                "I also travel a fair amount, mostly drawn to older, grand architecture and the way light falls on it. A few of my favourite shots are below.",
+    "photosHeading":       "A few photos I'm proud of",
+    "portraitAlt":         "Nithun Manoharan smiling under a garden archway",
+    "flowerAlt":           "Nithun Manoharan standing in a purple flower field",
+    "photoWroclawAlt":     "An illuminated building reflected in the river at night in Wrocław",
+    "photoRedWindowsAlt":  "Red bay windows against a clear blue sky in Copenhagen",
+    "photoHeddalAlt":      "Heddal stave church under a stormy sky in Norway"
   }
 }

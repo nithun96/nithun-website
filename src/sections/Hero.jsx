@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
+import PyreMark from '../components/PyreMark'
 
 const SHELL = {
   padding: '0 clamp(24px, 5vw, 80px)',
@@ -22,6 +23,31 @@ export default function Hero() {
       <div className="hero-grid">
         {/* Text column */}
         <div>
+          <a
+            href="https://pyre.no"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              fontSize: 11,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              fontWeight: 500,
+              color: 'var(--fgm)',
+              textDecoration: 'none',
+              marginBottom: 20,
+              transition: 'color 0.2s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
+          >
+            <PyreMark size={14} />
+            {t('hero.pyreBadge')}
+            <span aria-hidden="true">→</span>
+          </a>
+
           <h1
             style={{
               fontFamily: 'Georgia, serif',

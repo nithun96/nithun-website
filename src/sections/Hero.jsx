@@ -68,7 +68,7 @@ export default function Hero() {
               <PyreMark size={12} />
               {t('hero.pyreBadge')}
             </a>
-            <span aria-hidden="true">—</span>
+            <span aria-hidden="true">·</span>
             {t('hero.location')}
           </p>
 

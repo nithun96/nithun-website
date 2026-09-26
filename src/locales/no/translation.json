@@ -34,8 +34,9 @@
     "heading":      "Skriverier",
     "subtitle":     "Essays, kommentarer og enkle observasjoner.",
     "backWriting":  "Skriverier",
-    "noDate":       "Udatert",
-    "conversation": "Bli med i samtalen på Mastodon"
+    "noDate":         "Udatert",
+    "conversation":   "Bli med i samtalen på Mastodon",
+    "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:"
   },
   "shelf": {
     "heading":  "Hylle",

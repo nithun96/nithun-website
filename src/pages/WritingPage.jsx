@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
+import { SHELL } from '../styles/shell'
 
 const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
 
@@ -41,11 +42,6 @@ function LanguagePill({ lang }) {
   )
 }
 
-const SHELL = {
-  padding: '0 clamp(24px, 5vw, 80px)',
-  maxWidth: 'calc(780px + 160px)',
-  margin: '0 auto',
-}
 
 export default function WritingPage() {
   const { t, i18n } = useTranslation()

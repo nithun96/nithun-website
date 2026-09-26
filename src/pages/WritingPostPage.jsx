@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
 import { parseFootnotes } from '../lib/parseFootnotes'
+import { SHELL } from '../styles/shell'
 
 const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
 
@@ -45,11 +46,6 @@ function LanguagePill({ lang }) {
   )
 }
 
-const SHELL = {
-  padding: '0 clamp(24px, 5vw, 80px)',
-  maxWidth: 'calc(780px + 160px)',
-  margin: '0 auto',
-}
 
 // ── Footnote context ──────────────────────────────────────────────────────────
 

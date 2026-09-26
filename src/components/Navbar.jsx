@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
+import { SHELL } from '../styles/shell'
 
 function ThemePill() {
   const { t } = useTranslation()
@@ -61,7 +62,6 @@ export default function Navbar() {
       aria-label="Main navigation"
       className="sticky top-0 z-50"
       style={{
-        padding: '0 clamp(24px, 5vw, 80px)',
         background: 'var(--bg)',
         borderBottom: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
         transition: 'background 0.2s ease',
@@ -71,58 +71,60 @@ export default function Navbar() {
         Skip to content
       </a>
 
-      {/* Row 1: logo + pills */}
-      <div className="flex items-center justify-between h-14">
-        <Link
-          to="/"
-          style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: 'var(--fg2)', letterSpacing: '0.02em', textDecoration: 'none', transition: 'color 0.2s ease' }}
-          onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'var(--fg2)'}
-        >
-          NM
-        </Link>
+      <div style={SHELL}>
+        {/* Row 1: logo + pills */}
+        <div className="flex items-center justify-between h-14">
+          <Link
+            to="/"
+            style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: 'var(--fg2)', letterSpacing: '0.02em', textDecoration: 'none', transition: 'color 0.2s ease' }}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'var(--fg2)'}
+          >
+            NM
+          </Link>
 
-        {/* Nav links — inline on desktop, hidden here on mobile (shown in row 2) */}
-        <ul className="hidden min-[560px]:flex items-center gap-8 list-none m-0 p-0">
+          {/* Nav links — inline on desktop, hidden here on mobile (shown in row 2) */}
+          <ul className="hidden min-[560px]:flex items-center gap-8 list-none m-0 p-0">
+            {NAV_SECTIONS.map(({ key, path, accent }) => {
+              const isActive = pathname === path || pathname.startsWith(path + '/')
+              return (
+                <li key={key}>
+                  <Link
+                    to={path}
+                    className={`nav-link${isActive ? ' active' : ''}`}
+                    style={{ '--link-accent': accent }}
+                  >
+                    {t(`nav.${key}`)}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+
+          <div className="flex items-center gap-4">
+            <LangPill />
+            <ThemePill />
+          </div>
+        </div>
+
+        {/* Row 2: nav links on mobile only */}
+        <div
+          className="flex min-[560px]:hidden items-center justify-center gap-6 pb-3"
+        >
           {NAV_SECTIONS.map(({ key, path, accent }) => {
             const isActive = pathname === path || pathname.startsWith(path + '/')
             return (
-              <li key={key}>
-                <Link
-                  to={path}
-                  className={`nav-link${isActive ? ' active' : ''}`}
-                  style={{ '--link-accent': accent }}
-                >
-                  {t(`nav.${key}`)}
-                </Link>
-              </li>
+              <Link
+                key={key}
+                to={path}
+                className={`nav-link${isActive ? ' active' : ''}`}
+                style={{ '--link-accent': accent }}
+              >
+                {t(`nav.${key}`)}
+              </Link>
             )
           })}
-        </ul>
-
-        <div className="flex items-center gap-4">
-          <LangPill />
-          <ThemePill />
         </div>
-      </div>
-
-      {/* Row 2: nav links on mobile only */}
-      <div
-        className="flex min-[560px]:hidden items-center justify-center gap-6 pb-3"
-      >
-        {NAV_SECTIONS.map(({ key, path, accent }) => {
-          const isActive = pathname === path || pathname.startsWith(path + '/')
-          return (
-            <Link
-              key={key}
-              to={path}
-              className={`nav-link${isActive ? ' active' : ''}`}
-              style={{ '--link-accent': accent }}
-            >
-              {t(`nav.${key}`)}
-            </Link>
-          )
-        })}
       </div>
     </nav>
   )

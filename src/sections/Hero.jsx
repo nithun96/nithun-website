@@ -1,12 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import PyreMark from '../components/PyreMark'
-
-const SHELL = {
-  padding: '0 clamp(24px, 5vw, 80px)',
-  maxWidth: 'calc(780px + 160px)',
-  margin: '0 auto',
-}
+import { SHELL } from '../styles/shell'
 
 const SECTION_TEASERS = [
   { key: 'writing', path: '/writing', cls: 'writing', accent: 'var(--dusty)' },

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createNoiseEngine } from '../audio/noiseEngine'
 import charitiesData from '../data/charities.json'
+import { SHELL } from '../styles/shell'
 
 const SOUND_TYPES = [
   { id: 'brown', icon: '▬' },
@@ -29,11 +30,6 @@ function formatRemaining(ms) {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
-const SHELL = {
-  padding: '0 clamp(24px, 5vw, 80px)',
-  maxWidth: 'calc(780px + 160px)',
-  margin: '0 auto',
-}
 
 const isIOS = typeof navigator !== 'undefined' && /iPhone|iPad/.test(navigator.userAgent)
 

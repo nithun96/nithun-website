@@ -1,11 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
-
-const SHELL = {
-  padding: '0 clamp(24px, 5vw, 80px)',
-  maxWidth: 'calc(780px + 160px)',
-  margin: '0 auto',
-}
+import PyreMark from '../components/PyreMark'
+import { SHELL } from '../styles/shell'
 
 const SECTION_TEASERS = [
   { key: 'writing', path: '/writing', cls: 'writing', accent: 'var(--dusty)' },
@@ -49,6 +45,25 @@ export default function Hero() {
             }}
           >
             <span style={{ display: 'inline-block', width: 16, height: 1, background: 'var(--fgm)', flexShrink: 0 }} />
+            <a
+              href="https://pyre.no"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                color: 'inherit',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
+            >
+              <PyreMark size={12} />
+              {t('hero.pyreBadge')}
+            </a>
+            <span aria-hidden="true">·</span>
             {t('hero.location')}
           </p>
 
@@ -64,22 +79,6 @@ export default function Hero() {
           >
             {t('hero.intro')}
           </p>
-
-          <blockquote
-            style={{
-              fontFamily: 'Georgia, serif',
-              fontSize: 15,
-              fontStyle: 'italic',
-              color: 'var(--fgm)',
-              borderLeft: '2px solid color-mix(in oklch, var(--stone) 50%, transparent)',
-              paddingLeft: 16,
-              lineHeight: 1.6,
-              maxWidth: 480,
-              margin: 0,
-            }}
-          >
-            {t('hero.teaser')}
-          </blockquote>
         </div>
 
       </div>

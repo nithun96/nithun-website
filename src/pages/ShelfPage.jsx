@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import { getBookCover } from '../utils/bookCovers'
+import { SHELL } from '../styles/shell'
 
 const CATEGORIES = ['books', 'games', 'tv']
 const STATUSES   = ['all', 'current', 'finished', 'want']
@@ -13,12 +14,6 @@ const DOT_COLORS = {
   current:  'var(--sage)',
   finished: 'color-mix(in oklch, var(--fgm) 45%, transparent)',
   want:     'color-mix(in oklch, var(--wheat) 50%, transparent)',
-}
-
-const SHELL = {
-  padding: '0 clamp(24px, 5vw, 80px)',
-  maxWidth: 'calc(780px + 160px)',
-  margin: '0 auto',
 }
 
 // ── Book card ─────────────────────────────────────────────────────────────────

@@ -89,6 +89,16 @@ export default function AboutPage() {
             </figure>
           ))}
         </div>
+        <a
+          href="https://www.instagram.com/nithunm"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ display: 'inline-block', marginTop: 24, fontSize: 13, color: 'var(--fgm)', textDecoration: 'none', transition: 'color 0.2s ease' }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
+        >
+          {t('about.instagram')}
+        </a>
       </div>
 
       <div style={{ paddingBottom: 80 }} />

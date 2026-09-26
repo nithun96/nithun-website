@@ -96,12 +96,14 @@
   "about": {
     "eyebrow":            "Om",
     "bio1":                "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner. Utenom det skriver jeg her innimellom, har bygget Deafening Silence som et gratis verktøy for tinnituslydterapi, og holder en hylle med bøker, spill og TV jeg er fan av.",
-    "bio2":                "Jeg reiser også en del, og trekkes mest mot eldre, staselig arkitektur og hvordan lyset faller på den. Noen av favorittbildene mine er under.",
+    "bio2":                "Reising har også lært meg mye — som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
     "photosHeading":       "Noen bilder jeg er stolt av",
     "portraitAlt":         "Nithun Manoharan smiler under en hagebue",
     "flowerAlt":           "Nithun Manoharan står i et lilla blomsterfelt",
     "photoWroclawAlt":     "En opplyst bygning speilet i elven om natten i Wrocław",
     "photoRedWindowsAlt":  "Røde karnappvinduer mot en klar blå himmel i København",
-    "photoHeddalAlt":      "Heddal stavkirke under en stormfull himmel i Norge"
+    "photoHeddalAlt":      "Heddal stavkirke under en stormfull himmel i Norge",
+    "photoSunflareAlt":    "En solblendet, staselig hjørnebygning mot en klar blå himmel",
+    "photoInariAlt":       "En bronsestatue av en rev ved et japansk helligdom, under et rødt tak"
   }
 }

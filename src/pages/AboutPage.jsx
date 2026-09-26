@@ -2,9 +2,11 @@ import { useTranslation } from 'react-i18next'
 import { SHELL } from '../styles/shell'
 
 const PHOTOS = [
-  { file: 'photo-wroclaw-night.webp', altKey: 'about.photoWroclawAlt', caption: 'Wrocław, Poland' },
-  { file: 'photo-red-windows.webp',   altKey: 'about.photoRedWindowsAlt', caption: 'Copenhagen, Denmark' },
-  { file: 'photo-heddal-church.webp', altKey: 'about.photoHeddalAlt', caption: 'Heddal, Norway' },
+  { file: 'photo-wroclaw-night.webp',      altKey: 'about.photoWroclawAlt', caption: 'Wrocław, Poland' },
+  { file: 'photo-red-windows.webp',        altKey: 'about.photoRedWindowsAlt', caption: 'Copenhagen, Denmark' },
+  { file: 'photo-heddal-church.webp',      altKey: 'about.photoHeddalAlt', caption: 'Heddal, Norway' },
+  { file: 'photo-sunflare-building.webp',  altKey: 'about.photoSunflareAlt', caption: null },
+  { file: 'photo-inari-fox.webp',          altKey: 'about.photoInariAlt', caption: null },
 ]
 
 export default function AboutPage() {
@@ -78,7 +80,7 @@ export default function AboutPage() {
                 style={{ width: '100%', borderRadius: 6, objectFit: 'cover', aspectRatio: '3/4', display: 'block' }}
               />
               <figcaption style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginTop: 8 }}>
-                {caption} · © {t('hero.name')}
+                {caption ? `${caption} · ` : ''}© {t('hero.name')}
               </figcaption>
             </figure>
           ))}

@@ -23,31 +23,6 @@ export default function Hero() {
       <div className="hero-grid">
         {/* Text column */}
         <div>
-          <a
-            href="https://pyre.no"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              fontSize: 11,
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              fontWeight: 500,
-              color: 'var(--fgm)',
-              textDecoration: 'none',
-              marginBottom: 20,
-              transition: 'color 0.2s ease',
-            }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
-          >
-            <PyreMark size={14} />
-            {t('hero.pyreBadge')}
-            <span aria-hidden="true">→</span>
-          </a>
-
           <h1
             style={{
               fontFamily: 'Georgia, serif',
@@ -75,6 +50,25 @@ export default function Hero() {
             }}
           >
             <span style={{ display: 'inline-block', width: 16, height: 1, background: 'var(--fgm)', flexShrink: 0 }} />
+            <a
+              href="https://pyre.no"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                color: 'inherit',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
+            >
+              <PyreMark size={12} />
+              {t('hero.pyreBadge')}
+            </a>
+            <span aria-hidden="true">—</span>
             {t('hero.location')}
           </p>
 

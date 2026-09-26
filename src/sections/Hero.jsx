@@ -90,22 +90,6 @@ export default function Hero() {
           >
             {t('hero.intro')}
           </p>
-
-          <blockquote
-            style={{
-              fontFamily: 'Georgia, serif',
-              fontSize: 15,
-              fontStyle: 'italic',
-              color: 'var(--fgm)',
-              borderLeft: '2px solid color-mix(in oklch, var(--stone) 50%, transparent)',
-              paddingLeft: 16,
-              lineHeight: 1.6,
-              maxWidth: 480,
-              margin: 0,
-            }}
-          >
-            {t('hero.teaser')}
-          </blockquote>
         </div>
 
       </div>

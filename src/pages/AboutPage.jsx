@@ -7,6 +7,7 @@ const PHOTOS = [
   { file: 'photo-heddal-church.webp',      altKey: 'about.photoHeddalAlt', caption: 'Heddal, Norway' },
   { file: 'photo-sunflare-building.webp',  altKey: 'about.photoSunflareAlt', caption: 'Stockholm, Sweden' },
   { file: 'photo-inari-fox.webp',          altKey: 'about.photoInariAlt', caption: 'Kyoto, Japan' },
+  { file: 'photo-riga-cathedral.webp',     altKey: 'about.photoRigaAlt', caption: 'Riga, Latvia' },
 ]
 
 export default function AboutPage() {
@@ -65,9 +66,12 @@ export default function AboutPage() {
 
       {/* Photography */}
       <div style={{ marginTop: 56, paddingTop: 32, borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)' }}>
-        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 'normal', color: 'var(--fg)', marginBottom: 24 }}>
+        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 'normal', color: 'var(--fg)', marginBottom: 8 }}>
           {t('about.photosHeading')}
         </h2>
+        <p style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginBottom: 24 }}>
+          © {t('hero.name')}
+        </p>
         <div className="about-photo-grid">
           {PHOTOS.map(({ file, altKey, caption }) => (
             <figure key={file} style={{ margin: 0 }}>
@@ -80,7 +84,7 @@ export default function AboutPage() {
                 style={{ width: '100%', borderRadius: 6, objectFit: 'cover', aspectRatio: '3/4', display: 'block' }}
               />
               <figcaption style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginTop: 8 }}>
-                {caption ? `${caption} · ` : ''}© {t('hero.name')}
+                {caption}
               </figcaption>
             </figure>
           ))}

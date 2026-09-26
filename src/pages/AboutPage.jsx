@@ -70,7 +70,7 @@ export default function AboutPage() {
           {t('about.photosHeading')}
         </h2>
         <p style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginBottom: 24 }}>
-          © {t('hero.name')}
+          {t('about.photosRights')}
         </p>
         <div className="about-photo-grid">
           {PHOTOS.map(({ file, altKey, caption }) => (

@@ -71,14 +71,6 @@
 
     {"series": "Chronicles of Narnia",     "title": "The Chronicles of Narnia",            "author": "C.S. Lewis",          "note": "Complete series #1–7", "status": "finished"},
 
-    {"series": "Harry Potter",             "title": "The Philosopher's Stone",             "author": "J.K. Rowling",        "number": 1, "status": "finished"},
-    {"series": "Harry Potter",             "title": "The Chamber of Secrets",              "author": "J.K. Rowling",        "number": 2, "status": "finished"},
-    {"series": "Harry Potter",             "title": "The Prisoner of Azkaban",             "author": "J.K. Rowling",        "number": 3, "status": "finished"},
-    {"series": "Harry Potter",             "title": "The Goblet of Fire",                  "author": "J.K. Rowling",        "number": 4, "status": "finished"},
-    {"series": "Harry Potter",             "title": "The Order of the Phoenix",            "author": "J.K. Rowling",        "number": 5, "status": "finished"},
-    {"series": "Harry Potter",             "title": "The Half-Blood Prince",               "author": "J.K. Rowling",        "number": 6, "status": "finished"},
-    {"series": "Harry Potter",             "title": "The Deathly Hallows",                 "author": "J.K. Rowling",        "number": 7, "status": "finished"},
-
     {"series": "Warcraft",                 "title": "Lord of the Clans",                   "author": "Christie Golden",     "status": "finished"},
     {"series": "Warcraft",                 "title": "The Last Guardian",                   "author": "Jeff Grubb",          "status": "finished"},
     {"series": "Warcraft — War of the Ancients", "title": "The Well of Eternity",          "author": "Richard A. Knaak",    "number": 1, "status": "finished"},

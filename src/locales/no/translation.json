@@ -11,7 +11,7 @@
     "name":       "Nithun Manoharan",
     "pyreBadge":  "Bygger Pyre",
     "location":   "Oslo, Norge",
-    "intro":    "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, hvor vi bygger og drifter våre egne produkter. Utenom det er dette stedet der jeg deler det jeg gjør på fritiden. Dette inkluderer Deafening Silence, et verktøy for tinnituslydterapi; en hylle med bøker, spill og TV jeg er fan av; og noe av skrivingen min — fiksjon eller om det som skjer i den virkelige verden, hva enn jeg finner tid og interesse for.",
+    "intro":    "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, hvor vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
     "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselforskningsorganisasjonene som er nevnt på Silence-siden</5>.",
     "teasers": {
       "writing": {
@@ -28,6 +28,11 @@
         "label": "Hylle",
         "title": "Bøker, serier, spill",
         "desc":  "En logg over det jeg er fan av."
+      },
+      "about": {
+        "label": "Om",
+        "title": "Om meg",
+        "desc":  "Bilder, og litt mer om hvem jeg er."
       }
     }
   },

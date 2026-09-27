@@ -252,7 +252,7 @@ body::before {
 .hero-teasers {
   border-top: 1px solid color-mix(in oklch, var(--fg) 8%, transparent);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 /* On mobile: stack teasers with consistent padding — no staircase */

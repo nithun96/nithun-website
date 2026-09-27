@@ -7,6 +7,7 @@ const SECTION_TEASERS = [
   { key: 'writing', path: '/writing', cls: 'writing', accent: 'var(--dusty)' },
   { key: 'silence', path: '/silence', cls: 'silence', accent: 'var(--sage)'  },
   { key: 'shelf',   path: '/shelf',   cls: 'shelf',   accent: 'var(--honey)' },
+  { key: 'about',   path: '/about',   cls: 'about',   accent: 'var(--stone)' },
 ]
 
 export default function Hero() {
@@ -120,7 +121,7 @@ export default function Hero() {
             to={path}
             style={{
               padding: '28px 24px 28px 0',
-              borderRight: i < 2 ? '1px solid color-mix(in oklch, var(--fg) 8%, transparent)' : 'none',
+              borderRight: i < SECTION_TEASERS.length - 1 ? '1px solid color-mix(in oklch, var(--fg) 8%, transparent)' : 'none',
               paddingLeft: i > 0 ? 24 : 0,
               textDecoration: 'none',
               display: 'block',

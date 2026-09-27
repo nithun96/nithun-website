@@ -4,7 +4,9 @@ import shelfData from '../data/shelf.json'
 import { getBookCover } from '../utils/bookCovers'
 import { SHELL } from '../styles/shell'
 
-const CATEGORIES = ['books', 'games', 'tv']
+// Games and TV are hidden until they have cover art (see "Cover Art for
+// Games & TV" in CLAUDE.md) — re-add 'games', 'tv' once that's done.
+const CATEGORIES = ['books']
 
 const TAB_ACCENTS  = { books: 'var(--wheat)', games: 'var(--sage)', tv: 'var(--dusty)' }
 const COVER_RATIOS = { books: '2/3', games: '3/4', tv: '2/3' }
@@ -125,12 +127,12 @@ export default function ShelfPage() {
         </p>
       </div>
 
-      {/* Category tabs */}
+      {/* Category tabs — hidden when there's only one category to switch between */}
       <div
         className="flex"
         style={{ paddingTop: 32, borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)', marginTop: 32 }}
       >
-        {CATEGORIES.map(c => (
+        {CATEGORIES.length > 1 && CATEGORIES.map(c => (
           <button
             key={c}
             onClick={() => setCat(c)}

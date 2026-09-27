@@ -32,7 +32,6 @@
     {"series": "Standalone — Sanderson",   "title": "Elantris",                            "author": "Brandon Sanderson",   "status": "finished"},
     {"series": "Standalone — Sanderson",   "title": "Warbreaker",                          "author": "Brandon Sanderson",   "status": "finished"},
     {"series": "Standalone — Sanderson",   "title": "The Rithmatist",                      "author": "Brandon Sanderson",   "status": "finished"},
-    {"series": "Standalone — Sanderson",   "title": "Steelheart",                          "author": "Brandon Sanderson",   "status": "finished"},
 
     {"series": "Bartimaeus",               "title": "The Amulet of Samarkand",             "author": "Jonathan Stroud",     "number": 1, "status": "finished"},
     {"series": "Bartimaeus",               "title": "The Golem's Eye",                     "author": "Jonathan Stroud",     "number": 2, "status": "finished"},
@@ -60,17 +59,6 @@
     {"series": "Malazan Book of the Fallen","title": "Gardens of the Moon",                "author": "Steven Erikson",      "number": 1, "status": "finished"},
     {"series": "Malazan Book of the Fallen","title": "Deadhouse Gates",                    "author": "Steven Erikson",      "number": 2, "status": "finished"},
 
-    {"series": "Skammar",                  "title": "Skammarens dotter",                   "author": "Lene Kaaberbøl",      "number": 1, "status": "finished"},
-    {"series": "Skammar",                  "title": "Skammarteiknet",                      "author": "Lene Kaaberbøl",      "number": 2, "status": "finished"},
-    {"series": "Skammar",                  "title": "Slangens gåve",                       "author": "Lene Kaaberbøl",      "number": 3, "status": "finished"},
-    {"series": "Skammar",                  "title": "Skammarkrigen",                       "author": "Lene Kaaberbøl",      "number": 4, "status": "finished"},
-
-    {"series": "Artemis Fowl",             "title": "Artemis Fowl",                        "author": "Eoin Colfer",         "number": 1, "status": "finished"},
-    {"series": "Artemis Fowl",             "title": "The Arctic Incident",                 "author": "Eoin Colfer",         "number": 2, "status": "finished"},
-    {"series": "Artemis Fowl",             "title": "The Eternity Code",                   "author": "Eoin Colfer",         "number": 3, "status": "finished"},
-
-    {"series": "Chronicles of Narnia",     "title": "The Chronicles of Narnia",            "author": "C.S. Lewis",          "note": "Complete series #1–7", "status": "finished"},
-
     {"series": "Warcraft",                 "title": "Lord of the Clans",                   "author": "Christie Golden",     "status": "finished"},
     {"series": "Warcraft",                 "title": "The Last Guardian",                   "author": "Jeff Grubb",          "status": "finished"},
     {"series": "Warcraft — War of the Ancients", "title": "The Well of Eternity",          "author": "Richard A. Knaak",    "number": 1, "status": "finished"},
@@ -79,8 +67,6 @@
     {"series": "Warcraft",                 "title": "Rise of the Horde",                   "author": "Christie Golden",     "status": "finished"},
     {"series": "Warcraft",                 "title": "Beyond the Dark Portal",              "author": "Aaron Rosenberg",     "status": "finished"},
     {"series": "Warcraft",                 "title": "Arthas: Rise of the Lich King",       "author": "Christie Golden",     "status": "finished"},
-    {"series": "Warcraft",                 "title": "The Shattering",                      "author": "Christie Golden",     "status": "finished"},
-    {"series": "Warcraft",                 "title": "Stormrage",                           "author": "Richard A. Knaak",    "status": "finished"},
 
     {"series": "Standalone",               "title": "Sofies verden",                       "author": "Jostein Gaarder",     "status": "finished"},
     {"series": "Standalone",               "title": "The Alchemist",                       "author": "Paulo Coelho",        "status": "finished"},

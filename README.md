@@ -49,7 +49,7 @@ nithun-website/
     ├── audio/
     │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
     ├── data/
-    │   ├── shelf.json              # Shelf content — 70 books, 50 games, 9 TV entries
+    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 9 TV entries
     │   └── charities.json          # Charity links shown on Silence page
     ├── lib/
     │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
@@ -167,7 +167,7 @@ Nginx serves `dist/` with `try_files` so React Router's client-side routes work 
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Hero section — name, intro, section teasers
-- [x] Shelf page (`/shelf`) — 70 books with cover art, 50 games, 9 TV entries; tabs + status filters
+- [x] Shelf page (`/shelf`) — 59 books with cover art, 50 games, 9 TV entries; tabs + status filters
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with frontmatter, rendered with react-markdown
 - [x] Footer with social icon links and build date

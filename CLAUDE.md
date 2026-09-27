@@ -149,7 +149,7 @@ nithun-website/
     ├── audio/
     │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
     ├── data/
-    │   ├── shelf.json              # Shelf content — 70 books, 50 games, 9 TV entries
+    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 9 TV entries
     │   └── charities.json          # Charity links shown on Silence page
     ├── lib/
     │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
@@ -263,7 +263,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Hero section — name, Pyre badge, intro, donate nudge, section teasers
-- [x] Shelf page (`/shelf`) — 70 books with cover art, 50 games, 9 TV entries; tabs + status filters
+- [x] Shelf page (`/shelf`) — 59 books with cover art, 50 games, 9 TV entries; tabs + status filters
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked

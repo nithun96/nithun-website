@@ -52,17 +52,6 @@
       "games": "Games",
       "tv":    "TV & Anime"
     },
-    "filters": {
-      "all":      "All",
-      "current":  "Currently",
-      "finished": "Finished",
-      "want":     "Want to"
-    },
-    "statusLabels": {
-      "current":  "Currently",
-      "finished": "Finished",
-      "want":     "Want to"
-    },
     "empty": "Nothing here yet."
   },
   "silence": {

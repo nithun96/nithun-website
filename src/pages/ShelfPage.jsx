@@ -5,21 +5,13 @@ import { getBookCover } from '../utils/bookCovers'
 import { SHELL } from '../styles/shell'
 
 const CATEGORIES = ['books', 'games', 'tv']
-const STATUSES   = ['all', 'current', 'finished', 'want']
 
 const TAB_ACCENTS  = { books: 'var(--wheat)', games: 'var(--sage)', tv: 'var(--dusty)' }
 const COVER_RATIOS = { books: '2/3', games: '3/4', tv: '2/3' }
 
-const DOT_COLORS = {
-  current:  'var(--sage)',
-  finished: 'color-mix(in oklch, var(--fgm) 45%, transparent)',
-  want:     'color-mix(in oklch, var(--wheat) 50%, transparent)',
-}
-
 // ── Book card ─────────────────────────────────────────────────────────────────
 
 function BookCard({ book }) {
-  const { t } = useTranslation()
   const imageUrl = book.coverUrl ?? getBookCover(book.title)
   const [imageOk, setImageOk] = useState(false)
 
@@ -95,11 +87,11 @@ function BookCard({ book }) {
         {book.title}
       </div>
       <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{book.author}</div>
-      <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 4 }}>
-        <span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: DOT_COLORS[book.status], flexShrink: 0 }} />
-        {t(`shelf.statusLabels.${book.status}`)}
-        {bookMeta ? ` · ${bookMeta}` : ''}
-      </div>
+      {bookMeta && (
+        <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em' }}>
+          {bookMeta}
+        </div>
+      )}
     </div>
   )
 }
@@ -109,8 +101,6 @@ function BookCard({ book }) {
 export default function ShelfPage() {
   const { t } = useTranslation()
   const [cat, setCat]       = useState('books')
-  const [status, setStatus] = useState('all')
-
   // Book/game/TV cover art shouldn't surface in Google Images for name
   // searches — keep it out of image search without affecting page ranking.
   useEffect(() => {
@@ -121,8 +111,7 @@ export default function ShelfPage() {
     return () => document.head.removeChild(meta)
   }, [])
 
-  const items    = shelfData[cat]
-  const filtered = status === 'all' ? items : items.filter(i => i.status === status)
+  const items = shelfData[cat]
 
   return (
     <div className="page-enter" style={SHELL}>
@@ -144,7 +133,7 @@ export default function ShelfPage() {
         {CATEGORIES.map(c => (
           <button
             key={c}
-            onClick={() => { setCat(c); setStatus('all') }}
+            onClick={() => setCat(c)}
             style={{
               fontSize: 13,
               fontWeight: 400,
@@ -165,31 +154,6 @@ export default function ShelfPage() {
         ))}
       </div>
 
-      {/* Status filters */}
-      <div className="flex flex-wrap gap-2" style={{ paddingTop: 20 }}>
-        {STATUSES.map(s => (
-          <button
-            key={s}
-            onClick={() => setStatus(s)}
-            style={{
-              fontSize: 11,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: status === s ? 'var(--fg2)' : 'var(--fgm)',
-              background: status === s ? 'color-mix(in oklch, var(--fg) 5%, transparent)' : 'none',
-              border: `1px solid ${status === s ? 'color-mix(in oklch, var(--fg) 35%, transparent)' : 'color-mix(in oklch, var(--fgm) 28%, transparent)'}`,
-              borderRadius: 2,
-              padding: '4px 11px',
-              cursor: 'pointer',
-              transition: 'all 0.15s',
-              fontFamily: 'DM Sans, sans-serif',
-            }}
-          >
-            {t(`shelf.filters.${s}`)}
-          </button>
-        ))}
-      </div>
-
       {/* Card grid */}
       <div
         style={{
@@ -199,11 +163,11 @@ export default function ShelfPage() {
           padding: '32px 0 80px',
         }}
       >
-        {filtered.length === 0 ? (
+        {items.length === 0 ? (
           <div style={{ gridColumn: '1 / -1', padding: '48px 0', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 15, color: 'var(--fgm)' }}>
             {t('shelf.empty')}
           </div>
-        ) : filtered.map((item, i) => (
+        ) : items.map((item, i) => (
           cat === 'books' ? (
             <BookCard key={i} book={item} />
           ) : (
@@ -231,11 +195,11 @@ export default function ShelfPage() {
               <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>
                 {item.platform || item.category}
               </div>
-              <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: DOT_COLORS[item.status], flexShrink: 0 }} />
-                {t(`shelf.statusLabels.${item.status}`)}
-                {item.note ? ` · ${item.note}` : ''}
-              </div>
+              {item.note && (
+                <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em' }}>
+                  {item.note}
+                </div>
+              )}
             </div>
           )
         ))}

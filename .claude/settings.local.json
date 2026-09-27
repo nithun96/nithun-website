@@ -6,7 +6,8 @@
       "WebFetch(domain:openlibrary.org)",
       "Bash(curl -s \"https://openlibrary.org/isbn/9780007123834.json\")",
       "Bash(git merge *)",
-      "Bash(bash deploy.sh \"Curate shelf, remove status filters, add games/TV cover plan to CLAUDE.md\")"
+      "Bash(bash deploy.sh \"Curate shelf, remove status filters, add games/TV cover plan to CLAUDE.md\")",
+      "Bash(bash deploy.sh \"Hide Games/TV tabs on Shelf until cover art is ready\")"
     ]
   }
 }

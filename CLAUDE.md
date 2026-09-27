@@ -142,7 +142,7 @@ nithun-website/
     │   └── Hero.jsx                # Home page — name, location, intro, teaser, section teasers
     ├── pages/
     │   ├── AboutPage.jsx           # /about — bio, portrait, travel photography grid
-    │   ├── ShelfPage.jsx           # /shelf — books/games/TV with cover art and status filters
+    │   ├── ShelfPage.jsx           # /shelf — books/games/TV with cover art; category tabs, no status filters
     │   ├── SilencePage.jsx         # /silence — tinnitus noise tool with sleep timer
     │   ├── WritingPage.jsx         # /writing — list of markdown posts
     │   └── WritingPostPage.jsx     # /writing/:slug — individual post renderer
@@ -285,7 +285,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Hero section — name, Pyre badge, intro, donate nudge, section teasers
-- [x] Shelf page (`/shelf`) — 59 books with cover art, 50 games, 9 TV entries; tabs + status filters
+- [x] Shelf page (`/shelf`) — 59 books with cover art, 50 games, 9 TV entries; category tabs only (no status filters)
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked

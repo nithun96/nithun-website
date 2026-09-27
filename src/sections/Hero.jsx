@@ -16,6 +16,7 @@ export default function Hero() {
     <div className="page-enter" style={SHELL}>
       {/* ── Hero grid ─────────────────────────────────────────── */}
       <div className="hero-grid">
+        <div className="hero-top-row">
         {/* Text column */}
         <div>
           <h1
@@ -81,6 +82,34 @@ export default function Hero() {
           </p>
         </div>
 
+        {/* Small photo collage — a personal, creative touch */}
+        <div className="hero-collage" aria-hidden="false">
+          <img
+            className="hero-collage-photo hero-collage-1"
+            src="/images/about/nithun-portrait.webp"
+            alt={t('about.portraitAlt')}
+            width={900}
+            height={1200}
+            loading="lazy"
+          />
+          <img
+            className="hero-collage-photo hero-collage-2"
+            src="/images/about/photo-inari-fox.webp"
+            alt={t('about.photoInariAlt')}
+            width={1000}
+            height={1333}
+            loading="lazy"
+          />
+          <img
+            className="hero-collage-photo hero-collage-3"
+            src="/images/about/photo-riga-cathedral.webp"
+            alt={t('about.photoRigaAlt')}
+            width={1000}
+            height={1333}
+            loading="lazy"
+          />
+        </div>
+        </div>
       </div>
 
       {/* ── Section teasers ───────────────────────────────────── */}

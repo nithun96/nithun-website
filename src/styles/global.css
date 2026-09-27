@@ -219,8 +219,8 @@ body::before {
 
 .hero-collage {
   position: relative;
-  width: 210px;
-  height: 200px;
+  width: 230px;
+  height: 220px;
   flex-shrink: 0;
 }
 
@@ -232,8 +232,9 @@ body::before {
   border: 3px solid var(--bg);
 }
 
-.hero-collage-1 { width: 130px; height: 162px; top: 0;   left: 0;   transform: rotate(-5deg); z-index: 2; }
-.hero-collage-2 { width: 118px; height: 148px; top: 52px; left: 88px; transform: rotate(6deg); z-index: 1; }
+.hero-collage-1 { width: 128px; height: 160px; top: 0;   left: 0;    transform: rotate(-5deg); z-index: 3; }
+.hero-collage-2 { width: 100px; height: 100px; top: 0;   right: 0;   transform: rotate(6deg);  z-index: 2; }
+.hero-collage-3 { width: 118px; height: 148px; bottom: 0; left: 56px; transform: rotate(4deg); z-index: 1; }
 
 @media (max-width: 700px) {
   .hero-top-row {

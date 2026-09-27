@@ -94,6 +94,14 @@ export default function Hero() {
           />
           <img
             className="hero-collage-photo hero-collage-2"
+            src="/images/about/nithun-headshot.webp"
+            alt={t('about.headshotAlt')}
+            width={700}
+            height={700}
+            loading="lazy"
+          />
+          <img
+            className="hero-collage-photo hero-collage-3"
             src="/images/about/nithun-flower-field.webp"
             alt={t('about.flowerAlt')}
             width={900}

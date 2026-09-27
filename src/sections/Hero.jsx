@@ -96,8 +96,8 @@ export default function Hero() {
             className="hero-collage-photo hero-collage-2"
             src="/images/about/nithun-headshot.webp"
             alt={t('about.headshotAlt')}
-            width={700}
-            height={700}
+            width={900}
+            height={1075}
             loading="lazy"
           />
           <img

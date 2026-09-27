@@ -219,24 +219,24 @@ body::before {
 
 .hero-collage {
   position: relative;
-  width: 324px;
-  height: 132px;
+  width: 336px;
+  height: 150px;
   flex-shrink: 0;
 }
 
 .hero-collage-photo {
   position: absolute;
   width: 100px;
-  height: 100px;
+  height: 130px;
   border-radius: 6px;
   object-fit: cover;
   box-shadow: 0 6px 18px color-mix(in oklch, black 35%, transparent);
   border: 3px solid var(--bg);
 }
 
-.hero-collage-1 { top: 14px; left: 0;   transform: rotate(-6deg); object-position: center 20%; }
-.hero-collage-2 { top: 0;    left: 112px; transform: rotate(5deg); }
-.hero-collage-3 { top: 18px; left: 224px; transform: rotate(-4deg); object-position: center 20%; }
+.hero-collage-1 { top: 20px; left: 0;   transform: rotate(-6deg); object-position: center 18%; }
+.hero-collage-2 { top: 0;    left: 118px; transform: rotate(5deg); object-position: 65% 22%; }
+.hero-collage-3 { top: 18px; left: 236px; transform: rotate(-4deg); object-position: center 18%; }
 
 @media (max-width: 700px) {
   .hero-top-row {
@@ -246,7 +246,7 @@ body::before {
     margin-top: 16px;
     align-self: flex-start;
     width: 100%;
-    max-width: 324px;
+    max-width: 336px;
   }
 }
 

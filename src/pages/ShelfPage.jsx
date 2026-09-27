@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import { getBookCover } from '../utils/bookCovers'
@@ -110,6 +110,16 @@ export default function ShelfPage() {
   const { t } = useTranslation()
   const [cat, setCat]       = useState('books')
   const [status, setStatus] = useState('all')
+
+  // Book/game/TV cover art shouldn't surface in Google Images for name
+  // searches — keep it out of image search without affecting page ranking.
+  useEffect(() => {
+    const meta = document.createElement('meta')
+    meta.name = 'robots'
+    meta.content = 'noimageindex'
+    document.head.appendChild(meta)
+    return () => document.head.removeChild(meta)
+  }, [])
 
   const items    = shelfData[cat]
   const filtered = status === 'all' ? items : items.filter(i => i.status === status)

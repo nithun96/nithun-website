@@ -94,18 +94,10 @@ export default function Hero() {
           />
           <img
             className="hero-collage-photo hero-collage-2"
-            src="/images/about/photo-inari-fox.webp"
-            alt={t('about.photoInariAlt')}
-            width={1000}
-            height={1333}
-            loading="lazy"
-          />
-          <img
-            className="hero-collage-photo hero-collage-3"
-            src="/images/about/photo-riga-cathedral.webp"
-            alt={t('about.photoRigaAlt')}
-            width={1000}
-            height={1333}
+            src="/images/about/nithun-flower-field.webp"
+            alt={t('about.flowerAlt')}
+            width={900}
+            height={1200}
             loading="lazy"
           />
         </div>

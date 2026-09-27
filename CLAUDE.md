@@ -149,7 +149,7 @@ nithun-website/
     ├── audio/
     │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
     ├── data/
-    │   ├── shelf.json              # Shelf content — 94 books, 49 games, 2 TV entries
+    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 9 TV entries
     │   └── charities.json          # Charity links shown on Silence page
     ├── lib/
     │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
@@ -227,6 +227,28 @@ Without a key the script still works but may encounter rate limits. Get a free k
 
 ---
 
+## Cover Art for Games & TV (planned — do this in VS Code / local Claude Code)
+
+Games and TV/Anime cards currently show text only — no cover image at all (unlike Books, which has `bookCovers.json`). This can't be built from a cloud session: the API domains below are blocked by that environment's network policy, and no session should have real API keys pasted into chat. Do this locally, where you already have unrestricted network access and can hold the keys yourself.
+
+### Sources
+- **Games → RAWG** (api.rawg.io). Free API key, broad coverage including retro/console titles (needed for things like GBA-era Pokémon). Sign up at rawg.io/apidocs.
+- **TV/Anime → TMDB** (api.themoviedb.org). Free API key, covers both Western/Korean shows and anime-as-TV-shows under one API — no need for a second source. Sign up at themoviedb.org/settings/api.
+
+Alternatives considered: SteamGridDB (games — nicer curated "grid" art style, but less retro coverage, still needs a key) and AniList (anime only, keyless, but doesn't cover the 4 non-anime TV entries — would still need TMDB alongside it, so no simpler than TMDB alone).
+
+### Plan (mirrors the existing Book Covers workflow above)
+1. Get free API keys from RAWG and TMDB; set as env vars locally (`RAWG_API_KEY`, `TMDB_API_KEY`), same pattern as `GOOGLE_BOOKS_API_KEY`.
+2. Write `scripts/fetchGameCovers.js` and `scripts/fetchTvCovers.js` (or one shared script keyed by category), modeled on `scripts/fetchBookCovers.js`: query per-title, validate images (width ≥ 200px via sharp, same as books), write `.draft.json` + a preview HTML per category.
+3. Review the preview HTML, add any wrong/missing covers to override files (`gameCoversOverride.json`, `tvCoversOverride.json`), same override pattern as books.
+4. Run finalise scripts → `src/data/gameCovers.json`, `src/data/tvCovers.json` (committed, no runtime API calls — same principle as book covers).
+5. **Update `ShelfPage.jsx`**: the non-book card branch currently renders no image at all. It needs an `<img>` block added (same spine/fallback pattern as `BookCard`), reading from the new cover maps by title.
+6. **Update Nginx CSP** on the server (`img-src`) to allow the actual image CDN hosts once known (likely `media.rawg.io` and `image.tmdb.org` — confirm exact hosts from real API responses, don't guess).
+7. Update README/CLAUDE.md folder structure notes to mention the new data files and scripts.
+8. `./deploy.sh "Add cover art for games and TV"`.
+
+---
+
 ## Writing Posts
 
 Post frontmatter supports:
@@ -263,7 +285,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Hero section — name, Pyre badge, intro, donate nudge, section teasers
-- [x] Shelf page (`/shelf`) — 94 books with cover art, 49 games, TV entries; tabs + status filters
+- [x] Shelf page (`/shelf`) — 59 books with cover art, 50 games, 9 TV entries; tabs + status filters
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked

@@ -52,17 +52,6 @@
       "games": "Spill",
       "tv":    "TV og anime"
     },
-    "filters": {
-      "all":      "Alle",
-      "current":  "Leser nå",
-      "finished": "Ferdig",
-      "want":     "Vil ha"
-    },
-    "statusLabels": {
-      "current":  "Leser nå",
-      "finished": "Ferdig",
-      "want":     "Vil ha"
-    },
     "empty": "Ingenting her ennå."
   },
   "silence": {

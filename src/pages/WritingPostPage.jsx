@@ -377,7 +377,7 @@ export default function WritingPostPage() {
         {post.spotify && post.spotify.trim() && (
           <div style={{ maxWidth: 780, marginTop: 48 }}>
             <p style={{ fontSize: 12, color: 'var(--fgm)', fontStyle: 'italic', marginBottom: 12, margin: '0 0 12px' }}>
-              Spillelisten jeg hørte på, med noen av favorittlåtene mine:
+              {t('writing.spotifyCaption')}
             </p>
             <iframe
               src={`https://open.spotify.com/embed/playlist/${post.spotify.split('/').pop().split('?')[0]}`}

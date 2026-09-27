@@ -40,8 +40,9 @@
     "heading":      "Writing",
     "subtitle":     "Essays, commentary, and the occasional observation.",
     "backWriting":  "Writing",
-    "noDate":       "Undated",
-    "conversation": "Join the conversation on Mastodon"
+    "noDate":         "Undated",
+    "conversation":   "Join the conversation on Mastodon",
+    "spotifyCaption": "The playlist I was listening to while writing this:"
   },
   "shelf": {
     "heading":  "Shelf",
@@ -103,7 +104,7 @@
     "bio1":                "I'm a Product Manager specialising in AI and Data Analytics, and a co-founder of Pyre, a Norwegian software company I run with two friends. Outside of that, I write here occasionally, built Deafening Silence as a free tool for tinnitus sound therapy, and keep a shelf of books, games and TV I've enjoyed.",
     "bio2":                "Travelling has also taught me valuable lessons such as how much people have in common, even on the other side of the globe. But mainly I travel for the food though.",
     "photosHeading":       "A few photos I'm proud of",
-    "photosRights":        "© Nithun Manoharan. All rights reserved — not covered by the licence below.",
+    "photosRights":        "© Nithun Manoharan. All rights reserved. Not covered by the licence below.",
     "portraitAlt":         "Nithun Manoharan smiling under a garden archway",
     "flowerAlt":           "Nithun Manoharan standing in a purple flower field",
     "headshotAlt":         "A portrait photo of Nithun Manoharan",
@@ -112,6 +113,7 @@
     "photoHeddalAlt":      "Heddal stave church under a stormy sky in Norway",
     "photoSunflareAlt":    "A sun-flared ornate corner building against a clear blue sky in Stockholm",
     "photoInariAlt":       "A bronze fox statue at a shrine in Kyoto, framed under a red roof",
-    "photoRigaAlt":        "A brick Orthodox cathedral lit up at night in Riga"
+    "photoRigaAlt":        "A brick Orthodox cathedral lit up at night in Riga",
+    "instagram":           "More on Instagram →"
   }
 }

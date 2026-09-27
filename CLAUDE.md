@@ -122,21 +122,26 @@ nithun-website/
 │   └── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
-│   └── sitemap.xml                 # Generated at build time — do not edit manually
+│   ├── sitemap.xml                 # Generated at build time — do not edit manually
+│   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
+│   └── images/about/               # About page photos — portrait, flower field, 6 travel shots (webp)
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer
     ├── i18n.js                     # i18next config — EN/NO, language detection
     ├── styles/
-    │   └── global.css              # Tailwind import, dark mode variant, CSS custom properties
+    │   ├── global.css              # Tailwind import, dark mode variant, CSS custom properties
+    │   └── shell.js                # Shared page width/padding constants (SHELL) — keeps Navbar/pages/Footer aligned
     ├── components/
-    │   ├── Navbar.jsx              # Navigation bar (sticky, frosted glass)
-    │   ├── Footer.jsx              # Footer with social links and build date
-    │   ├── ThemeToggle.jsx         # Dark/light toggle with SVG icons
-    │   └── LangToggle.jsx          # EN/NO language toggle
+    │   ├── Navbar.jsx              # Navigation bar — NM logo, nav links, ThemePill + LangPill toggles (two-row mobile)
+    │   ├── Footer.jsx              # Footer — Pyre logo, GitHub, CC license, build date
+    │   ├── PyreMark.jsx            # Pyre triangle SVG logo — used in Hero subtitle and Footer
+    │   ├── ThemeToggle.jsx         # UNUSED — functionality folded into Navbar.jsx as ThemePill
+    │   └── LangToggle.jsx          # UNUSED — functionality folded into Navbar.jsx as LangPill
     ├── sections/
     │   └── Hero.jsx                # Home page — name, location, intro, teaser, section teasers
     ├── pages/
+    │   ├── AboutPage.jsx           # /about — bio, portrait, travel photography grid
     │   ├── ShelfPage.jsx           # /shelf — books/games/TV with cover art and status filters
     │   ├── SilencePage.jsx         # /silence — tinnitus noise tool with sleep timer
     │   ├── WritingPage.jsx         # /writing — list of markdown posts
@@ -147,7 +152,8 @@ nithun-website/
     │   ├── shelf.json              # Shelf content — 94 books, 49 games, 2 TV entries
     │   └── charities.json          # Charity links shown on Silence page
     ├── lib/
-    │   └── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
+    │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
+    │   └── parseFootnotes.js       # Strips inline footnote syntax from post body, returns {body, footnotes[]}
     ├── utils/
     │   └── bookCovers.js           # Cover art — Google Books (primary), Open Library (fallback)
     ├── writing/
@@ -256,11 +262,16 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Project scaffolded (Vite + React + Tailwind)
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
-- [x] Hero section — name, intro, section teasers (portrait removed)
+- [x] Hero section — name, Pyre badge, intro, donate nudge, section teasers
 - [x] Shelf page (`/shelf`) — 94 books with cover art, 49 games, TV entries; tabs + status filters
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
-- [x] Writing page (`/writing`) — markdown posts with frontmatter, rendered with react-markdown
-- [x] Footer with social icon links and build date
+- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
+- [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
+- [x] Pyre branding — triangle mark in Hero subtitle and Footer, links to pyre.no
+- [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`
+- [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
+- [x] Footer — Pyre logo, GitHub, Instagram, CC license, build date
+- [x] Navbar — NM wordmark, two-row mobile layout, pill-style theme/lang toggles; About link added
 - [x] SEO meta tags, Open Graph, JSON-LD schema, sitemap (auto-generated)
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
 - [x] Security headers on Nginx (CSP allows Google Books + Open Library)

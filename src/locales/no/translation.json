@@ -40,8 +40,9 @@
     "heading":      "Skriverier",
     "subtitle":     "Essays, kommentarer og enkle observasjoner.",
     "backWriting":  "Skriverier",
-    "noDate":       "Udatert",
-    "conversation": "Bli med i samtalen på Mastodon"
+    "noDate":         "Udatert",
+    "conversation":   "Bli med i samtalen på Mastodon",
+    "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:"
   },
   "shelf": {
     "heading":  "Hylle",
@@ -103,7 +104,7 @@
     "bio1":                "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner. Utenom det skriver jeg her innimellom, har bygget Deafening Silence som et gratis verktøy for tinnituslydterapi, og holder en hylle med bøker, spill og TV jeg er fan av.",
     "bio2":                "Reising har også lært meg mye — som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
     "photosHeading":       "Noen bilder jeg er stolt av",
-    "photosRights":        "© Nithun Manoharan. Alle rettigheter forbeholdt — omfattes ikke av lisensen under.",
+    "photosRights":        "© Nithun Manoharan. Alle rettigheter forbeholdt. Omfattes ikke av lisensen under.",
     "portraitAlt":         "Nithun Manoharan smiler under en hagebue",
     "flowerAlt":           "Nithun Manoharan står i et lilla blomsterfelt",
     "headshotAlt":         "Et portrettbilde av Nithun Manoharan",
@@ -112,6 +113,7 @@
     "photoHeddalAlt":      "Heddal stavkirke under en stormfull himmel i Norge",
     "photoSunflareAlt":    "En solblendet, staselig hjørnebygning mot en klar blå himmel i Stockholm",
     "photoInariAlt":       "En bronsestatue av en rev ved et helligdom i Kyoto, under et rødt tak",
-    "photoRigaAlt":        "En opplyst ortodoks katedral i murstein om natten i Riga"
+    "photoRigaAlt":        "En opplyst ortodoks katedral i murstein om natten i Riga",
+    "instagram":           "Mer på Instagram →"
   }
 }

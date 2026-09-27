@@ -36,17 +36,7 @@ export default function Footer() {
           >
             GitHub
           </a>
-          <a
-            href="https://www.instagram.com/nithunm"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease' }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
-          >
-            Instagram
-          </a>
-          <span style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em' }}>
+<span style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em' }}>
             {t('footer.license')}
           </span>
         </div>

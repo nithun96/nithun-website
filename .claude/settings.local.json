@@ -4,7 +4,9 @@
       "Bash(./deploy.sh \"Refresh homepage: new intro text, fade-in animation, remove Books and Contact from nav\")",
       "WebSearch",
       "WebFetch(domain:openlibrary.org)",
-      "Bash(curl -s \"https://openlibrary.org/isbn/9780007123834.json\")"
+      "Bash(curl -s \"https://openlibrary.org/isbn/9780007123834.json\")",
+      "Bash(git merge *)",
+      "Bash(bash deploy.sh \"Curate shelf, remove status filters, add games/TV cover plan to CLAUDE.md\")"
     ]
   }
 }

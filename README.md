@@ -37,7 +37,7 @@ nithun-website/
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer
-    ├── i18n.js                     # i18next config — EN/NO, language detection
+    ├── i18n.js                     # i18next config — EN/NO, language detection, keeps <html lang> in sync
     ├── styles/
     │   ├── global.css              # Tailwind import, fonts, design tokens, page-specific CSS
     │   └── shell.js                # Shared page container (SHELL) — aligns Navbar, pages and Footer
@@ -97,10 +97,10 @@ nithun-website/
 React mounts into `<div id="root">` in `index.html`. `i18n.js` is imported first to initialise language detection. The app is wrapped in `BrowserRouter` for client-side navigation.
 
 ### Layout (`App.jsx`)
-Every page shares: `Navbar`, `<main>` with `<Routes>`, and `Footer`. A hidden skip-to-content link sits at the top for keyboard/screen reader accessibility. All three use the `SHELL` container from `styles/shell.js` so their edges line up.
+Every page shares: `Navbar`, `<main>` with `<Routes>`, and `Footer`. A translated skip-to-content link is the first element in the page (visible on keyboard focus), and `<main>` can take focus so the skip lands correctly. All three use the `SHELL` container from `styles/shell.js` so their edges line up.
 
 ### Theme and language (`Navbar.jsx`)
-The theme pill toggles a `.dark` class on `<html>`; the preference is saved in `localStorage` and restored before React boots via an inline script in `index.html` (prevents a flash of the wrong theme). The language pill calls `i18n.changeLanguage()` and updates `document.documentElement.lang`.
+The theme pill toggles a `.dark` class on `<html>`; the preference is saved in `localStorage` and restored before React boots via an inline script in `index.html` (prevents a flash of the wrong theme). The language pill calls `i18n.changeLanguage()`. `i18n.js` keeps `<html lang>` in sync with the active language, both on first load and whenever it changes.
 
 ### Home page (`Hero.jsx`)
 Name as `<h1>`, a "Building Pyre · Oslo" line linking to pyre.no, a short intro, and a three-photo collage. Below: four teaser cards linking to Writing, Silence, Shelf and About, then a donation nudge.
@@ -120,7 +120,7 @@ Framework-agnostic Web Audio module, designed to be extractable into a standalon
 ### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
 Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime, language, spotify). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date, rendered with `react-markdown` + `rehype-raw`.
 
-Footnote system: two types — `clarification` (quiet aside) and `wry` (warm left border). Desktop: hover shows tooltip, click pins it. Mobile: tap opens a bottom sheet portal rendered directly on `document.body`.
+Footnote system: two types — `clarification` (quiet aside) and `wry` (warm left border). Desktop: hover or keyboard focus shows the tooltip, click or Enter/Space pins it, Escape closes it. Mobile: tap opens a bottom sheet portal rendered directly on `document.body`; it is a dialog that takes focus when opened, closes on Escape, returns focus to the marker, and is hidden from the tab order when closed.
 
 Language pill: each post carries a `language` field (`"en"` or `"no"`, defaults to `"en"`). Shown as a coloured pill on the list page and in the post header. The post's title and body are also marked with that `lang` attribute.
 
@@ -138,6 +138,15 @@ To add or edit a string:
 - `lib/usePageMeta.js` sets each page's own title, description, canonical URL and Open Graph tags when it loads. Page titles and descriptions live under `meta` in the translation files; posts use their frontmatter title and summary.
 - `public/robots.txt` points crawlers to the sitemap. `scripts/generate-sitemap.js` lists every page and post, and runs on every build. **When adding a new page, add it to the sitemap script too.**
 - Unknown URLs show `NotFoundPage`, marked `noindex`.
+
+---
+
+## Accessibility
+
+- **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
+- **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
+- **Motion:** `prefers-reduced-motion` switches off animations, transitions and smooth scrolling.
+- **Known gaps:** Silence controls don't announce play/stop to screen readers, Shelf tabs aren't marked up as tabs, the theme/language pills are smaller than 24px, and the game prototype is English-only.
 
 ---
 
@@ -185,7 +194,7 @@ Nginx serves `dist/` with `try_files` so React Router's client-side routes work 
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
 - [x] Footer — Pyre link, GitHub, licence, build date
 - [x] SEO — per-page titles, descriptions and canonicals; Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
-- [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
+- [x] WCAG AA accessibility — translated skip link, aria-labels, keyboard-accessible footnotes, visible focus, AA contrast in both themes, reduced-motion support, `<html lang>` follows the language (known gaps listed under Accessibility)
 - [x] Security headers on Nginx
 - [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)

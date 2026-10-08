@@ -1,0 +1,61 @@
+# Builds and deploys nithun.no on every push to main, including merged PRs
+# (e.g. from Claude Cowork / cloud sessions). Mirrors deploy.sh.
+# Secrets: DEPLOY_SSH_KEY (private key for the `deploy` user, GitHub-only),
+#          DEPLOY_KNOWN_HOSTS (the server's host keys).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - 'CLAUDE.md'
+      - 'GAME-BRIEF.md'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Set up SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Upload site
+        run: scp -r dist/* deploy@204.168.209.150:/var/www/nithun-website/dist/
+
+      - name: Update Nginx config
+        run: |
+          scp nginx/nithun-website deploy@204.168.209.150:/tmp/nithun-website
+          ssh deploy@204.168.209.150 "sudo cp /tmp/nithun-website /etc/nginx/sites-available/nithun-website && sudo nginx -t && sudo nginx -s reload"
+
+      - name: Check the live site
+        run: |
+          curl -fsS -o /dev/null -w "nithun.no: %{http_code}\n" https://nithun.no/

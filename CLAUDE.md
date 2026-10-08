@@ -93,7 +93,7 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - Each page calls `usePageMeta({ title, description, path })` from `src/lib/usePageMeta.js`, which sets its own title, description, canonical URL and Open Graph tags. Titles/descriptions live under `meta.*` in both translation files; posts use their frontmatter `title` and `summary`.
 - **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`. Posts in `src/writing/` are added to the sitemap automatically.
 - Unknown URLs fall through to `NotFoundPage` (noindex). Don't add `hreflang` tags — language is switched client-side, so there are no separate language URLs.
-- Merging a PR on GitHub does not deploy. Changes only go live when `./deploy.sh` runs.
+- Every push to `main` (including a merged PR) deploys automatically via GitHub Actions — see Deployment.
 
 ---
 
@@ -125,6 +125,7 @@ nithun-website/
 ├── index.html                      # Entry point — SEO meta, Open Graph, JSON-LD, dark mode init
 ├── vite.config.js                  # Vite config — React plugin, Tailwind plugin, build date injection
 ├── deploy.sh                       # Deploy: build → scp to server → update Nginx → git commit + push
+├── .github/workflows/deploy.yml    # Auto-deploy on every push to main (see Deployment)
 ├── nginx/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── scripts/
@@ -216,7 +217,13 @@ certbot certificates                                       # list certs, domains
 certbot renew --dry-run                                    # test renewal of all certs
 ```
 
-**Important:** After every change session, run `./deploy.sh` with a descriptive commit message to deploy to the live server.
+**Automatic deploys:** every push to `main` — including merging a pull request on GitHub, e.g. from a Cowork or cloud session — runs `.github/workflows/deploy.yml`, which builds the site, uploads it and updates Nginx (same steps as `deploy.sh`). Pushes that only change `README.md`, `CLAUDE.md` or `GAME-BRIEF.md` are skipped. Progress and failures show under the repo's **Actions** tab on GitHub, and GitHub emails on failure. A deploy can also be started by hand there ("Run workflow").
+
+It uses a GitHub-only SSH key (secret `DEPLOY_SSH_KEY`, created Oct 2026, comment `github-actions-deploy@nithun-website` in the server's `/home/deploy/.ssh/authorized_keys`) and the server's host keys (secret `DEPLOY_KNOWN_HOSTS`). The `deploy` user can only copy the Nginx config, test it and reload it via sudo. To revoke GitHub's access, delete that key's line from `authorized_keys`.
+
+**Cloud/Cowork sessions:** work on a branch and open a PR. Review the PR (or ask a local session to), then merge it — the site deploys itself. Don't push unreviewed changes straight to `main`.
+
+`./deploy.sh` still works for deploying from this laptop; it deploys directly, and its push to `main` then triggers the workflow, which redeploys the same commit (harmless).
 
 **After every deploy:** Update `README.md` to reflect the current state of the site — pages, routes, file structure, and the "What's Live" checklist. The README is the living reference for what exists; keep it accurate.
 

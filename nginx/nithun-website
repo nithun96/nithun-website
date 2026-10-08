@@ -30,7 +30,9 @@ server {
 
 # www.nithun.no → nithun.no, so Google sees one copy of each page
 server {
-    listen 443 ssl http2;
+    # http2 is enabled for all of port 443 by the nithun.no block below;
+    # repeating it here makes nginx 1.24 warn.
+    listen 443 ssl;
     server_name www.nithun.no;
 
     ssl_certificate /etc/letsencrypt/live/nithun.no/fullchain.pem;

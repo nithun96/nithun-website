@@ -207,11 +207,13 @@ This will build, upload to the server, and push to GitHub in one command.
 
 The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
 
-**SSL certificates** are renewed automatically by certbot on the server. In the `nithunmanoharan.com` Nginx block, the redirect must stay inside `location /` (not a server-level `return`), otherwise Let's Encrypt's renewal check is redirected away and renewal fails. That is what let the `.com` certificate expire in July 2026. To check or renew by hand (needs the server sudo password):
+**SSL certificates** are renewed automatically by certbot on the server (nginx authenticator). Every domain on a certificate must have a DNS record, or renewal fails for the whole certificate. That is what let the `.com` certificate expire in July 2026: it covered `www.nithunmanoharan.com`, which has no DNS record. Keep the `.com` redirect inside `location /` (not a server-level `return`) so certbot's temporary challenge location still works.
+
+To check or renew by hand, log in as root with your SSH key (no sudo password needed):
 ```
-ssh deploy@204.168.209.150
-sudo certbot renew --cert-name nithunmanoharan.com --dry-run   # test
-sudo certbot renew --cert-name nithunmanoharan.com             # renew for real
+ssh root@204.168.209.150
+certbot certificates                                       # list certs, domains and expiry dates
+certbot renew --dry-run                                    # test renewal of all certs
 ```
 
 **Important:** After every change session, run `./deploy.sh` with a descriptive commit message to deploy to the live server.
@@ -314,8 +316,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
 - [x] Security headers on Nginx (CSP allows Open Library/archive.org images and Spotify embeds only)
-- [x] www.nithun.no redirects to nithun.no
-- [ ] nithunmanoharan.com over HTTPS — certificate expired July 2026; renew on the server (see Deployment). The HTTP redirect works.
+- [x] www.nithun.no, nithunmanoharan.com and www.nithunmanoharan.com all redirect to nithun.no (`.com` DNS is hosted in the Hetzner Console; certificate reissued Oct 2026 with both names)
 - [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)
 - [x] Git repository on GitHub

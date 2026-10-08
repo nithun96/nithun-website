@@ -9,9 +9,8 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
-    # Let's Encrypt renewal checks must be answered here, not redirected to
-    # nithun.no. A server-level `return` runs before any location, which made
-    # renewal fail (cert expired July 2026) — so the redirect lives in `location /`.
+    # Let's Encrypt renewal checks are answered here rather than redirected to
+    # nithun.no, so the redirect lives in `location /`, not a server-level `return`.
     location ^~ /.well-known/acme-challenge/ {
         root /var/www/html;
     }

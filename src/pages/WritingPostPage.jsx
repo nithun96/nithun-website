@@ -57,6 +57,7 @@ const FootnoteCtx = createContext(null)
 // Mobile: click updates activeFootnote in context; FootnotePanel handles display.
 
 function FootnoteMarker({ number, type, text }) {
+  const { t } = useTranslation()
   const { activeFootnote, onToggle } = useContext(FootnoteCtx)
   const [hovering, setHovering] = useState(false)
   const [pinned, setPinned] = useState(false)
@@ -96,6 +97,17 @@ function FootnoteMarker({ number, type, text }) {
     }
   }
 
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleClick()
+    } else if (e.key === 'Escape') {
+      setPinned(false)
+      setHovering(false)
+      if (activeFootnote === number) onToggle(number)
+    }
+  }
+
   const calloutBase = {
     background: 'var(--bg2)',
     border: '1px solid color-mix(in oklch, var(--fg) 10%, transparent)',
@@ -112,13 +124,18 @@ function FootnoteMarker({ number, type, text }) {
     <span
       ref={wrapRef}
       className="fn-marker"
+      role="button"
+      tabIndex={0}
+      aria-expanded={showPanel || activeFootnote === number}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onFocus={handleEnter}
+      onBlur={handleLeave}
     >
       <sup
         data-footnote={number}
-        aria-label={`Footnote ${number}: ${text}`}
         style={{
           fontSize: 10,
           color: supColor,
@@ -134,7 +151,7 @@ function FootnoteMarker({ number, type, text }) {
       </sup>
 
       {/* Always in the DOM for screen readers */}
-      <span className="sr-only">Footnote {number}: {text}</span>
+      <span className="sr-only">{t('writing.footnote')} {number}: {text}</span>
 
       {/* Desktop: hover tooltip or pinned panel */}
       {showPanel && (
@@ -167,7 +184,10 @@ function FootnoteMarker({ number, type, text }) {
 // Slides up from the bottom when a footnote is active on touch devices.
 
 function FootnotePanel({ footnotes }) {
+  const { t } = useTranslation()
   const { activeFootnote, onToggle } = useContext(FootnoteCtx)
+  const closeRef = useRef(null)
+  const returnFocusRef = useRef(null)
 
   // Keep last-seen footnote visible while the panel is sliding away
   const lastFn = useRef(null)
@@ -176,6 +196,18 @@ function FootnotePanel({ footnotes }) {
   const displayFn = fn || lastFn.current
 
   const isOpen = !!fn
+
+  useEffect(() => {
+    if (!isOpen) return
+    returnFocusRef.current = document.activeElement
+    closeRef.current?.focus()
+    const onKey = e => { if (e.key === 'Escape') onToggle(activeFootnote) }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      returnFocusRef.current?.focus?.()
+    }
+  }, [isOpen, activeFootnote, onToggle])
 
   return createPortal(
     <>
@@ -192,9 +224,11 @@ function FootnotePanel({ footnotes }) {
       />
 
       <div
-        role="complementary"
-        aria-live="polite"
+        role="dialog"
+        aria-label={t('writing.footnote')}
+        aria-hidden={!isOpen}
         style={{
+          visibility: isOpen ? 'visible' : 'hidden',
           position: 'fixed',
           bottom: 0,
           left: 0,
@@ -205,7 +239,9 @@ function FootnotePanel({ footnotes }) {
             : '1px solid color-mix(in oklch, var(--fg) 10%, transparent)',
           padding: '20px clamp(24px, 5vw, 64px) max(28px, env(safe-area-inset-bottom))',
           transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
-          transition: 'transform 0.25s ease',
+          transition: isOpen
+            ? 'transform 0.25s ease'
+            : 'transform 0.25s ease, visibility 0s linear 0.25s',
           zIndex: 50,
         }}
       >
@@ -230,8 +266,9 @@ function FootnotePanel({ footnotes }) {
             {displayFn?.text}
           </p>
           <button
+            ref={closeRef}
             onClick={() => isOpen && onToggle(activeFootnote)}
-            aria-label="Close footnote"
+            aria-label={t('writing.closeFootnote')}
             style={{
               background: 'none',
               border: 'none',

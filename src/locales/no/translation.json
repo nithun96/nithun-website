@@ -5,14 +5,16 @@
     "shelf":       "Hylle",
     "about":       "Om meg",
     "toggleTheme": "Bytt tema",
-    "toggleLang":  "English"
+    "toggleLang":  "English",
+    "skip":        "Hopp til innhold",
+    "mainNav":     "Hovednavigasjon"
   },
   "hero": {
     "name":       "Nithun Manoharan",
     "pyreBadge":  "Bygger Pyre",
     "location":   "Oslo, Norge",
     "intro":    "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, hvor vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
-    "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselforskningsorganisasjonene som er nevnt på Silence-siden</5>.",
+    "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselsforskningsorganisasjonene som er nevnt på Stillhet-siden</5>.",
     "teasers": {
       "writing": {
         "label": "Skriverier",
@@ -22,7 +24,7 @@
       "silence": {
         "label": "Stillhet",
         "title": "Et tinnitus-verktøy",
-        "desc":  "Søvn- og avslapningslyder."
+        "desc":  "Søvn- og avslappingslyder."
       },
       "shelf": {
         "label": "Hylle",
@@ -40,6 +42,8 @@
     "heading":      "Skriverier",
     "subtitle":     "Essays, kommentarer og enkle observasjoner.",
     "backWriting":  "Skriverier",
+    "footnote":       "Fotnote",
+    "closeFootnote":  "Lukk fotnote",
     "noDate":         "Udatert",
     "conversation":   "Bli med i samtalen på Mastodon",
     "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:"
@@ -66,12 +70,12 @@
       "ocean": "Hav"
     },
     "soundDescriptions": {
-      "brown": "Dyp, beroligende dur",
+      "brown": "Dyp, beroligende buldring",
       "pink":  "Balansert, naturlig sus",
       "rain":  "Rolig regnfall, syntetisert",
       "ocean": "Jevne bølger, forsiktig"
     },
-    "play":         "Spill",
+    "play":         "Spill av",
     "pause":        "Pause",
     "volume":       "Volum",
     "sleepTimer":   "Søvntimer",
@@ -79,9 +83,9 @@
     "timerMinutes": "{{minutes}} min",
     "timerActive":  "Stopper om {{remaining}}",
     "cancelTimer":  "Avbryt",
-    "donationHeading": "Støtt hørselhelse",
+    "donationHeading": "Støtt hørselshelse",
     "donationIntro":   "Hvis Deafening Silence hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
-    "audioError": "Lyden startet ikke. Trykk Spill igjen.",
+    "audioError": "Lyden startet ikke. Trykk Spill av igjen.",
     "iosMuteNote": "Hører du ingen lyd, sjekk at lydavbryterknappen er av. På iPhone kan sideknappen dempe lyden selv om volumet er skrudd opp."
   },
   "footer": {
@@ -119,7 +123,7 @@
     "photoRedWindowsAlt":  "Røde karnappvinduer mot en klar blå himmel i København",
     "photoHeddalAlt":      "Heddal stavkirke under en stormfull himmel i Norge",
     "photoSunflareAlt":    "En solblendet, staselig hjørnebygning mot en klar blå himmel i Stockholm",
-    "photoInariAlt":       "En bronsestatue av en rev ved et helligdom i Kyoto, under et rødt tak",
+    "photoInariAlt":       "En bronsestatue av en rev ved en helligdom i Kyoto, under et rødt tak",
     "photoRigaAlt":        "En opplyst ortodoks katedral i murstein om natten i Riga",
     "instagram":           "Mer på Instagram →"
   }

@@ -54,7 +54,7 @@ function BookCard({ book }) {
           }}
         />
         <span style={{
-          fontSize: 9,
+          fontSize: 11,
           fontFamily: 'monospace',
           color: 'var(--fgm)',
           letterSpacing: '0.06em',
@@ -91,7 +91,7 @@ function BookCard({ book }) {
       </div>
       <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{book.author}</div>
       {bookMeta && (
-        <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em' }}>
+        <div style={{ fontSize: 12, color: 'var(--fgm)', letterSpacing: '0.06em' }}>
           {bookMeta}
         </div>
       )}
@@ -200,7 +200,7 @@ export default function ShelfPage() {
                 {item.platform || item.category}
               </div>
               {item.note && (
-                <div style={{ fontSize: 10, color: 'color-mix(in oklch, var(--fgm) 70%, transparent)', letterSpacing: '0.06em' }}>
+                <div style={{ fontSize: 12, color: 'var(--fgm)', letterSpacing: '0.06em' }}>
                   {item.note}
                 </div>
               )}

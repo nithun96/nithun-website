@@ -8,6 +8,7 @@ import rehypeRaw from 'rehype-raw'
 import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
 import { parseFootnotes } from '../lib/parseFootnotes'
 import { SHELL } from '../styles/shell'
+import { usePageMeta } from '../lib/usePageMeta'
 
 const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
 
@@ -261,6 +262,12 @@ export default function WritingPostPage() {
 
   const post = posts.find(p => p.slug === slug)
 
+  usePageMeta({
+    title: post ? `${post.title} | Nithun Manoharan` : t('meta.writingTitle'),
+    description: post?.summary || t('meta.writingDescription'),
+    path: post ? `/writing/${post.slug}` : '/writing',
+  })
+
   const { body, footnotes } = useMemo(
     () => (post ? parseFootnotes(post.content) : { body: '', footnotes: [] }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -331,6 +338,7 @@ export default function WritingPostPage() {
           </Link>
 
           <h1
+            lang={post.language || 'en'}
             style={{
               fontFamily: 'Georgia, serif',
               fontSize: 'clamp(26px, 4.5vw, 44px)',
@@ -363,6 +371,7 @@ export default function WritingPostPage() {
             fontWeight: 300,
           }}
           className="post-body"
+          lang={post.language || 'en'}
         >
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}

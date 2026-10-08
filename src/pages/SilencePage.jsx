@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { createNoiseEngine } from '../audio/noiseEngine'
 import charitiesData from '../data/charities.json'
 import { SHELL } from '../styles/shell'
+import { usePageMeta } from '../lib/usePageMeta'
 
 const SOUND_TYPES = [
   { id: 'brown', icon: '▬' },
@@ -35,6 +36,7 @@ const isIOS = typeof navigator !== 'undefined' && /iPhone|iPad/.test(navigator.u
 
 export default function SilencePage() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('meta.silenceTitle'), description: t('meta.silenceDescription'), path: '/silence' })
   const engineRef = useRef(null)
   const wakeLockRef = useRef(null)
 

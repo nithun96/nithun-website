@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import { getBookCover } from '../utils/bookCovers'
 import { SHELL } from '../styles/shell'
+import { usePageMeta } from '../lib/usePageMeta'
 
 // Games and TV are hidden until they have cover art (see "Cover Art for
 // Games & TV" in CLAUDE.md) — re-add 'games', 'tv' once that's done.
@@ -102,6 +103,7 @@ function BookCard({ book }) {
 
 export default function ShelfPage() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('meta.shelfTitle'), description: t('meta.shelfDescription'), path: '/shelf' })
   const [cat, setCat]       = useState('books')
   // Book/game/TV cover art shouldn't surface in Google Images for name
   // searches — keep it out of image search without affecting page ranking.

@@ -88,6 +88,24 @@
     "lastUpdated": "Last updated:",
     "license":     "CC BY-NC 4.0"
   },
+  "meta": {
+    "homeTitle":          "Nithun Manoharan | Product Manager, AI & Data Analytics",
+    "homeDescription":    "Nithun Manoharan is a Product Manager specialising in AI and Data Analytics, based in Norway. This is his personal site.",
+    "writingTitle":       "Writing | Nithun Manoharan",
+    "writingDescription": "Essays, commentary and the occasional observation from Nithun Manoharan.",
+    "shelfTitle":         "Shelf | Nithun Manoharan",
+    "shelfDescription":   "Books Nithun Manoharan has enjoyed: a personal log of what's been worth the time.",
+    "silenceTitle":       "Deafening Silence | Nithun Manoharan",
+    "silenceDescription": "A free tool for tinnitus sound therapy: brown noise, pink noise, rain and ocean sounds, with a sleep timer.",
+    "aboutTitle":         "About | Nithun Manoharan",
+    "aboutDescription":   "About Nithun Manoharan, Product Manager and co-founder of Pyre, based in Oslo. Plus a few travel photos.",
+    "notFoundTitle":      "Page not found | Nithun Manoharan"
+  },
+  "notFound": {
+    "heading": "Page not found",
+    "body":    "There's nothing at this address.",
+    "home":    "Back to the homepage"
+  },
   "about": {
     "eyebrow":            "About",
     "bio1":                "I'm a Product Manager specialising in AI and Data Analytics, and a co-founder of Pyre, a Norwegian software company I run with two friends. Outside of that, I write here occasionally, built Deafening Silence as a free tool for tinnitus sound therapy, and keep a shelf of books, games and TV I've enjoyed.",

@@ -28,3 +28,6 @@ npm-debug.log*
 cover-preview.html
 src/data/bookCovers.draft.json
 
+
+# Claude Code per-machine settings
+.claude/settings.local.json

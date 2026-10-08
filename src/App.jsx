@@ -7,6 +7,7 @@ import WritingPage from './pages/WritingPage'
 import WritingPostPage from './pages/WritingPostPage'
 import SilencePage from './pages/SilencePage'
 import AboutPage from './pages/AboutPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/shelf"         element={<ShelfPage />} />
           <Route path="/about"         element={<AboutPage />} />
           <Route path="/books"         element={<Navigate to="/shelf" replace />} />
+          <Route path="*"              element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer />

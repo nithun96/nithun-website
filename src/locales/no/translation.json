@@ -88,6 +88,24 @@
     "lastUpdated": "Sist oppdatert:",
     "license":     "CC BY-NC 4.0"
   },
+  "meta": {
+    "homeTitle":          "Nithun Manoharan | Produktsjef, AI og dataanalyse",
+    "homeDescription":    "Nithun Manoharan er produktsjef med spesialisering innen AI og dataanalyse, basert i Norge. Dette er hans personlige nettside.",
+    "writingTitle":       "Skriverier | Nithun Manoharan",
+    "writingDescription": "Essays, kommentarer og enkle observasjoner fra Nithun Manoharan.",
+    "shelfTitle":         "Hylle | Nithun Manoharan",
+    "shelfDescription":   "Bøker Nithun Manoharan har likt: en personlig logg over hva som har vært verdt tiden.",
+    "silenceTitle":       "Deafening Silence | Nithun Manoharan",
+    "silenceDescription": "Et gratis verktøy for tinnituslydterapi: brun støy, rosa støy, regn og havlyder, med søvntimer.",
+    "aboutTitle":         "Om meg | Nithun Manoharan",
+    "aboutDescription":   "Om Nithun Manoharan, produktsjef og medgründer av Pyre, basert i Oslo. Pluss noen reisebilder.",
+    "notFoundTitle":      "Siden finnes ikke | Nithun Manoharan"
+  },
+  "notFound": {
+    "heading": "Siden finnes ikke",
+    "body":    "Det er ingenting på denne adressen.",
+    "home":    "Tilbake til forsiden"
+  },
   "about": {
     "eyebrow":            "Om",
     "bio1":                "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner. Utenom det skriver jeg her innimellom, har bygget Deafening Silence som et gratis verktøy for tinnituslydterapi, og holder en hylle med bøker, spill og TV jeg er fan av.",

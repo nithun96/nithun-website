@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import PyreMark from '../components/PyreMark'
 import { SHELL } from '../styles/shell'
+import { usePageMeta } from '../lib/usePageMeta'
 
 const SECTION_TEASERS = [
   { key: 'writing', path: '/writing', cls: 'writing', accent: 'var(--dusty)' },
@@ -12,6 +13,7 @@ const SECTION_TEASERS = [
 
 export default function Hero() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('meta.homeTitle'), description: t('meta.homeDescription'), path: '/' })
 
   return (
     <div className="page-enter" style={SHELL}>

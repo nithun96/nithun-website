@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
 import { SHELL } from '../styles/shell'
+import { usePageMeta } from '../lib/usePageMeta'
 
 const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
 
@@ -45,6 +46,7 @@ function LanguagePill({ lang }) {
 
 export default function WritingPage() {
   const { t, i18n } = useTranslation()
+  usePageMeta({ title: t('meta.writingTitle'), description: t('meta.writingDescription'), path: '/writing' })
 
   return (
     <div className="page-enter" style={SHELL}>

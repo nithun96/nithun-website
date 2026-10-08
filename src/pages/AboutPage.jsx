@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { SHELL } from '../styles/shell'
+import { usePageMeta } from '../lib/usePageMeta'
 
 const PHOTOS = [
   { file: 'photo-wroclaw-night.webp',      altKey: 'about.photoWroclawAlt', caption: 'Wrocław, Poland' },
@@ -12,6 +13,7 @@ const PHOTOS = [
 
 export default function AboutPage() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('meta.aboutTitle'), description: t('meta.aboutDescription'), path: '/about' })
 
   return (
     <div className="page-enter" style={SHELL}>

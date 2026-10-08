@@ -9,7 +9,16 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
-    return 301 https://nithun.no$request_uri;
+    # Let's Encrypt renewal checks must be answered here, not redirected to
+    # nithun.no. A server-level `return` runs before any location, which made
+    # renewal fail (cert expired July 2026) — so the redirect lives in `location /`.
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/html;
+    }
+
+    location / {
+        return 301 https://nithun.no$request_uri;
+    }
 }
 
 # Primary domain: nithun.no
@@ -19,9 +28,26 @@ server {
     return 301 https://$host$request_uri;
 }
 
+# www.nithun.no → nithun.no, so Google sees one copy of each page
 server {
     listen 443 ssl http2;
-    server_name nithun.no www.nithun.no;
+    server_name www.nithun.no;
+
+    ssl_certificate /etc/letsencrypt/live/nithun.no/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/nithun.no/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    location / {
+        return 301 https://nithun.no$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    server_name nithun.no;
     root /var/www/nithun-website/dist;
     index index.html;
 
@@ -29,7 +55,7 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://covers.openlibrary.org https://archive.org https://*.archive.org https://books.google.com; connect-src 'self' https://www.googleapis.com https://open.spotify.com; frame-src https://open.spotify.com; frame-ancestors 'none'" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://covers.openlibrary.org https://archive.org https://*.archive.org; connect-src 'self'; frame-src https://open.spotify.com; frame-ancestors 'none'" always;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
     location / {
@@ -40,11 +66,4 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/nithun.no/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-
-    # OCSP Stapling - speeds up handshakes and improves privacy
-    ssl_stapling on;
-    ssl_stapling_verify on;
-    ssl_trusted_certificate /etc/letsencrypt/live/nithun.no/chain.pem;
-    resolver 1.1.1.1 8.8.8.8 valid=300s;
-    resolver_timeout 5s;
 }

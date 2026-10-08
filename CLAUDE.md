@@ -88,6 +88,13 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - All images must have descriptive `alt` text
 - Semantic HTML: use `<nav>`, `<main>`, `<section>`, `<footer>`, `<article>` correctly
 
+### How SEO works in this codebase
+- The site is a single-page app: Nginx serves the same `index.html` for every URL. `index.html` only holds the **homepage's** title, description and Open Graph tags, plus the JSON-LD schema. There is deliberately **no static canonical tag** in it.
+- Each page calls `usePageMeta({ title, description, path })` from `src/lib/usePageMeta.js`, which sets its own title, description, canonical URL and Open Graph tags. Titles/descriptions live under `meta.*` in both translation files; posts use their frontmatter `title` and `summary`.
+- **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`. Posts in `src/writing/` are added to the sitemap automatically.
+- Unknown URLs fall through to `NotFoundPage` (noindex). Don't add `hreflang` tags — language is switched client-side, so there are no separate language URLs.
+- Merging a PR on GitHub does not deploy. Changes only go live when `./deploy.sh` runs.
+
 ---
 
 ## Accessibility Requirements (WCAG AA)
@@ -117,11 +124,14 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 nithun-website/
 ├── index.html                      # Entry point — SEO meta, Open Graph, JSON-LD, dark mode init
 ├── vite.config.js                  # Vite config — React plugin, Tailwind plugin, build date injection
-├── deploy.sh                       # Deploy: build → scp to server → git commit + push
+├── deploy.sh                       # Deploy: build → scp to server → update Nginx → git commit + push
+├── nginx/
+│   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── scripts/
 │   └── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
+│   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
 │   └── images/about/               # About page photos — portrait, flower field, 6 travel shots (webp)
@@ -135,17 +145,16 @@ nithun-website/
     ├── components/
     │   ├── Navbar.jsx              # Navigation bar — NM logo, nav links, ThemePill + LangPill toggles (two-row mobile)
     │   ├── Footer.jsx              # Footer — Pyre logo, GitHub, CC license, build date
-    │   ├── PyreMark.jsx            # Pyre triangle SVG logo — used in Hero subtitle and Footer
-    │   ├── ThemeToggle.jsx         # UNUSED — functionality folded into Navbar.jsx as ThemePill
-    │   └── LangToggle.jsx          # UNUSED — functionality folded into Navbar.jsx as LangPill
+    │   └── PyreMark.jsx            # Pyre triangle SVG logo — used in Hero subtitle and Footer
     ├── sections/
-    │   └── Hero.jsx                # Home page — name, location, intro, teaser, section teasers
+    │   └── Hero.jsx                # Home page — name, Pyre badge, intro, photo collage, 4 section teasers, donate nudge
     ├── pages/
-    │   ├── AboutPage.jsx           # /about — bio, portrait, travel photography grid
-    │   ├── ShelfPage.jsx           # /shelf — books/games/TV with cover art; category tabs, no status filters
+    │   ├── AboutPage.jsx           # /about — bio, portrait, travel photography grid, Instagram link
+    │   ├── ShelfPage.jsx           # /shelf — books with cover art; Games/TV hidden until they have covers
     │   ├── SilencePage.jsx         # /silence — tinnitus noise tool with sleep timer
     │   ├── WritingPage.jsx         # /writing — list of markdown posts
-    │   └── WritingPostPage.jsx     # /writing/:slug — individual post renderer
+    │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
+    │   └── NotFoundPage.jsx        # Catch-all for unknown URLs — "page not found", marked noindex
     ├── audio/
     │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
     ├── data/
@@ -153,9 +162,10 @@ nithun-website/
     │   └── charities.json          # Charity links shown on Silence page
     ├── lib/
     │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
-    │   └── parseFootnotes.js       # Strips inline footnote syntax from post body, returns {body, footnotes[]}
+    │   ├── parseFootnotes.js       # Strips inline footnote syntax from post body, returns {body, footnotes[]}
+    │   └── usePageMeta.js          # Sets per-page title, description, canonical + Open Graph tags (see SEO section)
     ├── utils/
-    │   └── bookCovers.js           # Cover art — Google Books (primary), Open Library (fallback)
+    │   └── bookCovers.js           # Looks up a book's cover in the pre-fetched bookCovers.json
     ├── writing/
     │   └── *.md                    # Writing posts — YAML frontmatter + markdown body
     │                               # Frontmatter fields:
@@ -195,7 +205,14 @@ To deploy changes, use the deploy script with a commit message:
 
 This will build, upload to the server, and push to GitHub in one command.
 
-The site is live at **nithun.no** (primary domain). Traffic from nithunmanoharan.com automatically redirects to nithun.no.
+The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
+
+**SSL certificates** are renewed automatically by certbot on the server. In the `nithunmanoharan.com` Nginx block, the redirect must stay inside `location /` (not a server-level `return`), otherwise Let's Encrypt's renewal check is redirected away and renewal fails. That is what let the `.com` certificate expire in July 2026. To check or renew by hand (needs the server sudo password):
+```
+ssh deploy@204.168.209.150
+sudo certbot renew --cert-name nithunmanoharan.com --dry-run   # test
+sudo certbot renew --cert-name nithunmanoharan.com             # renew for real
+```
 
 **Important:** After every change session, run `./deploy.sh` with a descriptive commit message to deploy to the live server.
 
@@ -253,7 +270,7 @@ Alternatives considered: SteamGridDB (games — nicer curated "grid" art style, 
 
 Post frontmatter supports:
 - `language`: `"en"` or `"no"` — defaults to `"en"` if absent (backwards compatible with existing posts). Shown as a coloured pill on the list page and in the post header.
-- `spotify`: full Spotify playlist/album/track URL (optional). Renders as an embed iframe below the post body with the label "Listening while writing". The embed URL is derived by extracting the ID from the URL (everything after the last `/` and before any `?`).
+- `spotify`: full Spotify playlist/album/track URL (optional). Renders as an embed iframe below the post body with a translated caption (`writing.spotifyCaption`). The embed URL is derived by extracting the ID from the URL (everything after the last `/` and before any `?`).
 
 The `parseFrontmatter.js` parser handles all keys generically — no changes needed when adding new frontmatter fields.
 
@@ -284,19 +301,21 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Project scaffolded (Vite + React + Tailwind)
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
-- [x] Hero section — name, Pyre badge, intro, donate nudge, section teasers
-- [x] Shelf page (`/shelf`) — 59 books with cover art, 50 games, 9 TV entries; category tabs only (no status filters)
+- [x] Hero section — name, Pyre badge, intro, photo collage, donate nudge, 4 section teasers
+- [x] Shelf page (`/shelf`) — 59 books with cover art; Games (50) and TV (9) hidden until they have cover art
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
 - [x] Pyre branding — triangle mark in Hero subtitle and Footer, links to pyre.no
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`
 - [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
-- [x] Footer — Pyre logo, GitHub, Instagram, CC license, build date
+- [x] Footer — Pyre logo, GitHub, CC license, build date (Instagram lives on the About page)
 - [x] Navbar — NM wordmark, two-row mobile layout, pill-style theme/lang toggles; About link added
-- [x] SEO meta tags, Open Graph, JSON-LD schema, sitemap (auto-generated)
+- [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
-- [x] Security headers on Nginx (CSP allows Google Books + Open Library)
+- [x] Security headers on Nginx (CSP allows Open Library/archive.org images and Spotify embeds only)
+- [x] www.nithun.no redirects to nithun.no
+- [ ] nithunmanoharan.com over HTTPS — certificate expired July 2026; renew on the server (see Deployment). The HTTP redirect works.
 - [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)
 - [x] Git repository on GitHub

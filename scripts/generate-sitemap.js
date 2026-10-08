@@ -45,6 +45,7 @@ ${urlBlock('https://nithun.no', today, 'monthly', '1.0')}
 ${urlBlock('https://nithun.no/writing', today, 'weekly', '0.8')}
 ${urlBlock('https://nithun.no/shelf', today, 'monthly', '0.7')}
 ${urlBlock('https://nithun.no/silence', today, 'monthly', '0.7')}
+${urlBlock('https://nithun.no/about', today, 'monthly', '0.7')}
 ${postBlocks}
 </urlset>
 `

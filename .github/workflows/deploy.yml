@@ -57,4 +57,5 @@ jobs:
           ssh deploy@204.168.209.150 "sudo cp /tmp/nithun-website /etc/nginx/sites-available/nithun-website && sudo nginx -t && sudo nginx -s reload"
 
       - name: Check the live site
-        run: curl -fsS -o /dev/null -w "nithun.no: %{http_code}\n" https://nithun.no/
+        run: |
+          curl -fsS -o /dev/null -w "nithun.no: %{http_code}\n" https://nithun.no/

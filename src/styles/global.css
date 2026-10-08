@@ -46,15 +46,15 @@
   --bg2:   #EDE6D8;
   --fg:    #2A2218;
   --fg2:   #5A5040;
-  --fgm:   #7A6E5E;
-  /* Accents — same in both modes */
+  --fgm:   #6B5F4F;
+  /* Accents — darkened in light mode so text in these colours reaches 4.5:1 */
   --olive: #5C6B3A;
-  --sage:  #8FAF6E;
+  --sage:  #4F6B30;
   --navy:  #2C3E5C;
-  --dusty: #7090B0;
-  --stone: #C4A882;
-  --honey: #FAEDCB;
-  --wheat: #E8D49A;
+  --dusty: #3F6285;
+  --stone: #7A6445;
+  --honey: #7A6420;
+  --wheat: #7A6420;
 }
 
 .dark {
@@ -63,6 +63,11 @@
   --fg:  #E8DFC8;
   --fg2: #B8B0A0;
   --fgm: #9A8E7E;
+  --sage:  #8FAF6E;
+  --dusty: #7090B0;
+  --stone: #C4A882;
+  --honey: #FAEDCB;
+  --wheat: #E8D49A;
 }
 
 /* ── Register tokens as Tailwind color utilities ───────────── */
@@ -102,6 +107,22 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* ── Keyboard focus ────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+/* ── Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ── Grain overlay ─────────────────────────────────────────── */
@@ -182,7 +203,6 @@ body::before {
   height: 2px;
   background: color-mix(in oklch, var(--fg) 15%, transparent);
   border-radius: 2px;
-  outline: none;
   cursor: pointer;
 }
 .vol-slider::-webkit-slider-thumb {

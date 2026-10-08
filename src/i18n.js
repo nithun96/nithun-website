@@ -20,4 +20,8 @@ i18n
     },
   })
 
+const syncHtmlLang = lng => { document.documentElement.lang = (lng || 'en').startsWith('no') ? 'no' : 'en' }
+syncHtmlLang(i18n.language)
+i18n.on('languageChanged', syncHtmlLang)
+
 export default i18n

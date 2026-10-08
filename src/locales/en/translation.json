@@ -5,7 +5,9 @@
     "shelf":       "Shelf",
     "about":       "About",
     "toggleTheme": "Toggle theme",
-    "toggleLang":  "Norsk"
+    "toggleLang":  "Norsk",
+    "skip":        "Skip to content",
+    "mainNav":     "Main navigation"
   },
   "hero": {
     "name":       "Nithun Manoharan",
@@ -40,6 +42,8 @@
     "heading":      "Writing",
     "subtitle":     "Essays, commentary, and the occasional observation.",
     "backWriting":  "Writing",
+    "footnote":       "Footnote",
+    "closeFootnote":  "Close footnote",
     "noDate":         "Undated",
     "conversation":   "Join the conversation on Mastodon",
     "spotifyCaption": "The playlist I was listening to while writing this:"

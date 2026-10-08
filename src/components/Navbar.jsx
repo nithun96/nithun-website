@@ -60,7 +60,7 @@ export default function Navbar() {
 
   return (
     <nav
-      aria-label="Main navigation"
+      aria-label={t('nav.mainNav')}
       className="sticky top-0 z-50"
       style={{
         background: 'var(--bg)',
@@ -68,10 +68,6 @@ export default function Navbar() {
         transition: 'background 0.2s ease',
       }}
     >
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-3 focus:py-1 focus:bg-bg2 focus:text-fg focus:rounded text-xs">
-        Skip to content
-      </a>
-
       <div style={SHELL}>
         {/* Row 1: logo + pills */}
         <div className="flex items-center justify-between h-14">

@@ -33,7 +33,7 @@ nithun-website/
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files
-│   └── images/                     # nithun.jpeg (social preview image) + about/ (About page and hero photos)
+│   └── images/                     # og-nithun.jpg (1200×630 link-preview crop of the archway portrait) + about/ (About page and hero photos)
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer

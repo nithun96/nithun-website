@@ -165,7 +165,7 @@ In order:
 3. Copies `nginx/nithun-website` to the server, tests it and reloads Nginx
 4. Commits and pushes all changes to GitHub
 
-Merging a pull request on GitHub does **not** deploy — run `deploy.sh` afterwards.
+**Automatic deploys:** every push to `main`, including merging a pull request on GitHub, runs `.github/workflows/deploy.yml` (same build, upload and Nginx steps). Docs-only pushes (`README.md`, `CLAUDE.md`) are skipped. Watch runs under the repo's **Actions** tab.
 
 Nginx serves `dist/` with `try_files` so React Router's client-side routes work on direct URL access. www.nithun.no and nithunmanoharan.com both redirect to nithun.no. Security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) are configured in Nginx.
 

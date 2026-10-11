@@ -6,7 +6,7 @@ This file is the memory and rulebook for this project. Read it at the start of e
 
 ## Who I Am
 
-My name is **Nithun Manoharan**. I am a Product Manager specializing in AI and Data Analytics, based in Norway. I am not a professional developer – I know enough HTML/CSS to tweak individual lines, but I rely on you (Claude Code) to write and structure the code. I want to understand what I'm building, but I don't need line-by-line explanations unless I ask.
+My name is **Nithun Manoharan**. I am a Product Manager specialising in AI and Data Analytics, based in Norway. I am not a professional developer – I know enough HTML/CSS to tweak individual lines, but I rely on you (Claude Code) to write and structure the code. I want to understand what I'm building, but I don't need line-by-line explanations unless I ask.
 
 I have a larger personal mission around climate, nature, and spreading unbiased information. This website is the first step.
 
@@ -20,7 +20,7 @@ Build a **personal website** that:
 - Is **accessible** (WCAG AA compliant)
 - Is **creative and bold** in design – not a generic template
 - Is a **learning project** for me to understand React and modern frontend development
-- Launches by **April 6, 2026**
+- Is live at **nithun.no** (original launch target: 06.04.2026)
 
 This is **not** a CV or portfolio. It is a personal brand and identity site.
 
@@ -31,7 +31,7 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 | Layer | Choice | Reason |
 |---|---|---|
 | Framework | **React + Vite** | Fast, modern, great learning base |
-| Styling | **Tailwind CSS** | Utility-first, widely used, easy to customize |
+| Styling | **Tailwind CSS** | Utility-first, widely used, easy to customise |
 | Routing | **React Router** | Good to learn even on a single-page site |
 | i18n | **react-i18next** | Multi-language support (EN primary, NO secondary) |
 | Analytics | **Plausible Analytics** | Privacy-friendly, lightweight |
@@ -45,8 +45,8 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 
 - **Tone:** Creative and bold. Not corporate. Not generic. Visually distinctive.
 - **Theme:** Both dark and light mode, with a toggle. Dark mode as default.
-- **Typography:** Serif for headings (e.g. Lora or Playfair Display), sans-serif for body (e.g. Inter)
-- **Colors:** A neutral dark/light base with 1–2 strong accent colors. Avoid clichéd tech blues.
+- **Typography:** Serif for headings (Georgia), sans-serif for body (self-hosted DM Sans — see Fonts)
+- **Colours:** A neutral dark/light base with 1–2 strong accent colours. Avoid clichéd tech blues.
 - **No interactive elements in v1** – no animations, no hover effects that serve no purpose, no JS tricks
 - **Mobile-first** – design for small screen first, then scale up
 - **Generous whitespace** – clean, not cluttered
@@ -66,7 +66,7 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 
 ### 3. Books & Music I Love
 - A curated, personal list – not exhaustive
-- Books: mix of genres, no need to categorize by field
+- Books: mix of genres, no need to categorise by field
 - Music: honest picks that say something about who I am
 - No star ratings or complex UI – just clean lists
 
@@ -100,15 +100,15 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 
 ## Accessibility Requirements (WCAG AA)
 
-- Color contrast minimum **4.5:1** for body text, **3:1** for large text
+- Colour contrast minimum **4.5:1** for body text, **3:1** for large text
 - All interactive elements (including dark/light toggle) keyboard-navigable
 - Use `aria-label` on icon-only buttons
 - Skip-to-content link at top of page for screen readers
-- No content that depends solely on color to convey meaning
+- No content that depends solely on colour to convey meaning
 
 ---
 
-## Internationalization (i18n)
+## Internationalisation (i18n)
 
 - Use **react-i18next** from the start
 - English (`en`) is the primary language
@@ -129,14 +129,21 @@ nithun-website/
 ├── .github/workflows/deploy.yml    # Auto-deploy on every push to main (see Deployment)
 ├── nginx/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
+├── GAME-BRIEF.md                   # Brief for the point-and-click game pilot (see src/game/)
+├── design-handoff/                 # Redesign handoff — README.md + nithun.html reference prototype
 ├── scripts/
-│   └── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
+│   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
+│   ├── fetchBookCovers.js          # `npm run fetch-covers` — see Book Covers
+│   └── finaliseBookCovers.js       # `npm run finalise-covers` — see Book Covers
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
-│   └── images/about/               # About page photos — portrait, flower field, 6 travel shots (webp); *-sm.webp = 324px copies for the hero collage
+│   └── images/
+│       ├── og-nithun.jpg           # Link-preview (Open Graph / Twitter) image
+│       ├── nithun.jpeg             # Old link-preview image — no longer referenced
+│       └── about/                  # About page photos — portrait, headshot, flower field, 6 travel shots (webp); *-sm.webp = 324px copies for the hero collage
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer
@@ -146,7 +153,7 @@ nithun-website/
     │   └── shell.js                # Shared page width/padding constants (SHELL) — keeps Navbar/pages/Footer aligned
     ├── components/
     │   ├── Navbar.jsx              # Navigation bar — NM logo, nav links, ThemePill + LangPill toggles (two-row mobile)
-    │   ├── Footer.jsx              # Footer — Pyre logo, GitHub, CC license, build date
+    │   ├── Footer.jsx              # Footer — Pyre logo, GitHub, CC licence, build date
     │   └── PyreMark.jsx            # Pyre triangle SVG logo — used in Hero subtitle and Footer
     ├── sections/
     │   └── Hero.jsx                # Home page — name, Pyre badge, intro, photo collage, 4 section teasers, donate nudge
@@ -157,10 +164,14 @@ nithun-website/
     │   ├── WritingPage.jsx         # /writing — list of markdown posts
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Catch-all for unknown URLs — "page not found", marked noindex
+    ├── game/
+    │   └── GameLevel1.jsx          # Game pilot (see GAME-BRIEF.md) — not imported or routed yet
     ├── audio/
     │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
     ├── data/
-    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 9 TV entries
+    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 8 TV entries
+    │   ├── bookCovers.json         # Pre-fetched book cover URLs — generated, see Book Covers
+    │   ├── bookCoversOverride.json # Manual cover overrides, keyed by exact book title
     │   └── charities.json          # Charity links shown on Silence page
     ├── lib/
     │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
@@ -205,7 +216,7 @@ To deploy changes, use the deploy script with a commit message:
 ./deploy.sh "Your commit message"
 ```
 
-This will build, upload to the server, and push to GitHub in one command.
+This will build, upload to the server, update the Nginx config, and push to GitHub in one command.
 
 The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
 
@@ -258,7 +269,7 @@ Without a key the script still works but may encounter rate limits. Get a free k
 
 ## Cover Art for Games & TV (planned — do this in VS Code / local Claude Code)
 
-Games and TV/Anime cards currently show text only — no cover image at all (unlike Books, which has `bookCovers.json`). This can't be built from a cloud session: the API domains below are blocked by that environment's network policy, and no session should have real API keys pasted into chat. Do this locally, where you already have unrestricted network access and can hold the keys yourself.
+Games and TV/Anime entries have no cover image (unlike Books, which has `bookCovers.json`), so both tabs are hidden on the Shelf page for now (`CATEGORIES = ['books']` in `ShelfPage.jsx`). This can't be built from a cloud session: the API domains below are blocked by that environment's network policy, and no session should have real API keys pasted into chat. Do this locally, where you already have unrestricted network access and can hold the keys yourself.
 
 ### Sources
 - **Games → RAWG** (api.rawg.io). Free API key, broad coverage including retro/console titles (needed for things like GBA-era Pokémon). Sign up at rawg.io/apidocs.
@@ -268,10 +279,10 @@ Alternatives considered: SteamGridDB (games — nicer curated "grid" art style, 
 
 ### Plan (mirrors the existing Book Covers workflow above)
 1. Get free API keys from RAWG and TMDB; set as env vars locally (`RAWG_API_KEY`, `TMDB_API_KEY`), same pattern as `GOOGLE_BOOKS_API_KEY`.
-2. Write `scripts/fetchGameCovers.js` and `scripts/fetchTvCovers.js` (or one shared script keyed by category), modeled on `scripts/fetchBookCovers.js`: query per-title, validate images (width ≥ 200px via sharp, same as books), write `.draft.json` + a preview HTML per category.
+2. Write `scripts/fetchGameCovers.js` and `scripts/fetchTvCovers.js` (or one shared script keyed by category), modelled on `scripts/fetchBookCovers.js`: query per-title, validate images (width ≥ 200px via sharp, same as books), write `.draft.json` + a preview HTML per category.
 3. Review the preview HTML, add any wrong/missing covers to override files (`gameCoversOverride.json`, `tvCoversOverride.json`), same override pattern as books.
 4. Run finalise scripts → `src/data/gameCovers.json`, `src/data/tvCovers.json` (committed, no runtime API calls — same principle as book covers).
-5. **Update `ShelfPage.jsx`**: the non-book card branch currently renders no image at all. It needs an `<img>` block added (same spine/fallback pattern as `BookCard`), reading from the new cover maps by title.
+5. **Update `ShelfPage.jsx`**: the non-book card branch currently renders no image at all. It needs an `<img>` block added (same spine/fallback pattern as `BookCard`), reading from the new cover maps by title. Then re-add `'games'` and `'tv'` to `CATEGORIES`.
 6. **Update Nginx CSP** on the server (`img-src`) to allow the actual image CDN hosts once known (likely `media.rawg.io` and `image.tmdb.org` — confirm exact hosts from real API responses, don't guess).
 7. Update README/CLAUDE.md folder structure notes to mention the new data files and scripts.
 8. `./deploy.sh "Add cover art for games and TV"`.
@@ -314,14 +325,14 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Hero section — name, Pyre badge, intro, photo collage, donate nudge, 4 section teasers
-- [x] Shelf page (`/shelf`) — 59 books with cover art; Games (50) and TV (9) hidden until they have cover art
+- [x] Shelf page (`/shelf`) — 59 books with cover art; Games (50) and TV (8) hidden until they have cover art
 - [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
 - [x] Pyre branding — triangle mark in Hero subtitle and Footer, links to pyre.no
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`
 - [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
-- [x] Footer — Pyre logo, GitHub, CC license, build date (Instagram lives on the About page)
+- [x] Footer — Pyre logo, GitHub, CC licence, build date (Instagram lives on the About page)
 - [x] Navbar — NM wordmark, two-row mobile layout, pill-style theme/lang toggles; About link added
 - [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)

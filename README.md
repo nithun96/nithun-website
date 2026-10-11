@@ -57,7 +57,7 @@ nithun-website/
     ├── audio/
     │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
     ├── data/
-    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 9 TV entries
+    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 8 TV entries
     │   ├── bookCovers.json         # Pre-fetched cover URLs (generated — see CLAUDE.md)
     │   ├── bookCoversOverride.json # Manual cover fixes
     │   └── charities.json          # Charity links shown on Silence page

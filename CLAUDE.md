@@ -136,7 +136,7 @@ nithun-website/
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
-│   └── images/about/               # About page photos — portrait, flower field, 6 travel shots (webp)
+│   └── images/about/               # About page photos — portrait, flower field, 6 travel shots (webp); *-sm.webp = 324px copies for the hero collage
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer
@@ -208,6 +208,8 @@ To deploy changes, use the deploy script with a commit message:
 This will build, upload to the server, and push to GitHub in one command.
 
 The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
+
+**Compression and caching** are set in `nginx/nithun-website`: gzip for JS/CSS/JSON/SVG/XML; `/assets/` (hashed build files) cached 1 year, `/fonts/` 30 days, `/images/` 7 days; pages always revalidate. Because images are cached for a week, give a replaced image a new filename rather than overwriting it.
 
 **SSL certificates** are renewed automatically by certbot on the server (nginx authenticator). Every domain on a certificate must have a DNS record, or renewal fails for the whole certificate. That is what let the `.com` certificate expire in July 2026: it covered `www.nithunmanoharan.com`, which has no DNS record. Keep the `.com` redirect inside `location /` (not a server-level `return`) so certbot's temporary challenge location still works.
 

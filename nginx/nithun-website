@@ -69,7 +69,31 @@ server {
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     add_header X-Robots-Tag $robots_tag always;   # empty (not sent) except on /shelf
 
+    # Compression. `gzip on` is set in nginx.conf, but only for HTML by default.
+    gzip_types text/css application/javascript application/json image/svg+xml text/xml application/xml text/plain;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_min_length 256;
+
+    # Caching. `expires` sets Cache-Control without using add_header, so the
+    # security headers above still apply in these locations.
+    # Vite gives built files a content hash in the name, so they never change.
+    location /assets/ {
+        expires 1y;
+        try_files $uri =404;
+    }
+    location /fonts/ {
+        expires 30d;
+        try_files $uri =404;
+    }
+    location /images/ {
+        expires 7d;
+        try_files $uri =404;
+    }
+
+    # Pages, sitemap, robots.txt: always revalidate, so a deploy shows up at once.
     location / {
+        expires -1;
         try_files $uri $uri/ /index.html;
     }
 

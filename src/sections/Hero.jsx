@@ -85,31 +85,31 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Small photo collage — a personal, creative touch */}
+        {/* Small photo collage — a personal, creative touch.
+            Uses -sm copies (324px wide, 3× the 108px display size) and loads
+            them immediately: they're the first images visitors see. */}
         <div className="hero-collage" aria-hidden="false">
           <img
             className="hero-collage-photo hero-collage-1"
-            src="/images/about/nithun-portrait.webp"
+            src="/images/about/nithun-portrait-sm.webp"
             alt={t('about.portraitAlt')}
-            width={900}
-            height={1200}
-            loading="lazy"
+            width={324}
+            height={432}
+            fetchPriority="high"
           />
           <img
             className="hero-collage-photo hero-collage-2"
-            src="/images/about/nithun-headshot.webp"
+            src="/images/about/nithun-headshot-sm.webp"
             alt={t('about.headshotAlt')}
-            width={900}
-            height={1075}
-            loading="lazy"
+            width={324}
+            height={387}
           />
           <img
             className="hero-collage-photo hero-collage-3"
-            src="/images/about/nithun-flower-field.webp"
+            src="/images/about/nithun-flower-field-sm.webp"
             alt={t('about.flowerAlt')}
-            width={900}
-            height={1200}
-            loading="lazy"
+            width={324}
+            height={432}
           />
         </div>
         </div>

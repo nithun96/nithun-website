@@ -1,3 +1,12 @@
+# Keep Shelf cover art (other people's book covers, hosted by Open Library) out of
+# Google Images, where it showed up in searches for Nithun's name. Sent as an HTTP
+# header so it doesn't rely on Google running the page's JavaScript.
+# $request_uri, not $uri: try_files rewrites $uri to /index.html.
+map $request_uri $robots_tag {
+    ~^/shelf/?(\?.*)?$  "noimageindex";
+    default             "";
+}
+
 # Redirect nithunmanoharan.com to nithun.no
 server {
     listen 80;
@@ -58,6 +67,7 @@ server {
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://covers.openlibrary.org https://archive.org https://*.archive.org; connect-src 'self'; frame-src https://open.spotify.com; frame-ancestors 'none'" always;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Robots-Tag $robots_tag always;   # empty (not sent) except on /shelf
 
     location / {
         try_files $uri $uri/ /index.html;

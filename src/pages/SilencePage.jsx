@@ -313,7 +313,7 @@ export default function SilencePage() {
             marginBottom: 48,
           }}
         >
-          <p style={{ fontSize: 13, color: 'var(--fgm)', lineHeight: 1.65 }}>
+          <p style={{ fontSize: 13, color: 'color-mix(in oklch, var(--fgm) 75%, var(--fg))', lineHeight: 1.65 }}>
             {t('silence.guidance')}
           </p>
         </div>
@@ -331,7 +331,7 @@ export default function SilencePage() {
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 'normal', color: 'var(--fg2)', marginBottom: 8 }}>
             {t('silence.donationHeading')}
           </h2>
-          <p style={{ fontSize: 13, color: 'var(--fgm)', lineHeight: 1.65, marginBottom: 16 }}>
+          <p style={{ fontSize: 13, color: 'color-mix(in oklch, var(--fgm) 75%, var(--fg))', lineHeight: 1.65, marginBottom: 16 }}>
             {t('silence.donationIntro')}
           </p>
           <ul className="list-none p-0 m-0 space-y-2">
@@ -341,13 +341,13 @@ export default function SilencePage() {
                   href={charity.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ fontSize: 12, letterSpacing: '0.07em', color: 'var(--sage)', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklch, var(--sage) 40%, transparent)', paddingBottom: 1, transition: 'color 0.2s ease' }}
+                  style={{ fontSize: 12, letterSpacing: '0.07em', color: 'color-mix(in oklch, var(--sage) 80%, var(--fg))', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklch, var(--sage) 40%, transparent)', paddingBottom: 1, transition: 'color 0.2s ease' }}
                   onMouseEnter={e => e.currentTarget.style.color = 'color-mix(in oklch, var(--sage) 150%, white 20%)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'var(--sage)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'color-mix(in oklch, var(--sage) 80%, var(--fg))'}
                 >
                   {charity.name}
                 </a>
-                <span style={{ fontSize: 11, color: 'var(--fgm)', marginLeft: 8 }}>{charity.country}</span>
+                <span style={{ fontSize: 11, color: 'color-mix(in oklch, var(--fgm) 75%, var(--fg))', marginLeft: 8 }}>{charity.country}</span>
               </li>
             ))}
           </ul>

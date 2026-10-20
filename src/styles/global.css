@@ -330,10 +330,12 @@ sup[data-footnote] {
 /* ── Donate section inline links ──────────────────────────── */
 .hero-donate-link {
   color: var(--fg2);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--fg2) 45%, transparent);
+  text-underline-offset: 2px;
 }
 .hero-donate-link:hover {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 /* ── About page ────────────────────────────────────────────── */

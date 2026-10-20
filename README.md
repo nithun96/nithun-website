@@ -138,7 +138,7 @@ To add or edit a string:
 ### SEO
 - `index.html` holds the homepage's title, description, Open Graph tags and the JSON-LD `Person` schema (with Pyre affiliation and LinkedIn, GitHub and Instagram profiles).
 - `lib/usePageMeta.js` sets each page's own title, description, canonical URL and Open Graph tags when it loads. Page titles and descriptions live under `meta` in the translation files; posts use their frontmatter title and summary.
-- `public/robots.txt` points crawlers to the sitemap. `scripts/generate-sitemap.js` lists every page and post, and runs on every build. **When adding a new page, add it to the sitemap script too.**
+- `public/robots.txt` points crawlers to the sitemap. `scripts/generate-sitemap.js` lists every page and post, plus image entries for the photos of Nithun, and runs on every build. Other images (Shelf covers, post photos, About travel photos) are kept out of image search by Nginx. **When adding a new page, add it to the sitemap script too.**
 - Unknown URLs show `NotFoundPage`, marked `noindex`.
 
 ---

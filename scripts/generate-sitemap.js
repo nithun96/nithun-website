@@ -14,13 +14,31 @@ function parseDateFromFrontmatter(raw) {
   return match ? match[1] : today
 }
 
+// Photos of Nithun, listed so Google finds them even though the pages are rendered
+// by JavaScript. Only photos of him go here; other images are kept out of image
+// search by Nginx (see the robots map in nginx/nithun-website).
+const IMAGES = {
+  'https://nithun.no': [
+    '/images/about/nithun-portrait-sm.webp',
+    '/images/about/nithun-headshot-sm.webp',
+    '/images/about/nithun-flower-field-sm.webp',
+  ],
+  'https://nithun.no/about': [
+    '/images/about/nithun-portrait.webp',
+    '/images/about/nithun-flower-field.webp',
+  ],
+}
+
 function urlBlock(loc, lastmod, changefreq, priority) {
+  const images = (IMAGES[loc] || [])
+    .map(path => `\n    <image:image><image:loc>https://nithun.no${path}</image:loc></image:image>`)
+    .join('')
   return `
   <url>
     <loc>${loc}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
+    <priority>${priority}</priority>${images}
   </url>`
 }
 
@@ -36,7 +54,8 @@ const postBlocks = readdirSync(writingDir)
   .join('')
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${urlBlock('https://nithun.no', today, 'monthly', '1.0')}
 ${urlBlock('https://nithun.no/writing', today, 'weekly', '0.8')}
 ${urlBlock('https://nithun.no/shelf', today, 'monthly', '0.7')}

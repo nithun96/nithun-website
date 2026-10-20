@@ -99,7 +99,10 @@ server {
     # Pages, sitemap, robots.txt: always revalidate, so a deploy shows up at once.
     location / {
         expires -1;
-        try_files $uri $uri/ /index.html;
+        # $uri.html = the per-page copies scripts/prerender.js writes (title, description,
+        # Open Graph tags), so link previews show the right page without JavaScript.
+        # No $uri/: dist/writing/ is now a folder, and /writing/ would hit it and 403.
+        try_files $uri $uri.html /index.html;
     }
 
     ssl_certificate /etc/letsencrypt/live/nithun.no/fullchain.pem;

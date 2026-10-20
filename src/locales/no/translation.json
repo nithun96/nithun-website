@@ -92,7 +92,8 @@
   },
   "footer": {
     "lastUpdated": "Sist oppdatert:",
-    "license":     "CC BY-NC 4.0"
+    "license":     "CC BY-NC 4.0",
+    "rss":         "RSS"
   },
   "meta": {
     "homeTitle":          "Nithun Manoharan | Produktsjef, AI og dataanalyse",

@@ -178,7 +178,7 @@ In order:
 
 **Automatic deploys:** every push to `main`, including merging a pull request on GitHub, runs `.github/workflows/deploy.yml` (same build, upload and Nginx steps). Docs-only pushes (`README.md`, `CLAUDE.md`) are skipped. Watch runs under the repo's **Actions** tab.
 
-Nginx serves `dist/` with `try_files` so React Router's client-side routes work on direct URL access. www.nithun.no and nithunmanoharan.com both redirect to nithun.no. Security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) are configured in Nginx.
+Nginx serves `dist/` with `try_files $uri $uri.html /index.html`: the `.html` step picks up the per-page copies `scripts/prerender.js` writes after the build (each with its own title, description, canonical and Open Graph tags, for link previews), and anything else falls back to `index.html` so React Router's client-side routes work on direct URL access. www.nithun.no and nithunmanoharan.com both redirect to nithun.no. Security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) are configured in Nginx.
 
 **CSP note:** the `Content-Security-Policy` must explicitly allow external domains. Currently permitted: `covers.openlibrary.org`, `archive.org` and `*.archive.org` (img-src, for book covers) and `open.spotify.com` (frame-src, for Spotify embeds). Fonts, scripts and data requests are same-origin only.
 
@@ -195,7 +195,9 @@ Nginx serves `dist/` with `try_files` so React Router's client-side routes work 
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
 - [x] Footer — Pyre link, GitHub, licence, build date
-- [x] SEO — per-page titles, descriptions and canonicals; Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
+- [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
+- [x] RSS feed at `/rss.xml`, linked in the footer
+- [x] Pages other than Home load on demand, so the first visit downloads about half as much script
 - [x] WCAG AA accessibility — translated skip link, aria-labels, keyboard-accessible footnotes, visible focus, AA contrast in both themes, reduced-motion support, `<html lang>` follows the language (known gaps listed under Accessibility)
 - [x] Security headers on Nginx
 - [x] Deployed to Hetzner VPS — live at nithun.no

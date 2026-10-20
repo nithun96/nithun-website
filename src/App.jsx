@@ -1,14 +1,18 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
-import ShelfPage from './pages/ShelfPage'
-import WritingPage from './pages/WritingPage'
-import WritingPostPage from './pages/WritingPostPage'
-import SilencePage from './pages/SilencePage'
-import AboutPage from './pages/AboutPage'
-import NotFoundPage from './pages/NotFoundPage'
+
+// Every page except the homepage is loaded on demand, so the first visit only
+// downloads what it shows (the posts, Markdown renderer and Shelf data are big).
+const ShelfPage = lazy(() => import('./pages/ShelfPage'))
+const WritingPage = lazy(() => import('./pages/WritingPage'))
+const WritingPostPage = lazy(() => import('./pages/WritingPostPage'))
+const SilencePage = lazy(() => import('./pages/SilencePage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 export default function App() {
   const { t } = useTranslation()
@@ -22,6 +26,7 @@ export default function App() {
       </a>
       <Navbar />
       <main id="main-content" tabIndex={-1} style={{ outline: 'none' }}>
+        <Suspense fallback={null}>
         <Routes>
           <Route path="/"              element={<Hero />} />
           <Route path="/writing"       element={<WritingPage />} />
@@ -32,6 +37,7 @@ export default function App() {
           <Route path="/books"         element={<Navigate to="/shelf" replace />} />
           <Route path="*"              element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
     </div>

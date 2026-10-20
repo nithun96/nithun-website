@@ -89,9 +89,10 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - Semantic HTML: use `<nav>`, `<main>`, `<section>`, `<footer>`, `<article>` correctly
 
 ### How SEO works in this codebase
-- The site is a single-page app: Nginx serves the same `index.html` for every URL. `index.html` only holds the **homepage's** title, description and Open Graph tags, plus the JSON-LD schema. There is deliberately **no static canonical tag** in it.
+- The site is a single-page app. `index.html` holds the **homepage's** title, description and Open Graph tags, plus the JSON-LD schema, and deliberately **no static canonical tag** (it is also the fallback for unknown URLs).
+- **Per-page HTML for link previews:** after `vite build`, `scripts/prerender.js` writes a copy of `index.html` for every page and post with that page's own title, description, canonical URL and Open Graph tags (`dist/about.html`, `dist/writing/<slug>.html`, …). Nginx serves them via `try_files $uri $uri.html /index.html`, so chat apps and LinkedIn show the right page without running JavaScript. React still renders the body. (No `$uri/` in that rule: `dist/writing/` is a folder, and `/writing/` would 403.)
 - Each page calls `usePageMeta({ title, description, path })` from `src/lib/usePageMeta.js`, which sets its own title, description, canonical URL and Open Graph tags. Titles/descriptions live under `meta.*` in both translation files; posts use their frontmatter `title` and `summary`.
-- **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`. Posts in `src/writing/` are added to the sitemap automatically.
+- **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`, (4) add it to `PAGES` in `scripts/prerender.js`. Posts in `src/writing/` are added to the sitemap, the per-page HTML and the RSS feed automatically.
 - Shelf cover art (other people's book covers) must stay out of Google Images, where it used to appear in searches for Nithun's name. `/shelf` gets `noimageindex` twice: an `X-Robots-Tag` header from Nginx (a `map` on `$request_uri` in `nginx/nithun-website`) and a robots meta tag added by `ShelfPage.jsx`. Any new page that shows third-party images (e.g. Games/TV covers) needs the same.
 - Photos in posts live in `public/images/writing/<slug>/` as webp: a 1000px-wide copy for the page and a full-resolution `-full.webp` for the full-screen view, all metadata stripped (phone photos carry GPS location). Nginx sends `X-Robots-Tag: noindex` for everything under `/images/writing/` (same `map`), so they stay out of Google Images and searches for Nithun's name.
 - **Only photos of Nithun himself should appear in image search.** The six travel photos on About (`/images/about/photo-*`) get the same `noindex` header. His own photos (portrait, headshot, flower field and their `-sm` copies) stay indexable and are listed as image entries in the sitemap (`IMAGES` in `scripts/generate-sitemap.js`), because the pages are rendered by JavaScript. A new photo of him: add it to `IMAGES`. A new photo that isn't of him: put it under `/images/writing/` or name it `photo-*` in `/images/about/`.
@@ -135,6 +136,7 @@ nithun-website/
 ├── design-handoff/                 # Redesign handoff — README.md + nithun.html reference prototype
 ├── scripts/
 │   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
+│   ├── prerender.js                # After vite build: per-page HTML with each page's meta tags + dist/rss.xml (see SEO)
 │   ├── fetchBookCovers.js          # `npm run fetch-covers` — see Book Covers
 │   └── finaliseBookCovers.js       # `npm run finalise-covers` — see Book Covers
 ├── public/
@@ -300,6 +302,8 @@ Post frontmatter supports:
 
 The `parseFrontmatter.js` parser handles all keys generically — no changes needed when adding new frontmatter fields.
 
+**RSS:** every post appears in `/rss.xml` (title, link, date, summary), generated at build by `scripts/prerender.js`. The footer links to it, and `index.html` advertises it to feed readers.
+
 **Photos in a post:** raw HTML `<img src="…/name.webp" data-full="…/name-full.webp" alt="…" width height>` inside a `<div style="columns: 2; column-gap: 12px;">` (see `context-window.md`). Every post image becomes a button that opens `ImageLightbox` in `WritingPostPage.jsx`: full screen, click anywhere or Escape to close. No captions; alt text is required. Files and search rules: see SEO.
 
 ---
@@ -339,6 +343,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
 - [x] Footer — Pyre logo, GitHub, CC licence, build date (Instagram lives on the About page)
 - [x] Navbar — NM wordmark, two-row mobile layout, pill-style theme/lang toggles; About link added
+- [x] Per-page HTML for link previews (`scripts/prerender.js`), RSS feed at `/rss.xml`, pages other than Home loaded on demand (`React.lazy` in `App.jsx`)
 - [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
 - [x] Security headers on Nginx (CSP allows Open Library/archive.org images and Spotify embeds only)

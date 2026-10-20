@@ -36,6 +36,15 @@ export default function Footer() {
           >
             GitHub
           </a>
+          <a
+            href="/rss.xml"
+            type="application/rss+xml"
+            style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease' }}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
+          >
+            {t('footer.rss')}
+          </a>
 <span style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em' }}>
             {t('footer.license')}
           </span>

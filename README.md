@@ -33,7 +33,7 @@ nithun-website/
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files
-│   └── images/                     # og-nithun.jpg (1200×630 link-preview crop of the archway portrait) + about/ (About page and hero photos)
+│   └── images/                     # og-nithun.jpg (1200×630 link-preview crop of the archway portrait) + about/ (About page and hero photos) + writing/ (photos in posts, one folder per slug, noindex)
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer
@@ -123,6 +123,8 @@ Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summ
 Footnote system: two types — `clarification` (quiet aside) and `wry` (warm left border). Desktop: hover or keyboard focus shows the tooltip, click or Enter/Space pins it, Escape closes it. Mobile: tap opens a bottom sheet portal rendered directly on `document.body`; it is a dialog that takes focus when opened, closes on Escape, returns focus to the marker, and is hidden from the tab order when closed.
 
 Language pill: each post carries a `language` field (`"en"` or `"no"`, defaults to `"en"`). Shown as a coloured pill on the list page and in the post header. The post's title and body are also marked with that `lang` attribute.
+
+Photos: post images (raw HTML `<img>` with a `data-full` full-resolution file) open full screen on click via `ImageLightbox`; files live in `public/images/writing/<slug>/` and are kept out of image search by an Nginx `X-Robots-Tag: noindex`.
 
 Spotify embed: if a post has a `spotify` URL in its frontmatter, an embedded Spotify player is rendered below the post body with a translated caption (`writing.spotifyCaption`).
 

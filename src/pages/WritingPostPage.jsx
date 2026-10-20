@@ -290,12 +290,86 @@ function FootnotePanel({ footnotes }) {
   )
 }
 
+// ── ImageLightbox (full-screen photo view) ───────────────────────────────────
+// Opens when a photo in a post is clicked. Shows the full-resolution file
+// (data-full on the <img>) if there is one. Click anywhere or press Escape to close.
+
+function ImageLightbox({ image, onClose }) {
+  const { t } = useTranslation()
+  const closeRef = useRef(null)
+
+  useEffect(() => {
+    const returnFocus = document.activeElement
+    closeRef.current?.focus()
+    const onKey = e => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+      returnFocus?.focus?.()
+    }
+  }, [onClose])
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={image.alt}
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 60,
+        background: 'rgba(0, 0, 0, 0.9)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 'max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom))',
+        cursor: 'zoom-out',
+      }}
+    >
+      <img
+        src={image.src}
+        alt={image.alt}
+        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 6 }}
+      />
+      <button
+        ref={closeRef}
+        type="button"
+        onClick={onClose}
+        aria-label={t('writing.closeImage')}
+        style={{
+          position: 'absolute',
+          top: 'max(12px, env(safe-area-inset-top))',
+          right: 12,
+          background: 'rgba(0, 0, 0, 0.5)',
+          border: 'none',
+          borderRadius: 999,
+          color: '#fff',
+          cursor: 'pointer',
+          fontSize: 16,
+          width: 36,
+          height: 36,
+          lineHeight: 1,
+        }}
+      >
+        ✕
+      </button>
+    </div>,
+    document.body
+  )
+}
+
 // ── WritingPostPage ───────────────────────────────────────────────────────────
 
 export default function WritingPostPage() {
   const { slug } = useParams()
   const { t, i18n } = useTranslation()
   const [activeFootnote, setActiveFootnote] = useState(null)
+  const [lightbox, setLightbox] = useState(null)
+  const closeLightbox = useCallback(() => setLightbox(null), [])
 
   const post = posts.find(p => p.slug === slug)
 
@@ -338,7 +412,30 @@ export default function WritingPostPage() {
       }
       return <sup id={id} {...rest}>{children}</sup>
     },
-  }), [footnotes])
+    // Photos in posts: click to open full screen (see ImageLightbox)
+    // eslint-disable-next-line no-unused-vars
+    img({ node, src, alt, 'data-full': full, ...rest }) {
+      return (
+        <button
+          type="button"
+          onClick={() => setLightbox({ src: full || src, alt })}
+          aria-label={t('writing.openImage', { alt })}
+          style={{
+            display: 'block',
+            width: '100%',
+            padding: 0,
+            border: 'none',
+            background: 'none',
+            cursor: 'zoom-in',
+            breakInside: 'avoid',
+            marginBottom: 12,
+          }}
+        >
+          <img src={src} alt={alt} {...rest} />
+        </button>
+      )
+    },
+  }), [footnotes, t])
 
   if (!post) return <Navigate to="/writing" replace />
 
@@ -492,6 +589,7 @@ export default function WritingPostPage() {
 
       {/* Mobile footnote panel — portalled to body, outside inline text flow */}
       <FootnotePanel footnotes={footnotes} />
+      {lightbox && <ImageLightbox image={lightbox} onClose={closeLightbox} />}
     </FootnoteCtx.Provider>
   )
 }

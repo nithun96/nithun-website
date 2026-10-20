@@ -36,7 +36,9 @@ function LanguagePill({ lang }) {
       border: isNo
         ? '1px solid color-mix(in oklch, var(--honey) 40%, transparent)'
         : '1px solid color-mix(in oklch, var(--dusty) 40%, transparent)',
-      color: isNo ? 'var(--wheat)' : 'var(--dusty)',
+      color: isNo
+        ? 'color-mix(in oklch, var(--wheat) 75%, var(--fg))'
+        : 'color-mix(in oklch, var(--dusty) 75%, var(--fg))',
     }}>
       {isNo ? 'NO' : 'EN'}
     </span>

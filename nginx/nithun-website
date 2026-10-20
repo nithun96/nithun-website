@@ -1,12 +1,14 @@
 # Keep Shelf cover art (other people's book covers, hosted by Open Library) out of
 # Google Images, where it showed up in searches for Nithun's name. Sent as an HTTP
 # header so it doesn't rely on Google running the page's JavaScript.
-# Photos in posts (/images/writing/) get "noindex" on the image file itself, so they
-# stay out of image search wherever they appear.
+# Photos in posts (/images/writing/) and the travel photos on About (/images/about/photo-*)
+# get "noindex" on the image file itself, so they stay out of image search wherever they
+# appear. Only the photos of Nithun himself stay indexable.
 # $request_uri, not $uri: try_files rewrites $uri to /index.html.
 map $request_uri $robots_tag {
     ~^/shelf/?(\?.*)?$  "noimageindex";
     ~^/images/writing/  "noindex";
+    ~^/images/about/photo-  "noindex";
     default             "";
 }
 
@@ -70,7 +72,7 @@ server {
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://covers.openlibrary.org https://archive.org https://*.archive.org; connect-src 'self'; frame-src https://open.spotify.com; frame-ancestors 'none'" always;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    add_header X-Robots-Tag $robots_tag always;   # empty (not sent) except on /shelf and /images/writing/
+    add_header X-Robots-Tag $robots_tag always;   # empty (not sent) except on /shelf, /images/writing/ and /images/about/photo-*
 
     # Compression. `gzip on` is set in nginx.conf, but only for HTML by default.
     gzip_types text/css application/javascript application/json image/svg+xml text/xml application/xml text/plain;

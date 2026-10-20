@@ -44,6 +44,8 @@
     "backWriting":  "Skriverier",
     "footnote":       "Fotnote",
     "closeFootnote":  "Lukk fotnote",
+    "openImage": "Åpne bildet i fullskjerm: {{alt}}",
+    "closeImage": "Lukk bildet",
     "noDate":         "Udatert",
     "conversation":   "Bli med i samtalen på Mastodon",
     "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:"

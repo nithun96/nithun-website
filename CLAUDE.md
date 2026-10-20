@@ -93,6 +93,7 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - Each page calls `usePageMeta({ title, description, path })` from `src/lib/usePageMeta.js`, which sets its own title, description, canonical URL and Open Graph tags. Titles/descriptions live under `meta.*` in both translation files; posts use their frontmatter `title` and `summary`.
 - **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`. Posts in `src/writing/` are added to the sitemap automatically.
 - Shelf cover art (other people's book covers) must stay out of Google Images, where it used to appear in searches for Nithun's name. `/shelf` gets `noimageindex` twice: an `X-Robots-Tag` header from Nginx (a `map` on `$request_uri` in `nginx/nithun-website`) and a robots meta tag added by `ShelfPage.jsx`. Any new page that shows third-party images (e.g. Games/TV covers) needs the same.
+- Photos in posts live in `public/images/writing/<slug>/` as webp: a 1000px-wide copy for the page and a full-resolution `-full.webp` for the full-screen view, all metadata stripped (phone photos carry GPS location). Nginx sends `X-Robots-Tag: noindex` for everything under `/images/writing/` (same `map`), so they stay out of Google Images and searches for Nithun's name.
 - Unknown URLs fall through to `NotFoundPage` (noindex). Don't add `hreflang` tags — language is switched client-side, so there are no separate language URLs.
 - Every push to `main` (including a merged PR) deploys automatically via GitHub Actions — see Deployment.
 
@@ -143,6 +144,7 @@ nithun-website/
 │   └── images/
 │       ├── og-nithun.jpg           # Link-preview (Open Graph / Twitter) image
 │       ├── nithun.jpeg             # Old link-preview image — no longer referenced
+│       ├── writing/                # Photos in posts, one folder per post slug — noindex via Nginx (see SEO)
 │       └── about/                  # About page photos — portrait, headshot, flower field, 6 travel shots (webp); *-sm.webp = 324px copies for the hero collage
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
@@ -296,6 +298,8 @@ Post frontmatter supports:
 - `spotify`: full Spotify playlist/album/track URL (optional). Renders as an embed iframe below the post body with a translated caption (`writing.spotifyCaption`). The embed URL is derived by extracting the ID from the URL (everything after the last `/` and before any `?`).
 
 The `parseFrontmatter.js` parser handles all keys generically — no changes needed when adding new frontmatter fields.
+
+**Photos in a post:** raw HTML `<img src="…/name.webp" data-full="…/name-full.webp" alt="…" width height>` inside a `<div style="columns: 2; column-gap: 12px;">` (see `context-window.md`). Every post image becomes a button that opens `ImageLightbox` in `WritingPostPage.jsx`: full screen, click anywhere or Escape to close. No captions; alt text is required. Files and search rules: see SEO.
 
 ---
 

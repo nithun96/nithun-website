@@ -1,0 +1,24 @@
+---
+title: "Context Window"
+date: "2026-10-16"
+slug: "context-window"
+language: "en"
+summary: "I condensed 5 months of posts into one, or so I thought. Planned a trip for 68. Travelled to South Korea and Japan (months apart). Cofounded Pyre. And ran out of space…"
+mastodon: ""
+---
+
+It’s been a while since my last post and that is for a couple of reasons; I have been wondering where I want to take this site, while I’ve also been busy with my daily life across a couple of different projects and hobbies.
+
+As I was writing this, I ended up going into too many topics to give each the time it deserves. So what I will do is that I will briefly touch on some of them, both as an in medias res style landing in the middle of the action for each topic.[^1: wry: I’m probably very wrong in using it in this context, so sorry to my Norwegian teacher, Lise] But also so I can hold myself accountable and follow up on them.
+
+First of all, I have never been one to write a diary, but I have always wanted to write. I just have never found myself the time to do it. I’ll see if I can make these musings or blogposts a form of it, only that I am not good at committing to frequent and regular posts.[^2: wry: This you can see from me disappearing after the first two posts.] I’ll have to choose only one of them, so I’ll try to start off with monthly posts. Either way, the evidence will lie in the future of this website.
+
+Secondly, I have in the last five months been to Japan and South Korea, and I’m on my way to Poland as I write this. 3 weeks in Japan was from mid-June to early July. I noticed both the similarities and dissimilarities from living in Oslo. That was a great trip to the point that I definitely want to return. South Korea was 10 days in two cities (Seoul and Busan) in September. It is easy to compare the two countries and while they are geographically quite close, it is noticeable how dissimilar they are. Recent years have brought them closer but I have a preference for South Korea, simply because I consume so much of the culture that South Korea exports, especially K-pop.[^3: wry: I went to Berlin for a Twice concert - with both Japanese and Korean members! But I will be going to Copenhagen next year for Aespa just to clarify my interest in both South Korea and Japan. Not to mention Otsukare Summer by HALICALI being an earworm in recent months. In addition I listen to quite a lot of Korean hip-hop and R&B in the form of artists like Coogie, Sik-K, Crush and many more.] My interest in Japanese and Korean culture will need its own posts.
+
+Thirdly, I have my volunteer work. For a couple of years now I have been volunteering for Spire, an organisation working to make the world more sustainable and fair in very simple terms. Then I have been volunteering around 5-6 years for the Red Cross, at a youth club concept called Fellesverket, where we serve food, arrange activities and give young people an area to play games (mainly FIFA) and billiards among other things. And then I am the leader of the social committee for Young Professionals in Tieto Oslo. This is why we are around 70 travellers going to Gdansk, for what I have tried to establish as a yearly foreign trip event, and why I’m writing this post on the plane. There is much to say about each of these three things I do, which is why I’ll stop there.
+
+Lastly, I have cofounded Pyre AS with two friends of mine. Our website is [pyre.no](https://pyre.no) and we have soft-launched [cvforge.dev](https://www.cvforge.dev) as our first product. There is so much happening here, with quick and frequent changes that would make this post outdated by the time it’s published. We are still in the early stages in terms of what our strategy and vision will be. And as the CEO/cofounder I have a full backlog.
+
+This is not to mention my full-time job, which takes priority.
+
+There was a time when I felt a bit embarrassed or cautious in a way about telling others what I do. That feeling still exists, because I do not like to brag, but what I have written here is only the facts and there are a couple of things I have forgotten to mention (such as my interest in F1 and football which I might come back to depending on what happens to the 114 out of 115 breaches allegedly committed by Manchester City[^4: wry: If they are not punished I could at least save time by having one fewer hobby, with Fantasy Premier League taking unnecessary time]). However, my ambition and desire to do as much as possible in the time I am given has led me here. And as you possibly can tell, I have a lot on my mind. In AI terms, I am just about maxing out my context window by doing all the things I’m doing now. But this weekend, I’ll try to relax in Gdansk.

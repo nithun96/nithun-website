@@ -95,6 +95,11 @@ server {
         expires 7d;
         try_files $uri =404;
     }
+    # Silence's audio files (scripts/makeSilenceSounds.js). A changed file needs a new name.
+    location /sounds/ {
+        expires 30d;
+        try_files $uri =404;
+    }
 
     # Pages, sitemap, robots.txt: always revalidate, so a deploy shows up at once.
     location / {

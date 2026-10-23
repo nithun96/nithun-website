@@ -14,7 +14,7 @@
     "pyreBadge":  "Building Pyre",
     "location":   "Oslo, Norway",
     "intro":    "I'm a co-founder of Pyre, a Norwegian software company I run with two friends, building and operating our own products. Beyond Pyre, here's what else I keep myself busy with:",
-    "donate":   "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund</3>, <4>GiveWell</4> (global health), and the <5>hearing research charities listed on the Silence page</5>.",
+    "donate":   "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund</3>, <4>GiveWell</4> (global health), and the <5>hearing charities listed on the Silence page</5>.",
     "teasers": {
       "writing": {
         "label": "Writing",
@@ -63,32 +63,22 @@
   "silence": {
     "navLink":  "Silence",
     "heading":  "Deafening Silence",
-    "subtitle": "Deafening Silence is a small tool for tinnitus sound therapy. Tap a sound to play; adjust to your preference.",
-    "guidance": "Based on Tinnitus Retraining Therapy (TRT) principles: set the volume so the sound sits just below the level of your tinnitus — not to mask it completely. The goal is habituation over time, not suppression.",
+    "subtitle": "Deafening Silence is a small tool for tinnitus sound therapy.",
     "sounds": {
-      "brown": "Brown Noise",
-      "pink":  "Pink Noise",
+      "brown": "Brown noise",
+      "pink":  "Pink noise",
       "rain":  "Rain",
       "ocean": "Ocean"
     },
-    "soundDescriptions": {
-      "brown": "Deep, grounding rumble",
-      "pink":  "Balanced, natural hiss",
-      "rain":  "Soft rainfall, synthesised",
-      "ocean": "Steady waves, gentle"
-    },
-    "play":         "Play",
     "pause":        "Pause",
     "volume":       "Volume",
     "sleepTimer":   "Sleep timer",
     "timerOff":     "Off",
     "timerMinutes": "{{minutes}} min",
     "timerActive":  "Stops in {{remaining}}",
-    "cancelTimer":  "Cancel",
     "donationHeading": "Support hearing health",
-    "donationIntro":   "If Deafening Silence helps you, please consider donating to research and advocacy. These organisations were chosen for being credible and focused on hearing loss and tinnitus research.",
-    "audioError": "Audio couldn't start. Please tap Play again.",
-    "iosMuteNote": "If you hear no sound, check that your mute switch is off. On iPhone, the side switch may silence audio even when volume is up."
+    "donationIntro":   "If Deafening Silence helps you, please consider donating to research and advocacy.",
+    "audioError": "Audio couldn't start. Tap the sound again."
   },
   "footer": {
     "lastUpdated": "Last updated:",

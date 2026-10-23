@@ -14,7 +14,7 @@
     "pyreBadge":  "Bygger Pyre",
     "location":   "Oslo, Norge",
     "intro":    "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, hvor vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
-    "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselsforskningsorganisasjonene som er nevnt på Stillhet-siden</5>.",
+    "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselsorganisasjonene som er nevnt på Stillhet-siden</5>.",
     "teasers": {
       "writing": {
         "label": "Skriverier",
@@ -63,32 +63,22 @@
   "silence": {
     "navLink":  "Stillhet",
     "heading":  "Deafening Silence",
-    "subtitle": "Deafening Silence er et lite verktøy for tinnituslydterapi. Trykk på en lyd for å spille av; juster etter eget ønske.",
-    "guidance": "Basert på prinsipper fra Tinnitus Retraining Therapy (TRT): still inn volumet slik at lyden er rett under nivået på tinnitussen din — ikke for å maskere den fullstendig. Målet er habituering over tid, ikke undertrykking.",
+    "subtitle": "Deafening Silence er et lite verktøy for tinnituslydterapi.",
     "sounds": {
       "brown": "Brun støy",
       "pink":  "Rosa støy",
       "rain":  "Regn",
       "ocean": "Hav"
     },
-    "soundDescriptions": {
-      "brown": "Dyp, beroligende buldring",
-      "pink":  "Balansert, naturlig sus",
-      "rain":  "Rolig regnfall, syntetisert",
-      "ocean": "Jevne bølger, forsiktig"
-    },
-    "play":         "Spill av",
     "pause":        "Pause",
     "volume":       "Volum",
     "sleepTimer":   "Søvntimer",
     "timerOff":     "Av",
     "timerMinutes": "{{minutes}} min",
     "timerActive":  "Stopper om {{remaining}}",
-    "cancelTimer":  "Avbryt",
     "donationHeading": "Støtt hørselshelse",
-    "donationIntro":   "Hvis Deafening Silence hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner. Disse organisasjonene er valgt for å være troverdige og rettet mot forskning på hørselstap og tinnitus.",
-    "audioError": "Lyden startet ikke. Trykk Spill av igjen.",
-    "iosMuteNote": "Hører du ingen lyd, sjekk at lydavbryterknappen er av. På iPhone kan sideknappen dempe lyden selv om volumet er skrudd opp."
+    "donationIntro":   "Hvis Deafening Silence hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner.",
+    "audioError": "Lyden startet ikke. Trykk på lyden igjen."
   },
   "footer": {
     "lastUpdated": "Sist oppdatert:",

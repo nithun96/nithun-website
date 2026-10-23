@@ -138,12 +138,14 @@ nithun-website/
 │   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
 │   ├── prerender.js                # After vite build: per-page HTML with each page's meta tags + dist/rss.xml (see SEO)
 │   ├── fetchBookCovers.js          # `npm run fetch-covers` — see Book Covers
-│   └── finaliseBookCovers.js       # `npm run finalise-covers` — see Book Covers
+│   ├── finaliseBookCovers.js       # `npm run finalise-covers` — see Book Covers
+│   └── makeSilenceSounds.js        # `npm run make-sounds` — renders Silence's sound files (needs ffmpeg)
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
+│   ├── sounds/                     # Silence's sound files — 30-day cache, so a changed file needs a new name
 │   └── images/
 │       ├── og-nithun.jpg           # Link-preview (Open Graph / Twitter) image
 │       ├── nithun.jpeg             # Old link-preview image — no longer referenced
@@ -172,7 +174,7 @@ nithun-website/
     ├── game/
     │   └── GameLevel1.jsx          # Game pilot (see GAME-BRIEF.md) — not imported or routed yet
     ├── audio/
-    │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
+    │   └── loopPlayer.js           # Silence player — plays public/sounds/ with a 1 s crossfade (see README)
     ├── data/
     │   ├── shelf.json              # Shelf content — 59 books, 50 games, 8 TV entries
     │   ├── bookCovers.json         # Pre-fetched book cover URLs — generated, see Book Covers
@@ -225,7 +227,7 @@ This will build, upload to the server, update the Nginx config, and push to GitH
 
 The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
 
-**Compression and caching** are set in `nginx/nithun-website`: gzip for JS/CSS/JSON/SVG/XML; `/assets/` (hashed build files) cached 1 year, `/fonts/` 30 days, `/images/` 7 days; pages always revalidate. Because images are cached for a week, give a replaced image a new filename rather than overwriting it.
+**Compression and caching** are set in `nginx/nithun-website`: gzip for JS/CSS/JSON/SVG/XML; `/assets/` (hashed build files) cached 1 year, `/fonts/` and `/sounds/` 30 days, `/images/` 7 days; pages always revalidate. Because images and sounds are cached, give a replaced file a new filename rather than overwriting it.
 
 **SSL certificates** are renewed automatically by certbot on the server (nginx authenticator). Every domain on a certificate must have a DNS record, or renewal fails for the whole certificate. That is what let the `.com` certificate expire in July 2026: it covered `www.nithunmanoharan.com`, which has no DNS record. Keep the `.com` redirect inside `location /` (not a server-level `return`) so certbot's temporary challenge location still works.
 
@@ -335,7 +337,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Hero section — name, Pyre badge, intro, photo collage, donate nudge, 4 section teasers
 - [x] Shelf page (`/shelf`) — 59 books with cover art; Games (50) and TV (8) hidden until they have cover art
-- [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
+- [x] Silence page (`/silence`) — noise tool with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
 - [x] Pyre branding — triangle mark in Hero subtitle and Footer, links to pyre.no

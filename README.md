@@ -27,12 +27,14 @@ nithun-website/
 ├── nginx/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── scripts/
-│   └── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
+│   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
+│   └── makeSilenceSounds.js        # `npm run make-sounds` — renders Silence's sound files (needs ffmpeg)
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files
+│   ├── sounds/                     # Silence's sound files — a 5-minute loop and a fade-out version per sound
 │   └── images/                     # og-nithun.jpg (1200×630 link-preview crop of the archway portrait) + about/ (About page and hero photos) + writing/ (photos in posts, one folder per slug, noindex)
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
@@ -55,7 +57,7 @@ nithun-website/
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Any unknown URL — "page not found", marked noindex
     ├── audio/
-    │   └── noiseEngine.js          # Web Audio API noise engine (brown, pink, rain, ocean)
+    │   └── loopPlayer.js           # Silence player — plays the sound files in public/sounds/
     ├── data/
     │   ├── shelf.json              # Shelf content — 59 books, 50 games, 8 TV entries
     │   ├── bookCovers.json         # Pre-fetched cover URLs (generated — see CLAUDE.md)
@@ -112,10 +114,10 @@ Books only for now — Games and TV are hidden until they have cover art (re-ena
 Bio, two portraits, six travel photos with locations, and an Instagram link. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.
 
 ### Silence (`SilencePage.jsx`)
-Noise tool for tinnitus and sleep. Uses `noiseEngine.js` (Web Audio API) to synthesise brown, pink, rain, and ocean sounds. Features: per-sound volume, sleep timer with fade-out, charity donation links. On iOS, a near-silent `<audio>` element is started inside the play gesture to force the "playback" audio session category — this keeps audio playing when the hardware mute switch is on.
+Sound tool for tinnitus and sleep: brown noise, pink noise, rain and ocean, a sleep timer (30/60/90 min, 60-second fade-out) and hearing charity links. The volume slider shows only where the browser can change volume (not on iPhone or iPad, which use their volume buttons).
 
-### Noise engine (`audio/noiseEngine.js`)
-Framework-agnostic Web Audio module, designed to be extractable into a standalone Capacitor mobile app. Synthesises: brown noise (leaky integrator random walk), pink noise (Paul Kellet IIR 1/f approximation), rain (three blended layers — bandpass white noise body, low rumble, LFO-modulated high-frequency drops), and ocean (amplitude-modulated white noise with slow sine envelope).
+### Player (`audio/loopPlayer.js`) and sounds (`public/sounds/`)
+Plays audio files with `<audio>` elements, which keep playing on a locked iPhone and ignore the mute switch (the Web Audio API it used before stops when the phone locks). Each sound is a 5-minute loop file with 1 s fades at both ends; a second copy starts 1 s before the first ends, so they crossfade with no gap. For the sleep timer the last copy is a version that fades out over 60 s. `npm run make-sounds` (needs ffmpeg) renders the files with `scripts/makeSilenceSounds.js`: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (white noise under a slow wave swell), all at the same loudness. A changed file needs a new name, because Nginx lets browsers cache `/sounds/` for 30 days.
 
 ### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
 Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime, language, spotify). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date, rendered with `react-markdown` + `rehype-raw`.
@@ -191,7 +193,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html /index.html`: the `.html` st
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Home page — name, Pyre badge, intro, photo collage, four section teasers, donation nudge
 - [x] Shelf page (`/shelf`) — 59 books with cover art; Games and TV hidden until they have covers
-- [x] Silence page (`/silence`) — noise tool with sleep timer; iOS mute switch compatible
+- [x] Silence page (`/silence`) — noise tool with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
 - [x] Footer — Pyre link, GitHub, licence, build date

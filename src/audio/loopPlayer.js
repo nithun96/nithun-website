@@ -26,13 +26,13 @@ const file = (sound, kind) => `/sounds/silence-${sound}-${kind}.m4a`
 // Seconds left in an element (its duration can be NaN before it loads, or Infinity)
 const left = el => (Number.isFinite(el.duration) ? el.duration : LENGTH) - el.currentTime
 
-// iPhones and iPads ignore audio.volume; the volume buttons set it instead
-export const canSetVolume = (() => {
-  if (typeof Audio === 'undefined') return false
-  const a = new Audio()
-  a.volume = 0.5
-  return a.volume === 0.5
-})()
+// iPhones and iPads ignore audio.volume (in every browser, as all of them use
+// WebKit there); the volume buttons set it instead. Reading audio.volume right
+// after setting it can still return the new value, so check the device instead.
+// iPads ask for desktop pages and say "Macintosh", but have a touch screen.
+export const canSetVolume = typeof navigator !== 'undefined' &&
+  !/iPhone|iPad|iPod/.test(navigator.userAgent) &&
+  !(/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
 
 export function createLoopPlayer(onChange) {
   const loops = [new Audio(), new Audio()]

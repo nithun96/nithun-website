@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Silence lock-screen test</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background: #1C1A17; color: #E8DFC8; font: 16px/1.6 system-ui, -apple-system, sans-serif; }
+    main { max-width: 560px; margin: 0 auto; padding: 32px 20px 64px; }
+    h1 { font: normal 28px/1.2 Georgia, serif; margin: 0 0 8px; }
+    p, li { color: #B8B0A0; }
+    ol { padding-left: 20px; }
+    button { font: inherit; font-size: 17px; padding: 12px 20px; border-radius: 6px; border: 1px solid #8FAF6E; background: #2A2620; color: #E8DFC8; cursor: pointer; }
+    button + button { margin-left: 8px; }
+    label { display: block; margin: 16px 0; color: #B8B0A0; }
+    #status { margin: 16px 0 8px; font-weight: 600; }
+    #log { background: #2A2620; border-radius: 6px; padding: 12px 14px; font: 13px/1.6 ui-monospace, Menlo, monospace; color: #B8B0A0; white-space: pre-wrap; min-height: 80px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Silence lock-screen test</h1>
+  <p>A temporary page to see whether an iPhone keeps playing Silence's sound with the screen locked, when it plays as an ordinary looping audio file.</p>
+  <ol>
+    <li>Turn your phone's volume <strong>low</strong>, then press <strong>Start</strong>.</li>
+    <li>Lock the phone and listen for about ten minutes.</li>
+    <li>Unlock and screenshot this page. The log shows what happened while it was locked.</li>
+    <li>Optional second run: tick the box below, start again and lock. The sound should stop after two minutes. That tests whether a sleep timer works while locked.</li>
+  </ol>
+  <p>Volume here follows the phone's buttons; the page can't set it.</p>
+
+  <button id="start" type="button">Start</button><button id="stop" type="button">Stop</button>
+  <label><input id="timer" type="checkbox" /> Stop automatically after 2 minutes</label>
+  <div id="status">Not playing</div>
+  <div id="log" aria-live="polite"></div>
+</main>
+<script>
+  const audio = new Audio('/sounds/silence-test-brown.m4a');
+  audio.loop = true;
+  audio.preload = 'auto';
+  const logEl = document.getElementById('log');
+  const statusEl = document.getElementById('status');
+  let startedAt = null, timer = null;
+
+  const time = () => new Date().toLocaleTimeString('en-GB');
+  const log = msg => { logEl.textContent += `${time()}  ${msg}\n`; };
+  const status = () => {
+    const mins = startedAt ? Math.round((Date.now() - startedAt) / 60000) : 0;
+    statusEl.textContent = audio.paused ? 'Not playing' : `Playing (started ${mins} min ago)`;
+  };
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({ title: 'Brown noise (test)', artist: 'Silence · nithun.no' });
+    navigator.mediaSession.setActionHandler('play', () => audio.play());
+    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+  }
+
+  document.getElementById('start').addEventListener('click', async () => {
+    try {
+      await audio.play();
+      startedAt = Date.now();
+      log('Start pressed, sound playing');
+      clearTimeout(timer);
+      if (document.getElementById('timer').checked) {
+        timer = setTimeout(() => { audio.pause(); log('2-minute timer fired, sound stopped'); status(); }, 120000);
+        log('2-minute timer set');
+      }
+    } catch (e) { log('Could not start: ' + e.message); }
+    status();
+  });
+  document.getElementById('stop').addEventListener('click', () => { audio.pause(); clearTimeout(timer); log('Stop pressed'); status(); });
+
+  audio.addEventListener('pause', () => { log('Sound paused'); status(); });
+  audio.addEventListener('play', () => status());
+  audio.addEventListener('stalled', () => log('Sound stalled (loading)'));
+  audio.addEventListener('error', () => log('Audio error'));
+  document.addEventListener('visibilitychange', () => {
+    log(document.hidden ? 'Screen locked or page hidden' : `Back on the page; sound is ${audio.paused ? 'NOT playing' : 'still playing'}`);
+    status();
+  });
+  setInterval(status, 10000);
+</script>
+</body>
+</html>

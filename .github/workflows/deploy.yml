@@ -51,6 +51,19 @@ jobs:
       - name: Upload site
         run: scp -r dist/* deploy@204.168.209.150:/var/www/nithun-website/dist/
 
+      - name: Remove retired files
+        run: |
+          grep -vE '^\s*(#|$)' .github/retired-files.txt > /tmp/retired || true
+          if grep -qE '^/|\.\.|^assets/' /tmp/retired; then echo "retired-files.txt: relative paths outside assets/ only"; exit 1; fi
+          ssh deploy@204.168.209.150 'cd /var/www/nithun-website/dist && xargs -r rm -fv --' < /tmp/retired
+
+      - name: List files on the server that this build doesn't have
+        run: |
+          ssh deploy@204.168.209.150 'cd /var/www/nithun-website/dist && find . -type f ! -path "./assets/*" | sort' > /tmp/remote.txt
+          (cd dist && find . -type f ! -path "./assets/*" | sort) > /tmp/local.txt
+          echo "Left in place (add to .github/retired-files.txt to remove):"
+          comm -23 /tmp/remote.txt /tmp/local.txt
+
       - name: Update Nginx config
         run: |
           scp nginx/nithun-website deploy@204.168.209.150:/tmp/nithun-website
@@ -58,4 +71,9 @@ jobs:
 
       - name: Check the live site
         run: |
-          curl -fsS -o /dev/null -w "nithun.no: %{http_code}\n" https://nithun.no/
+          for p in / /writing /silence /shelf /about /rss.xml /sitemap.xml /manifest.webmanifest; do
+            curl -fsS -o /dev/null -w "$p: %{http_code}\n" "https://nithun.no$p"
+          done
+          code=$(curl -s -o /dev/null -w "%{http_code}" https://nithun.no/this-page-does-not-exist)
+          echo "unknown URL: $code"
+          test "$code" = 404

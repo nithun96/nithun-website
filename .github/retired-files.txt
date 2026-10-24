@@ -1,0 +1,8 @@
+# Files that were deployed once and are no longer part of the site.
+# Uploads only add and overwrite files, so the deploy deletes these from the
+# server (paths relative to dist/, one per line). Never list assets/ files:
+# old hashed builds stay so open tabs can still load them.
+silence-test.html
+sounds/silence-test-brown.m4a
+sounds/silence-test-soft.m4a
+sounds/silence-test-xfade.m4a

@@ -57,12 +57,15 @@ jobs:
           if grep -qE '^/|\.\.|^assets/' /tmp/retired; then echo "retired-files.txt: relative paths outside assets/ only"; exit 1; fi
           ssh deploy@204.168.209.150 'cd /var/www/nithun-website/dist && xargs -r rm -fv --' < /tmp/retired
 
+      # Information only: never stops a deploy. Both lists are sorted here, in the
+      # same locale, so comm can compare them.
       - name: List files on the server that this build doesn't have
+        continue-on-error: true
         run: |
-          ssh deploy@204.168.209.150 'cd /var/www/nithun-website/dist && find . -type f ! -path "./assets/*" | sort' > /tmp/remote.txt
-          (cd dist && find . -type f ! -path "./assets/*" | sort) > /tmp/local.txt
+          ssh deploy@204.168.209.150 'cd /var/www/nithun-website/dist && find . -type f ! -path "./assets/*"' 2>/dev/null | LC_ALL=C sort > /tmp/remote.txt || true
+          (cd dist && find . -type f ! -path "./assets/*") | LC_ALL=C sort > /tmp/local.txt
           echo "Left in place (add to .github/retired-files.txt to remove):"
-          comm -23 /tmp/remote.txt /tmp/local.txt
+          LC_ALL=C comm -23 /tmp/remote.txt /tmp/local.txt || true
 
       - name: Update Nginx config
         run: |

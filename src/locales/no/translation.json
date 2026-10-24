@@ -28,7 +28,7 @@
       },
       "shelf": {
         "label": "Hylle",
-        "title": "Bøker, serier, spill",
+        "title": "Bøker",
         "desc":  "En logg over det jeg er fan av."
       },
       "about": {
@@ -105,7 +105,7 @@
   },
   "about": {
     "eyebrow":            "Om",
-    "bio1":                "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner. Utenom det skriver jeg her innimellom, har bygget Deafening Silence som et gratis verktøy for tinnituslydterapi, og holder en hylle med bøker, spill og TV jeg er fan av.",
+    "bio1":                "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner. Utenom det skriver jeg her innimellom, har bygget Deafening Silence som et gratis verktøy for tinnituslydterapi, og holder en hylle med bøker jeg er fan av.",
     "bio2":                "Reising har også lært meg mye — som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
     "photosHeading":       "Noen bilder jeg er stolt av",
     "photosRights":        "© Nithun Manoharan. Alle rettigheter forbeholdt. Omfattes ikke av lisensen under.",

@@ -21,7 +21,8 @@ function ThemePill() {
       onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 35%, transparent)'}
       onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 18%, transparent)'}
     >
-      {dark ? '☀' : '◐'}
+      {/* \uFE0E shows the sun as a plain symbol, not a yellow emoji, on iPhone */}
+      {dark ? '\u2600\uFE0E' : '\u25D0'}
     </button>
   )
 }

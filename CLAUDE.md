@@ -321,6 +321,13 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 
 ---
 
+## Licence
+
+- Posts and other content: CC BY-NC 4.0 (stated in the footer). About-page photos: © Nithun Manoharan, excluded.
+- Code: all rights reserved — no open-source licence (decided Oct 2026; open it later only if Nithun decides to). Don't add licence headers or a LICENSE file.
+
+---
+
 ## What NOT to Do
 
 - Do not turn this into a CV or resume

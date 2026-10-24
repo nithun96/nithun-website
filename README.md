@@ -108,7 +108,7 @@ The theme pill toggles a `.dark` class on `<html>`; the preference is saved in `
 Name as `<h1>`, a "Building Pyre · Oslo" line linking to pyre.no, a short intro, and a three-photo collage. Below: four teaser cards linking to Writing, Silence, Shelf and About, then a donation nudge.
 
 ### Shelf (`ShelfPage.jsx`)
-Books only for now — Games and TV are hidden until they have cover art (re-enable by adding `'games', 'tv'` back to `CATEGORIES`). Covers come from `bookCovers.json`, pre-fetched at dev time, so there are no API calls at runtime. Cover art is kept out of Google Images with a `noimageindex` robots tag.
+Books only for now — Games and TV are hidden until they have cover art (re-enable by adding `'games', 'tv'` back to `CATEGORIES`). Covers come from `bookCovers.json`, pre-fetched at dev time, so there are no API calls at runtime. The images themselves load from Open Library: the covers on the first screen straight away at high priority, the rest lazily as you scroll. Cover art is kept out of Google Images with a `noimageindex` robots tag.
 
 ### About (`AboutPage.jsx`)
 Bio, two portraits, six travel photos with locations, and an Instagram link. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.

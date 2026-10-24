@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import { getBookCover } from '../utils/bookCovers'
@@ -70,6 +70,7 @@ function BookCard({ book }) {
             src={imageUrl}
             alt={book.title}
             loading="lazy"
+            decoding="async"
             onLoad={() => setImageOk(true)}
             onError={() => {}}
             style={{
@@ -117,6 +118,19 @@ export default function ShelfPage() {
 
   const items = shelfData[cat]
 
+  // Covers you see first load straight away, at high priority. The rest stay
+  // lazy: the browser fetches them as you scroll towards them. Runs before the
+  // first paint, so it works for any screen size.
+  const gridRef = useRef(null)
+  useLayoutEffect(() => {
+    for (const img of gridRef.current?.querySelectorAll('img') ?? []) {
+      if (img.getBoundingClientRect().top < window.innerHeight) {
+        img.loading = 'eager'
+        img.fetchPriority = 'high'
+      }
+    }
+  }, [cat])
+
   return (
     <div className="page-enter" style={SHELL}>
       {/* Page header */}
@@ -160,6 +174,7 @@ export default function ShelfPage() {
 
       {/* Card grid */}
       <div
+        ref={gridRef}
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',

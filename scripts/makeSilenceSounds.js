@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: AGPL-3.0-only
 // Deafening Silence — renders the four sounds to audio files.
 //
 // `npm run make-sounds` (needs ffmpeg) writes to public/sounds/:

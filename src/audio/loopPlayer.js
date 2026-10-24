@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: AGPL-3.0-only
 // Deafening Silence — player
 //
 // Plays the files made by scripts/makeSilenceSounds.js with ordinary <audio>

@@ -328,13 +328,14 @@ sup[data-footnote] {
 }
 
 /* ── Donate section inline links ──────────────────────────── */
-.hero-donate-link {
+/* Links inside running text (homepage donate line, About bio) */
+.hero-donate-link, .text-link {
   color: var(--fg2);
   text-decoration: underline;
   text-decoration-color: color-mix(in oklch, var(--fg2) 45%, transparent);
   text-underline-offset: 2px;
 }
-.hero-donate-link:hover {
+.hero-donate-link:hover, .text-link:hover {
   text-decoration-color: currentColor;
 }
 
@@ -348,9 +349,6 @@ sup[data-footnote] {
 @media (max-width: 640px) {
   .about-photo-grid {
     grid-template-columns: 1fr;
-  }
-  .about-portraits {
-    flex-wrap: wrap;
   }
 }
 

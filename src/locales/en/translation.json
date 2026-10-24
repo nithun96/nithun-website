@@ -14,6 +14,7 @@
     "pyreBadge":  "Building Pyre",
     "location":   "Oslo, Norway",
     "intro":    "I'm a co-founder of Pyre, a Norwegian software company I run with two friends, building and operating our own products. Beyond Pyre, here's what else I keep myself busy with:",
+    "latestPost": "Latest: {{title}}",
     "donate":   "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund</3>, <4>GiveWell</4> (global health), and the <5>hearing charities listed on the Silence page</5>.",
     "teasers": {
       "writing": {

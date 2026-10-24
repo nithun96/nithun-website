@@ -1,3 +1,4 @@
+/* global __LATEST_POST__ */   // set in vite.config.js
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import PyreMark from '../components/PyreMark'
@@ -20,8 +21,7 @@ export default function Hero() {
       {/* ── Hero grid ─────────────────────────────────────────── */}
       <div className="hero-grid">
         <div className="hero-top-row">
-        {/* Text column */}
-        <div>
+        <div className="hero-head">
           <h1
             style={{
               fontFamily: 'Georgia, serif',
@@ -70,20 +70,21 @@ export default function Hero() {
             <span aria-hidden="true">·</span>
             {t('hero.location')}
           </p>
-
-          <p
-            style={{
-              fontSize: 17,
-              lineHeight: 1.75,
-              color: 'var(--fg2)',
-              maxWidth: 560,
-              marginBottom: 24,
-              fontWeight: 300,
-            }}
-          >
-            {t('hero.intro')}
-          </p>
         </div>
+
+        <p
+          className="hero-intro"
+          style={{
+            fontSize: 17,
+            lineHeight: 1.75,
+            color: 'var(--fg2)',
+            maxWidth: 560,
+            marginBottom: 24,
+            fontWeight: 300,
+          }}
+        >
+          {t('hero.intro')}
+        </p>
 
         {/* Small photo collage — a personal, creative touch.
             Uses -sm copies (324px wide, 3× the 108px display size) and loads
@@ -160,6 +161,11 @@ export default function Hero() {
             <div style={{ fontSize: 13, color: 'var(--fgm)', lineHeight: 1.55 }}>
               {t(`hero.teasers.${key}.desc`)}
             </div>
+            {key === 'writing' && __LATEST_POST__ && (
+              <div style={{ fontSize: 12, color: 'var(--fgm)', lineHeight: 1.55, marginTop: 10, fontStyle: 'italic' }}>
+                {t('hero.latestPost', { title: __LATEST_POST__.title })}
+              </div>
+            )}
           </Link>
         ))}
       </div>

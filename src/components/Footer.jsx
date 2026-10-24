@@ -1,9 +1,14 @@
+/* global __BUILD_DATE__ */   // set in vite.config.js
 import { useTranslation } from 'react-i18next'
 import PyreMark from './PyreMark'
 import { SHELL } from '../styles/shell'
 
+// Noon, so no time zone can move it to another day
+const buildDate = new Date(`${__BUILD_DATE__}T12:00:00`)
+
 export default function Footer() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const locale = i18n.language?.startsWith('no') ? 'nb-NO' : 'en-GB'
 
   return (
     <footer style={{ borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)' }}>
@@ -12,7 +17,7 @@ export default function Footer() {
         style={{ ...SHELL, padding: '32px clamp(24px, 5vw, 80px)' }}
       >
         <span style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em' }}>
-          {t('footer.lastUpdated')} {__BUILD_DATE__}
+          {t('footer.lastUpdated')} {buildDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })}
         </span>
         <div className="flex items-center gap-5">
           <a

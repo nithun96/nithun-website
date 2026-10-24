@@ -8,8 +8,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   define: {
-    __BUILD_DATE__: JSON.stringify(
-      new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-    ),
+    // YYYY-MM-DD; the footer writes it out in the reader's language
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
   },
 })

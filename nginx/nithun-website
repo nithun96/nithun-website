@@ -70,12 +70,15 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://covers.openlibrary.org https://archive.org https://*.archive.org; connect-src 'self'; frame-src https://open.spotify.com; frame-ancestors 'none'" always;
+    # script-src: the hash is the inline theme script in index.html. npm run build fails if it changes (scripts/prerender.js).
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-FW0lesHhkylwUY2wJw0v/5Jmg0hPOTwHEWimN40fdLY='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://covers.openlibrary.org https://archive.org https://*.archive.org; connect-src 'self'; frame-src https://open.spotify.com; frame-ancestors 'none'" always;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()" always;
+    add_header Cross-Origin-Opener-Policy "same-origin" always;
     add_header X-Robots-Tag $robots_tag always;   # empty (not sent) except on /shelf, /images/writing/ and /images/about/photo-*
 
     # Compression. `gzip on` is set in nginx.conf, but only for HTML by default.
-    gzip_types text/css application/javascript application/json image/svg+xml text/xml application/xml text/plain;
+    gzip_types text/css application/javascript application/json application/manifest+json image/svg+xml text/xml application/xml text/plain;
     gzip_vary on;
     gzip_comp_level 6;
     gzip_min_length 256;
@@ -101,13 +104,36 @@ server {
         try_files $uri =404;
     }
 
+    # Unknown URLs get a real 404 (dist/404.html, written by scripts/prerender.js),
+    # not the homepage with status 200, which search engines count as a "soft 404".
+    error_page 404 /404.html;
+
+    # Web app manifest: the default MIME list has no .webmanifest
+    location = /manifest.webmanifest {
+        types { }
+        default_type application/manifest+json;
+        expires 1d;
+    }
+
+    # Old address for Shelf
+    location = /books {
+        return 301 /shelf;
+    }
+
+    location = / {
+        expires -1;
+        try_files /index.html =404;
+    }
+
     # Pages, sitemap, robots.txt: always revalidate, so a deploy shows up at once.
     location / {
         expires -1;
+        # "/writing/" → "/writing" (one address per page)
+        rewrite ^/(.+)/$ /$1 permanent;
         # $uri.html = the per-page copies scripts/prerender.js writes (title, description,
         # Open Graph tags), so link previews show the right page without JavaScript.
-        # No $uri/: dist/writing/ is now a folder, and /writing/ would hit it and 403.
-        try_files $uri $uri.html /index.html;
+        # Every page needs one: a page missing from PAGES in prerender.js gives a 404.
+        try_files $uri $uri.html =404;
     }
 
     ssl_certificate /etc/letsencrypt/live/nithun.no/fullchain.pem;

@@ -90,13 +90,13 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 
 ### How SEO works in this codebase
 - The site is a single-page app. `index.html` holds the **homepage's** title, description and Open Graph tags, plus the JSON-LD schema, and deliberately **no static canonical tag** (it is also the fallback for unknown URLs).
-- **Per-page HTML for link previews:** after `vite build`, `scripts/prerender.js` writes a copy of `index.html` for every page and post with that page's own title, description, canonical URL and Open Graph tags (`dist/about.html`, `dist/writing/<slug>.html`, …). Nginx serves them via `try_files $uri $uri.html /index.html`, so chat apps and LinkedIn show the right page without running JavaScript. React still renders the body. (No `$uri/` in that rule: `dist/writing/` is a folder, and `/writing/` would 403.)
+- **Per-page HTML for link previews:** after `vite build`, `scripts/prerender.js` writes a copy of `index.html` for every page and post with that page's own title, description, canonical URL and Open Graph tags (`dist/about.html`, `dist/writing/<slug>.html`, …). Nginx serves them via `try_files $uri $uri.html =404`, so chat apps and LinkedIn show the right page without running JavaScript. React still renders the body. Any other URL gets `dist/404.html` with a real **404 status** (also written by `prerender.js`), so **a page missing from `PAGES` returns 404**. A trailing slash redirects (`/writing/` → `/writing`), and `/books` → `/shelf`. Posts also get BlogPosting JSON-LD (author, date) in their per-page HTML.
 - Each page calls `usePageMeta({ title, description, path })` from `src/lib/usePageMeta.js`, which sets its own title, description, canonical URL and Open Graph tags. Titles/descriptions live under `meta.*` in both translation files; posts use their frontmatter `title` and `summary`.
 - **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`, (4) add it to `PAGES` in `scripts/prerender.js`. Posts in `src/writing/` are added to the sitemap, the per-page HTML and the RSS feed automatically.
 - Shelf cover art (other people's book covers) must stay out of Google Images, where it used to appear in searches for Nithun's name. `/shelf` gets `noimageindex` twice: an `X-Robots-Tag` header from Nginx (a `map` on `$request_uri` in `nginx/nithun-website`) and a robots meta tag added by `ShelfPage.jsx`. Any new page that shows third-party images (e.g. Games/TV covers) needs the same.
 - Photos in posts live in `public/images/writing/<slug>/` as webp: a 1000px-wide copy for the page and a full-resolution `-full.webp` for the full-screen view, all metadata stripped (phone photos carry GPS location). Nginx sends `X-Robots-Tag: noindex` for everything under `/images/writing/` (same `map`), so they stay out of Google Images and searches for Nithun's name.
 - **Only photos of Nithun himself should appear in image search.** The six travel photos on About (`/images/about/photo-*`) get the same `noindex` header. His own photos (portrait, headshot, flower field and their `-sm` copies) stay indexable and are listed as image entries in the sitemap (`IMAGES` in `scripts/generate-sitemap.js`), because the pages are rendered by JavaScript. A new photo of him: add it to `IMAGES`. A new photo that isn't of him: put it under `/images/writing/` or name it `photo-*` in `/images/about/`.
-- Unknown URLs fall through to `NotFoundPage` (noindex). Don't add `hreflang` tags — language is switched client-side, so there are no separate language URLs.
+- Unknown URLs get status 404 and React shows `NotFoundPage` (noindex). Don't add `hreflang` tags — language is switched client-side, so there are no separate language URLs.
 - Every push to `main` (including a merged PR) deploys automatically via GitHub Actions — see Deployment.
 
 ---
@@ -130,6 +130,7 @@ nithun-website/
 ├── vite.config.js                  # Vite config — React plugin, Tailwind plugin, build date injection
 ├── deploy.sh                       # Deploy: build → scp to server → update Nginx → git commit + push
 ├── .github/workflows/deploy.yml    # Auto-deploy on every push to main (see Deployment)
+├── .github/retired-files.txt       # Files the deploy deletes from the server (uploads never delete)
 ├── nginx/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── GAME-BRIEF.md                   # Brief for the point-and-click game pilot (see src/game/)
@@ -143,6 +144,8 @@ nithun-website/
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
+│   ├── manifest.webmanifest        # Name, colours and icons for "Add to Home Screen" (served as application/manifest+json)
+│   ├── apple-touch-icon.png        # iPhone home-screen icon (180px); icon-192/512 and icon-maskable-512 for Android
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
 │   ├── sounds/                     # Silence's sound files — 30-day cache, so a changed file needs a new name
@@ -228,6 +231,10 @@ This will build, upload to the server, update the Nginx config, and push to GitH
 The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
 
 **Compression and caching** are set in `nginx/nithun-website`: gzip for JS/CSS/JSON/SVG/XML; `/assets/` (hashed build files) cached 1 year, `/fonts/` and `/sounds/` 30 days, `/images/` 7 days; pages always revalidate. Because images and sounds are cached, give a replaced file a new filename rather than overwriting it.
+
+**Removing a file from the site:** the upload only adds and overwrites files, so a file deleted from the repo stays on the server. List it in `.github/retired-files.txt` (path relative to `dist/`) and the next deploy deletes it. Each deploy also logs files on the server that the build doesn't have. Never list `assets/` files: old hashed builds stay so open tabs can still load them.
+
+**Content-Security-Policy:** `script-src` allows the inline theme script in `index.html` by its SHA-256 hash, not `'unsafe-inline'`. Change that script and `npm run build` fails with the new hash to put in `nginx/nithun-website`.
 
 **SSL certificates** are renewed automatically by certbot on the server (nginx authenticator). Every domain on a certificate must have a DNS record, or renewal fails for the whole certificate. That is what let the `.com` certificate expire in July 2026: it covered `www.nithunmanoharan.com`, which has no DNS record. Keep the `.com` redirect inside `location /` (not a server-level `return`) so certbot's temporary challenge location still works.
 
@@ -355,7 +362,8 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Per-page HTML for link previews (`scripts/prerender.js`), RSS feed at `/rss.xml`, pages other than Home loaded on demand (`React.lazy` in `App.jsx`)
 - [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
-- [x] Security headers on Nginx (CSP allows Open Library/archive.org images and Spotify embeds only)
+- [x] Security headers on Nginx (CSP with a script hash instead of 'unsafe-inline'; allows Open Library/archive.org images and Spotify embeds only; Permissions-Policy, COOP, HSTS)
+- [x] Real 404 status for unknown URLs; home-screen icons and web app manifest
 - [x] www.nithun.no, nithunmanoharan.com and www.nithunmanoharan.com all redirect to nithun.no (`.com` DNS is hosted in the Hetzner Console; certificate reissued Oct 2026 with both names)
 - [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)

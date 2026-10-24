@@ -150,7 +150,7 @@ nithun-website/
 │       ├── og-nithun.jpg           # Link-preview (Open Graph / Twitter) image
 │       ├── nithun.jpeg             # Old link-preview image — no longer referenced
 │       ├── writing/                # Photos in posts, one folder per post slug — noindex via Nginx (see SEO)
-│       └── about/                  # About page photos — portrait, headshot, flower field, 6 travel shots (webp); *-sm.webp = 324px copies for the hero collage
+│       └── about/                  # About page photos — portrait, headshot, flower field, 6 travel shots (webp); smaller copies for srcset: *-sm (324px, also the hero collage), portraits *-600, travel shots *-700
 └── src/
     ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
     ├── App.jsx                     # Root layout — Navbar, Routes, Footer

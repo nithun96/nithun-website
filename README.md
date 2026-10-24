@@ -150,7 +150,7 @@ To add or edit a string:
 - **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
 - **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
 - **Motion:** `prefers-reduced-motion` switches off animations, transitions and smooth scrolling.
-- **Known gaps:** Silence controls don't announce play/stop to screen readers, Shelf tabs aren't marked up as tabs, the theme/language pills are smaller than 24px, and the game prototype is English-only.
+- **Known gaps:** Shelf's category tabs (hidden until games and TV have cover art) aren't marked up as tabs, and the game prototype is English-only. Speed: a post page is the slowest (the Markdown renderer runs in the browser); the next step there would be turning posts into HTML at build time.
 
 ---
 

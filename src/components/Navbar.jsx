@@ -10,6 +10,7 @@ function ThemePill() {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
     localStorage.setItem('theme', dark ? 'dark' : 'light')
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#1C1A17' : '#F5F0E8')
   }, [dark])
 
   return (
@@ -29,6 +30,7 @@ function ThemePill() {
 
 function LangPill() {
   const { i18n, t } = useTranslation()
+  const code = i18n.language.startsWith('no') ? 'EN' : 'NO'   // the language you switch to
   const toggle = () => {
     const next = i18n.language.startsWith('no') ? 'en' : 'no'
     i18n.changeLanguage(next)
@@ -37,13 +39,13 @@ function LangPill() {
   return (
     <button
       onClick={toggle}
-      aria-label={t('nav.toggleLang')}
+      aria-label={`${code}, ${t('nav.toggleLang')}`}
       style={{ fontSize: 11, letterSpacing: '0.08em', color: 'var(--fgm)', borderColor: 'color-mix(in oklch, var(--fg) 18%, transparent)' }}
       className="border rounded-sm px-2 py-1 cursor-pointer transition-colors duration-200 hover:text-fg"
       onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 35%, transparent)'}
       onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 18%, transparent)'}
     >
-      {i18n.language.startsWith('no') ? 'EN' : 'NO'}
+      {code}
     </button>
   )
 }

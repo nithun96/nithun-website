@@ -277,10 +277,15 @@ function FootnotePanel({ footnotes }) {
               color: 'var(--fgm)',
               cursor: 'pointer',
               fontSize: 14,
-              padding: '0 0 0 12px',
+              padding: 0,
+              marginLeft: 8,
+              minWidth: 32,
+              minHeight: 32,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               lineHeight: 1,
               flexShrink: 0,
-              opacity: 0.5,
             }}
           >
             ✕

@@ -25,7 +25,8 @@ export default function App() {
         {t('nav.skip')}
       </a>
       <Navbar />
-      <main id="main-content" tabIndex={-1} style={{ outline: 'none' }}>
+      {/* min-height: the footer stays below the screen while a page loads, instead of jumping down */}
+      <main id="main-content" tabIndex={-1} style={{ outline: 'none', minHeight: '100vh' }}>
         <Suspense fallback={null}>
         <Routes>
           <Route path="/"              element={<Hero />} />

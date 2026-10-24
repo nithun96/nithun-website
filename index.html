@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Browser UI colour (address bar, iOS status bar); the theme toggle updates it -->
+    <meta name="theme-color" content="#1C1A17" />
+    <!-- The main font, fetched before the CSS asks for it, so text settles sooner -->
+    <link rel="preload" href="/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <title>Nithun Manoharan | Product Manager, AI &amp; Data Analytics</title>
     <meta
       name="description"
@@ -56,6 +60,8 @@
       (function () {
         if (localStorage.getItem('theme') !== 'light') {
           document.documentElement.classList.add('dark');
+        } else {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#F5F0E8');
         }
       })();
     </script>

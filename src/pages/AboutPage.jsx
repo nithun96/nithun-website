@@ -66,14 +66,8 @@ export default function AboutPage() {
         </p>
       </div>
 
-      {/* Photography */}
-      <div style={{ marginTop: 56, paddingTop: 32, borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)' }}>
-        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 'normal', color: 'var(--fg)', marginBottom: 8 }}>
-          {t('about.photosHeading')}
-        </h2>
-        <p style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginBottom: 24 }}>
-          {t('about.photosRights')}
-        </p>
+      {/* Photography: follows straight on from the travel paragraph */}
+      <div style={{ marginTop: 32 }}>
         <div className="about-photo-grid">
           {PHOTOS.map(({ file, altKey, caption }) => (
             <figure key={file} style={{ margin: 0 }}>
@@ -101,6 +95,9 @@ export default function AboutPage() {
         >
           {t('about.instagram')}
         </a>
+        <p style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginTop: 32 }}>
+          {t('about.photosRights')}
+        </p>
       </div>
 
       <div style={{ paddingBottom: 80 }} />

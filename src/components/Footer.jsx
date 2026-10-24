@@ -24,7 +24,7 @@ export default function Footer() {
             href="https://pyre.no"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease', padding: '5px 0' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
           >
@@ -35,7 +35,7 @@ export default function Footer() {
             href="https://github.com/nithun96"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease' }}
+            style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease', padding: '5px 0' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
           >
@@ -44,7 +44,7 @@ export default function Footer() {
           <a
             href="/rss.xml"
             type="application/rss+xml"
-            style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease' }}
+            style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', textDecoration: 'none', transition: 'color 0.2s ease', padding: '5px 0' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
           >

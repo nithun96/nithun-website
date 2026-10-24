@@ -231,11 +231,17 @@ body::before {
 }
 
 .hero-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "head   photos"
+    "intro  photos";
+  column-gap: 32px;
+  align-items: start;
 }
+.hero-head   { grid-area: head; }
+.hero-intro  { grid-area: intro; }
+.hero-collage { grid-area: photos; }
 
 .hero-collage {
   position: relative;
@@ -258,14 +264,15 @@ body::before {
 .hero-collage-2 { top: 24px; left: 116px; transform: rotate(5deg); object-position: 65% 22%; z-index: 1; }
 .hero-collage-3 { top: 156px; left: 58px; transform: rotate(-4deg); object-position: center 18%; z-index: 3; }
 
+/* Phones: name, then photos, then the intro, so "…busy with:" leads straight
+   into the section list below it */
 @media (max-width: 700px) {
   .hero-top-row {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-template-areas: "head" "photos" "intro";
   }
   .hero-collage {
-    margin-top: 16px;
-    align-self: flex-start;
-    width: 224px;
+    margin-bottom: 32px;
   }
 }
 

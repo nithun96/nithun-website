@@ -1,15 +1,19 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { SHELL } from '../styles/shell'
 import { usePageMeta } from '../lib/usePageMeta'
 
 const PHOTOS = [
-  { file: 'photo-wroclaw-night.webp',      altKey: 'about.photoWroclawAlt', caption: 'Wrocław, Poland' },
-  { file: 'photo-red-windows.webp',        altKey: 'about.photoRedWindowsAlt', caption: 'Copenhagen, Denmark' },
-  { file: 'photo-heddal-church.webp',      altKey: 'about.photoHeddalAlt', caption: 'Heddal, Norway' },
-  { file: 'photo-sunflare-building.webp',  altKey: 'about.photoSunflareAlt', caption: 'Stockholm, Sweden' },
-  { file: 'photo-inari-fox.webp',          altKey: 'about.photoInariAlt', caption: 'Kyoto, Japan' },
-  { file: 'photo-riga-cathedral.webp',     altKey: 'about.photoRigaAlt', caption: 'Riga, Latvia' },
+  { file: 'photo-wroclaw-night.webp',      altKey: 'about.photoWroclawAlt',    placeKey: 'about.placeWroclaw' },
+  { file: 'photo-red-windows.webp',        altKey: 'about.photoRedWindowsAlt', placeKey: 'about.placeCopenhagen' },
+  { file: 'photo-heddal-church.webp',      altKey: 'about.photoHeddalAlt',     placeKey: 'about.placeHeddal' },
+  { file: 'photo-sunflare-building.webp',  altKey: 'about.photoSunflareAlt',   placeKey: 'about.placeStockholm' },
+  { file: 'photo-inari-fox.webp',          altKey: 'about.photoInariAlt',      placeKey: 'about.placeKyoto' },
+  { file: 'photo-riga-cathedral.webp',     altKey: 'about.photoRigaAlt',       placeKey: 'about.placeRiga' },
 ]
+
+const CAPTION = { fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginTop: 8 }
+const PORTRAIT = { flex: 1, minWidth: 0, width: '100%', borderRadius: 6, objectFit: 'cover', aspectRatio: '3/4' }
 
 export default function AboutPage() {
   const { t } = useTranslation()
@@ -38,28 +42,27 @@ export default function AboutPage() {
         </h1>
       </div>
 
-      {/* Portrait + secondary photo */}
-      <div className="about-portraits" style={{ display: 'flex', gap: 20, marginTop: 32 }}>
-        <img
-          src="/images/about/nithun-portrait.webp"
-          alt={t('about.portraitAlt')}
-          width={900}
-          height={1200}
-          style={{ width: '58%', maxWidth: 320, borderRadius: 6, objectFit: 'cover', aspectRatio: '3/4' }}
-        />
-        <img
-          src="/images/about/nithun-flower-field.webp"
-          alt={t('about.flowerAlt')}
-          width={900}
-          height={1200}
-          style={{ width: '42%', maxWidth: 220, borderRadius: 6, objectFit: 'cover', aspectRatio: '3/4', marginTop: 28 }}
-        />
-      </div>
+      {/* Two photos of Nithun, side by side at the same size */}
+      <figure style={{ margin: '32px 0 0', maxWidth: 620 }}>
+        <div style={{ display: 'flex', gap: 'clamp(12px, 3vw, 20px)' }}>
+          <img src="/images/about/nithun-portrait.webp" alt={t('about.portraitAlt')} width={900} height={1200} style={PORTRAIT} />
+          <img src="/images/about/nithun-flower-field.webp" alt={t('about.flowerAlt')} width={900} height={1200} style={PORTRAIT} />
+        </div>
+        <figcaption style={CAPTION}>{t('about.portraitsCaption')}</figcaption>
+      </figure>
 
       {/* Bio */}
       <div style={{ marginTop: 32, maxWidth: 620 }}>
         <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--fg2)', fontWeight: 300, marginBottom: 16 }}>
-          {t('about.bio1')}
+          <Trans
+            i18nKey="about.bio1"
+            components={[
+              <a href="https://pyre.no" className="text-link" target="_blank" rel="noopener noreferrer" />,
+              <Link to="/writing" className="text-link" />,
+              <Link to="/silence" className="text-link" />,
+              <Link to="/shelf" className="text-link" />,
+            ]}
+          />
         </p>
         <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--fg2)', fontWeight: 300 }}>
           {t('about.bio2')}
@@ -69,7 +72,7 @@ export default function AboutPage() {
       {/* Photography: follows straight on from the travel paragraph */}
       <div style={{ marginTop: 32 }}>
         <div className="about-photo-grid">
-          {PHOTOS.map(({ file, altKey, caption }) => (
+          {PHOTOS.map(({ file, altKey, placeKey }) => (
             <figure key={file} style={{ margin: 0 }}>
               <img
                 src={`/images/about/${file}`}
@@ -79,9 +82,7 @@ export default function AboutPage() {
                 loading="lazy"
                 style={{ width: '100%', borderRadius: 6, objectFit: 'cover', aspectRatio: '3/4', display: 'block' }}
               />
-              <figcaption style={{ fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginTop: 8 }}>
-                {caption}
-              </figcaption>
+              <figcaption style={CAPTION}>{t(placeKey)}</figcaption>
             </figure>
           ))}
         </div>

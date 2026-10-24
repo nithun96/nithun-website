@@ -111,7 +111,7 @@ Name as `<h1>`, a "Building Pyre · Oslo" line linking to pyre.no, a short intro
 Books only for now — Games and TV are hidden until they have cover art (re-enable by adding `'games', 'tv'` back to `CATEGORIES`). Covers come from `bookCovers.json`, pre-fetched at dev time, so there are no API calls at runtime. The images themselves load from Open Library: the covers on the first screen straight away at high priority, the rest lazily as you scroll. Cover art is kept out of Google Images with a `noimageindex` robots tag.
 
 ### About (`AboutPage.jsx`)
-Bio, two portraits, six travel photos with locations, and an Instagram link. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.
+Bio (linking Pyre, Writing, Silence and Shelf), two photos of Nithun with a caption, six travel photos with translated locations, and an Instagram link. Every photo has smaller copies (`-sm`, `-600`, `-700`) and `srcset`, so phones and laptops download only the size they need. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.
 
 ### Silence (`SilencePage.jsx`)
 Sound tool for tinnitus and sleep: brown noise, pink noise, rain and ocean, a sleep timer (30/60/90 min, 60-second fade-out) and hearing charity links. The volume slider shows only where the browser can change volume (not on iPhone or iPad, which use their volume buttons).

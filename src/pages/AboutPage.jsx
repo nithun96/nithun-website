@@ -15,6 +15,12 @@ const PHOTOS = [
 const CAPTION = { fontSize: 11, color: 'var(--fgm)', letterSpacing: '0.04em', marginTop: 8 }
 const PORTRAIT = { flex: 1, minWidth: 0, width: '100%', borderRadius: 6, objectFit: 'cover', aspectRatio: '3/4' }
 
+// The browser picks the smallest copy that is sharp on the visitor's screen.
+// Portraits: two side by side, at most 300px wide. Travel photos: full width
+// on phones, three in a row (about 306px) on wider screens.
+const PORTRAIT_SIZES = '(max-width: 660px) 45vw, 300px'
+const PHOTO_SIZES = '(max-width: 640px) calc(100vw - 48px), 306px'
+
 export default function AboutPage() {
   const { t } = useTranslation()
   usePageMeta({ title: t('meta.aboutTitle'), description: t('meta.aboutDescription'), path: '/about' })
@@ -45,8 +51,19 @@ export default function AboutPage() {
       {/* Two photos of Nithun, side by side at the same size */}
       <figure style={{ margin: '32px 0 0', maxWidth: 620 }}>
         <div style={{ display: 'flex', gap: 'clamp(12px, 3vw, 20px)' }}>
-          <img src="/images/about/nithun-portrait.webp" alt={t('about.portraitAlt')} width={900} height={1200} style={PORTRAIT} />
-          <img src="/images/about/nithun-flower-field.webp" alt={t('about.flowerAlt')} width={900} height={1200} style={PORTRAIT} />
+          {['nithun-portrait', 'nithun-flower-field'].map((name, i) => (
+            <img
+              key={name}
+              src={`/images/about/${name}.webp`}
+              srcSet={`/images/about/${name}-sm.webp 324w, /images/about/${name}-600.webp 600w, /images/about/${name}.webp 900w`}
+              sizes={PORTRAIT_SIZES}
+              alt={t(i === 0 ? 'about.portraitAlt' : 'about.flowerAlt')}
+              width={900}
+              height={1200}
+              fetchPriority={i === 0 ? 'high' : undefined}
+              style={PORTRAIT}
+            />
+          ))}
         </div>
         <figcaption style={CAPTION}>{t('about.portraitsCaption')}</figcaption>
       </figure>
@@ -76,6 +93,8 @@ export default function AboutPage() {
             <figure key={file} style={{ margin: 0 }}>
               <img
                 src={`/images/about/${file}`}
+                srcSet={`/images/about/${file.replace('.webp', '-700.webp')} 700w, /images/about/${file} 1000w`}
+                sizes={PHOTO_SIZES}
                 alt={t(altKey)}
                 width={1000}
                 height={1333}

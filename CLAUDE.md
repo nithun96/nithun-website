@@ -47,7 +47,13 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - **Theme:** Both dark and light mode, with a toggle. Dark mode as default.
 - **Typography:** Serif for headings (Georgia), sans-serif for body (self-hosted DM Sans — see Fonts)
 - **Colours:** A neutral dark/light base with 1–2 strong accent colours. Avoid clichéd tech blues.
-- **No interactive elements in v1** – no animations, no hover effects that serve no purpose, no JS tricks
+- **Motion and interaction:** modern, interactive and sleek, but always purposeful.
+  - Allowed: hover and focus effects, entrance animations (e.g. the name rising in), sections fading in on scroll, and small live previews that actually work (e.g. a Silence play button that plays sound).
+  - Not allowed: effects that hide content until they finish, scroll-jacking, parallax, or fake controls that do nothing.
+  - Everything must switch off under `prefers-reduced-motion`; content stays fully visible without it.
+  - Anything that moves or changes automatically for more than 5 seconds needs a visible pause control (WCAG 2.2.2).
+  - Every interaction has a touch and keyboard equivalent; nothing important is hover-only.
+  - Every design is checked in dark mode (the default) as well as light.
 - **Mobile-first** – design for small screen first, then scale up
 - **Generous whitespace** – clean, not cluttered
 

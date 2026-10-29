@@ -1,0 +1,120 @@
+{
+  "A Crown of Swords": {
+    "file": "wot-07.webp",
+    "w": 164
+  },
+  "A Memory of Light": {
+    "file": "wot-14.webp",
+    "w": 144,
+    "hardcover": true
+  },
+  "Arthas: Rise of the Lich King": {
+    "file": "arthas.webp",
+    "w": 91
+  },
+  "Crossroads of Twilight": {
+    "file": "wot-10.webp",
+    "w": 148
+  },
+  "Elantris": {
+    "file": "elantris.webp",
+    "w": 86
+  },
+  "Knife of Dreams": {
+    "file": "wot-11.webp",
+    "w": 121,
+    "hardcover": true
+  },
+  "Lord of Chaos": {
+    "file": "wot-06.webp",
+    "w": 153
+  },
+  "New Spring": {
+    "file": "wot-00.webp",
+    "w": 106
+  },
+  "Ptolemy's Gate": {
+    "file": "bart-3.webp",
+    "w": 89,
+    "hardcover": true
+  },
+  "The Amulet of Samarkand": {
+    "file": "bart-1.webp",
+    "w": 55
+  },
+  "The Demon Soul": {
+    "file": "woa-2.webp",
+    "w": 87
+  },
+  "The Dragon Reborn": {
+    "file": "wot-03.webp",
+    "w": 139
+  },
+  "The Eye of the World": {
+    "file": "wot-01.webp",
+    "w": 148
+  },
+  "The Final Empire": {
+    "file": "mistborn-1.webp",
+    "w": 94
+  },
+  "The Fires of Heaven": {
+    "file": "wot-05.webp",
+    "w": 163
+  },
+  "The Gathering Storm": {
+    "file": "wot-12.webp",
+    "w": 153,
+    "hardcover": true
+  },
+  "The Golem's Eye": {
+    "file": "bart-2.webp",
+    "w": 105,
+    "hardcover": true
+  },
+  "The Great Hunt": {
+    "file": "wot-02.webp",
+    "w": 151
+  },
+  "The Hero of Ages": {
+    "file": "mistborn-3.webp",
+    "w": 115
+  },
+  "The Path of Daggers": {
+    "file": "wot-08.webp",
+    "w": 159
+  },
+  "The Shadow Rising": {
+    "file": "wot-04.webp",
+    "w": 157
+  },
+  "The Sundering": {
+    "file": "woa-3.webp",
+    "w": 84
+  },
+  "The Way of Kings": {
+    "file": "storm-1.webp",
+    "w": 167
+  },
+  "The Well of Ascension": {
+    "file": "mistborn-2.webp",
+    "w": 113
+  },
+  "The Well of Eternity": {
+    "file": "woa-1.webp",
+    "w": 93
+  },
+  "Towers of Midnight": {
+    "file": "wot-13.webp",
+    "w": 165,
+    "hardcover": true
+  },
+  "Winter's Heart": {
+    "file": "wot-09.webp",
+    "w": 154
+  },
+  "Words of Radiance": {
+    "file": "storm-2.webp",
+    "w": 180
+  }
+}

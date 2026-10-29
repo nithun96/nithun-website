@@ -1,7 +1,12 @@
+/* global __BUILD_DATE__ */   // set in vite.config.js
 import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { SHELL } from '../styles/shell'
+import { sectionFor } from '../lib/sections'
+
+// Noon, so no time zone can move it to another day
+const buildDate = new Date(`${__BUILD_DATE__}T12:00:00`)
 
 function ThemePill() {
   const { t } = useTranslation()
@@ -14,16 +19,9 @@ function ThemePill() {
   }, [dark])
 
   return (
-    <button
-      onClick={() => setDark(d => !d)}
-      aria-label={t('nav.toggleTheme')}
-      style={{ fontSize: 11, letterSpacing: '0.08em', color: 'var(--fgm)', borderColor: 'color-mix(in oklch, var(--fg) 18%, transparent)' }}
-      className="border rounded-sm px-2 py-1 cursor-pointer transition-colors duration-200 hover:text-fg"
-      onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 35%, transparent)'}
-      onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 18%, transparent)'}
-    >
-      {/* \uFE0E shows the sun as a plain symbol, not a yellow emoji, on iPhone */}
-      {dark ? '\u2600\uFE0E' : '\u25D0'}
+    <button type="button" className="pill" onClick={() => setDark(d => !d)} aria-label={t('nav.toggleTheme')}>
+      {/* ︎ shows the sun as a plain symbol, not a yellow emoji, on iPhone */}
+      {dark ? '☀︎' : '◐'}
     </button>
   )
 }
@@ -37,95 +35,43 @@ function LangPill() {
     document.documentElement.lang = next
   }
   return (
-    <button
-      onClick={toggle}
-      aria-label={`${code}, ${t('nav.toggleLang')}`}
-      style={{ fontSize: 11, letterSpacing: '0.08em', color: 'var(--fgm)', borderColor: 'color-mix(in oklch, var(--fg) 18%, transparent)' }}
-      className="border rounded-sm px-2 py-1 cursor-pointer transition-colors duration-200 hover:text-fg"
-      onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 35%, transparent)'}
-      onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 18%, transparent)'}
-    >
+    <button type="button" className="pill" onClick={toggle} aria-label={`${code}, ${t('nav.toggleLang')}`}>
       {code}
     </button>
   )
 }
 
-const NAV_SECTIONS = [
-  { key: 'writing', path: '/writing', accent: 'var(--dusty)' },
-  { key: 'silence', path: '/silence', accent: 'var(--sage)'  },
-  { key: 'shelf',   path: '/shelf',   accent: 'var(--honey)' },
-  { key: 'about',   path: '/about',   accent: 'var(--stone)' },
-]
-
+// Top bar on every page; below it on section pages, a breadcrumb back to the
+// contents (the homepage), e.g. "Contents / 02 Silence".
 export default function Navbar() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { pathname } = useLocation()
+  const locale = i18n.language?.startsWith('no') ? 'nb-NO' : 'en-GB'
+  const section = sectionFor(pathname)
+  const deeper = section && pathname !== section.path   // e.g. a single post
 
   return (
-    <nav
-      aria-label={t('nav.mainNav')}
-      className="sticky top-0 z-50"
-      style={{
-        background: 'var(--bg)',
-        borderBottom: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
-        transition: 'background 0.2s ease',
-      }}
-    >
-      <div style={SHELL}>
-        {/* Row 1: logo + pills */}
-        <div className="flex items-center justify-between h-14">
-          <Link
-            to="/"
-            style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: 'var(--fg2)', letterSpacing: '0.02em', textDecoration: 'none', transition: 'color 0.2s ease' }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--fg2)'}
-          >
-            NM
-          </Link>
-
-          {/* Nav links — inline on desktop, hidden here on mobile (shown in row 2) */}
-          <ul className="hidden min-[560px]:flex items-center gap-8 list-none m-0 p-0">
-            {NAV_SECTIONS.map(({ key, path, accent }) => {
-              const isActive = pathname === path || pathname.startsWith(path + '/')
-              return (
-                <li key={key}>
-                  <Link
-                    to={path}
-                    className={`nav-link${isActive ? ' active' : ''}`}
-                    style={{ '--link-accent': accent }}
-                  >
-                    {t(`nav.${key}`)}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-
-          <div className="flex items-center gap-4">
-            <LangPill />
-            <ThemePill />
-          </div>
-        </div>
-
-        {/* Row 2: nav links on mobile only */}
-        <div
-          className="flex min-[560px]:hidden items-center justify-center gap-6 pb-3"
-        >
-          {NAV_SECTIONS.map(({ key, path, accent }) => {
-            const isActive = pathname === path || pathname.startsWith(path + '/')
-            return (
-              <Link
-                key={key}
-                to={path}
-                className={`nav-link${isActive ? ' active' : ''}`}
-                style={{ '--link-accent': accent }}
-              >
-                {t(`nav.${key}`)}
-              </Link>
-            )
-          })}
+    <header style={SHELL}>
+      <div className="topbar">
+        <Link to="/" className="mark"><span className="mark-dot" aria-hidden="true" />Nithun</Link>
+        <span className="issue">
+          {t('nav.updated', { date: buildDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }) })}
+        </span>
+        <div className="pills">
+          <LangPill />
+          <ThemePill />
         </div>
       </div>
-    </nav>
+      {section && (
+        <nav className="crumb" aria-label={t('nav.breadcrumb')} style={{ '--c': section.accent }}>
+          <Link to="/">{t('nav.contents')}</Link>
+          <span aria-hidden="true">/</span>
+          {deeper
+            ? <Link to={section.path}><b>{section.num} {t(`nav.${section.key}`)}</b></Link>
+            : <b aria-current="page">{section.num} {t(`nav.${section.key}`)}</b>}
+        </nav>
+      )}
+    </header>
   )
 }
+

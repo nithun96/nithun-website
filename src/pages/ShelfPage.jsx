@@ -1,113 +1,54 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
+import spines from '../data/bookSpines.json'
 import { getBookCover } from '../utils/bookCovers'
 import { SHELL } from '../styles/shell'
 import { usePageMeta } from '../lib/usePageMeta'
 
-// Games and TV are hidden until they have cover art (see "Cover Art for
-// Games & TV" in CLAUDE.md) — re-add 'games', 'tv' once that's done.
-const CATEGORIES = ['books']
+// Books only for now: Games and TV are hidden until they have cover art
+// (see "Cover Art for Games & TV" in CLAUDE.md).
+//
+// Each series stands on a plank, labelled underneath like a library shelf.
+// A book photographed on Nithun's own shelves shows its real spine
+// (src/data/bookSpines.json, images in public/images/shelf/spines/); the rest
+// get a drawn spine until they're photographed.
 
-const TAB_ACCENTS  = { books: 'var(--wheat)', games: 'var(--sage)', tv: 'var(--dusty)' }
-const COVER_RATIOS = { books: '2/3', games: '3/4', tv: '2/3' }
-
-// ── Book card ─────────────────────────────────────────────────────────────────
-
-function BookCard({ book }) {
-  const imageUrl = book.coverUrl ?? getBookCover(book.title)
-  const [imageOk, setImageOk] = useState(false)
-
-  const bookMeta = book.number != null ? `#${book.number}` : book.note || ''
-
-  return (
-    <div className="shelf-card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {/* Cover */}
-      <div
-        style={{
-          width: '100%',
-          aspectRatio: COVER_RATIOS.books,
-          background: 'var(--bg2)',
-          borderRadius: 3,
-          border: '1px solid color-mix(in oklch, var(--fg) 6%, transparent)',
-          position: 'relative',
-          overflow: 'hidden',
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'flex-start',
-          padding: '10px 10px 10px 18px',
-          transition: 'border-color 0.2s',
-          cursor: 'default',
-        }}
-        onMouseEnter={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 16%, transparent)'}
-        onMouseLeave={e => e.currentTarget.style.borderColor = 'color-mix(in oklch, var(--fg) 6%, transparent)'}
-      >
-        <div
-          className="shelf-spine"
-          style={{
-            position: 'absolute',
-            left: 0, top: 0, bottom: 0,
-            width: 4,
-            borderRadius: '2px 0 0 2px',
-            opacity: imageOk ? 0 : 1,
-            transition: 'opacity 0.3s ease',
-          }}
-        />
-        <span style={{
-          fontSize: 11,
-          fontFamily: 'monospace',
-          color: 'var(--fgm)',
-          letterSpacing: '0.06em',
-          lineHeight: 1.7,
-          position: 'relative',
-          opacity: imageOk ? 0 : 1,
-          transition: 'opacity 0.3s ease',
-        }}>
-          {book.title}
-        </span>
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt={book.title}
-            loading="lazy"
-            decoding="async"
-            onLoad={() => setImageOk(true)}
-            onError={() => {}}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: imageOk ? 1 : 0,
-              transition: 'opacity 0.3s ease',
-              display: 'block',
-            }}
-          />
-        )}
-      </div>
-      {/* Meta */}
-      <div style={{ fontFamily: 'Georgia, serif', fontSize: 13, color: 'var(--fg2)', lineHeight: 1.4 }}>
-        {book.title}
-      </div>
-      <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>{book.author}</div>
-      {bookMeta && (
-        <div style={{ fontSize: 12, color: 'var(--fgm)', letterSpacing: '0.06em' }}>
-          {bookMeta}
-        </div>
-      )}
-    </div>
-  )
+const SPINE_H = 238      // paperback height on the page, px
+const SPINE_H_HC = 272   // hardcover
+const SERIES_KEYS = {    // series renamed on the page; the rest show as written
+  'Standalone': 'standalone',
+  'Standalone — Sanderson': 'standaloneSanderson',
+  'Warcraft — War of the Ancients': 'warOfTheAncients',
 }
 
-// ── Shelf page ────────────────────────────────────────────────────────────────
+// Same title, same drawn-spine size every time
+function hash(str) {
+  let h = 2166136261
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) }
+  return h >>> 0
+}
+
+function groupBooks(books) {
+  const groups = new Map()
+  for (const b of books) {
+    const s = b.series || 'Standalone'
+    if (!groups.has(s)) groups.set(s, [])
+    groups.get(s).push(b)
+  }
+  // Biggest series first, standalones last
+  return [...groups.entries()]
+    .sort(([a, x], [b, y]) => (a.startsWith('Standalone') - b.startsWith('Standalone')) || y.length - x.length)
+}
 
 export default function ShelfPage() {
   const { t } = useTranslation()
   usePageMeta({ title: t('meta.shelfTitle'), description: t('meta.shelfDescription'), path: '/shelf' })
-  const [cat, setCat]       = useState('books')
-  // Book/game/TV cover art shouldn't surface in Google Images for name
-  // searches — keep it out of image search without affecting page ranking.
+  const [selected, setSelected] = useState(null)   // book title
+  const [coverFailed, setCoverFailed] = useState({})   // titles whose cover didn't load
+
+  // Book spines and covers belong to their publishers: keep them out of image
+  // search for Nithun's name. Nginx also sends this as a header.
   useEffect(() => {
     const meta = document.createElement('meta')
     meta.name = 'robots'
@@ -116,113 +57,93 @@ export default function ShelfPage() {
     return () => document.head.removeChild(meta)
   }, [])
 
-  const items = shelfData[cat]
+  // Escape puts the book back
+  useEffect(() => {
+    if (!selected) return
+    const onKey = e => { if (e.key === 'Escape') setSelected(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [selected])
 
-  // Covers you see first load straight away, at high priority. The rest stay
-  // lazy: the browser fetches them as you scroll towards them. Runs before the
-  // first paint, so it works for any screen size.
-  const gridRef = useRef(null)
-  useLayoutEffect(() => {
-    for (const img of gridRef.current?.querySelectorAll('img') ?? []) {
-      if (img.getBoundingClientRect().top < window.innerHeight) {
-        img.loading = 'eager'
-        img.fetchPriority = 'high'
-      }
-    }
-  }, [cat])
+  const groups = useMemo(() => {
+    let colour = 0
+    return groupBooks(shelfData.books).map(([series, books]) => ({
+      series,
+      name: SERIES_KEYS[series] ? t(`shelf.series.${SERIES_KEYS[series]}`) : series,
+      books: books.map((b, i) => {
+        const photo = spines[b.title]
+        const h = photo ? (photo.hardcover ? SPINE_H_HC : SPINE_H) : 196 + (hash(b.title) % 56)
+        const w = photo ? Math.round(h * photo.w / 600) : 38 + ((hash(b.title) >> 8) % 16)
+        return { ...b, photo, h, w, colour: colour++ % 7, delay: 0.2 + Math.min(i, 14) * 0.02 }
+      }),
+    }))
+  }, [t])
+
+  const pick = groups.flatMap(g => g.books.map(b => ({ ...b, group: g }))).find(b => b.title === selected)
+  let line = ''
+  if (pick) {
+    const series = pick.group.name
+    if (pick.series?.startsWith('Standalone') || pick.number == null) line = series
+    else if (pick.number === 0) line = t('shelf.prequel', { series })
+    else line = t('shelf.bookN', { n: pick.number, series })
+  }
+  const cover = pick && !pick.photo && !coverFailed[pick.title] ? getBookCover(pick.title) : null
 
   return (
     <div className="page-enter" style={SHELL}>
-      {/* Page header */}
-      <div style={{ padding: '56px 0 0', borderTop: 'none' }}>
-        <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 'normal', color: 'var(--fg)', marginBottom: 10 }}>
-          {t('shelf.heading')}
-        </h1>
-        <p style={{ fontSize: 14, color: 'var(--fgm)', letterSpacing: '0.03em', marginBottom: 0 }}>
-          {t('shelf.subtitle')}
-        </p>
-      </div>
+      <section className="sh-hero">
+        <div>
+          <h1 className="display sh-name" style={{ '--c': 'var(--honey)' }}>
+            <span className="l"><span>{t('shelf.heading')}</span></span>{' '}
+            <span className="l l2"><span>{t('shelf.headingTail')}</span></span>
+          </h1>
+          <p className="sh-intro enter">{t('shelf.intro')}</p>
+        </div>
+        <p className="sh-count enter"><b>{shelfData.books.length}</b><span>{t('shelf.books')}</span></p>
+      </section>
 
-      {/* Category tabs — hidden when there's only one category to switch between */}
-      <div
-        className="flex"
-        style={{ paddingTop: 32, borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)', marginTop: 32 }}
-      >
-        {CATEGORIES.length > 1 && CATEGORIES.map(c => (
-          <button
-            key={c}
-            onClick={() => setCat(c)}
-            style={{
-              fontSize: 13,
-              fontWeight: 400,
-              letterSpacing: '0.04em',
-              color: cat === c ? 'var(--fg)' : 'var(--fgm)',
-              background: 'none',
-              border: 'none',
-              borderBottom: `2px solid ${cat === c ? TAB_ACCENTS[c] : 'transparent'}`,
-              padding: '8px 0',
-              marginRight: 24,
-              cursor: 'pointer',
-              transition: 'color 0.15s, border-color 0.15s',
-              fontFamily: 'DM Sans, sans-serif',
-            }}
-          >
-            {t(`shelf.tabs.${c}`)}
-          </button>
-        ))}
-      </div>
-
-      {/* Card grid */}
-      <div
-        ref={gridRef}
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-          gap: '24px 20px',
-          padding: '32px 0 80px',
-        }}
-      >
-        {items.length === 0 ? (
-          <div style={{ gridColumn: '1 / -1', padding: '48px 0', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 15, color: 'var(--fgm)' }}>
-            {t('shelf.empty')}
-          </div>
-        ) : items.map((item, i) => (
-          cat === 'books' ? (
-            <BookCard key={i} book={item} />
-          ) : (
-            <div
-              key={i}
-              className="shelf-card"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 6,
-                padding: '10px 12px 10px 16px',
-                background: 'var(--bg2)',
-                borderRadius: 3,
-                border: '1px solid color-mix(in oklch, var(--fg) 6%, transparent)',
-                borderLeft: `3px solid ${TAB_ACCENTS[cat]}`,
-                transition: 'opacity 0.15s',
-                cursor: 'default',
-              }}
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            >
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 13, color: 'var(--fg2)', lineHeight: 1.4 }}>
-                {item.title}
-              </div>
-              <div style={{ fontSize: 11, color: 'var(--fgm)', lineHeight: 1.4 }}>
-                {item.platform || item.category}
-              </div>
-              {item.note && (
-                <div style={{ fontSize: 12, color: 'var(--fgm)', letterSpacing: '0.06em' }}>
-                  {item.note}
-                </div>
-              )}
+      <div className="case">
+        {groups.map((g, gi) => (
+          <section key={g.series} className="group" aria-labelledby={`shelf-${gi}`}>
+            <div className="spines">
+              {g.books.map(b => (
+                <button
+                  key={b.title}
+                  type="button"
+                  className={`spine${b.photo ? ' photo' : ''}`}
+                  style={{ '--h': `${b.h}px`, '--w': `${b.w}px`, '--s': `var(--sp${b.colour})`, animationDelay: `${b.delay}s` }}
+                  onClick={() => setSelected(selected === b.title ? null : b.title)}
+                  aria-pressed={selected === b.title}
+                  aria-label={t('shelf.bookLabel', { title: b.title, author: b.author })}
+                >
+                  {b.photo
+                    ? <img src={`/images/shelf/spines/${b.photo.file}`} alt="" width={b.w} height={b.h} loading="lazy" decoding="async" draggable="false" />
+                    : <span className="spine-title" aria-hidden="true">{b.title}</span>}
+                </button>
+              ))}
             </div>
-          )
+            <div className="plank" aria-hidden="true" />
+            <div className="shelf-label"><h2 id={`shelf-${gi}`}>{g.name}</h2><b>{g.books.length}</b></div>
+          </section>
         ))}
       </div>
+
+      {pick && (
+        <div className="sheet" role="region" aria-label={t('shelf.selected')} aria-live="polite">
+          {pick.photo
+            ? <img className="sheet-spine" src={`/images/shelf/spines/${pick.photo.file}`} alt={t('shelf.spineAlt', { title: pick.title })} />
+            : cover
+              ? <img className="sheet-cover" src={cover} alt={t('shelf.coverAlt', { title: pick.title })}
+                  onError={() => setCoverFailed(f => ({ ...f, [pick.title]: true }))} />
+              : <div className="sheet-drawn" style={{ '--s': `var(--sp${pick.colour})` }} aria-hidden="true">{pick.title}</div>}
+          <div>
+            <p className="sheet-line">{line}</p>
+            <h3 className="sheet-title">{pick.title}</h3>
+            <p className="sheet-author">{t('shelf.by', { author: pick.author })}</p>
+          </div>
+          <button type="button" className="sheet-close" onClick={() => setSelected(null)}>{t('shelf.putBack')}</button>
+        </div>
+      )}
     </div>
   )
 }

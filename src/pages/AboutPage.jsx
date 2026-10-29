@@ -17,9 +17,9 @@ const PORTRAIT = { flex: 1, minWidth: 0, width: '100%', borderRadius: 6, objectF
 
 // The browser picks the smallest copy that is sharp on the visitor's screen.
 // Portraits: two side by side, at most 300px wide. Travel photos: full width
-// on phones, three in a row (about 306px) on wider screens.
+// on phones, three in a row (at most 341px) on wider screens.
 const PORTRAIT_SIZES = '(max-width: 660px) 45vw, 300px'
-const PHOTO_SIZES = '(max-width: 640px) calc(100vw - 48px), 306px'
+const PHOTO_SIZES = '(max-width: 640px) calc(100vw - 48px), 341px'
 
 export default function AboutPage() {
   const { t } = useTranslation()

@@ -5,6 +5,8 @@ slug: "context-window"
 language: "en"
 summary: "I condensed 5 months of posts into one, or so I thought. Planned a trip for 68. Travelled to South Korea and Japan (months apart). Cofounded Pyre. And ran out of space…"
 mastodon: ""
+thumbnail: "/images/writing/context-window/gdansk-neptune-fountain-sm.webp"
+thumbnailAlt: "A bronze Neptune on a fountain in front of a red-brick town hall in Gdańsk"
 ---
 
 It’s been a while since my last post and that is for a couple of reasons; I have been wondering where I want to take this site, while I’ve also been busy with my daily life across a couple of different projects and hobbies.

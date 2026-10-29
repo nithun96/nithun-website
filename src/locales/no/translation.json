@@ -1,130 +1,180 @@
 {
   "nav": {
-    "writing":     "Skriverier",
-    "silence":     "Stillhet",
-    "shelf":       "Hylle",
-    "about":       "Om meg",
+    "writing": "Skriverier",
+    "silence": "Stillhet",
+    "shelf": "Hylle",
+    "about": "Om meg",
     "toggleTheme": "Bytt tema",
-    "toggleLang":  "English",
-    "skip":        "Hopp til innhold",
-    "mainNav":     "Hovednavigasjon"
+    "toggleLang": "English",
+    "skip": "Hopp til innhold",
+    "updated": "Oslo · Oppdatert {{date}}",
+    "contents": "Innhold",
+    "breadcrumb": "Brødsmulesti",
+    "sections": "Seksjoner"
   },
   "hero": {
-    "name":       "Nithun Manoharan",
-    "pyreBadge":  "Bygger Pyre",
-    "location":   "Oslo, Norge",
-    "intro":    "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, hvor vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
-    "latestPost": "Nyeste: {{title}}",
-    "donate":   "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselsorganisasjonene som er nevnt på Stillhet-siden</5>.",
+    "name": "Nithun Manoharan",
+    "pyreBadge": "Bygger Pyre",
+    "location": "Oslo, Norge",
+    "intro": "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, hvor vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
+    "donate": "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselsorganisasjonene som er nevnt på Stillhet-siden</5>.",
     "teasers": {
       "writing": {
         "label": "Skriverier",
         "title": "Essays og kommentarer",
-        "desc":  "Det som er på hjertet, etter hvert som det kommer."
+        "desc": "Det som er på hjertet, etter hvert som det kommer."
       },
       "silence": {
         "label": "Stillhet",
         "title": "Et tinnitus-verktøy",
-        "desc":  "Søvn- og avslappingslyder."
+        "desc": "Søvn- og avslappingslyder."
       },
       "shelf": {
         "label": "Hylle",
         "title": "Bøker",
-        "desc":  "En logg over det jeg er fan av."
+        "desc": "En logg over det jeg er fan av."
       },
       "about": {
         "label": "Om",
         "title": "Om meg",
-        "desc":  "Bilder, og litt mer om hvem jeg er."
+        "desc": "Bilder, og litt mer om hvem jeg er."
       }
-    }
+    },
+    "role1": "Produktsjef",
+    "role2": "AI og data",
+    "latestLabel": "Nyeste innlegg",
+    "books": "{{count}} bøker",
+    "play": "Spill",
+    "pause": "Pause",
+    "playSound": "Spill brun støy",
+    "pauseSound": "Sett brun støy på pause",
+    "shelfAlt": "Tegnede bokrygger i lilla, blått, gull og grønt på en trehylle"
   },
   "writing": {
-    "heading":      "Skriverier",
-    "subtitle":     "Essays, kommentarer og enkle observasjoner.",
-    "backWriting":  "Skriverier",
-    "footnote":       "Fotnote",
-    "closeFootnote":  "Lukk fotnote",
+    "heading": "Skriverier",
+    "subtitle": "Essays, kommentarer og enkle observasjoner.",
+    "backWriting": "Skriverier",
+    "footnote": "Fotnote",
+    "closeFootnote": "Lukk fotnote",
     "openImage": "Åpne bildet i fullskjerm: {{alt}}",
     "closeImage": "Lukk bildet",
-    "noDate":         "Udatert",
-    "conversation":   "Bli med i samtalen på Mastodon",
+    "noDate": "Udatert",
+    "conversation": "Bli med i samtalen på Mastodon",
     "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:"
   },
   "shelf": {
-    "heading":  "Hylle",
-    "subtitle": "Bøker — en personlig logg over hva som har vært verdt tiden.",
+    "heading": "Hylle",
     "tabs": {
       "books": "Bøker",
       "games": "Spill",
-      "tv":    "TV og anime"
+      "tv": "TV og anime"
     },
-    "empty": "Ingenting her ennå."
+    "empty": "Ingenting her ennå.",
+    "headingTail": "verdt tiden",
+    "intro": "Trykk på en bokrygg for å ta den ut av hylla.",
+    "books": "bøker",
+    "series": {
+      "standalone": "Frittstående",
+      "standaloneSanderson": "Mer Sanderson",
+      "warOfTheAncients": "War of the Ancients"
+    },
+    "prequel": "Forhistorie · {{series}}",
+    "bookN": "Bok {{n}} · {{series}}",
+    "by": "av {{author}}",
+    "bookLabel": "{{title}} av {{author}}",
+    "putBack": "Sett den tilbake",
+    "selected": "Valgt bok",
+    "spineAlt": "Bokryggen til {{title}}, fotografert i Nithuns hylle",
+    "coverAlt": "Omslaget til {{title}}"
   },
   "silence": {
-    "navLink":  "Stillhet",
-    "heading":  "Deafening Silence",
-    "subtitle": "Deafening Silence er et lite verktøy for tinnituslydterapi.",
+    "navLink": "Stillhet",
     "sounds": {
       "brown": "Brun støy",
-      "pink":  "Rosa støy",
-      "rain":  "Regn",
+      "pink": "Rosa støy",
+      "rain": "Regn",
       "ocean": "Hav"
     },
-    "pause":        "Pause",
-    "volume":       "Volum",
-    "sleepTimer":   "Søvntimer",
-    "timerOff":     "Av",
+    "pause": "Pause",
+    "volume": "Volum",
+    "sleepTimer": "Søvntimer",
+    "timerOff": "Av",
     "timerMinutes": "{{minutes}} min",
-    "timerActive":  "Stopper om {{remaining}}",
     "donationHeading": "Støtt hørselshelse",
-    "donationIntro":   "Hvis Deafening Silence hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner.",
-    "audioError": "Lyden startet ikke. Trykk på lyden igjen."
+    "donationIntro": "Hvis Deafening Silence hjelper deg, kan du vurdere å donere til forskning og interesseorganisasjoner.",
+    "audioError": "Lyden startet ikke. Trykk på lyden igjen.",
+    "headingA": "Deafening",
+    "headingB": "Silence",
+    "intro": "Et lite, gratis verktøy for tinnituslydterapi. Velg en lyd, sett en søvntimer, og den fortsetter å spille med skjermen låst.",
+    "artAlt": "Grønne åser i skumringen under en blek måne",
+    "artCaption": "Åsene er tegnet ut fra ekte brun støy.",
+    "soundsLabel": "Lyder",
+    "desc": {
+      "brown": "En dyp, lav dur.",
+      "pink": "Mykere og jevnere enn hvit støy.",
+      "rain": "Regndrypp over en lav dur.",
+      "ocean": "Rolige bølger, omtrent én hvert 12. sekund."
+    },
+    "play": "Spill",
+    "playerLabel": "Avspiller",
+    "nowPlaying": "Spilles nå",
+    "nothingYet": "Ingenting ennå",
+    "paused": "{{sound}} (på pause)",
+    "playSound": "Spill {{sound}}",
+    "pauseSound": "Sett {{sound}} på pause",
+    "iosVolume": "På iPhone og iPad bruker du volumknappene.",
+    "charities": {
+      "hlf": "Norges landsdekkende hørselsorganisasjon",
+      "efhoh": "Den europeiske føderasjonen for hørselshemmede",
+      "tinnitus-uk": "Storbritannias nasjonale tinnitusorganisasjon",
+      "hhf": "Den største ideelle finansiereren av hørselsforskning i USA",
+      "ifhoh": "Den internasjonale føderasjonen for hørselshemmede"
+    }
   },
   "footer": {
-    "lastUpdated": "Sist oppdatert:",
-    "license":     "CC BY-NC 4.0",
-    "rss":         "RSS"
+    "license": "CC BY-NC 4.0",
+    "rss": "RSS",
+    "elsewhere": "Andre steder"
   },
   "meta": {
-    "homeTitle":          "Nithun Manoharan | Produktsjef, AI og dataanalyse",
-    "homeDescription":    "Nithun Manoharan er produktsjef med spesialisering innen AI og dataanalyse, basert i Norge. Dette er hans personlige nettside.",
-    "writingTitle":       "Skriverier | Nithun Manoharan",
+    "homeTitle": "Nithun Manoharan | Produktsjef, AI og dataanalyse",
+    "homeDescription": "Nithun Manoharan er produktsjef med spesialisering innen AI og dataanalyse, basert i Norge. Dette er hans personlige nettside.",
+    "writingTitle": "Skriverier | Nithun Manoharan",
     "writingDescription": "Essays, kommentarer og enkle observasjoner fra Nithun Manoharan.",
-    "shelfTitle":         "Hylle | Nithun Manoharan",
-    "shelfDescription":   "Bøker Nithun Manoharan har likt: en personlig logg over hva som har vært verdt tiden.",
-    "silenceTitle":       "Deafening Silence | Nithun Manoharan",
+    "shelfTitle": "Hylle | Nithun Manoharan",
+    "shelfDescription": "Bøker Nithun Manoharan har likt: en personlig logg over hva som har vært verdt tiden.",
+    "silenceTitle": "Deafening Silence | Nithun Manoharan",
     "silenceDescription": "Et gratis verktøy for tinnituslydterapi: brun støy, rosa støy, regn og havlyder, med søvntimer.",
-    "aboutTitle":         "Om meg | Nithun Manoharan",
-    "aboutDescription":   "Om Nithun Manoharan, produktsjef og medgründer av Pyre, basert i Oslo. Pluss noen reisebilder.",
-    "notFoundTitle":      "Siden finnes ikke | Nithun Manoharan"
+    "aboutTitle": "Om meg | Nithun Manoharan",
+    "aboutDescription": "Om Nithun Manoharan, produktsjef og medgründer av Pyre, basert i Oslo. Pluss noen reisebilder.",
+    "notFoundTitle": "Siden finnes ikke | Nithun Manoharan"
   },
   "notFound": {
     "heading": "Siden finnes ikke",
-    "body":    "Det er ingenting på denne adressen.",
-    "home":    "Tilbake til forsiden"
+    "body": "Det er ingenting på denne adressen.",
+    "home": "Tilbake til forsiden"
   },
   "about": {
-    "eyebrow":            "Om",
-    "bio1":                "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av <0>Pyre</0>, et norsk programvareselskap jeg driver sammen med to venner. Utenom det <1>skriver jeg her</1> innimellom, har bygget <2>Deafening Silence</2> som et gratis verktøy for tinnituslydterapi, og holder en <3>hylle</3> med bøker jeg er fan av.",
-    "bio2":                "Reising har også lært meg mye — som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
+    "eyebrow": "Om",
+    "bio1": "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av <0>Pyre</0>, et norsk programvareselskap jeg driver sammen med to venner. Utenom det <1>skriver jeg her</1> innimellom, har bygget <2>Deafening Silence</2> som et gratis verktøy for tinnituslydterapi, og holder en <3>hylle</3> med bøker jeg er fan av.",
+    "bio2": "Reising har også lært meg mye — som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
     "portraitsCaption": "Fra turen min til Sør-Korea i år",
-    "placeWroclaw":       "Wrocław, Polen",
-    "placeCopenhagen":    "København, Danmark",
-    "placeHeddal":        "Heddal, Norge",
-    "placeStockholm":     "Stockholm, Sverige",
-    "placeKyoto":         "Kyoto, Japan",
-    "placeRiga":          "Riga, Latvia",
-    "photosRights":        "© Nithun Manoharan. Alle rettigheter forbeholdt. Omfattes ikke av lisensen under.",
-    "portraitAlt":         "Nithun Manoharan smiler under en hagebue",
-    "flowerAlt":           "Nithun Manoharan står i et lilla blomsterfelt",
-    "headshotAlt":         "Et portrettbilde av Nithun Manoharan",
-    "photoWroclawAlt":     "En opplyst bygning speilet i elven om natten i Wrocław",
-    "photoRedWindowsAlt":  "Røde karnappvinduer mot en klar blå himmel i København",
-    "photoHeddalAlt":      "Heddal stavkirke under en stormfull himmel i Norge",
-    "photoSunflareAlt":    "En solblendet, staselig hjørnebygning mot en klar blå himmel i Stockholm",
-    "photoInariAlt":       "En bronsestatue av en rev ved en helligdom i Kyoto, under et rødt tak",
-    "photoRigaAlt":        "En opplyst ortodoks katedral i murstein om natten i Riga",
-    "instagram":           "Mer på Instagram →"
+    "placeWroclaw": "Wrocław, Polen",
+    "placeCopenhagen": "København, Danmark",
+    "placeHeddal": "Heddal, Norge",
+    "placeStockholm": "Stockholm, Sverige",
+    "placeKyoto": "Kyoto, Japan",
+    "placeRiga": "Riga, Latvia",
+    "photosRights": "© Nithun Manoharan. Alle rettigheter forbeholdt. Omfattes ikke av lisensen under.",
+    "portraitAlt": "Nithun Manoharan smiler under en hagebue",
+    "flowerAlt": "Nithun Manoharan står i et lilla blomsterfelt",
+    "headshotAlt": "Et portrettbilde av Nithun Manoharan",
+    "photoWroclawAlt": "En opplyst bygning speilet i elven om natten i Wrocław",
+    "photoRedWindowsAlt": "Røde karnappvinduer mot en klar blå himmel i København",
+    "photoHeddalAlt": "Heddal stavkirke under en stormfull himmel i Norge",
+    "photoSunflareAlt": "En solblendet, staselig hjørnebygning mot en klar blå himmel i Stockholm",
+    "photoInariAlt": "En bronsestatue av en rev ved en helligdom i Kyoto, under et rødt tak",
+    "photoRigaAlt": "En opplyst ortodoks katedral i murstein om natten i Riga",
+    "instagram": "Mer på Instagram →"
   }
 }

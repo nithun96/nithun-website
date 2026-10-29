@@ -1,130 +1,180 @@
 {
   "nav": {
-    "writing":     "Writing",
-    "silence":     "Silence",
-    "shelf":       "Shelf",
-    "about":       "About",
+    "writing": "Writing",
+    "silence": "Silence",
+    "shelf": "Shelf",
+    "about": "About",
     "toggleTheme": "Toggle theme",
-    "toggleLang":  "Norsk",
-    "skip":        "Skip to content",
-    "mainNav":     "Main navigation"
+    "toggleLang": "Norsk",
+    "skip": "Skip to content",
+    "updated": "Oslo · Updated {{date}}",
+    "contents": "Contents",
+    "breadcrumb": "Breadcrumb",
+    "sections": "Sections"
   },
   "hero": {
-    "name":       "Nithun Manoharan",
-    "pyreBadge":  "Building Pyre",
-    "location":   "Oslo, Norway",
-    "intro":    "I'm a co-founder of Pyre, a Norwegian software company I run with two friends, building and operating our own products. Beyond Pyre, here's what else I keep myself busy with:",
-    "latestPost": "Latest: {{title}}",
-    "donate":   "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund</3>, <4>GiveWell</4> (global health), and the <5>hearing charities listed on the Silence page</5>.",
+    "name": "Nithun Manoharan",
+    "pyreBadge": "Building Pyre",
+    "location": "Oslo, Norway",
+    "intro": "I'm a co-founder of Pyre, a Norwegian software company I run with two friends, building and operating our own products. Beyond Pyre, here's what else I keep myself busy with:",
+    "donate": "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund</3>, <4>GiveWell</4> (global health), and the <5>hearing charities listed on the Silence page</5>.",
     "teasers": {
       "writing": {
         "label": "Writing",
         "title": "Essays & commentary",
-        "desc":  "Whatever's on my mind as we go."
+        "desc": "Whatever's on my mind as we go."
       },
       "silence": {
         "label": "Silence",
         "title": "A tinnitus sound tool",
-        "desc":  "Sleep and relaxation sounds."
+        "desc": "Sleep and relaxation sounds."
       },
       "shelf": {
         "label": "Shelf",
         "title": "Books",
-        "desc":  "A log of what I'm a fan of."
+        "desc": "A log of what I'm a fan of."
       },
       "about": {
         "label": "About",
         "title": "About me",
-        "desc":  "Photos, and a bit more about who I am."
+        "desc": "Photos, and a bit more about who I am."
       }
-    }
+    },
+    "role1": "Product manager",
+    "role2": "AI & data",
+    "latestLabel": "Latest post",
+    "books": "{{count}} books",
+    "play": "Play",
+    "pause": "Pause",
+    "playSound": "Play brown noise",
+    "pauseSound": "Pause brown noise",
+    "shelfAlt": "Drawn book spines in purple, blue, gold and green on a wooden shelf"
   },
   "writing": {
-    "heading":      "Writing",
-    "subtitle":     "Essays, commentary, and the occasional observation.",
-    "backWriting":  "Writing",
-    "footnote":       "Footnote",
-    "closeFootnote":  "Close footnote",
+    "heading": "Writing",
+    "subtitle": "Essays, commentary, and the occasional observation.",
+    "backWriting": "Writing",
+    "footnote": "Footnote",
+    "closeFootnote": "Close footnote",
     "openImage": "Open image in full screen: {{alt}}",
     "closeImage": "Close image",
-    "noDate":         "Undated",
-    "conversation":   "Join the conversation on Mastodon",
+    "noDate": "Undated",
+    "conversation": "Join the conversation on Mastodon",
     "spotifyCaption": "The playlist I was listening to while writing this:"
   },
   "shelf": {
-    "heading":  "Shelf",
-    "subtitle": "Books — a personal log of what's been worth the time.",
+    "heading": "Shelf",
     "tabs": {
       "books": "Books",
       "games": "Games",
-      "tv":    "TV & Anime"
+      "tv": "TV & Anime"
     },
-    "empty": "Nothing here yet."
+    "empty": "Nothing here yet.",
+    "headingTail": "worth the time",
+    "intro": "Tap a spine to take it off the shelf.",
+    "books": "books",
+    "series": {
+      "standalone": "Standalones",
+      "standaloneSanderson": "More Sanderson",
+      "warOfTheAncients": "War of the Ancients"
+    },
+    "prequel": "Prequel · {{series}}",
+    "bookN": "Book {{n}} · {{series}}",
+    "by": "by {{author}}",
+    "bookLabel": "{{title}} by {{author}}",
+    "putBack": "Put it back",
+    "selected": "Selected book",
+    "spineAlt": "The spine of {{title}}, photographed on Nithun's shelf",
+    "coverAlt": "Cover of {{title}}"
   },
   "silence": {
-    "navLink":  "Silence",
-    "heading":  "Deafening Silence",
-    "subtitle": "Deafening Silence is a small tool for tinnitus sound therapy.",
+    "navLink": "Silence",
     "sounds": {
       "brown": "Brown noise",
-      "pink":  "Pink noise",
-      "rain":  "Rain",
+      "pink": "Pink noise",
+      "rain": "Rain",
       "ocean": "Ocean"
     },
-    "pause":        "Pause",
-    "volume":       "Volume",
-    "sleepTimer":   "Sleep timer",
-    "timerOff":     "Off",
+    "pause": "Pause",
+    "volume": "Volume",
+    "sleepTimer": "Sleep timer",
+    "timerOff": "Off",
     "timerMinutes": "{{minutes}} min",
-    "timerActive":  "Stops in {{remaining}}",
     "donationHeading": "Support hearing health",
-    "donationIntro":   "If Deafening Silence helps you, please consider donating to research and advocacy.",
-    "audioError": "Audio couldn't start. Tap the sound again."
+    "donationIntro": "If Deafening Silence helps you, please consider donating to research and advocacy.",
+    "audioError": "Audio couldn't start. Tap the sound again.",
+    "headingA": "Deafening",
+    "headingB": "Silence",
+    "intro": "A small, free tool for tinnitus sound therapy. Pick a sound, set a sleep timer, and it keeps playing with the screen locked.",
+    "artAlt": "Green hills at dusk under a pale moon",
+    "artCaption": "The hills are drawn from real brown-noise data.",
+    "soundsLabel": "Sounds",
+    "desc": {
+      "brown": "A deep, low rumble.",
+      "pink": "Softer and more even than white noise.",
+      "rain": "Patter of rain over a low rumble.",
+      "ocean": "Slow waves, one about every 12 seconds."
+    },
+    "play": "Play",
+    "playerLabel": "Player",
+    "nowPlaying": "Now playing",
+    "nothingYet": "Nothing yet",
+    "paused": "{{sound}} (paused)",
+    "playSound": "Play {{sound}}",
+    "pauseSound": "Pause {{sound}}",
+    "iosVolume": "On iPhone and iPad, use the volume buttons.",
+    "charities": {
+      "hlf": "Norway's national hearing organisation",
+      "efhoh": "European Federation of Hard of Hearing People",
+      "tinnitus-uk": "The UK's national tinnitus charity",
+      "hhf": "Largest US non-profit funder of hearing research",
+      "ifhoh": "International Federation of Hard of Hearing People"
+    }
   },
   "footer": {
-    "lastUpdated": "Last updated:",
-    "license":     "CC BY-NC 4.0",
-    "rss":         "RSS"
+    "license": "CC BY-NC 4.0",
+    "rss": "RSS",
+    "elsewhere": "Elsewhere"
   },
   "meta": {
-    "homeTitle":          "Nithun Manoharan | Product Manager, AI & Data Analytics",
-    "homeDescription":    "Nithun Manoharan is a Product Manager specialising in AI and Data Analytics, based in Norway. This is his personal site.",
-    "writingTitle":       "Writing | Nithun Manoharan",
+    "homeTitle": "Nithun Manoharan | Product Manager, AI & Data Analytics",
+    "homeDescription": "Nithun Manoharan is a Product Manager specialising in AI and Data Analytics, based in Norway. This is his personal site.",
+    "writingTitle": "Writing | Nithun Manoharan",
     "writingDescription": "Essays, commentary and the occasional observation from Nithun Manoharan.",
-    "shelfTitle":         "Shelf | Nithun Manoharan",
-    "shelfDescription":   "Books Nithun Manoharan has enjoyed: a personal log of what's been worth the time.",
-    "silenceTitle":       "Deafening Silence | Nithun Manoharan",
+    "shelfTitle": "Shelf | Nithun Manoharan",
+    "shelfDescription": "Books Nithun Manoharan has enjoyed: a personal log of what's been worth the time.",
+    "silenceTitle": "Deafening Silence | Nithun Manoharan",
     "silenceDescription": "A free tool for tinnitus sound therapy: brown noise, pink noise, rain and ocean sounds, with a sleep timer.",
-    "aboutTitle":         "About | Nithun Manoharan",
-    "aboutDescription":   "About Nithun Manoharan, Product Manager and co-founder of Pyre, based in Oslo. Plus a few travel photos.",
-    "notFoundTitle":      "Page not found | Nithun Manoharan"
+    "aboutTitle": "About | Nithun Manoharan",
+    "aboutDescription": "About Nithun Manoharan, Product Manager and co-founder of Pyre, based in Oslo. Plus a few travel photos.",
+    "notFoundTitle": "Page not found | Nithun Manoharan"
   },
   "notFound": {
     "heading": "Page not found",
-    "body":    "There's nothing at this address.",
-    "home":    "Back to the homepage"
+    "body": "There's nothing at this address.",
+    "home": "Back to the homepage"
   },
   "about": {
-    "eyebrow":            "About",
-    "bio1":                "I'm a Product Manager specialising in AI and Data Analytics, and a co-founder of <0>Pyre</0>, a Norwegian software company I run with two friends. Outside of that, I <1>write here</1> occasionally, built <2>Deafening Silence</2> as a free tool for tinnitus sound therapy, and keep a <3>shelf</3> of books I've enjoyed.",
-    "bio2":                "Travelling has also taught me valuable lessons such as how much people have in common, even on the other side of the globe. But mainly I travel for the food.",
+    "eyebrow": "About",
+    "bio1": "I'm a Product Manager specialising in AI and Data Analytics, and a co-founder of <0>Pyre</0>, a Norwegian software company I run with two friends. Outside of that, I <1>write here</1> occasionally, built <2>Deafening Silence</2> as a free tool for tinnitus sound therapy, and keep a <3>shelf</3> of books I've enjoyed.",
+    "bio2": "Travelling has also taught me valuable lessons such as how much people have in common, even on the other side of the globe. But mainly I travel for the food.",
     "portraitsCaption": "From my trip to South Korea recently",
-    "placeWroclaw":       "Wrocław, Poland",
-    "placeCopenhagen":    "Copenhagen, Denmark",
-    "placeHeddal":        "Heddal, Norway",
-    "placeStockholm":     "Stockholm, Sweden",
-    "placeKyoto":         "Kyoto, Japan",
-    "placeRiga":          "Riga, Latvia",
-    "photosRights":        "© Nithun Manoharan. All rights reserved. Not covered by the licence below.",
-    "portraitAlt":         "Nithun Manoharan smiling under a garden archway",
-    "flowerAlt":           "Nithun Manoharan standing in a purple flower field",
-    "headshotAlt":         "A portrait photo of Nithun Manoharan",
-    "photoWroclawAlt":     "An illuminated building reflected in the river at night in Wrocław",
-    "photoRedWindowsAlt":  "Red bay windows against a clear blue sky in Copenhagen",
-    "photoHeddalAlt":      "Heddal stave church under a stormy sky in Norway",
-    "photoSunflareAlt":    "A sun-flared ornate corner building against a clear blue sky in Stockholm",
-    "photoInariAlt":       "A bronze fox statue at a shrine in Kyoto, framed under a red roof",
-    "photoRigaAlt":        "A brick Orthodox cathedral lit up at night in Riga",
-    "instagram":           "More on Instagram →"
+    "placeWroclaw": "Wrocław, Poland",
+    "placeCopenhagen": "Copenhagen, Denmark",
+    "placeHeddal": "Heddal, Norway",
+    "placeStockholm": "Stockholm, Sweden",
+    "placeKyoto": "Kyoto, Japan",
+    "placeRiga": "Riga, Latvia",
+    "photosRights": "© Nithun Manoharan. All rights reserved. Not covered by the licence below.",
+    "portraitAlt": "Nithun Manoharan smiling under a garden archway",
+    "flowerAlt": "Nithun Manoharan standing in a purple flower field",
+    "headshotAlt": "A portrait photo of Nithun Manoharan",
+    "photoWroclawAlt": "An illuminated building reflected in the river at night in Wrocław",
+    "photoRedWindowsAlt": "Red bay windows against a clear blue sky in Copenhagen",
+    "photoHeddalAlt": "Heddal stave church under a stormy sky in Norway",
+    "photoSunflareAlt": "A sun-flared ornate corner building against a clear blue sky in Stockholm",
+    "photoInariAlt": "A bronze fox statue at a shrine in Kyoto, framed under a red roof",
+    "photoRigaAlt": "A brick Orthodox cathedral lit up at night in Riga",
+    "instagram": "More on Instagram →"
   }
 }

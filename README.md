@@ -199,7 +199,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
 - [x] Top bar with build date and breadcrumb; footer with LinkedIn, GitHub, Instagram, RSS, licence
 - [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
-- [x] RSS feed at `/rss.xml`, linked in the footer
+- [x] RSS feed at `/rss.xml`, linked at the bottom of `/writing` (moved from the footer, Oct 2026)
 - [x] Pages other than Home load on demand, so the first visit downloads about half as much script
 - [x] WCAG AA accessibility — translated skip link, aria-labels, keyboard-accessible footnotes, visible focus, AA contrast in both themes, reduced-motion support, `<html lang>` follows the language (known gaps listed under Accessibility)
 - [x] Security headers on Nginx

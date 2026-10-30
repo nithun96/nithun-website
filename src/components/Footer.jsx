@@ -17,7 +17,6 @@ export default function Footer() {
           {LINKS.map(({ label, href }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}</a>
           ))}
-          <a href="/rss.xml" type="application/rss+xml">{t('footer.rss')}</a>
         </nav>
         <span>{t('footer.license')}</span>
       </div>

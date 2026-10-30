@@ -61,8 +61,6 @@ for (const book of shelf.books) {
 
 const cards = Object.entries(result).filter(([title]) => shelfTitles.has(title)).map(([title, url]) => {
   const isOverride = overrideKeys.has(title)
-  const draftUrl   = draft[title]
-  const draftHad   = draftUrl != null
   let badgeClass, badgeText
   if (isOverride) {
     badgeClass = 'override'; badgeText = 'OVERRIDE'

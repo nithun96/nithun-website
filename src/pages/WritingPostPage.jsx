@@ -191,11 +191,13 @@ function FootnotePanel({ footnotes }) {
   const closeRef = useRef(null)
   const returnFocusRef = useRef(null)
 
-  // Keep last-seen footnote visible while the panel is sliding away
-  const lastFn = useRef(null)
+  // Keep last-seen footnote visible while the panel is sliding away.
+  // State updated during render (React's pattern for deriving from props),
+  // since refs must not be read while rendering.
   const fn = footnotes.find(f => f.number === activeFootnote)
-  if (fn) lastFn.current = fn
-  const displayFn = fn || lastFn.current
+  const [lastFn, setLastFn] = useState(null)
+  if (fn && fn !== lastFn) setLastFn(fn)
+  const displayFn = fn || lastFn
 
   const isOpen = !!fn
 

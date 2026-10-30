@@ -139,7 +139,7 @@ export default function GameLevel1() {
   // clicks[objectKey] = number of times clicked
 
   const [narrative, setNarrative] = useState(null)
-  const [activeObject, setActiveObject] = useState(null)
+  const [, setActiveObject] = useState(null)
 
   // ── Helpers ──────────────────────────────────────────────────────────────
 

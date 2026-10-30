@@ -61,7 +61,8 @@
     "noDate": "Udatert",
     "conversation": "Bli med i samtalen på Mastodon",
     "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:",
-    "spotifyTitle": "Musikken jeg hørte på mens jeg skrev"
+    "spotifyTitle": "Musikken jeg hørte på mens jeg skrev",
+    "rssFollow": "Følg nye innlegg i en RSS-leser:"
   },
   "shelf": {
     "heading": "Hylle",
@@ -134,7 +135,6 @@
   },
   "footer": {
     "license": "CC BY-NC 4.0",
-    "rss": "RSS",
     "elsewhere": "Andre steder"
   },
   "meta": {

@@ -130,6 +130,14 @@ export default function WritingPage() {
           </li>
         ))}
       </ul>
+
+      {/* Feed */}
+      <p style={{ padding: '32px 0 8px', fontSize: 13, color: 'var(--fgm)', lineHeight: 1.6 }}>
+        {t('writing.rssFollow')}{' '}
+        <a href="/rss.xml" type="application/rss+xml" style={{ color: 'var(--fg2)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+          nithun.no/rss.xml
+        </a>
+      </p>
     </div>
   )
 }

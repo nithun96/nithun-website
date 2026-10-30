@@ -335,7 +335,7 @@ Post frontmatter supports:
 
 The `parseFrontmatter.js` parser handles all keys generically — no changes needed when adding new frontmatter fields.
 
-**RSS:** every post appears in `/rss.xml` (title, link, date, summary), generated at build by `scripts/prerender.js`. The footer links to it, and `index.html` advertises it to feed readers.
+**RSS:** every post appears in `/rss.xml` (title, link, date, summary), generated at build by `scripts/prerender.js`. The Writing page links to it below the post list (not the footer: browsers show a feed as raw XML, and Chrome drops XSLT feed styling on 17.11.2026), and `index.html` advertises it to feed readers.
 
 **Photos in a post:** raw HTML `<img src="…/name.webp" data-full="…/name-full.webp" alt="…" width height>` inside a `<div style="columns: 2; column-gap: 12px;">` (see `context-window.md`). Every post image becomes a button that opens `ImageLightbox` in `WritingPostPage.jsx`: full screen, click anywhere or Escape to close. No captions; alt text is required. Files and search rules: see SEO.
 
@@ -382,7 +382,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Pyre branding — triangle mark on the homepage, links to pyre.no
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`
 - [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
-- [x] Footer — LinkedIn, GitHub, Instagram, RSS, CC licence
+- [x] Footer — LinkedIn, GitHub, Instagram, CC licence
 - [x] Top bar — wordmark, build date, theme/lang pills; breadcrumb on section pages
 - [x] Per-page HTML for link previews (`scripts/prerender.js`), RSS feed at `/rss.xml`, pages other than Home loaded on demand (`React.lazy` in `App.jsx`)
 - [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page

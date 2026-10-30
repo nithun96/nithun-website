@@ -321,9 +321,15 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
 /* Phones: wordmark and pills on top, the four sections on a row of their own */
 @media (max-width: 719px) {
   .topbar-row { padding-top: 8px; }
-  .sections { order: 3; width: 100%; margin: 0 -12px 4px; }
+  /* 24px wider than the row so the link padding hangs past both edges and the
+     labels line up with the wordmark and the pills; nowrap keeps "Om meg" on one line */
+  .sections { order: 3; width: calc(100% + 24px); margin: 0 -12px 4px; }
   .sections ul { justify-content: space-between; }
-  .section-link { padding: 0 10px; font-size: 15px; }
+  .section-link { padding: 0 10px; font-size: 15px; white-space: nowrap; }
+}
+@media (max-width: 399px) {
+  .sections ul { gap: 0; }
+  .section-link { padding: 0 8px; gap: 6px; }
 }
 @media (max-width: 359px) { .section-dot { display: none; } }
 

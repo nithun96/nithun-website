@@ -7,10 +7,8 @@
     "toggleTheme": "Bytt tema",
     "toggleLang": "English",
     "skip": "Hopp til innhold",
-    "updated": "Oslo · Oppdatert {{date}}",
-    "contents": "Innhold",
-    "breadcrumb": "Brødsmulesti",
-    "sections": "Seksjoner"
+    "sections": "Seksjoner",
+    "mainNav": "Hovednavigasjon"
   },
   "hero": {
     "name": "Nithun Manoharan",
@@ -52,6 +50,7 @@
   },
   "writing": {
     "heading": "Skriverier",
+    "headingTail": "underveis",
     "subtitle": "Essays, kommentarer og enkle observasjoner.",
     "backWriting": "Skriverier",
     "footnote": "Fotnote",
@@ -135,7 +134,8 @@
   },
   "footer": {
     "license": "CC BY-NC 4.0",
-    "elsewhere": "Andre steder"
+    "elsewhere": "Andre steder",
+    "updated": "Oppdatert {{date}}"
   },
   "meta": {
     "homeTitle": "Nithun Manoharan | Produktsjef, AI og dataanalyse",

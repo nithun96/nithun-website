@@ -91,7 +91,8 @@ export default function Hero() {
           <a href="https://pyre.no" target="_blank" rel="noopener noreferrer"><PyreMark size={12} />{t('hero.pyreBadge')}</a><br />
           {t('hero.role1')}<br />{t('hero.role2')}<br />{t('hero.location')}
         </p>
-        <p className="stand-intro">{t('hero.intro')}</p>
+        {/* The first letter as its own span: ::first-letter also takes the apostrophe in "I'm" */}
+        <p className="stand-intro"><span className="dropcap">{t('hero.intro').charAt(0)}</span>{t('hero.intro').slice(1)}</p>
         <img className="stand-head" src="/images/about/nithun-headshot-sm.webp" alt={t('about.headshotAlt')}
           width={324} height={387} fetchPriority="high" />
       </div>
@@ -100,7 +101,7 @@ export default function Hero() {
         <ol className="contents">
           {SECTIONS.map(({ key, num, path, accent, fill }) => (
             <li key={key} className="row" style={{ '--c': accent, '--f': fill }}>
-              <Link to={path} className="row-link">
+              <Link to={path} className="row-link" viewTransition>
                 <span className="r-num" aria-hidden="true">{num}</span>
                 <span className="r-text">
                   <span className="r-title">{t(`nav.${key}`)}</span>
@@ -123,7 +124,7 @@ export default function Hero() {
             <a href="https://www.spire.no/"            className="text-link" target="_blank" rel="noopener noreferrer" />,
             <a href="https://www.utviklingsfondet.no/" className="text-link" target="_blank" rel="noopener noreferrer" />,
             <a href="https://www.givewell.org/"        className="text-link" target="_blank" rel="noopener noreferrer" />,
-            <Link to="/silence"                        className="text-link" />,
+            <Link to="/silence"                        className="text-link" viewTransition />,
           ]}
         />
       </p>

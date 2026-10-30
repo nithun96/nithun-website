@@ -28,7 +28,7 @@ function LanguagePill({ lang }) {
   const isNo = lang === 'no'
   return (
     <span style={{
-      fontSize: 10,
+      fontSize: 11,
       letterSpacing: '0.1em',
       textTransform: 'uppercase',
       fontStyle: 'normal',
@@ -116,7 +116,7 @@ function FootnoteMarker({ number, type, text }) {
     ...(type === 'wry' ? { borderLeft: '2px solid var(--stone)' } : {}),
     borderRadius: 4,
     padding: '8px 12px',
-    fontSize: 13,
+    fontSize: 14,
     color: 'var(--fgm)',
     fontStyle: 'italic',
     lineHeight: 1.55,
@@ -139,7 +139,7 @@ function FootnoteMarker({ number, type, text }) {
       <sup
         data-footnote={number}
         style={{
-          fontSize: 10,
+          fontSize: 11,
           color: supColor,
           textDecorationLine: 'underline',
           textDecorationStyle: 'dotted',
@@ -462,8 +462,9 @@ export default function WritingPostPage() {
         >
           <Link
             to="/writing"
+            viewTransition
             style={{
-              fontSize: 12,
+              fontSize: 13,
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
               color: 'var(--fgm)',
@@ -484,17 +485,18 @@ export default function WritingPostPage() {
             lang={post.language || 'en'}
             style={{
               fontFamily: 'Georgia, serif',
-              fontSize: 'clamp(26px, 4.5vw, 44px)',
+              fontSize: 'clamp(40px, 7vw, 88px)',
               fontWeight: 'normal',
               color: 'var(--fg)',
-              lineHeight: 1.25,
-              marginBottom: 16,
+              lineHeight: 1.02,
+              letterSpacing: '-0.025em',
+              marginBottom: 20,
             }}
           >
             {post.title}
           </h1>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 12, color: 'var(--fgm)', letterSpacing: '0.04em', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14, color: 'var(--fgm)', letterSpacing: '0.04em', flexWrap: 'wrap' }}>
             {post.date && <span>{formatDate(post.date, i18n.language)}</span>}
             <LanguagePill lang={post.language || 'en'} />
             {post.readTime && <><span style={{ opacity: 0.4 }}>·</span><span>{post.readTime}</span></>}
@@ -507,9 +509,9 @@ export default function WritingPostPage() {
         {/* Body */}
         <div
           style={{
-            maxWidth: 780,
-            fontSize: 17,
-            lineHeight: 1.82,
+            maxWidth: 740,
+            fontSize: 18,
+            lineHeight: 1.75,
             color: 'var(--fg2)',
             fontWeight: 300,
           }}
@@ -528,7 +530,7 @@ export default function WritingPostPage() {
         {/* Spotify embed */}
         {post.spotify && post.spotify.trim() && (
           <div style={{ maxWidth: 780, marginTop: 48 }}>
-            <p style={{ fontSize: 12, color: 'var(--fgm)', fontStyle: 'italic', marginBottom: 12, margin: '0 0 12px' }}>
+            <p style={{ fontSize: 14, color: 'var(--fgm)', fontStyle: 'italic', marginBottom: 12, margin: '0 0 12px' }}>
               {t('writing.spotifyCaption')}
             </p>
             <iframe
@@ -564,7 +566,7 @@ export default function WritingPostPage() {
                 <span
                   key={tag}
                   style={{
-                    fontSize: 10,
+                    fontSize: 11,
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
                     color: 'var(--fgm)',
@@ -583,7 +585,7 @@ export default function WritingPostPage() {
               href={post.mastodon}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontSize: 13, color: 'var(--fgm)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, transition: 'color 0.2s ease' }}
+              style={{ fontSize: 15, color: 'var(--fgm)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, transition: 'color 0.2s ease' }}
               onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
               onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
             >

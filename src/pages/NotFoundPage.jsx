@@ -22,6 +22,7 @@ export default function NotFoundPage() {
       </p>
       <Link
         to="/"
+        viewTransition
         style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--fgm)', textDecoration: 'none', transition: 'color 0.2s ease' }}
         onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
         onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}

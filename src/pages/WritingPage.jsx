@@ -20,31 +20,7 @@ function formatDate(dateStr, locale) {
   })
 }
 
-function LanguagePill({ lang }) {
-  const isNo = lang === 'no'
-  return (
-    <span style={{
-      fontSize: 10,
-      letterSpacing: '0.1em',
-      textTransform: 'uppercase',
-      fontStyle: 'normal',
-      borderRadius: 2,
-      padding: '2px 7px',
-      background: isNo
-        ? 'color-mix(in oklch, var(--honey) 15%, transparent)'
-        : 'color-mix(in oklch, var(--dusty) 15%, transparent)',
-      border: isNo
-        ? '1px solid color-mix(in oklch, var(--honey) 40%, transparent)'
-        : '1px solid color-mix(in oklch, var(--dusty) 40%, transparent)',
-      color: isNo
-        ? 'color-mix(in oklch, var(--wheat) 75%, var(--fg))'
-        : 'color-mix(in oklch, var(--dusty) 75%, var(--fg))',
-    }}>
-      {isNo ? 'NO' : 'EN'}
-    </span>
-  )
-}
-
+const splitTags = tags => (tags ? tags.split(',').map(tag => tag.trim()).filter(Boolean) : [])
 
 export default function WritingPage() {
   const { t, i18n } = useTranslation()
@@ -52,91 +28,37 @@ export default function WritingPage() {
 
   return (
     <div className="page-enter" style={SHELL}>
-      {/* Header */}
-      <div
-        style={{
-          padding: '56px 0 48px',
-          borderBottom: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
-        }}
-      >
-        <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 'normal', color: 'var(--fg)' }}>
-          {t('writing.heading')}
+      <section className="pg-hero">
+        <h1 className="display pg-name" style={{ '--c': 'var(--dusty)' }}>
+          <span className="l"><span>{t('writing.heading')}</span></span>{' '}
+          <span className="l l2"><span>{t('writing.headingTail')}</span></span>
         </h1>
-      </div>
+        <p className="pg-intro enter">{t('writing.subtitle')}</p>
+      </section>
 
-      {/* List */}
-      <ul className="list-none p-0 m-0">
+      <ol className="posts">
         {posts.map(post => (
-          <li
-            key={post.slug}
-            style={{ borderBottom: '1px solid color-mix(in oklch, var(--fg) 7%, transparent)' }}
-          >
-            <Link
-              to={`/writing/${post.slug}`}
-              style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: 24, padding: '32px 0', textDecoration: 'none' }}
-              className="group max-[560px]:block max-[560px]:py-6"
-            >
-              <div style={{ fontSize: 12, color: 'var(--fgm)', letterSpacing: '0.04em', paddingTop: 4, lineHeight: 1.4, fontVariantNumeric: 'tabular-nums' }}>
-                {formatDate(post.date, i18n.language) ?? t('writing.noDate')}
-              </div>
-              <div>
-                <div
-                  style={{ fontFamily: 'Georgia, serif', fontSize: 20, fontWeight: 'normal', color: 'var(--fg2)', lineHeight: 1.35, marginBottom: 8, transition: 'color 0.2s ease' }}
-                  className="group-hover:text-fg"
-                >
-                  {post.title}
-                </div>
-                {post.summary && (
-                  <div style={{ fontSize: 14, color: 'var(--fgm)', lineHeight: 1.6, maxWidth: 560 }}>
-                    {post.summary}
-                  </div>
-                )}
-                <div className="flex flex-wrap gap-2 mt-3" style={{ alignItems: 'center' }}>
-                  <LanguagePill lang={post.language || 'en'} />
-                  {post.tags && post.tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => (
-                    <span
-                      key={tag}
-                      style={{
-                        fontSize: 10,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        color: 'var(--fgm)',
-                        border: '1px solid color-mix(in oklch, var(--fgm) 35%, transparent)',
-                        padding: '2px 7px',
-                        borderRadius: 2,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                  {post.readTime && (
-                    <span
-                      style={{
-                        fontSize: 10,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        color: 'var(--fgm)',
-                        border: '1px solid color-mix(in oklch, var(--fgm) 35%, transparent)',
-                        padding: '2px 7px',
-                        borderRadius: 2,
-                      }}
-                    >
-                      {post.readTime}
-                    </span>
-                  )}
-                </div>
-              </div>
+          <li key={post.slug} className="post-row">
+            <Link to={`/writing/${post.slug}`} className="post-link" viewTransition>
+              <span className="post-date">{formatDate(post.date, i18n.language) ?? t('writing.noDate')}</span>
+              <span className="post-main">
+                <span className="post-title" lang={post.language || 'en'}>{post.title}</span>
+                {post.summary && <span className="post-sum" lang={post.language || 'en'}>{post.summary}</span>}
+                <span className="post-tags">
+                  <span className="r-lang">{(post.language || 'en').toUpperCase()}</span>
+                  {splitTags(post.tags).map(tag => <span key={tag} className="r-lang">{tag}</span>)}
+                  {post.readTime && <span className="r-lang">{post.readTime}</span>}
+                </span>
+              </span>
+              <span className="r-go" aria-hidden="true">→</span>
             </Link>
           </li>
         ))}
-      </ul>
+      </ol>
 
-      {/* Feed */}
-      <p style={{ padding: '32px 0 8px', fontSize: 13, color: 'var(--fgm)', lineHeight: 1.6 }}>
+      <p className="rss-line">
         {t('writing.rssFollow')}{' '}
-        <a href="/rss.xml" type="application/rss+xml" style={{ color: 'var(--fg2)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
-          nithun.no/rss.xml
-        </a>
+        <a href="/rss.xml" type="application/rss+xml" className="text-link">nithun.no/rss.xml</a>
       </p>
     </div>
   )

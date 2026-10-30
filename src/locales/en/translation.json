@@ -7,10 +7,8 @@
     "toggleTheme": "Toggle theme",
     "toggleLang": "Norsk",
     "skip": "Skip to content",
-    "updated": "Oslo · Updated {{date}}",
-    "contents": "Contents",
-    "breadcrumb": "Breadcrumb",
-    "sections": "Sections"
+    "sections": "Sections",
+    "mainNav": "Main navigation"
   },
   "hero": {
     "name": "Nithun Manoharan",
@@ -52,6 +50,7 @@
   },
   "writing": {
     "heading": "Writing",
+    "headingTail": "as we go",
     "subtitle": "Essays, commentary, and the occasional observation.",
     "backWriting": "Writing",
     "footnote": "Footnote",
@@ -135,7 +134,8 @@
   },
   "footer": {
     "license": "CC BY-NC 4.0",
-    "elsewhere": "Elsewhere"
+    "elsewhere": "Elsewhere",
+    "updated": "Updated {{date}}"
   },
   "meta": {
     "homeTitle": "Nithun Manoharan | Product Manager, AI & Data Analytics",

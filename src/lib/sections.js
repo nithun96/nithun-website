@@ -6,6 +6,3 @@ export const SECTIONS = [
   { key: 'shelf',   num: '03', path: '/shelf',   accent: 'var(--honey)', fill: 'var(--honey-f)' },
   { key: 'about',   num: '04', path: '/about',   accent: 'var(--stone)', fill: 'var(--stone-f)' },
 ]
-
-export const sectionFor = pathname =>
-  SECTIONS.find(s => pathname === s.path || pathname.startsWith(s.path + '/')) ?? null

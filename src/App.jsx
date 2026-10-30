@@ -1,19 +1,9 @@
-import { lazy, Suspense } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Outlet, ScrollRestoration } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import Hero from './sections/Hero'
 
-// Every page except the homepage is loaded on demand, so the first visit only
-// downloads what it shows (the posts, Markdown renderer and Shelf data are big).
-const ShelfPage = lazy(() => import('./pages/ShelfPage'))
-const WritingPage = lazy(() => import('./pages/WritingPage'))
-const WritingPostPage = lazy(() => import('./pages/WritingPostPage'))
-const SilencePage = lazy(() => import('./pages/SilencePage'))
-const AboutPage = lazy(() => import('./pages/AboutPage'))
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
-
+// The layout every page shares; the routes are in main.jsx
 export default function App() {
   const { t } = useTranslation()
   return (
@@ -27,20 +17,11 @@ export default function App() {
       <Navbar />
       {/* min-height: the footer stays below the screen while a page loads, instead of jumping down */}
       <main id="main-content" tabIndex={-1} style={{ outline: 'none', minHeight: '100vh' }}>
-        <Suspense fallback={null}>
-        <Routes>
-          <Route path="/"              element={<Hero />} />
-          <Route path="/writing"       element={<WritingPage />} />
-          <Route path="/writing/:slug" element={<WritingPostPage />} />
-          <Route path="/silence"       element={<SilencePage />} />
-          <Route path="/shelf"         element={<ShelfPage />} />
-          <Route path="/about"         element={<AboutPage />} />
-          <Route path="/books"         element={<Navigate to="/shelf" replace />} />
-          <Route path="*"              element={<NotFoundPage />} />
-        </Routes>
-        </Suspense>
+        <Outlet />
       </main>
       <Footer />
+      {/* A new page starts at the top; Back returns to where you were */}
+      <ScrollRestoration />
     </div>
   )
 }

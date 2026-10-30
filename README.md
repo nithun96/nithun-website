@@ -37,23 +37,23 @@ nithun-website/
 │   ├── sounds/                     # Silence's sound files — a 5-minute loop and a fade-out version per sound
 │   └── images/                     # og-nithun.jpg (1200×630 link-preview crop of the archway portrait) + about/ (About page and hero photos) + writing/ (photos in posts, one folder per slug, noindex)
 └── src/
-    ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
-    ├── App.jsx                     # Root layout — Navbar, Routes, Footer
+    ├── main.jsx                    # Bootstrap — i18n init + the routes (data router, lazy pages)
+    ├── App.jsx                     # Root layout — Navbar, page outlet, Footer, scroll restoration
     ├── i18n.js                     # i18next config — EN/NO, language detection, keeps <html lang> in sync
     ├── styles/
     │   ├── global.css              # Tailwind import, fonts, design tokens, page-specific CSS
     │   └── shell.js                # Shared page container (SHELL) — aligns Navbar, pages and Footer
     ├── components/
-    │   ├── Navbar.jsx              # Top bar — wordmark, build date, language + theme pills; breadcrumb on section pages
-    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, RSS, licence
+    │   ├── Navbar.jsx              # Top bar — wordmark, section links, language + theme pills
+    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, build date, licence
     │   └── PyreMark.jsx            # Pyre triangle logo (SVG)
     ├── sections/
     │   └── Hero.jsx                # Home page — contents page: name, standfirst, 4 numbered section rows
     ├── pages/
-    │   ├── AboutPage.jsx           # /about — bio, portraits, travel photos, Instagram link
+    │   ├── AboutPage.jsx           # /about — heading, bio beside portraits, travel photos, Instagram link
     │   ├── ShelfPage.jsx           # /shelf — bookcase of real and drawn spines (Games/TV hidden for now)
     │   ├── SilencePage.jsx         # /silence — sound rows, player band, hearing charities
-    │   ├── WritingPage.jsx         # /writing — list of markdown posts
+    │   ├── WritingPage.jsx         # /writing — heading, posts as rows, RSS line
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Any unknown URL — "page not found", marked noindex
     ├── audio/
@@ -96,10 +96,10 @@ nithun-website/
 ## How It Fits Together
 
 ### Startup (`main.jsx`)
-React mounts into `<div id="root">` in `index.html`. `i18n.js` is imported first to initialise language detection. The app is wrapped in `BrowserRouter` for client-side navigation.
+React mounts into `<div id="root">` in `index.html`. `i18n.js` is imported first to initialise language detection. The routes are defined here with `createBrowserRouter` (a React Router "data router"): every page except Home is a `lazy` route, loaded before the switch, so links with `viewTransition` can cross-fade between pages without flashing an empty page.
 
 ### Layout (`App.jsx`)
-Every page shares: `Navbar` (top bar, plus a breadcrumb on section pages), `<main>` with `<Routes>`, and `Footer`. A translated skip-to-content link is the first element in the page (visible on keyboard focus), and `<main>` can take focus so the skip lands correctly. All three use the `SHELL` container from `styles/shell.js` so their edges line up.
+Every page shares: `Navbar` (top bar with links to the four sections), `<main>` with the page (`<Outlet />`), and `Footer`. `<ScrollRestoration />` starts each new page at the top and returns you to your place on Back. A translated skip-to-content link is the first element in the page (visible on keyboard focus), and `<main>` can take focus so the skip lands correctly. All three use the `SHELL` container from `styles/shell.js` so their edges line up.
 
 ### Theme and language (`Navbar.jsx`)
 The theme pill toggles a `.dark` class on `<html>`; the preference is saved in `localStorage` and restored before React boots via an inline script in `index.html` (prevents a flash of the wrong theme). The language pill calls `i18n.changeLanguage()`. `i18n.js` keeps `<html lang>` in sync with the active language, both on first load and whenever it changes.
@@ -111,7 +111,7 @@ A "contents page": the name as a large two-line `<h1>` (surname in purple), a st
 A bookcase of the books Nithun recommends: one plank per series, labelled underneath. Books photographed on his own shelves show their real spine (`data/bookSpines.json`, images in `public/images/shelf/spines/`); the rest get a drawn spine. Tapping a spine lifts it and opens a panel with its title, author and series position; for drawn spines the panel shows the front cover from `bookCovers.json` (loaded from Open Library). Escape or "Put it back" closes it. Games and TV are hidden until they have cover art. Spine and cover art is kept out of Google Images (`noimageindex` tag, and `noindex` on the image files).
 
 ### About (`AboutPage.jsx`)
-Bio (linking Pyre, Writing, Silence and Shelf), two photos of Nithun with a caption, six travel photos with translated locations, and an Instagram link. Every photo has smaller copies (`-sm`, `-600`, `-700`) and `srcset`, so phones and laptops download only the size they need. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.
+A large "About / Nithun Manoharan" heading, then the bio (linking Pyre, Writing, Silence and Shelf; first paragraph as a serif lead) beside two photos of Nithun with a caption, six travel photos with translated locations, and an Instagram link. Every photo has smaller copies (`-sm`, `-600`, `-700`) and `srcset`, so phones and laptops download only the size they need. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.
 
 ### Silence (`SilencePage.jsx`)
 Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink noise, rain, ocean) that fill green while playing, a player band with a play/pause button, sleep timer countdown (30/60/90 min, 60-second fade-out) and volume, and hearing charity rows. The volume slider shows only where the browser can change volume (not on iPhone or iPad, which use their volume buttons).
@@ -150,7 +150,7 @@ To add or edit a string:
 - **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
 - **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
 - **Motion:** `prefers-reduced-motion` switches off animations, transitions and smooth scrolling.
-- **Known gaps:** The game prototype is English-only. There are no section links in the top bar: sections are reached from the homepage's contents list and back via the breadcrumb. Speed: a post page is the slowest (the Markdown renderer runs in the browser); the next step there would be turning posts into HTML at build time.
+- **Known gaps:** The game prototype is English-only. Speed: a post page is the slowest (the Markdown renderer runs in the browser); the next step there would be turning posts into HTML at build time.
 
 ---
 
@@ -197,7 +197,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Silence page (`/silence`) — sound rows and player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
-- [x] Top bar with build date and breadcrumb; footer with LinkedIn, GitHub, Instagram, RSS, licence
+- [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, build date, licence
 - [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
 - [x] RSS feed at `/rss.xml`, linked at the bottom of `/writing` (moved from the footer, Oct 2026)
 - [x] Pages other than Home load on demand, so the first visit downloads about half as much script

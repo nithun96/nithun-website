@@ -1,12 +1,8 @@
-/* global __BUILD_DATE__ */   // set in vite.config.js
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { SHELL } from '../styles/shell'
-import { sectionFor } from '../lib/sections'
-
-// Noon, so no time zone can move it to another day
-const buildDate = new Date(`${__BUILD_DATE__}T12:00:00`)
+import { SECTIONS } from '../lib/sections'
 
 function ThemePill() {
   const { t } = useTranslation()
@@ -41,37 +37,32 @@ function LangPill() {
   )
 }
 
-// Top bar on every page; below it on section pages, a breadcrumb back to the
-// contents (the homepage), e.g. "Contents / 02 Silence".
+// Top bar on every page: wordmark, the four sections (each marked in its own
+// colour, underlined when you're in it), language and theme. On phones the
+// section links move to a second row.
 export default function Navbar() {
-  const { t, i18n } = useTranslation()
-  const { pathname } = useLocation()
-  const locale = i18n.language?.startsWith('no') ? 'nb-NO' : 'en-GB'
-  const section = sectionFor(pathname)
-  const deeper = section && pathname !== section.path   // e.g. a single post
+  const { t } = useTranslation()
 
   return (
-    <header style={SHELL}>
-      <div className="topbar">
-        <Link to="/" className="mark"><span className="mark-dot" aria-hidden="true" />Nithun</Link>
-        <span className="issue">
-          {t('nav.updated', { date: buildDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }) })}
-        </span>
+    <header className="topbar" style={SHELL}>
+      <div className="topbar-row">
+        <Link to="/" className="mark" viewTransition><span className="mark-dot" aria-hidden="true" />Nithun</Link>
+        <nav className="sections" aria-label={t('nav.mainNav')}>
+          <ul>
+            {SECTIONS.map(({ key, path, accent }) => (
+              <li key={key}>
+                <NavLink to={path} className="section-link" style={{ '--c': accent }} viewTransition>
+                  <span className="section-dot" aria-hidden="true" />{t(`nav.${key}`)}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
         <div className="pills">
           <LangPill />
           <ThemePill />
         </div>
       </div>
-      {section && (
-        <nav className="crumb" aria-label={t('nav.breadcrumb')} style={{ '--c': section.accent }}>
-          <Link to="/">{t('nav.contents')}</Link>
-          <span aria-hidden="true">/</span>
-          {deeper
-            ? <Link to={section.path}><b>{section.num} {t(`nav.${section.key}`)}</b></Link>
-            : <b aria-current="page">{section.num} {t(`nav.${section.key}`)}</b>}
-        </nav>
-      )}
     </header>
   )
 }
-

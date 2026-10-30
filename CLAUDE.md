@@ -46,8 +46,8 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - **Tone:** Creative and bold. Not corporate. Not generic. Visually distinctive.
 - **Theme:** Both dark and light mode, with a toggle. Dark mode as default.
 - **Typography:** Serif for headings (Georgia), sans-serif for body (self-hosted DM Sans — see Fonts)
-- **Colours:** A neutral dark/light base with 1–2 strong accent colours. Avoid clichéd tech blues. Purple (`--purple`, #A990CF dark / #6B3FA0 light) is Nithun's own colour: wordmark dot, surname, drop cap, text selection. Each section owns one colour (Writing `--dusty`, Silence `--sage`, Shelf `--honey`, About `--stone`) for its number, labels and the fill when a row is hovered (`--*-f`, with `--on` for text on it). Section order and colours live in `src/lib/sections.js`.
-- **Layout:** editorial "contents page": the homepage lists the four sections as large numbered rows; every section page has a breadcrumb back to it ("Contents / 02 Silence"). The design system and mockups live in two private claude.ai artifacts (Nithun design system; "Nithun homepage – bolder sample" canvas).
+- **Colours:** A neutral dark/light base with 1–2 strong accent colours. Avoid clichéd tech blues. Purple (`--purple`, #8F5FD0 dark / #552C8A light — in dark only for large text and marks, at 3.9:1) is Nithun's own colour: wordmark dot, surname, drop cap, text selection. Each section owns one colour (Writing `--dusty`, Silence `--sage`, Shelf `--honey`, About `--stone`) for its number, labels and the fill when a row is hovered (`--*-f`, with `--on` for text on it). Section order and colours live in `src/lib/sections.js`.
+- **Layout:** editorial "contents page": the homepage lists the four sections as large numbered rows; the top bar links all four (each with its colour dot, underlined when you're in it). Section pages open with a large two-line heading (second line italic in the section colour). Links animate between pages with View Transitions (`viewTransition` on router links; off with reduced motion). The design system and mockups live in two private claude.ai artifacts (Nithun design system; "Nithun homepage – bolder sample" canvas).
 - **Motion and interaction:** modern, interactive and sleek, but always purposeful.
   - Allowed: hover and focus effects, entrance animations (e.g. the name rising in), sections fading in on scroll, and small live previews that actually work (e.g. a Silence play button that plays sound).
   - Not allowed: effects that hide content until they finish, scroll-jacking, parallax, or fake controls that do nothing.
@@ -164,23 +164,23 @@ nithun-website/
 │       ├── silence/                # hills.webp (+ -sm for the homepage) — artwork drawn from brown-noise data — noindex
 │       └── about/                  # About page photos — portrait, headshot, flower field, 6 travel shots (webp); smaller copies for srcset: *-sm (324px, also the hero collage), portraits *-600, travel shots *-700
 └── src/
-    ├── main.jsx                    # Bootstrap — BrowserRouter + i18n init
-    ├── App.jsx                     # Root layout — Navbar, Routes, Footer
+    ├── main.jsx                    # Bootstrap — i18n init + the routes (createBrowserRouter; pages other than Home loaded with `lazy`)
+    ├── App.jsx                     # Root layout — Navbar, <Outlet /> for the page, Footer, ScrollRestoration
     ├── i18n.js                     # i18next config — EN/NO, language detection
     ├── styles/
     │   ├── global.css              # Tailwind import, dark mode variant, CSS custom properties
     │   └── shell.js                # Shared page container (SHELL, max 1200px) — keeps top bar, pages and footer aligned
     ├── components/
-    │   ├── Navbar.jsx              # Top bar — purple-dot wordmark, "Oslo · Updated <build date>", language + theme pills; breadcrumb on section pages
-    │   ├── Footer.jsx              # Footer — LinkedIn, GitHub, Instagram, RSS, CC licence
-    │   └── PyreMark.jsx            # Pyre triangle SVG logo — used in Hero subtitle and Footer
+    │   ├── Navbar.jsx              # Top bar — purple-dot wordmark, links to the four sections, language + theme pills (links on a second row on phones)
+    │   ├── Footer.jsx              # Footer — LinkedIn, GitHub, Instagram, "Updated <build date>", CC licence
+    │   └── PyreMark.jsx            # Pyre triangle SVG logo — used on the homepage
     ├── sections/
     │   └── Hero.jsx                # Home page (contents page) — name, standfirst, 4 numbered section rows with thumbnails (Silence's plays brown noise), donate nudge
     ├── pages/
-    │   ├── AboutPage.jsx           # /about — bio, portrait, travel photography grid, Instagram link
+    │   ├── AboutPage.jsx           # /about — large heading, bio beside two portraits, travel photography grid, Instagram link
     │   ├── ShelfPage.jsx           # /shelf — bookcase: a plank per series, real spines where photographed, drawn spines otherwise; tap for details
     │   ├── SilencePage.jsx         # /silence — sound rows, player band (timer, volume), hearing charities
-    │   ├── WritingPage.jsx         # /writing — list of markdown posts
+    │   ├── WritingPage.jsx         # /writing — large heading, posts as rows (date, title, summary, language), RSS line
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Catch-all for unknown URLs — "page not found", marked noindex
     ├── game/
@@ -383,8 +383,8 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`
 - [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
 - [x] Footer — LinkedIn, GitHub, Instagram, CC licence
-- [x] Top bar — wordmark, build date, theme/lang pills; breadcrumb on section pages
-- [x] Per-page HTML for link previews (`scripts/prerender.js`), RSS feed at `/rss.xml`, pages other than Home loaded on demand (`React.lazy` in `App.jsx`)
+- [x] Top bar — wordmark, links to the four sections, theme/lang pills; page transitions; new pages open at the top, Back restores the scroll position
+- [x] Per-page HTML for link previews (`scripts/prerender.js`), RSS feed at `/rss.xml`, pages other than Home loaded on demand (`lazy` routes in `main.jsx`)
 - [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page
 - [x] WCAG AA accessibility basics (skip link, aria-labels, keyboard navigation)
 - [x] Security headers on Nginx (CSP with a script hash instead of 'unsafe-inline'; allows Open Library/archive.org images and Spotify embeds only; Permissions-Policy, COOP, HSTS)

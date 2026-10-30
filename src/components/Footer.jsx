@@ -1,3 +1,4 @@
+/* global __BUILD_DATE__ */   // set in vite.config.js
 import { useTranslation } from 'react-i18next'
 import { SHELL } from '../styles/shell'
 
@@ -7,8 +8,12 @@ const LINKS = [
   { label: 'Instagram', href: 'https://www.instagram.com/nithunm' },
 ]
 
+// Noon, so no time zone can move it to another day
+const buildDate = new Date(`${__BUILD_DATE__}T12:00:00`)
+
 export default function Footer() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const locale = i18n.language?.startsWith('no') ? 'nb-NO' : 'en-GB'
 
   return (
     <footer style={SHELL}>
@@ -18,7 +23,10 @@ export default function Footer() {
             <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}</a>
           ))}
         </nav>
-        <span>{t('footer.license')}</span>
+        <span>
+          {t('footer.updated', { date: buildDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }) })}
+          {' · '}{t('footer.license')}
+        </span>
       </div>
     </footer>
   )

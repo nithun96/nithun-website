@@ -60,7 +60,8 @@
     "closeImage": "Close image",
     "noDate": "Undated",
     "conversation": "Join the conversation on Mastodon",
-    "spotifyCaption": "The playlist I was listening to while writing this:"
+    "spotifyCaption": "The playlist I was listening to while writing this:",
+    "spotifyTitle": "Listening while writing"
   },
   "shelf": {
     "heading": "Shelf",

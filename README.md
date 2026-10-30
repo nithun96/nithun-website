@@ -128,7 +128,7 @@ Language pill: each post carries a `language` field (`"en"` or `"no"`, defaults 
 
 Photos: post images (raw HTML `<img>` with a `data-full` full-resolution file) open full screen on click via `ImageLightbox`; files live in `public/images/writing/<slug>/` and are kept out of image search by an Nginx `X-Robots-Tag: noindex`.
 
-Spotify embed: if a post has a `spotify` URL in its frontmatter, an embedded Spotify player is rendered below the post body with a translated caption (`writing.spotifyCaption`).
+Spotify embed: if a post has a `spotify` URL in its frontmatter, an embedded Spotify player is rendered below the post body with a translated caption (`writing.spotifyCaption`) and a translated title for screen readers (`writing.spotifyTitle`).
 
 ### Translations (`locales/`)
 All user-facing text lives in `en/translation.json` and `no/translation.json`. Nothing is hardcoded in JSX.

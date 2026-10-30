@@ -60,7 +60,8 @@
     "closeImage": "Lukk bildet",
     "noDate": "Udatert",
     "conversation": "Bli med i samtalen på Mastodon",
-    "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:"
+    "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:",
+    "spotifyTitle": "Musikken jeg hørte på mens jeg skrev"
   },
   "shelf": {
     "heading": "Hylle",

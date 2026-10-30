@@ -44,15 +44,15 @@ nithun-website/
     │   ├── global.css              # Tailwind import, fonts, design tokens, page-specific CSS
     │   └── shell.js                # Shared page container (SHELL) — aligns Navbar, pages and Footer
     ├── components/
-    │   ├── Navbar.jsx              # Sticky nav — NM wordmark, links, language + theme pills
-    │   ├── Footer.jsx              # Pyre link, GitHub, licence, build date
+    │   ├── Navbar.jsx              # Top bar — wordmark, build date, language + theme pills; breadcrumb on section pages
+    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, RSS, licence
     │   └── PyreMark.jsx            # Pyre triangle logo (SVG)
     ├── sections/
-    │   └── Hero.jsx                # Home page — name, Pyre badge, intro, photo collage, section teasers
+    │   └── Hero.jsx                # Home page — contents page: name, standfirst, 4 numbered section rows
     ├── pages/
     │   ├── AboutPage.jsx           # /about — bio, portraits, travel photos, Instagram link
-    │   ├── ShelfPage.jsx           # /shelf — books with cover art (Games/TV hidden for now)
-    │   ├── SilencePage.jsx         # /silence — tinnitus noise tool with sleep timer
+    │   ├── ShelfPage.jsx           # /shelf — bookcase of real and drawn spines (Games/TV hidden for now)
+    │   ├── SilencePage.jsx         # /silence — sound rows, player band, hearing charities
     │   ├── WritingPage.jsx         # /writing — list of markdown posts
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Any unknown URL — "page not found", marked noindex
@@ -82,11 +82,11 @@ nithun-website/
 
 | Route | Component | Description |
 |---|---|---|
-| `/` | `Hero` | Home — name, intro, photo collage, section teasers |
+| `/` | `Hero` | Home — contents page: name, standfirst, numbered section rows |
 | `/writing` | `WritingPage` | List of writing posts |
 | `/writing/:slug` | `WritingPostPage` | Individual writing post |
 | `/silence` | `SilencePage` | Tinnitus noise tool |
-| `/shelf` | `ShelfPage` | Books shelf |
+| `/shelf` | `ShelfPage` | Bookcase of recommended books |
 | `/about` | `AboutPage` | Bio and photography |
 | `/books` | → `/shelf` | Redirect |
 | anything else | `NotFoundPage` | Page not found (noindex) |
@@ -99,22 +99,22 @@ nithun-website/
 React mounts into `<div id="root">` in `index.html`. `i18n.js` is imported first to initialise language detection. The app is wrapped in `BrowserRouter` for client-side navigation.
 
 ### Layout (`App.jsx`)
-Every page shares: `Navbar`, `<main>` with `<Routes>`, and `Footer`. A translated skip-to-content link is the first element in the page (visible on keyboard focus), and `<main>` can take focus so the skip lands correctly. All three use the `SHELL` container from `styles/shell.js` so their edges line up.
+Every page shares: `Navbar` (top bar, plus a breadcrumb on section pages), `<main>` with `<Routes>`, and `Footer`. A translated skip-to-content link is the first element in the page (visible on keyboard focus), and `<main>` can take focus so the skip lands correctly. All three use the `SHELL` container from `styles/shell.js` so their edges line up.
 
 ### Theme and language (`Navbar.jsx`)
 The theme pill toggles a `.dark` class on `<html>`; the preference is saved in `localStorage` and restored before React boots via an inline script in `index.html` (prevents a flash of the wrong theme). The language pill calls `i18n.changeLanguage()`. `i18n.js` keeps `<html lang>` in sync with the active language, both on first load and whenever it changes.
 
 ### Home page (`Hero.jsx`)
-Name as `<h1>`, a "Building Pyre · Oslo" line linking to pyre.no, a short intro, and a three-photo collage. Below: four teaser cards linking to Writing, Silence, Shelf and About, then a donation nudge.
+A "contents page": the name as a large two-line `<h1>` (surname in purple), a standfirst (Pyre link, role, location, intro with a purple drop cap, headshot), then four numbered rows for Writing, Silence, Shelf and About (order and colours in `lib/sections.js`). Hovering or focusing a row fills it with the section's colour. Each row has a thumbnail that is always visible: the newest post's `thumbnail`, a real brown-noise player for Silence, the Shelf artwork, and the flower-field photo. A donation nudge closes the page.
 
 ### Shelf (`ShelfPage.jsx`)
-Books only for now — Games and TV are hidden until they have cover art (re-enable by adding `'games', 'tv'` back to `CATEGORIES`). Covers come from `bookCovers.json`, pre-fetched at dev time, so there are no API calls at runtime. The images themselves load from Open Library: the covers on the first screen straight away at high priority, the rest lazily as you scroll. Cover art is kept out of Google Images with a `noimageindex` robots tag.
+A bookcase of the books Nithun recommends: one plank per series, labelled underneath. Books photographed on his own shelves show their real spine (`data/bookSpines.json`, images in `public/images/shelf/spines/`); the rest get a drawn spine. Tapping a spine lifts it and opens a panel with its title, author and series position; for drawn spines the panel shows the front cover from `bookCovers.json` (loaded from Open Library). Escape or "Put it back" closes it. Games and TV are hidden until they have cover art. Spine and cover art is kept out of Google Images (`noimageindex` tag, and `noindex` on the image files).
 
 ### About (`AboutPage.jsx`)
 Bio (linking Pyre, Writing, Silence and Shelf), two photos of Nithun with a caption, six travel photos with translated locations, and an Instagram link. Every photo has smaller copies (`-sm`, `-600`, `-700`) and `srcset`, so phones and laptops download only the size they need. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.
 
 ### Silence (`SilencePage.jsx`)
-Sound tool for tinnitus and sleep: brown noise, pink noise, rain and ocean, a sleep timer (30/60/90 min, 60-second fade-out) and hearing charity links. The volume slider shows only where the browser can change volume (not on iPhone or iPad, which use their volume buttons).
+Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink noise, rain, ocean) that fill green while playing, a player band with a play/pause button, sleep timer countdown (30/60/90 min, 60-second fade-out) and volume, and hearing charity rows. The volume slider shows only where the browser can change volume (not on iPhone or iPad, which use their volume buttons).
 
 ### Player (`audio/loopPlayer.js`) and sounds (`public/sounds/`)
 Plays audio files with `<audio>` elements, which keep playing on a locked iPhone and ignore the mute switch (the Web Audio API it used before stops when the phone locks). Each sound is a 5-minute loop file with 1 s fades at both ends; a second copy starts 1 s before the first ends, so they crossfade with no gap. For the sleep timer the last copy is a version that fades out over 60 s. A tap shows the sound as playing at once, before the file has loaded; if another app takes over the sound (a video, a call), Silence counts that as stopped. `npm run make-sounds` (needs ffmpeg) renders the files with `scripts/makeSilenceSounds.js`: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (white noise under a slow wave swell), all at the same loudness. A changed file needs a new name, because Nginx lets browsers cache `/sounds/` for 30 days.
@@ -150,7 +150,7 @@ To add or edit a string:
 - **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
 - **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
 - **Motion:** `prefers-reduced-motion` switches off animations, transitions and smooth scrolling.
-- **Known gaps:** Shelf's category tabs (hidden until games and TV have cover art) aren't marked up as tabs, and the game prototype is English-only. Speed: a post page is the slowest (the Markdown renderer runs in the browser); the next step there would be turning posts into HTML at build time.
+- **Known gaps:** The game prototype is English-only. There are no section links in the top bar: sections are reached from the homepage's contents list and back via the breadcrumb. Speed: a post page is the slowest (the Markdown renderer runs in the browser); the next step there would be turning posts into HTML at build time.
 
 ---
 
@@ -191,12 +191,13 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Project scaffolded (Vite + React + Tailwind)
 - [x] i18n configured (EN + NO)
 - [x] Dark/light theme toggle (no flash on load)
-- [x] Home page — name, Pyre badge, intro, photo collage, four section teasers, donation nudge
-- [x] Shelf page (`/shelf`) — 59 books with cover art; Games and TV hidden until they have covers
-- [x] Silence page (`/silence`) — noise tool with sleep timer; keeps playing on a locked iPhone and with the mute switch on
+- [x] Home page — name, standfirst, four numbered section rows with thumbnails (incl. a working brown-noise player), donation nudge
+- [x] Redesign (Oct 2026) — contents-page homepage, purple identity colour, section colours, motion that switches off with reduced motion
+- [x] Shelf page (`/shelf`) — bookcase of 59 books, 28 with real spines from Nithun's shelves; Games and TV hidden until they have covers
+- [x] Silence page (`/silence`) — sound rows and player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
-- [x] Footer — Pyre link, GitHub, licence, build date
+- [x] Top bar with build date and breadcrumb; footer with LinkedIn, GitHub, Instagram, RSS, licence
 - [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
 - [x] RSS feed at `/rss.xml`, linked in the footer
 - [x] Pages other than Home load on demand, so the first visit downloads about half as much script

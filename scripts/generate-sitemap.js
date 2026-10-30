@@ -19,7 +19,6 @@ function parseDateFromFrontmatter(raw) {
 // search by Nginx (see the robots map in nginx/nithun-website).
 const IMAGES = {
   'https://nithun.no': [
-    '/images/about/nithun-portrait-sm.webp',
     '/images/about/nithun-headshot-sm.webp',
     '/images/about/nithun-flower-field-sm.webp',
   ],

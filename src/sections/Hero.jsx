@@ -1,195 +1,132 @@
-/* global __LATEST_POST__ */   // set in vite.config.js
+/* global __LATEST_POST__, __BOOK_COUNT__ */   // set in vite.config.js
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import PyreMark from '../components/PyreMark'
 import { SHELL } from '../styles/shell'
+import { SECTIONS } from '../lib/sections'
 import { usePageMeta } from '../lib/usePageMeta'
+import { createLoopPlayer } from '../audio/loopPlayer'
 
-const SECTION_TEASERS = [
-  { key: 'writing', path: '/writing', cls: 'writing', accent: 'var(--dusty)' },
-  { key: 'silence', path: '/silence', cls: 'silence', accent: 'var(--sage)'  },
-  { key: 'shelf',   path: '/shelf',   cls: 'shelf',   accent: 'var(--honey)' },
-  { key: 'about',   path: '/about',   cls: 'about',   accent: 'var(--stone)' },
-]
+const post = __LATEST_POST__
+
+function formatDate(dateStr, lang) {
+  return new Date(`${dateStr}T12:00:00`).toLocaleDateString(lang.startsWith('no') ? 'nb-NO' : 'en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  })
+}
+
+// Silence's row: the thumbnail is a real player for brown noise
+function SilenceThumb() {
+  const { t } = useTranslation()
+  const [playing, setPlaying] = useState(false)
+  const [player] = useState(() => createLoopPlayer(id => setPlaying(id !== null)))
+  useEffect(() => () => player.stop(), [player])
+
+  const toggle = () => {
+    if (playing) player.stop()
+    else player.play('brown', t('silence.sounds.brown')).catch(() => setPlaying(false))
+  }
+
+  return (
+    <button type="button" className="thumb thumb-play" onClick={toggle} aria-pressed={playing}
+      aria-label={t(playing ? 'hero.pauseSound' : 'hero.playSound')}>
+      <img src="/images/silence/hills-sm.webp" alt="" width={288} height={360} />
+      <span className="thumb-play-ov">
+        <span className={`eq${playing ? ' on' : ''}`} aria-hidden="true"><i /><i /><i /><i /><i /></span>
+        <span className="thumb-play-label" aria-hidden="true">
+          {playing
+            ? <><svg width="9" height="9" viewBox="0 0 12 12"><rect x="1" y="1" width="3.5" height="10" rx="1" /><rect x="7.5" y="1" width="3.5" height="10" rx="1" /></svg>{t('hero.pause')}</>
+            : <><svg width="9" height="9" viewBox="0 0 12 12"><path d="M3 1.5v9l7.5-4.5z" /></svg>{t('hero.play')}</>}
+        </span>
+      </span>
+    </button>
+  )
+}
+
+function RowSub({ sectionKey }) {
+  const { t, i18n } = useTranslation()
+  if (sectionKey === 'writing' && post) {
+    return (
+      <span className="r-sub">
+        <b>{t('hero.latestLabel')}</b>
+        <span className="r-post">{post.title}</span>
+        <span className="r-date">{formatDate(post.date, i18n.language)} <span className="r-lang">{post.language.toUpperCase()}</span></span>
+      </span>
+    )
+  }
+  return (
+    <span className="r-sub">
+      <b>{sectionKey === 'shelf' ? t('hero.books', { count: __BOOK_COUNT__ }) : t(`hero.teasers.${sectionKey}.title`)}</b>
+      {t(`hero.teasers.${sectionKey}.desc`)}
+    </span>
+  )
+}
+
+function RowThumb({ sectionKey }) {
+  const { t } = useTranslation()
+  if (sectionKey === 'silence') return <SilenceThumb />
+  const img = {
+    writing: post?.thumbnail && { src: post.thumbnail, alt: post.thumbnailAlt },
+    shelf:   { src: '/images/shelf/shelf-sm.webp', alt: t('hero.shelfAlt') },
+    about:   { src: '/images/about/nithun-flower-field-sm.webp', alt: t('about.flowerAlt') },
+  }[sectionKey]
+  if (!img) return <span />
+  return <span className="thumb"><img src={img.src} alt={img.alt} width={288} height={360} loading="lazy" /></span>
+}
 
 export default function Hero() {
   const { t } = useTranslation()
   usePageMeta({ title: t('meta.homeTitle'), description: t('meta.homeDescription'), path: '/' })
 
   return (
-    <div className="page-enter" style={SHELL}>
-      {/* ── Hero grid ─────────────────────────────────────────── */}
-      <div className="hero-grid">
-        <div className="hero-top-row">
-        <div className="hero-head">
-          <h1
-            style={{
-              fontFamily: 'Georgia, serif',
-              fontSize: 'clamp(32px, 5vw, 52px)',
-              fontWeight: 'normal',
-              color: 'var(--fg)',
-              lineHeight: 1.15,
-              letterSpacing: '-0.01em',
-              marginBottom: 10,
-            }}
-          >
-            {t('hero.name')}
-          </h1>
+    <div style={SHELL}>
+      <h1 className="display home-name">
+        <span className="l"><span>Nithun</span></span>
+        <span className="l l2"><span>Manoharan</span></span>
+      </h1>
 
-          <p
-            style={{
-              fontSize: 11,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: 'var(--fgm)',
-              marginBottom: 32,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
-            <span style={{ display: 'inline-block', width: 16, height: 1, background: 'var(--fgm)', flexShrink: 0 }} />
-            <a
-              href="https://pyre.no"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                color: 'inherit',
-                textDecoration: 'none',
-                transition: 'color 0.2s ease',
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
-            >
-              <PyreMark size={12} />
-              {t('hero.pyreBadge')}
-            </a>
-            <span aria-hidden="true">·</span>
-            {t('hero.location')}
-          </p>
-        </div>
-
-        <p
-          className="hero-intro"
-          style={{
-            fontSize: 17,
-            lineHeight: 1.75,
-            color: 'var(--fg2)',
-            maxWidth: 560,
-            marginBottom: 24,
-            fontWeight: 300,
-          }}
-        >
-          {t('hero.intro')}
+      <div className="stand enter">
+        <p className="stand-meta">
+          <a href="https://pyre.no" target="_blank" rel="noopener noreferrer"><PyreMark size={12} />{t('hero.pyreBadge')}</a><br />
+          {t('hero.role1')}<br />{t('hero.role2')}<br />{t('hero.location')}
         </p>
-
-        {/* Small photo collage — a personal, creative touch.
-            Uses -sm copies (324px wide, 3× the 108px display size) and loads
-            them immediately: they're the first images visitors see. */}
-        <div className="hero-collage" aria-hidden="false">
-          <img
-            className="hero-collage-photo hero-collage-1"
-            src="/images/about/nithun-portrait-sm.webp"
-            alt={t('about.portraitAlt')}
-            width={324}
-            height={432}
-            fetchPriority="high"
-          />
-          <img
-            className="hero-collage-photo hero-collage-2"
-            src="/images/about/nithun-headshot-sm.webp"
-            alt={t('about.headshotAlt')}
-            width={324}
-            height={387}
-          />
-          <img
-            className="hero-collage-photo hero-collage-3"
-            src="/images/about/nithun-flower-field-sm.webp"
-            alt={t('about.flowerAlt')}
-            width={324}
-            height={432}
-          />
-        </div>
-        </div>
+        <p className="stand-intro">{t('hero.intro')}</p>
+        <img className="stand-head" src="/images/about/nithun-headshot-sm.webp" alt={t('about.headshotAlt')}
+          width={324} height={387} fetchPriority="high" />
       </div>
 
-      {/* ── Section teasers ───────────────────────────────────── */}
-      <div className="hero-teasers" id="section-teasers">
-        {SECTION_TEASERS.map(({ key, path, accent }, i) => (
-          <Link
-            key={key}
-            to={path}
-            style={{
-              padding: '28px 24px 28px 0',
-              borderRight: i < SECTION_TEASERS.length - 1 ? '1px solid color-mix(in oklch, var(--fg) 8%, transparent)' : 'none',
-              paddingLeft: i > 0 ? 24 : 0,
-              textDecoration: 'none',
-              display: 'block',
-              transition: 'background 0.2s ease',
-            }}
-            className="group"
-          >
-            <span
-              style={{
-                fontSize: 10,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                fontWeight: 500,
-                color: accent,
-                marginBottom: 10,
-                display: 'inline-block',
-              }}
-            >
-              {t(`hero.teasers.${key}.label`)}
-            </span>
-            <div
-              style={{
-                fontFamily: 'Georgia, serif',
-                fontSize: 17,
-                color: 'var(--fg2)',
-                lineHeight: 1.4,
-                marginBottom: 8,
-                transition: 'color 0.2s ease',
-              }}
-              className="group-hover:text-fg"
-            >
-              {t(`hero.teasers.${key}.title`)}
-            </div>
-            <div style={{ fontSize: 13, color: 'var(--fgm)', lineHeight: 1.55 }}>
-              {t(`hero.teasers.${key}.desc`)}
-            </div>
-            {key === 'writing' && __LATEST_POST__ && (
-              <div style={{ fontSize: 12, color: 'var(--fgm)', lineHeight: 1.55, marginTop: 10, fontStyle: 'italic' }}>
-                {t('hero.latestPost', { title: __LATEST_POST__.title })}
-              </div>
-            )}
-          </Link>
-        ))}
-      </div>
-      {/* ── Donate nudge ──────────────────────────────────────── */}
-      <div style={{
-        marginTop: 48,
-        paddingTop: 24,
-        borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
-        paddingBottom: 64,
-      }}>
-        <p style={{ fontSize: 13, color: 'var(--fgm)', fontWeight: 300, lineHeight: 1.7, maxWidth: 640, margin: 0 }}>
+      <nav aria-label={t('nav.sections')}>
+        <ol className="contents">
+          {SECTIONS.map(({ key, num, path, accent, fill }) => (
+            <li key={key} className="row" style={{ '--c': accent, '--f': fill }}>
+              <Link to={path} className="row-link">
+                <span className="r-num" aria-hidden="true">{num}</span>
+                <span className="r-text">
+                  <span className="r-title">{t(`nav.${key}`)}</span>
+                  <RowSub sectionKey={key} />
+                </span>
+                <span className="r-go" aria-hidden="true">→</span>
+              </Link>
+              <RowThumb sectionKey={key} />
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <p className="donate">
         <Trans
           i18nKey="hero.donate"
           components={[
-            <a href="https://www.rodekors.no/"        className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
-            <a href="https://legerutengrenser.no/"     className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
-            <a href="https://www.spire.no/"            className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
-            <a href="https://www.utviklingsfondet.no/" className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
-            <a href="https://www.givewell.org/"        className="hero-donate-link" target="_blank" rel="noopener noreferrer" />,
-            <Link to="/silence"                        className="hero-donate-link" />,
+            <a href="https://www.rodekors.no/"        className="text-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://legerutengrenser.no/"     className="text-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.spire.no/"            className="text-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.utviklingsfondet.no/" className="text-link" target="_blank" rel="noopener noreferrer" />,
+            <a href="https://www.givewell.org/"        className="text-link" target="_blank" rel="noopener noreferrer" />,
+            <Link to="/silence"                        className="text-link" />,
           ]}
         />
-        </p>
-      </div>
+      </p>
     </div>
   )
 }

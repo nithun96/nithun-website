@@ -12,6 +12,11 @@
     "file": "arthas.webp",
     "w": 91
   },
+  "Chronicles of War": {
+    "file": "chronicles-of-war.webp",
+    "w": 120,
+    "hardcover": true
+  },
   "Crossroads of Twilight": {
     "file": "wot-10.webp",
     "w": 148
@@ -107,6 +112,11 @@
   "Towers of Midnight": {
     "file": "wot-13.webp",
     "w": 165,
+    "hardcover": true
+  },
+  "Warcraft Archive": {
+    "file": "warcraft-archive.webp",
+    "w": 94,
     "hardcover": true
   },
   "Winter's Heart": {

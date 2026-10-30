@@ -59,13 +59,12 @@
     {"series": "Malazan Book of the Fallen","title": "Gardens of the Moon",                "author": "Steven Erikson",      "number": 1},
     {"series": "Malazan Book of the Fallen","title": "Deadhouse Gates",                    "author": "Steven Erikson",      "number": 2},
 
-    {"series": "Warcraft",                 "title": "Lord of the Clans",                   "author": "Christie Golden"},
-    {"series": "Warcraft",                 "title": "The Last Guardian",                   "author": "Jeff Grubb"},
+    {"series": "Warcraft",                 "title": "Chronicles of War",                   "author": "Christie Golden, Jeff Grubb, Aaron Rosenberg"},
     {"series": "Warcraft — War of the Ancients", "title": "The Well of Eternity",          "author": "Richard A. Knaak",    "number": 1},
     {"series": "Warcraft — War of the Ancients", "title": "The Demon Soul",                "author": "Richard A. Knaak",    "number": 2},
     {"series": "Warcraft — War of the Ancients", "title": "The Sundering",                 "author": "Richard A. Knaak",    "number": 3},
-    {"series": "Warcraft",                 "title": "Rise of the Horde",                   "author": "Christie Golden"},
     {"series": "Warcraft",                 "title": "Beyond the Dark Portal",              "author": "Aaron Rosenberg"},
+    {"series": "Warcraft",                 "title": "Warcraft Archive",                    "author": "Richard A. Knaak, Christie Golden, Jeff Grubb, Chris Metzen"},
     {"series": "Warcraft",                 "title": "Arthas: Rise of the Lich King",       "author": "Christie Golden"},
 
     {"series": "Standalone",               "title": "Sofies verden",                       "author": "Jostein Gaarder"},

@@ -537,7 +537,7 @@ export default function WritingPostPage() {
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
               style={{ borderRadius: 4 }}
-              title="Listening while writing"
+              title={t('writing.spotifyTitle')}
             />
           </div>
         )}

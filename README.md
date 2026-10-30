@@ -59,7 +59,7 @@ nithun-website/
     ├── audio/
     │   └── loopPlayer.js           # Silence player — plays the sound files in public/sounds/
     ├── data/
-    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 8 TV entries
+    │   ├── shelf.json              # Shelf content — 58 books, 50 games, 8 TV entries
     │   ├── bookCovers.json         # Pre-fetched cover URLs (generated — see CLAUDE.md)
     │   ├── bookCoversOverride.json # Manual cover fixes
     │   └── charities.json          # Charity links shown on Silence page
@@ -193,7 +193,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Home page — name, standfirst, four numbered section rows with thumbnails (incl. a working brown-noise player), donation nudge
 - [x] Redesign (Oct 2026) — contents-page homepage, purple identity colour, section colours, motion that switches off with reduced motion
-- [x] Shelf page (`/shelf`) — bookcase of 59 books, 28 with real spines from Nithun's shelves; Games and TV hidden until they have covers
+- [x] Shelf page (`/shelf`) — bookcase of 58 books, 30 with real spines from Nithun's shelves; Games and TV hidden until they have covers
 - [x] Silence page (`/silence`) — sound rows and player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link

@@ -188,7 +188,7 @@ nithun-website/
     ├── audio/
     │   └── loopPlayer.js           # Silence player — plays public/sounds/ with a 1 s crossfade (see README)
     ├── data/
-    │   ├── shelf.json              # Shelf content — 59 books, 50 games, 8 TV entries
+    │   ├── shelf.json              # Shelf content — 58 books, 50 games, 8 TV entries
     │   ├── bookCovers.json         # Pre-fetched book cover URLs — generated, see Book Covers
     │   ├── bookCoversOverride.json # Manual cover overrides, keyed by exact book title
     │   ├── charities.json          # Charity links shown on Silence page (descriptions translated in silence.charities.*)
@@ -298,8 +298,8 @@ The Shelf shows only books Nithun would recommend (`src/data/shelf.json`) — bo
 
 - **Files:** `public/images/shelf/spines/<id>.webp`, 600px tall, straightened, cropped to the spine, no metadata. `src/data/bookSpines.json` maps the exact book title to `{ file, w, hardcover }` (`w` = width at 600px tall; hardcovers stand taller).
 - **Adding spines:** Nithun sends photos (straight on, one shelf per photo, daylight, no flash). Strip GPS/metadata, cut each spine with a perspective transform (PIL `Image.QUAD`), save as webp at 600px tall, add the entry to `bookSpines.json`. A replaced image needs a new filename (images are cached 7 days).
-- **Still to photograph (Oct 2026):** Tolkien (5), A Song of Ice and Fire (5), Night Angel (3), The First Law (3), Kingkiller (2), Malazan (2), The Black Prism, Warbreaker, The Rithmatist, Sofies verden, The Alchemist, A Brief History of Time, Empire in Black and Gold. Wheel of Time 4 is from a distant photo (a close-up would sharpen it).
-- **Undecided:** Lord of the Clans, The Last Guardian, Rise of the Horde and Beyond the Dark Portal probably have no spine of their own (they seem to be inside *Warcraft Archive* and *Chronicles of War* — check). Either show the collection's spine for them or keep drawn spines.
+- **Still to photograph (Oct 2026):** Tolkien (5), A Song of Ice and Fire (5), Night Angel (3), The First Law (3), Kingkiller (2), Malazan (2), The Black Prism, Warbreaker, The Rithmatist, Sofies verden, The Alchemist, A Brief History of Time, Empire in Black and Gold, Beyond the Dark Portal. Wheel of Time 4 is from a distant photo (a close-up would sharpen it).
+- **Warcraft collections:** Lord of the Clans, The Last Guardian and Rise of the Horde are on the Shelf as the collections Nithun owns them in, *Warcraft Archive* and *Chronicles of War* (decided Oct 2026). Beyond the Dark Portal is in neither, so it stays a book of its own.
 - Spine images aren't generally available online (shops show front covers), and cloud sessions can't reach image sites anyway.
 
 ---
@@ -375,7 +375,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Redesign (Oct 2026) — editorial "contents page" homepage, purple identity colour, section colours, motion per Design Principles
 - [x] Homepage — name, standfirst, 4 numbered section rows with thumbnails (latest post, a Silence player, Shelf, About), donate nudge
-- [x] Shelf page (`/shelf`) — 59 books as a bookcase; 28 real spines photographed from Nithun's shelves, 31 drawn (see Shelf Spines); Games (50) and TV (8) hidden until they have cover art
+- [x] Shelf page (`/shelf`) — 58 books as a bookcase; 30 real spines photographed from Nithun's shelves, 28 drawn (see Shelf Spines); Games (50) and TV (8) hidden until they have cover art
 - [x] Silence page (`/silence`) — sound rows, player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked

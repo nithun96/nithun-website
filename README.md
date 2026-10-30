@@ -149,7 +149,7 @@ To add or edit a string:
 
 - **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
 - **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
-- **Motion:** `prefers-reduced-motion` switches off animations, transitions and smooth scrolling.
+- **Motion:** `prefers-reduced-motion` switches off animations, transitions, page transitions and smooth scrolling, including their delays, so staggered entrances (homepage rows, Silence rows, Shelf spines) show at once instead of popping in.
 - **Known gaps:** The game prototype is English-only. Speed: a post page is the slowest (the Markdown renderer runs in the browser); the next step there would be turning posts into HTML at build time.
 
 ---

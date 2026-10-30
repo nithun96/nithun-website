@@ -89,7 +89,7 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 
 - `<title>`: `Nithun Manoharan | Product Manager, AI & Data Analytics`
 - `<meta name="description">`: Written to rank for name-based searches, human-sounding
-- `<h1>` must contain full name on every page
+- **Full name** "Nithun Manoharan": in the `<h1>` on Home and About, and at the end of every page's `<title>` (e.g. `Shelf | Nithun Manoharan`). Section pages (Writing, posts, Silence, Shelf) keep their own section name as the `<h1>` — decided Oct 2026 after the redesign; don't add hidden text to them.
 - Add **JSON-LD Person schema** in `<head>` for Google Knowledge Panel eligibility
 - Language attribute on `<html>`: `lang="en"` (or dynamic based on selected language)
 - All images must have descriptive `alt` text

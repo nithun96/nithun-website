@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
-import { SHELL } from '../styles/shell'
+import { slugFromPath } from '../lib/parseFrontmatter'
 import { usePageMeta } from '../lib/usePageMeta'
 
-const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
+// Frontmatter only, read at build time (see the `posts` plugin in vite.config.js)
+const metaFiles = import.meta.glob('../writing/*.md', { query: '?meta', import: 'default', eager: true })
 
-const posts = Object.entries(rawFiles)
-  .map(([path, raw]) => {
-    const { data, content } = parseFrontmatter(raw)
-    return { ...data, slug: slugFromPath(path), content }
-  })
+const posts = Object.entries(metaFiles)
+  .map(([path, data]) => ({ ...data, slug: slugFromPath(path) }))
   .sort((a, b) => new Date(b.date) - new Date(a.date))
 
 function formatDate(dateStr, locale) {
@@ -27,7 +24,7 @@ export default function WritingPage() {
   usePageMeta({ title: t('meta.writingTitle'), description: t('meta.writingDescription'), path: '/writing' })
 
   return (
-    <div className="page-enter" style={SHELL}>
+    <div className="page-enter shell">
       <section className="pg-hero">
         <h1 className="display pg-name" style={{ '--c': 'var(--dusty)' }}>
           <span className="l"><span>{t('writing.heading')}</span></span>{' '}

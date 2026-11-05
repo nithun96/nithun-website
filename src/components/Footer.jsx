@@ -1,6 +1,5 @@
 /* global __BUILD_DATE__ */   // set in vite.config.js
 import { useTranslation } from 'react-i18next'
-import { SHELL } from '../styles/shell'
 
 const LINKS = [
   { label: 'LinkedIn',  href: 'https://no.linkedin.com/in/nithunm' },
@@ -16,7 +15,7 @@ export default function Footer() {
   const locale = i18n.language?.startsWith('no') ? 'nb-NO' : 'en-GB'
 
   return (
-    <footer style={SHELL}>
+    <footer className="shell">
       <div className="foot">
         <nav aria-label={t('footer.elsewhere')}>
           {LINKS.map(({ label, href }) => (

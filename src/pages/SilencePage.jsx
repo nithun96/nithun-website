@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createLoopPlayer, canSetVolume } from '../audio/loopPlayer'
 import charitiesData from '../data/charities.json'
-import { SHELL } from '../styles/shell'
 import { usePageMeta } from '../lib/usePageMeta'
 
 const SOUNDS = ['brown', 'pink', 'rain', 'ocean']
@@ -57,6 +56,13 @@ export default function SilencePage() {
   // Stop when leaving the page
   useEffect(() => () => player.stop(), [player])
 
+  // Save this page and the sounds played on it for offline use (src/sw.js)
+  useEffect(() => {
+    if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {})
+    }
+  }, [])
+
   // Sleep timer countdown
   useEffect(() => {
     if (!playing || !timerMinutes) return
@@ -104,7 +110,7 @@ export default function SilencePage() {
 
   return (
     <div className="page-enter">
-      <div style={SHELL}>
+      <div className="shell">
         <section className="s-hero">
           <div>
             <h1 className="display s-name" style={{ '--c': 'var(--sage)' }}>
@@ -142,7 +148,7 @@ export default function SilencePage() {
       </div>
 
       <section className="player" aria-label={t('silence.playerLabel')}>
-        <div className="player-grid" style={SHELL}>
+        <div className="player-grid shell">
           <div className="np">
             <span className="k">{t('silence.nowPlaying')}</span>
             <button type="button" className="big-play" onClick={() => toggle(bigId)}
@@ -181,7 +187,7 @@ export default function SilencePage() {
         </div>
       </section>
 
-      <div style={SHELL}>
+      <div className="shell">
         <section className="give" aria-labelledby="give-title">
           <div className="give-head">
             <h2 id="give-title">{t('silence.donationHeading')}</h2>

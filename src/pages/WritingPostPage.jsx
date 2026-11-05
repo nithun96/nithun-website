@@ -2,20 +2,18 @@ import { useState, useRef, useMemo, useCallback, useEffect, createContext, useCo
 import { createPortal } from 'react-dom'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import rehypeRaw from 'rehype-raw'
-import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
-import { parseFootnotes } from '../lib/parseFootnotes'
-import { SHELL } from '../styles/shell'
+import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
+import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
+import { slugFromPath } from '../lib/parseFrontmatter'
 import { usePageMeta } from '../lib/usePageMeta'
 
-const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
+// Each post arrives as a ready-made tree, turned from Markdown at build time
+// (the `posts` plugin in vite.config.js, src/lib/markdownPost.js)
+const postFiles = import.meta.glob('../writing/*.md', { query: '?post', import: 'default', eager: true })
 
-const posts = Object.entries(rawFiles).map(([path, raw]) => {
-  const { data, content } = parseFrontmatter(raw)
-  return { ...data, slug: slugFromPath(path), content }
-})
+const posts = Object.entries(postFiles).map(([path, { data, footnotes, hast }]) => (
+  { ...data, slug: slugFromPath(path), footnotes, hast }
+))
 
 function formatDate(dateStr, locale) {
   if (!dateStr) return null
@@ -26,27 +24,7 @@ function formatDate(dateStr, locale) {
 
 function LanguagePill({ lang }) {
   const isNo = lang === 'no'
-  return (
-    <span style={{
-      fontSize: 11,
-      letterSpacing: '0.1em',
-      textTransform: 'uppercase',
-      fontStyle: 'normal',
-      borderRadius: 2,
-      padding: '2px 7px',
-      background: isNo
-        ? 'color-mix(in oklch, var(--honey) 15%, transparent)'
-        : 'color-mix(in oklch, var(--dusty) 15%, transparent)',
-      border: isNo
-        ? '1px solid color-mix(in oklch, var(--honey) 40%, transparent)'
-        : '1px solid color-mix(in oklch, var(--dusty) 40%, transparent)',
-      color: isNo
-        ? 'color-mix(in oklch, var(--wheat) 75%, var(--fg))'
-        : 'color-mix(in oklch, var(--dusty) 75%, var(--fg))',
-    }}>
-      {isNo ? 'NO' : 'EN'}
-    </span>
-  )
+  return <span className={isNo ? 'lang-pill is-no' : 'lang-pill'}>{isNo ? 'NO' : 'EN'}</span>
 }
 
 
@@ -75,7 +53,6 @@ function FootnoteMarker({ number, type, text }) {
   useEffect(() => () => clearTimeout(hideTimer.current), [])
 
   const showPanel = hasHover && (hovering || pinned)
-  const supColor = pinned ? 'var(--fg2)' : 'var(--fgm)'
 
   function handleEnter() {
     if (!hasHover) return
@@ -110,22 +87,10 @@ function FootnoteMarker({ number, type, text }) {
     }
   }
 
-  const calloutBase = {
-    background: 'var(--bg2)',
-    border: '1px solid color-mix(in oklch, var(--fg) 10%, transparent)',
-    ...(type === 'wry' ? { borderLeft: '2px solid var(--stone)' } : {}),
-    borderRadius: 4,
-    padding: '8px 12px',
-    fontSize: 14,
-    color: 'var(--fgm)',
-    fontStyle: 'italic',
-    lineHeight: 1.55,
-  }
-
   return (
     <span
       ref={wrapRef}
-      className="fn-marker"
+      className={pinned ? 'fn-marker is-pinned' : 'fn-marker'}
       role="button"
       tabIndex={0}
       aria-expanded={showPanel || activeFootnote === number}
@@ -136,44 +101,15 @@ function FootnoteMarker({ number, type, text }) {
       onFocus={handleEnter}
       onBlur={handleLeave}
     >
-      <sup
-        data-footnote={number}
-        style={{
-          fontSize: 11,
-          color: supColor,
-          textDecorationLine: 'underline',
-          textDecorationStyle: 'dotted',
-          textDecorationColor: supColor,
-          fontStyle: 'normal',
-          userSelect: 'none',
-          transition: 'color 0.15s ease',
-        }}
-      >
-        {number}
-      </sup>
+      <sup data-footnote={number}>{number}</sup>
 
       {/* Always in the DOM for screen readers */}
       <span className="sr-only">{t('writing.footnote')} {number}: {text}</span>
 
       {/* Desktop: hover tooltip or pinned panel */}
       {showPanel && (
-        <span
-          role="tooltip"
-          style={{
-            ...calloutBase,
-            display: 'block',
-            position: 'absolute',
-            [below ? 'top' : 'bottom']: 'calc(100% + 6px)',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            maxWidth: 280,
-            width: 'max-content',
-            zIndex: 10,
-            pointerEvents: 'none',
-            animation: 'fn-fade 0.15s ease',
-          }}
-        >
-          <span style={{ color: 'var(--wheat)', marginRight: 6, fontStyle: 'normal' }}>[{number}]</span>
+        <span role="tooltip" className={['fn-tip', below && 'is-below', type === 'wry' && 'is-wry'].filter(Boolean).join(' ')}>
+          <span className="fn-num">[{number}]</span>
           {text}
         </span>
       )}
@@ -219,76 +155,23 @@ function FootnotePanel({ footnotes }) {
       <div
         aria-hidden="true"
         onClick={() => isOpen && onToggle(activeFootnote)}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 49,
-          display: isOpen ? 'block' : 'none',
-        }}
+        className={isOpen ? 'fn-backdrop is-open' : 'fn-backdrop'}
       />
 
       <div
         role="dialog"
         aria-label={t('writing.footnote')}
         aria-hidden={!isOpen}
-        style={{
-          visibility: isOpen ? 'visible' : 'hidden',
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: 'var(--bg2)',
-          borderTop: displayFn?.type === 'wry'
-            ? '2px solid var(--stone)'
-            : '1px solid color-mix(in oklch, var(--fg) 10%, transparent)',
-          padding: '20px clamp(24px, 5vw, 64px) max(28px, env(safe-area-inset-bottom))',
-          transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
-          transition: isOpen
-            ? 'transform 0.25s ease'
-            : 'transform 0.25s ease, visibility 0s linear 0.25s',
-          zIndex: 50,
-        }}
+        className={['fn-panel', isOpen && 'is-open', displayFn?.type === 'wry' && 'is-wry'].filter(Boolean).join(' ')}
       >
-        <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', maxWidth: 780 }}>
-          <span style={{
-            color: 'var(--wheat)',
-            fontStyle: 'normal',
-            flexShrink: 0,
-            fontSize: 12,
-            marginTop: 2,
-          }}>
-            [{displayFn?.number}]
-          </span>
-          <p style={{
-            fontSize: 14,
-            color: 'var(--fgm)',
-            fontStyle: 'italic',
-            lineHeight: 1.65,
-            margin: 0,
-            flex: 1,
-          }}>
-            {displayFn?.text}
-          </p>
+        <div className="fn-panel-row">
+          <span className="fn-panel-num">[{displayFn?.number}]</span>
+          <p className="fn-panel-text">{displayFn?.text}</p>
           <button
             ref={closeRef}
             onClick={() => isOpen && onToggle(activeFootnote)}
             aria-label={t('writing.closeFootnote')}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--fgm)',
-              cursor: 'pointer',
-              fontSize: 14,
-              padding: 0,
-              marginLeft: 8,
-              minWidth: 32,
-              minHeight: 32,
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              lineHeight: 1,
-              flexShrink: 0,
-            }}
+            className="fn-panel-close"
           >
             ✕
           </button>
@@ -327,42 +210,15 @@ function ImageLightbox({ image, onClose }) {
       aria-modal="true"
       aria-label={image.alt}
       onClick={onClose}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 60,
-        background: 'rgba(0, 0, 0, 0.9)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 'max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom))',
-        cursor: 'zoom-out',
-      }}
+      className="lightbox"
     >
-      <img
-        src={image.src}
-        alt={image.alt}
-        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 6 }}
-      />
+      <img src={image.src} alt={image.alt} />
       <button
         ref={closeRef}
         type="button"
         onClick={onClose}
         aria-label={t('writing.closeImage')}
-        style={{
-          position: 'absolute',
-          top: 'max(12px, env(safe-area-inset-top))',
-          right: 12,
-          background: 'rgba(0, 0, 0, 0.5)',
-          border: 'none',
-          borderRadius: 999,
-          color: '#fff',
-          cursor: 'pointer',
-          fontSize: 16,
-          width: 36,
-          height: 36,
-          lineHeight: 1,
-        }}
+        className="lightbox-close"
       >
         ✕
       </button>
@@ -388,31 +244,17 @@ export default function WritingPostPage() {
     path: post ? `/writing/${post.slug}` : '/writing',
   })
 
-  const { body, footnotes } = useMemo(
-    () => (post ? parseFootnotes(post.content) : { body: '', footnotes: [] }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [post?.content]
-  )
+  const footnotes = useMemo(() => post?.footnotes ?? [], [post])
 
   const handleToggle = useCallback((num) => {
     setActiveFootnote(prev => prev === num ? null : num)
   }, [])
 
   const mdComponents = useMemo(() => ({
-    p: ({ children }) => <p style={{ marginBottom: '1.5em' }}>{children}</p>,
-    h2: ({ children }) => (
-      <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 'normal', color: 'var(--fg)', margin: '2.5em 0 0.8em', lineHeight: 1.3 }}>
-        {children}
-      </h2>
-    ),
-    blockquote: ({ children }) => (
-      <blockquote style={{ borderLeft: '2px solid color-mix(in oklch, var(--stone) 50%, transparent)', padding: '4px 0 4px 24px', margin: '2em 0', fontStyle: 'italic', color: 'var(--fgm)', fontSize: 16 }}>
-        {children}
-      </blockquote>
-    ),
-    a: ({ href, children }) => (
-      <a href={href} style={{ color: 'var(--dusty)', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklch, var(--dusty) 40%, transparent)' }}>{children}</a>
-    ),
+    p: ({ children }) => <p className="wp-p">{children}</p>,
+    h2: ({ children }) => <h2 className="wp-h2">{children}</h2>,
+    blockquote: ({ children }) => <blockquote className="wp-quote">{children}</blockquote>,
+    a: ({ href, children }) => <a href={href} className="wp-link">{children}</a>,
     sup({ id, children, ...rest }) {
       if (id?.startsWith('fnref-')) {
         const num = parseInt(id.slice(6), 10)
@@ -429,16 +271,7 @@ export default function WritingPostPage() {
           type="button"
           onClick={() => setLightbox({ src: full || src, alt })}
           aria-label={t('writing.openImage', { alt })}
-          style={{
-            display: 'block',
-            width: '100%',
-            padding: 0,
-            border: 'none',
-            background: 'none',
-            cursor: 'zoom-in',
-            breakInside: 'avoid',
-            marginBottom: 12,
-          }}
+          className="wp-img"
         >
           <img src={src} alt={alt} {...rest} />
         </button>
@@ -446,93 +279,45 @@ export default function WritingPostPage() {
     },
   }), [footnotes, t])
 
+  // Same options react-markdown used, so the components above get the same props
+  const article = useMemo(() => post && toJsxRuntime(post.hast, {
+    Fragment, jsx, jsxs, components: mdComponents, ignoreInvalidStyle: true, passKeys: true, passNode: true,
+  }), [post, mdComponents])
+
   if (!post) return <Navigate to="/writing" replace />
 
   return (
     <FootnoteCtx.Provider value={{ activeFootnote, onToggle: handleToggle }}>
-      <div className="page-enter" style={SHELL}>
+      <div className="page-enter shell">
         {/* Post header */}
-        <div
-          style={{
-            padding: '64px 0 48px',
-            maxWidth: 780,
-            borderBottom: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
-            marginBottom: 48,
-          }}
-        >
-          <Link
-            to="/writing"
-            viewTransition
-            style={{
-              fontSize: 13,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--fgm)',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              marginBottom: 32,
-              transition: 'color 0.2s ease',
-            }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--fg)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
-          >
+        <div className="wp-head">
+          <Link to="/writing" viewTransition className="wp-back">
             ← {t('writing.backWriting')}
           </Link>
 
-          <h1
-            lang={post.language || 'en'}
-            style={{
-              fontFamily: 'Georgia, serif',
-              fontSize: 'clamp(40px, 7vw, 88px)',
-              fontWeight: 'normal',
-              color: 'var(--fg)',
-              lineHeight: 1.02,
-              letterSpacing: '-0.025em',
-              marginBottom: 20,
-            }}
-          >
+          <h1 lang={post.language || 'en'} className="wp-title">
             {post.title}
           </h1>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14, color: 'var(--fgm)', letterSpacing: '0.04em', flexWrap: 'wrap' }}>
+          <div className="wp-meta">
             {post.date && <span>{formatDate(post.date, i18n.language)}</span>}
             <LanguagePill lang={post.language || 'en'} />
-            {post.readTime && <><span style={{ opacity: 0.4 }}>·</span><span>{post.readTime}</span></>}
+            {post.readTime && <><span className="wp-sep">·</span><span>{post.readTime}</span></>}
             {post.tags && post.tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => (
-              <span key={tag}><span style={{ opacity: 0.4, marginRight: 8 }}>·</span>{tag}</span>
+              <span key={tag}><span className="wp-tag-sep">·</span>{tag}</span>
             ))}
           </div>
         </div>
 
         {/* Body */}
-        <div
-          style={{
-            maxWidth: 740,
-            fontSize: 18,
-            lineHeight: 1.75,
-            color: 'var(--fg2)',
-            fontWeight: 300,
-          }}
-          className="post-body"
-          lang={post.language || 'en'}
-        >
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            components={mdComponents}
-          >
-            {body}
-          </ReactMarkdown>
+        <div className="post-body" lang={post.language || 'en'}>
+          {article}
         </div>
 
         {/* Spotify embed */}
         {post.spotify && post.spotify.trim() && (
-          <div style={{ maxWidth: 780, marginTop: 48 }}>
-            <p style={{ fontSize: 14, color: 'var(--fgm)', fontStyle: 'italic', marginBottom: 12, margin: '0 0 12px' }}>
-              {t('writing.spotifyCaption')}
-            </p>
+          <div className="wp-spotify">
+            <p>{t('writing.spotifyCaption')}</p>
             <iframe
               src={`https://open.spotify.com/embed/playlist/${post.spotify.split('/').pop().split('?')[0]}`}
               width="100%"
@@ -540,43 +325,17 @@ export default function WritingPostPage() {
               frameBorder="0"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
-              style={{ borderRadius: 4 }}
               title={t('writing.spotifyTitle')}
             />
           </div>
         )}
 
         {/* Footer */}
-        <div
-          style={{
-            maxWidth: 780,
-            marginTop: 72,
-            paddingTop: 32,
-            borderTop: '1px solid color-mix(in oklch, var(--fg) 8%, transparent)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: 16,
-          }}
-        >
+        <div className="wp-foot">
           {post.tags && (
             <div className="flex flex-wrap gap-2">
               {post.tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => (
-                <span
-                  key={tag}
-                  style={{
-                    fontSize: 11,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'var(--fgm)',
-                    border: '1px solid color-mix(in oklch, var(--fgm) 35%, transparent)',
-                    padding: '2px 7px',
-                    borderRadius: 2,
-                  }}
-                >
-                  {tag}
-                </span>
+                <span key={tag} className="wp-tag">{tag}</span>
               ))}
             </div>
           )}
@@ -585,9 +344,7 @@ export default function WritingPostPage() {
               href={post.mastodon}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontSize: 15, color: 'var(--fgm)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, transition: 'color 0.2s ease' }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--fg2)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--fgm)'}
+              className="wp-mastodon"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                 <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>

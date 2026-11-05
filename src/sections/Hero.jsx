@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import PyreMark from '../components/PyreMark'
-import { SHELL } from '../styles/shell'
 import { SECTIONS } from '../lib/sections'
 import { usePageMeta } from '../lib/usePageMeta'
 import { createLoopPlayer } from '../audio/loopPlayer'
@@ -80,7 +79,7 @@ export default function Hero() {
   usePageMeta({ title: t('meta.homeTitle'), description: t('meta.homeDescription'), path: '/' })
 
   return (
-    <div style={SHELL}>
+    <div className="shell">
       <h1 className="display home-name">
         <span className="l"><span>Nithun</span></span>
         <span className="l l2"><span>Manoharan</span></span>

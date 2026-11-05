@@ -28,6 +28,7 @@ nithun-website/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── scripts/
 │   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
+│   ├── build-sw.js                 # After prerender: writes dist/sw.js (Silence offline) with the files to save
 │   ├── check-site.js               # Last build step: stops the build if translations, pages, file paths or JSON-LD drift out of step
 │   └── makeSilenceSounds.js        # `npm run make-sounds` — renders Silence's sound files (needs ffmpeg)
 ├── public/
@@ -41,9 +42,9 @@ nithun-website/
     ├── main.jsx                    # Bootstrap — i18n init + the routes (data router, lazy pages)
     ├── App.jsx                     # Root layout — Navbar, page outlet, Footer, scroll restoration
     ├── i18n.js                     # i18next config — EN/NO, language detection, keeps <html lang> in sync
+    ├── sw.js                       # Service worker template — lets Silence work offline (built by scripts/build-sw.js)
     ├── styles/
-    │   ├── global.css              # Tailwind import, fonts, design tokens, page-specific CSS
-    │   └── shell.js                # Shared page container (SHELL) — aligns Navbar, pages and Footer
+    │   └── global.css              # Tailwind import, fonts, design tokens, all component classes (`.shell` aligns top bar, pages and footer)
     ├── components/
     │   ├── Navbar.jsx              # Top bar — wordmark, section links, language + theme pills
     │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, build date, licence
@@ -67,6 +68,7 @@ nithun-website/
     ├── lib/
     │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
     │   ├── parseFootnotes.js       # Parses [^N: type: text] footnote syntax from post body
+    │   ├── markdownPost.js         # Build time: turns a post's Markdown into a ready-made tree
     │   └── usePageMeta.js          # Sets title, description, canonical and Open Graph tags per page
     ├── utils/
     │   └── bookCovers.js           # Looks up a book's cover in bookCovers.json
@@ -100,7 +102,7 @@ nithun-website/
 React mounts into `<div id="root">` in `index.html`. `i18n.js` is imported first to initialise language detection. The routes are defined here with `createBrowserRouter` (a React Router "data router"): every page except Home is a `lazy` route, loaded before the switch, so links with `viewTransition` can cross-fade between pages without flashing an empty page.
 
 ### Layout (`App.jsx`)
-Every page shares: `Navbar` (top bar with links to the four sections), `<main>` with the page (`<Outlet />`), and `Footer`. `<ScrollRestoration />` starts each new page at the top and returns you to your place on Back. A translated skip-to-content link is the first element in the page (visible on keyboard focus), and `<main>` can take focus so the skip lands correctly. All three use the `SHELL` container from `styles/shell.js` so their edges line up.
+Every page shares: `Navbar` (top bar with links to the four sections), `<main>` with the page (`<Outlet />`), and `Footer`. `<ScrollRestoration />` starts each new page at the top and returns you to your place on Back. A translated skip-to-content link is the first element in the page (visible on keyboard focus), and `<main>` can take focus so the skip lands correctly. All three use the `.shell` container class from `global.css` so their edges line up.
 
 ### Theme and language (`Navbar.jsx`)
 The theme pill toggles a `.dark` class on `<html>`; the preference is saved in `localStorage` and restored before React boots via an inline script in `index.html` (prevents a flash of the wrong theme). The language pill calls `i18n.changeLanguage()`. `i18n.js` keeps `<html lang>` in sync with the active language, both on first load and whenever it changes.
@@ -120,8 +122,10 @@ Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink nois
 ### Player (`audio/loopPlayer.js`) and sounds (`public/sounds/`)
 Plays audio files with `<audio>` elements, which keep playing on a locked iPhone and ignore the mute switch (the Web Audio API it used before stops when the phone locks). Each sound is a 5-minute loop file with 1 s fades at both ends; a second copy starts 1 s before the first ends, so they crossfade with no gap. For the sleep timer the last copy is a version that fades out over 60 s. A tap shows the sound as playing at once, before the file has loaded; if another app takes over the sound (a video, a call), Silence counts that as stopped. `npm run make-sounds` (needs ffmpeg) renders the files with `scripts/makeSilenceSounds.js`: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (white noise under a slow wave swell), all at the same loudness. A changed file needs a new name, because Nginx lets browsers cache `/sounds/` for 30 days.
 
+**Offline:** after a first visit to Silence, a service worker (`src/sw.js`) keeps the page, its code and fonts, and every sound once it has played, so Silence works without a connection (e.g. on a plane). See CLAUDE.md, Silence Offline.
+
 ### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
-Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime, language, spotify). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date, rendered with `react-markdown` + `rehype-raw`.
+Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime, language, spotify). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date. The Markdown (with GFM and raw HTML) is turned into a tree at build time by the `posts` plugin in `vite.config.js` and `lib/markdownPost.js`; the page only turns that tree into React elements (`hast-util-to-jsx-runtime`), so visitors don't download a Markdown parser.
 
 Footnote system: two types — `clarification` (quiet aside) and `wry` (warm left border). Desktop: hover or keyboard focus shows the tooltip, click or Enter/Space pins it, Escape closes it. Mobile: tap opens a bottom sheet portal rendered directly on `document.body`; it is a dialog that takes focus when opened, closes on Escape, returns focus to the marker, and is hidden from the tab order when closed.
 
@@ -152,7 +156,7 @@ To add or edit a string:
 - **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
 - **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
 - **Motion:** `prefers-reduced-motion` switches off animations, transitions, page transitions and smooth scrolling, including their delays, so staggered entrances (homepage rows, Silence rows, Shelf spines) show at once instead of popping in.
-- **Known gaps:** The game prototype is English-only. Speed: a post page is the slowest (the Markdown renderer runs in the browser); the next step there would be turning posts into HTML at build time.
+- **Known gaps:** The game prototype is English-only. Silence's offline mode has been tested in Chromium but not yet on an iPhone.
 
 ---
 

@@ -134,7 +134,7 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 ```
 nithun-website/
 ├── index.html                      # Entry point — SEO meta, Open Graph, JSON-LD, dark mode init
-├── vite.config.js                  # Vite config — React plugin, Tailwind plugin, build date injection
+├── vite.config.js                  # Vite config — React and Tailwind plugins, `posts` plugin (Markdown → tree at build time), build date injection
 ├── deploy.sh                       # Deploy: build → scp to server → update Nginx → git commit + push
 ├── .github/workflows/deploy.yml    # Auto-deploy on every push to main (see Deployment)
 ├── .github/retired-files.txt       # Files the deploy deletes from the server (uploads never delete)
@@ -145,6 +145,7 @@ nithun-website/
 ├── scripts/
 │   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
 │   ├── prerender.js                # After vite build: per-page HTML with each page's meta tags + dist/rss.xml (see SEO)
+│   ├── build-sw.js                 # After prerender: writes dist/sw.js from src/sw.js with the list of files to save offline (see Silence offline)
 │   ├── check-site.js               # Last build step: fails the build if translation keys, pages (PAGES/sitemap), file paths or JSON-LD drift out of step
 │   ├── fetchBookCovers.js          # `npm run fetch-covers` — see Book Covers
 │   ├── finaliseBookCovers.js       # `npm run finalise-covers` — see Book Covers
@@ -168,9 +169,9 @@ nithun-website/
     ├── main.jsx                    # Bootstrap — i18n init + the routes (createBrowserRouter; pages other than Home loaded with `lazy`)
     ├── App.jsx                     # Root layout — Navbar, <Outlet /> for the page, Footer, ScrollRestoration
     ├── i18n.js                     # i18next config — EN/NO, language detection
+    ├── sw.js                       # Service worker template — Silence offline; built to dist/sw.js by scripts/build-sw.js, not bundled
     ├── styles/
-    │   ├── global.css              # Tailwind import, dark mode variant, CSS custom properties
-    │   └── shell.js                # Shared page container (SHELL, max 1200px) — keeps top bar, pages and footer aligned
+    │   └── global.css              # Tailwind import, dark mode variant, CSS custom properties, all component classes (incl. `.shell`, the shared 1200px page container)
     ├── components/
     │   ├── Navbar.jsx              # Top bar — purple-dot wordmark, links to the four sections, language + theme pills (links on a second row on phones)
     │   ├── Footer.jsx              # Footer — LinkedIn, GitHub, Instagram, "Updated <build date>", CC licence
@@ -197,6 +198,7 @@ nithun-website/
     ├── lib/
     │   ├── parseFrontmatter.js     # Parses YAML frontmatter from .md writing files
     │   ├── parseFootnotes.js       # Strips inline footnote syntax from post body, returns {body, footnotes[]}
+    │   ├── markdownPost.js         # Build time only: post Markdown → { data, footnotes, hast } for `x.md?post`, frontmatter for `x.md?meta`
     │   ├── usePageMeta.js          # Sets per-page title, description, canonical + Open Graph tags (see SEO section)
     │   └── sections.js             # The four sections: order, number, path, colour and fill
     ├── utils/
@@ -327,6 +329,17 @@ Alternatives considered: SteamGridDB (games — nicer curated "grid" art style, 
 
 ---
 
+## Silence Offline (service worker)
+
+`src/sw.js` is a service worker registered by `SilencePage.jsx` only, so visitors who never open Silence download nothing extra. `scripts/build-sw.js` copies it to `dist/sw.js` with the list of files to save (built files, fonts, Silence artwork, about 0.7 MB) and a version that changes with that list.
+
+- Pages always come from the network; offline it falls back to the saved `/` or `/silence`.
+- Each sound file is saved the first time it plays (3.7 MB each) and then played from the cache, answering the audio element's byte-range requests (status 206, which iPhones need).
+- Don't rename `/sw.js`, and keep it out of the long-cache locations in Nginx (it is served by `location /`, which always revalidates).
+- **To switch it off:** replace the body of `src/sw.js` with a worker that unregisters itself (the comment at the top of the file shows how) and deploy. Removing the file alone would leave the old worker running in visitors' browsers.
+
+---
+
 ## Writing Posts
 
 Post frontmatter supports:
@@ -377,8 +390,8 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Redesign (Oct 2026) — editorial "contents page" homepage, purple identity colour, section colours, motion per Design Principles
 - [x] Homepage — name, standfirst, 4 numbered section rows with thumbnails (latest post, a Silence player, Shelf, About), donate nudge
 - [x] Shelf page (`/shelf`) — 58 books as a bookcase; 34 real spines photographed from Nithun's shelves, 24 drawn (see Shelf Spines); Games (50) and TV (8) hidden until they have cover art
-- [x] Silence page (`/silence`) — sound rows, player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
-- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed
+- [x] Silence page (`/silence`) — sound rows, player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on; works offline after a first visit (service worker)
+- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed; posts turned into a tree at build time, so no Markdown parser ships to visitors
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
 - [x] Pyre branding — triangle mark on the homepage, links to pyre.no
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`

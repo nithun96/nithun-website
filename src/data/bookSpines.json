@@ -59,6 +59,11 @@
     "file": "wot-01.webp",
     "w": 148
   },
+  "The Fellowship of the Ring": {
+    "file": "tolkien-fellowship.webp",
+    "w": 115,
+    "hardcover": true
+  },
   "The Final Empire": {
     "file": "mistborn-1.webp",
     "w": 94
@@ -85,9 +90,19 @@
     "file": "mistborn-3.webp",
     "w": 115
   },
+  "The Hobbit": {
+    "file": "tolkien-hobbit.webp",
+    "w": 77,
+    "hardcover": true
+  },
   "The Path of Daggers": {
     "file": "wot-08.webp",
     "w": 159
+  },
+  "The Return of the King": {
+    "file": "tolkien-return-king.webp",
+    "w": 114,
+    "hardcover": true
   },
   "The Shadow Rising": {
     "file": "wot-04.webp",
@@ -96,6 +111,11 @@
   "The Sundering": {
     "file": "woa-3.webp",
     "w": 84
+  },
+  "The Two Towers": {
+    "file": "tolkien-two-towers.webp",
+    "w": 93,
+    "hardcover": true
   },
   "The Way of Kings": {
     "file": "storm-1.webp",

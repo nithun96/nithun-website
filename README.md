@@ -195,7 +195,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Home page — name, standfirst, four numbered section rows with thumbnails (incl. a working brown-noise player), donation nudge
 - [x] Redesign (Oct 2026) — contents-page homepage, purple identity colour, section colours, motion that switches off with reduced motion
-- [x] Shelf page (`/shelf`) — bookcase of 58 books, 30 with real spines from Nithun's shelves; Games and TV hidden until they have covers
+- [x] Shelf page (`/shelf`) — bookcase of 58 books, 34 with real spines from Nithun's shelves; Games and TV hidden until they have covers
 - [x] Silence page (`/silence`) — sound rows and player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link

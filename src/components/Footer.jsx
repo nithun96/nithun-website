@@ -24,7 +24,7 @@ export default function Footer() {
         </nav>
         <span>
           {t('footer.updated', { date: buildDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }) })}
-          {' · '}{t('footer.license')}
+          {' · '}{t('footer.copyright')}
         </span>
       </div>
     </footer>

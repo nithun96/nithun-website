@@ -133,7 +133,7 @@
     }
   },
   "footer": {
-    "license": "CC BY-NC 4.0",
+    "copyright": "© Nithun Manoharan",
     "elsewhere": "Elsewhere",
     "updated": "Updated {{date}}"
   },
@@ -166,7 +166,6 @@
     "placeStockholm": "Stockholm, Sweden",
     "placeKyoto": "Kyoto, Japan",
     "placeRiga": "Riga, Latvia",
-    "photosRights": "© Nithun Manoharan. All rights reserved. Not covered by the licence below.",
     "portraitAlt": "Nithun Manoharan smiling under a garden archway",
     "flowerAlt": "Nithun Manoharan standing in a purple flower field",
     "headshotAlt": "A portrait photo of Nithun Manoharan",

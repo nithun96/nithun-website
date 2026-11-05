@@ -57,6 +57,13 @@ export default function SilencePage() {
   // Stop when leaving the page
   useEffect(() => () => player.stop(), [player])
 
+  // Save this page and the sounds played on it for offline use (src/sw.js)
+  useEffect(() => {
+    if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {})
+    }
+  }, [])
+
   // Sleep timer countdown
   useEffect(() => {
     if (!playing || !timerMinutes) return

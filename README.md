@@ -28,6 +28,7 @@ nithun-website/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── scripts/
 │   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
+│   ├── check-site.js               # Last build step: stops the build if translations, pages, file paths or JSON-LD drift out of step
 │   └── makeSilenceSounds.js        # `npm run make-sounds` — renders Silence's sound files (needs ffmpeg)
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
@@ -142,6 +143,7 @@ To add or edit a string:
 - `lib/usePageMeta.js` sets each page's own title, description, canonical URL and Open Graph tags when it loads. Page titles and descriptions live under `meta` in the translation files; posts use their frontmatter title and summary.
 - `public/robots.txt` points crawlers to the sitemap. `scripts/generate-sitemap.js` lists every page and post, plus image entries for the photos of Nithun, and runs on every build. Other images (Shelf covers, post photos, About travel photos) are kept out of image search by Nginx. **When adding a new page, add it to the sitemap script too.**
 - Unknown URLs show `NotFoundPage`, marked `noindex`.
+- The last step of `npm run build` is `scripts/check-site.js`. It stops the build (so a broken push fails in GitHub Actions instead of going live) if: a translation key is in `en` but not `no` or the other way round; a route in `src/main.jsx` has no per-page HTML (missing from `PAGES` in `prerender.js`) or is missing from the sitemap; an `/images`, `/fonts` or `/sounds` path (or a root icon) in `src/`, `index.html` or the manifest points to a file that doesn't exist, including paths built from a variable and the spine photos in `bookSpines.json`; or JSON-LD in a generated page doesn't parse. It prints what to fix.
 
 ---
 

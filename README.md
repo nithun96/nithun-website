@@ -122,7 +122,7 @@ Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink nois
 ### Player (`audio/loopPlayer.js`) and sounds (`public/sounds/`)
 Plays audio files with `<audio>` elements, which keep playing on a locked iPhone and ignore the mute switch (the Web Audio API it used before stops when the phone locks). Each sound is a 5-minute loop file with 1 s fades at both ends; a second copy starts 1 s before the first ends, so they crossfade with no gap. For the sleep timer the last copy is a version that fades out over 60 s. A tap shows the sound as playing at once, before the file has loaded; if another app takes over the sound (a video, a call), Silence counts that as stopped. `npm run make-sounds` (needs ffmpeg) renders the files with `scripts/makeSilenceSounds.js`: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (white noise under a slow wave swell), all at the same loudness. A changed file needs a new name, because Nginx lets browsers cache `/sounds/` for 30 days.
 
-**Offline:** after a first visit to Silence, a service worker (`src/sw.js`) keeps the page, its code and fonts, and every sound once it has played, so Silence works without a connection (e.g. on a plane). See CLAUDE.md, Silence Offline.
+**Offline:** after a first visit to Silence, a service worker (`src/sw.js`) keeps the page, its code and fonts, and every sound once it has played, so Silence works without a connection (e.g. on a plane). Tested on an iPhone in flight mode (Nov 2026). See CLAUDE.md, Silence Offline.
 
 ### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
 Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime, language, spotify). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date. The Markdown (with GFM and raw HTML) is turned into a tree at build time by the `posts` plugin in `vite.config.js` and `lib/markdownPost.js`; the page only turns that tree into React elements (`hast-util-to-jsx-runtime`), so visitors don't download a Markdown parser.
@@ -156,7 +156,7 @@ To add or edit a string:
 - **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
 - **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
 - **Motion:** `prefers-reduced-motion` switches off animations, transitions, page transitions and smooth scrolling, including their delays, so staggered entrances (homepage rows, Silence rows, Shelf spines) show at once instead of popping in.
-- **Known gaps:** The game prototype is English-only. Silence's offline mode has been tested in Chromium but not yet on an iPhone.
+- **Known gaps:** The game prototype is English-only. On iPhone, the lock screen could show Silence as paused while it played; fixed Nov 2026 by starting the playing copy last (check after a 5-minute handover too).
 
 ---
 

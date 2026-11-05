@@ -50,11 +50,15 @@ export function createLoopPlayer(onChange) {
 
   const isCurrent = s => s === session && sound !== null
 
-  // Pauses made here, so the 'pause' listener below can tell them from another app's
+  // Pauses made here, so the 'pause' listener below can tell them from another app's.
+  // iPhones show whichever element changed state last on the lock screen, so a
+  // pause of a spare copy made it show the sound as paused while it played on.
+  // Say again that it is playing after each of our pauses.
   const ours = new Set()
   function halt(el) {
     if (!el.paused) ours.add(el)
     el.pause()
+    if (sound !== null && 'mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing'
   }
 
   // Start an element inside a tap, then pause it, so it may start later without one
@@ -103,6 +107,12 @@ export function createLoopPlayer(onChange) {
     navigator.mediaSession.metadata = sound ? new MediaMetadata({ title, artist: 'Deafening Silence' }) : null
     navigator.mediaSession.playbackState = sound ? 'playing' : 'none'
     navigator.mediaSession.setActionHandler('pause', sound ? () => stop() : null)
+    // Lock-screen play while a sound is on (e.g. it showed paused by mistake): keep
+    // the copy that is playing going, and never start a second one
+    navigator.mediaSession.setActionHandler('play', sound ? () => {
+      playingNow().play().catch(() => {})
+      navigator.mediaSession.playbackState = 'playing'
+    } : null)
     navigator.mediaSession.setActionHandler('stop', sound ? () => stop() : null)
   }
 
@@ -132,13 +142,17 @@ export function createLoopPlayer(onChange) {
     current = 0
     endsAt = timerMinutes ? Date.now() + timerMinutes * 60000 : null
     onChange?.(sound)   // show it at once; the sound follows when the file has loaded
-    // All play() calls happen now, while still inside the tap
-    const first = loops[0].play()
+    // All play() calls happen now, while still inside the tap. Every copy, the one
+    // that will play included, is started and paused first; the real start comes
+    // after the spares have paused, so it is the last change the lock screen sees.
+    const first = unlock(loops[0])
     const spares = [unlock(loops[1])]
     if (endsAt) spares.push(unlock(end))
-    Promise.all(spares).catch(() => {})   // a blocked spare is retried at the handover
     try {
       await first
+      await Promise.allSettled(spares)   // a blocked spare is retried at the handover
+      if (!isCurrent(s)) return
+      await loops[0].play()
     } catch (err) {
       if (s !== session) return   // replaced by a later tap; not an error
       stop()

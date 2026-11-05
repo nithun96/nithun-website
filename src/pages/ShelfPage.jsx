@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import spines from '../data/bookSpines.json'
 import { getBookCover } from '../utils/bookCovers'
-import { SHELL } from '../styles/shell'
 import { usePageMeta } from '../lib/usePageMeta'
 
 // Books only for now: Games and TV are hidden until they have cover art
@@ -90,7 +89,7 @@ export default function ShelfPage() {
   const cover = pick && !pick.photo && !coverFailed[pick.title] ? getBookCover(pick.title) : null
 
   return (
-    <div className="page-enter" style={SHELL}>
+    <div className="page-enter shell">
       <section className="sh-hero">
         <div>
           <h1 className="display sh-name" style={{ '--c': 'var(--honey)' }}>

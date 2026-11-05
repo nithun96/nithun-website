@@ -1,6 +1,5 @@
 import { useTranslation, Trans } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { SHELL } from '../styles/shell'
 import { usePageMeta } from '../lib/usePageMeta'
 
 const PHOTOS = [
@@ -24,7 +23,7 @@ export default function AboutPage() {
   usePageMeta({ title: t('meta.aboutTitle'), description: t('meta.aboutDescription'), path: '/about' })
 
   return (
-    <div className="page-enter" style={SHELL}>
+    <div className="page-enter shell">
       <section className="pg-hero">
         <h1 className="display pg-name about-name" style={{ '--c': 'var(--stone)' }}>
           <span className="l"><span>{t('about.eyebrow')}</span></span>{' '}

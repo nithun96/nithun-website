@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { slugFromPath } from '../lib/parseFrontmatter'
-import { SHELL } from '../styles/shell'
 import { usePageMeta } from '../lib/usePageMeta'
 
 // Frontmatter only, read at build time (see the `posts` plugin in vite.config.js)
@@ -25,7 +24,7 @@ export default function WritingPage() {
   usePageMeta({ title: t('meta.writingTitle'), description: t('meta.writingDescription'), path: '/writing' })
 
   return (
-    <div className="page-enter" style={SHELL}>
+    <div className="page-enter shell">
       <section className="pg-hero">
         <h1 className="display pg-name" style={{ '--c': 'var(--dusty)' }}>
           <span className="l"><span>{t('writing.heading')}</span></span>{' '}

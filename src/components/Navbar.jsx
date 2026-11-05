@@ -1,7 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
-import { SHELL } from '../styles/shell'
 import { SECTIONS } from '../lib/sections'
 
 function ThemePill() {
@@ -44,7 +43,7 @@ export default function Navbar() {
   const { t } = useTranslation()
 
   return (
-    <header className="topbar" style={SHELL}>
+    <header className="topbar shell">
       <div className="topbar-row">
         <Link to="/" className="mark" viewTransition><span className="mark-dot" aria-hidden="true" />Nithun</Link>
         <nav className="sections" aria-label={t('nav.mainNav')}>

@@ -47,7 +47,7 @@ nithun-website/
     │   └── global.css              # Tailwind import, fonts, design tokens, all component classes (`.shell` aligns top bar, pages and footer)
     ├── components/
     │   ├── Navbar.jsx              # Top bar — wordmark, section links, language + theme pills
-    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, build date, licence
+    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, build date, ©
     │   └── PyreMark.jsx            # Pyre triangle logo (SVG)
     ├── sections/
     │   └── Hero.jsx                # Home page — contents page: name, standfirst, 4 numbered section rows
@@ -114,7 +114,7 @@ A "contents page": the name as a large two-line `<h1>` (surname in purple), a st
 A bookcase of the books Nithun recommends: one plank per series, labelled underneath. Books photographed on his own shelves show their real spine (`data/bookSpines.json`, images in `public/images/shelf/spines/`); the rest get a drawn spine. Tapping a spine lifts it and opens a panel with its title, author and series position; for drawn spines the panel shows the front cover from `bookCovers.json` (loaded from Open Library). Escape or "Put it back" closes it. Games and TV are hidden until they have cover art. Spine and cover art is kept out of Google Images (`noimageindex` tag, and `noindex` on the image files).
 
 ### About (`AboutPage.jsx`)
-A large "About / Nithun Manoharan" heading, then the bio (linking Pyre, Writing, Silence and Shelf; first paragraph as a serif lead) beside two photos of Nithun with a caption, six travel photos with translated locations, and an Instagram link. Every photo has smaller copies (`-sm`, `-600`, `-700`) and `srcset`, so phones and laptops download only the size they need. Photos are © Nithun Manoharan and excluded from the site's CC BY-NC licence.
+A large "About / Nithun Manoharan" heading, then the bio (linking Pyre, Writing, Silence and Shelf; first paragraph as a serif lead) beside two photos of Nithun with a caption, six travel photos with translated locations, and an Instagram link. Every photo has smaller copies (`-sm`, `-600`, `-700`) and `srcset`, so phones and laptops download only the size they need. Photos are © Nithun Manoharan, like everything else on the site.
 
 ### Silence (`SilencePage.jsx`)
 Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink noise, rain, ocean) that fill green while playing, a player band with a play/pause button, sleep timer countdown (30/60/90 min, 60-second fade-out) and volume, and hearing charity rows. The volume slider shows only where the browser can change volume (not on iPhone or iPad, which use their volume buttons).
@@ -203,7 +203,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Silence page (`/silence`) — sound rows and player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
-- [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, build date, licence
+- [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, build date, ©
 - [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
 - [x] RSS feed at `/rss.xml`, linked at the bottom of `/writing` (moved from the footer, Oct 2026)
 - [x] Pages other than Home load on demand, so the first visit downloads about half as much script

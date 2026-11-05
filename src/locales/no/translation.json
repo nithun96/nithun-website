@@ -133,7 +133,7 @@
     }
   },
   "footer": {
-    "license": "CC BY-NC 4.0",
+    "copyright": "© Nithun Manoharan",
     "elsewhere": "Andre steder",
     "updated": "Oppdatert {{date}}"
   },
@@ -166,7 +166,6 @@
     "placeStockholm": "Stockholm, Sverige",
     "placeKyoto": "Kyoto, Japan",
     "placeRiga": "Riga, Latvia",
-    "photosRights": "© Nithun Manoharan. Alle rettigheter forbeholdt. Omfattes ikke av lisensen under.",
     "portraitAlt": "Nithun Manoharan smiler under en hagebue",
     "flowerAlt": "Nithun Manoharan står i et lilla blomsterfelt",
     "headshotAlt": "Et portrettbilde av Nithun Manoharan",

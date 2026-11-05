@@ -87,7 +87,6 @@ export default function AboutPage() {
       <a className="about-more" href="https://www.instagram.com/nithunm" target="_blank" rel="noopener noreferrer">
         {t('about.instagram')}
       </a>
-      <p className="about-rights">{t('about.photosRights')}</p>
     </div>
   )
 }

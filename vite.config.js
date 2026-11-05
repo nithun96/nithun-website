@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { readdirSync, readFileSync } from 'fs'
 import { parseFrontmatter, slugFromPath } from './src/lib/parseFrontmatter.js'
+import { postToHast, postMeta } from './src/lib/markdownPost.js'
 
 // The newest post (title, slug, date, language and optional thumbnail), for the
 // Writing row on the homepage. Read here (not in the page) so the posts' text
@@ -20,8 +21,28 @@ function latestPost() {
   return posts.sort((a, b) => b.date.localeCompare(a.date))[0] ?? null
 }
 
+// Posts: `x.md?post` → { data, footnotes, hast } and `x.md?meta` → frontmatter,
+// both made here at build time so visitors don't download a Markdown parser
+// (see src/lib/markdownPost.js).
+function posts() {
+  return {
+    name: 'posts',
+    enforce: 'pre',
+    load(id) {
+      const [file, query = ''] = id.split('?')
+      const params = new URLSearchParams(query)   // the dev server adds `&import`
+      const kind = params.has('post') ? 'post' : params.has('meta') ? 'meta' : null
+      if (!file.endsWith('.md') || !kind) return null
+      this.addWatchFile(file)
+      const raw = readFileSync(file, 'utf-8')
+      return `export default ${JSON.stringify(kind === 'post' ? postToHast(raw) : postMeta(raw))}`
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
+    posts(),
     react(),
     tailwindcss(),
   ],

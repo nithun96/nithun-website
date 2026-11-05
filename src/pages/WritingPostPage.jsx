@@ -2,20 +2,19 @@ import { useState, useRef, useMemo, useCallback, useEffect, createContext, useCo
 import { createPortal } from 'react-dom'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import rehypeRaw from 'rehype-raw'
-import { parseFrontmatter, slugFromPath } from '../lib/parseFrontmatter'
-import { parseFootnotes } from '../lib/parseFootnotes'
+import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
+import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
+import { slugFromPath } from '../lib/parseFrontmatter'
 import { SHELL } from '../styles/shell'
 import { usePageMeta } from '../lib/usePageMeta'
 
-const rawFiles = import.meta.glob('../writing/*.md', { query: '?raw', import: 'default', eager: true })
+// Each post arrives as a ready-made tree, turned from Markdown at build time
+// (the `posts` plugin in vite.config.js, src/lib/markdownPost.js)
+const postFiles = import.meta.glob('../writing/*.md', { query: '?post', import: 'default', eager: true })
 
-const posts = Object.entries(rawFiles).map(([path, raw]) => {
-  const { data, content } = parseFrontmatter(raw)
-  return { ...data, slug: slugFromPath(path), content }
-})
+const posts = Object.entries(postFiles).map(([path, { data, footnotes, hast }]) => (
+  { ...data, slug: slugFromPath(path), footnotes, hast }
+))
 
 function formatDate(dateStr, locale) {
   if (!dateStr) return null
@@ -388,11 +387,7 @@ export default function WritingPostPage() {
     path: post ? `/writing/${post.slug}` : '/writing',
   })
 
-  const { body, footnotes } = useMemo(
-    () => (post ? parseFootnotes(post.content) : { body: '', footnotes: [] }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [post?.content]
-  )
+  const footnotes = useMemo(() => post?.footnotes ?? [], [post])
 
   const handleToggle = useCallback((num) => {
     setActiveFootnote(prev => prev === num ? null : num)
@@ -445,6 +440,11 @@ export default function WritingPostPage() {
       )
     },
   }), [footnotes, t])
+
+  // Same options react-markdown used, so the components above get the same props
+  const article = useMemo(() => post && toJsxRuntime(post.hast, {
+    Fragment, jsx, jsxs, components: mdComponents, ignoreInvalidStyle: true, passKeys: true, passNode: true,
+  }), [post, mdComponents])
 
   if (!post) return <Navigate to="/writing" replace />
 
@@ -518,13 +518,7 @@ export default function WritingPostPage() {
           className="post-body"
           lang={post.language || 'en'}
         >
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            components={mdComponents}
-          >
-            {body}
-          </ReactMarkdown>
+          {article}
         </div>
 
         {/* Spotify embed */}

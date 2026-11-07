@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { readdirSync, readFileSync } from 'fs'
+import { createHmac } from 'crypto'
 import { parseFrontmatter, slugFromPath } from './src/lib/parseFrontmatter.js'
 import { postToHast, postMeta } from './src/lib/markdownPost.js'
 
@@ -49,6 +50,22 @@ const LAB_VENDOR = {
   'lab/act-natural/vendor/qrcode.js': ['qrcode-generator/dist/qrcode.js'],
   'lab/act-natural/vendor/LICENSE-peerjs.txt': ['peerjs/LICENSE'],
 }
+// The relay (TURN) login for Act Natural, made fresh at each build from the secret the relay
+// on the server shares (GitHub secret TURN_SECRET; see server/turn/README.md). It follows the
+// TURN REST scheme coturn understands: the username holds an expiry time, the password is an
+// HMAC of it, so the secret itself never reaches the page and each login stops working after
+// 60 days. Without the secret (local builds) the game simply has no relay of its own.
+const TURN_TTL_DAYS = 60
+function turnScript() {
+  const secret = process.env.TURN_SECRET
+  if (!secret) return 'window.ActNatural = Object.assign(window.ActNatural || {}, { turn: null })\n'
+  const expires = Math.floor(Date.now() / 1000) + TURN_TTL_DAYS * 86400
+  const username = `${expires}:actnatural`
+  const credential = createHmac('sha1', secret).update(username).digest('base64')
+  return '// Made at build time by vite.config.js. Expires ' + new Date(expires * 1000).toISOString().slice(0, 10) + '.\n' +
+    `window.ActNatural = Object.assign(window.ActNatural || {}, { turn: ${JSON.stringify({ host: 'nithun.no', username, credential, expires })} })\n`
+}
+
 function labVendor() {
   const read = ([file, fix]) => {
     const text = readFileSync(new URL(`./node_modules/${file}`, import.meta.url), 'utf-8')
@@ -59,6 +76,7 @@ function labVendor() {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const path = req.url.split('?')[0].replace(/^\//, '')
+        if (path === 'lab/act-natural/turn.js') { res.setHeader('Content-Type', 'text/javascript'); return res.end(turnScript()) }
         if (!LAB_VENDOR[path]) return next()
         res.setHeader('Content-Type', path.endsWith('.js') ? 'text/javascript' : 'text/plain; charset=utf-8')
         res.end(read(LAB_VENDOR[path]))
@@ -66,6 +84,7 @@ function labVendor() {
     },
     generateBundle() {
       for (const [fileName, src] of Object.entries(LAB_VENDOR)) this.emitFile({ type: 'asset', fileName, source: read(src) })
+      this.emitFile({ type: 'asset', fileName: 'lab/act-natural/turn.js', source: turnScript() })
     },
   }
 }

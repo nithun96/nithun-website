@@ -36,6 +36,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          TURN_SECRET: ${{ secrets.TURN_SECRET }}   # Act Natural's relay login (server/turn/README.md); empty = no relay
         run: npm run build
 
       - name: Set up SSH

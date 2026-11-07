@@ -15,7 +15,7 @@ map $request_uri $robots_tag {
     default             "";
 }
 
-# Act Natural's PeerJS proxy (below) keeps WebSockets open: "upgrade" when the browser
+# Act Natural's PeerJS proxy and relay (below) keep WebSockets open: "upgrade" when the browser
 # asks for one, "close" otherwise. Its own name, so it can't clash with a map elsewhere.
 map $http_upgrade $act_natural_connection {
     default upgrade;
@@ -165,6 +165,21 @@ server {
         proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
         proxy_ssl_verify_depth 3;
         proxy_read_timeout 1h;     # the TV keeps its connection open for the whole game
+        proxy_send_timeout 1h;
+        proxy_buffering off;
+        expires -1;
+    }
+    # Act Natural's encrypted relay: Mosquitto on this server (server/mqtt/README.md), which
+    # listens on 127.0.0.1:9001 only. Through here phones and the TV reach it on port 443.
+    # Everything passing through is end-to-end encrypted by the game. Until Mosquitto is
+    # installed this answers 502 and phones that can't link directly can't join.
+    location = /lab/act-natural/mqtt {
+        proxy_pass http://127.0.0.1:9001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $act_natural_connection;
+        proxy_set_header Host $host;
+        proxy_read_timeout 1h;     # MQTT pings every 15 s; a game keeps the socket open
         proxy_send_timeout 1h;
         proxy_buffering off;
         expires -1;

@@ -90,6 +90,14 @@ function labVendor() {
 }
 
 export default defineConfig({
+  server: {
+    proxy: {
+      // Act Natural's relay (MQTT broker): the one on nithun.no, as on the live site.
+      // ACT_NATURAL_MQTT=ws://localhost:9001 npm run dev uses a local Mosquitto instead
+      // (run it with server/mqtt/act-natural.conf; see server/mqtt/README.md).
+      '/lab/act-natural/mqtt': { target: process.env.ACT_NATURAL_MQTT || 'wss://nithun.no', ws: true, changeOrigin: true },
+    },
+  },
   plugins: [
     posts(),
     labVendor(),

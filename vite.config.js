@@ -40,9 +40,40 @@ function posts() {
   }
 }
 
+// Act Natural (public/lab/act-natural/) loads PeerJS and the QR library from its own vendor/
+// folder on nithun.no: its CSP only allows the site's own scripts. They're npm dependencies
+// (versions in package.json), copied from node_modules into the build here and served
+// straight from node_modules by the dev server, so `npm run dev` works for testing too.
+const LAB_VENDOR = {
+  'lab/act-natural/vendor/peerjs.min.js': ['peerjs/dist/peerjs.min.js', s => s.replace(/\/\/# sourceMappingURL=\S+\s*$/, '')],
+  'lab/act-natural/vendor/qrcode.js': ['qrcode-generator/dist/qrcode.js'],
+  'lab/act-natural/vendor/LICENSE-peerjs.txt': ['peerjs/LICENSE'],
+}
+function labVendor() {
+  const read = ([file, fix]) => {
+    const text = readFileSync(new URL(`./node_modules/${file}`, import.meta.url), 'utf-8')
+    return fix ? fix(text) : text
+  }
+  return {
+    name: 'lab-vendor',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const path = req.url.split('?')[0].replace(/^\//, '')
+        if (!LAB_VENDOR[path]) return next()
+        res.setHeader('Content-Type', path.endsWith('.js') ? 'text/javascript' : 'text/plain; charset=utf-8')
+        res.end(read(LAB_VENDOR[path]))
+      })
+    },
+    generateBundle() {
+      for (const [fileName, src] of Object.entries(LAB_VENDOR)) this.emitFile({ type: 'asset', fileName, source: read(src) })
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     posts(),
+    labVendor(),
     react(),
     tailwindcss(),
   ],

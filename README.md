@@ -94,6 +94,15 @@ nithun-website/
 | `/books` | → `/shelf` | Redirect |
 | anything else | `NotFoundPage` | Page not found (noindex) |
 
+### Outside the React app (`public/lab/`, not linked, noindex)
+
+| URL | What |
+|---|---|
+| `/lab/noise` | Throwaway test page: brown noise made live with Web Audio (Silence lab) |
+| `/lab/act-natural/` | **Act Natural**, a party game for an AI workshop (`ACT-NATURAL-BRIEF.md`). `?host` on the computer driving the TV, phones join by QR code or room code; `?host&demo=6` runs without a network; `how.html` explains the rules |
+
+Act Natural is plain HTML, JS and canvas with no build step: `sim.js` (the room, bots, tasks), `round.js` (rounds, Hunter, shooting, scores), `net.js` (room codes, PeerJS settings), `host.js` (the TV: server, drawing, join panel), `phone.js` (landing page, controller, Hunter and results screens). PeerJS and the QR library are copied into `vendor/`. The TV is the server: phones connect to it directly over WebRTC, and PeerJS's public server (`0.peerjs.com`) only introduces them. It has its own Nginx block (CSP allows `0.peerjs.com`, `X-Robots-Tag: noindex`). To retire it, delete that block and list its files in `.github/retired-files.txt`.
+
 ---
 
 ## How It Fits Together
@@ -208,6 +217,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] RSS feed at `/rss.xml`, linked at the bottom of `/writing` (moved from the footer, Oct 2026)
 - [x] Pages other than Home load on demand, so the first visit downloads about half as much script
 - [x] WCAG AA accessibility — translated skip link, aria-labels, keyboard-accessible footnotes, visible focus, AA contrast in both themes, reduced-motion support, `<html lang>` follows the language (known gaps listed under Accessibility)
+- [x] Act Natural party game (`/lab/act-natural/`, Nov 2026) — TV + phones over PeerJS, Hunter rounds, tasks and scores, colour-blind friendly; not linked from the site
 - [x] Security headers on Nginx
 - [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)

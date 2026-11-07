@@ -128,6 +128,27 @@ server {
         try_files /index.html =404;
     }
 
+    # Act Natural, a party game for an AI workshop (ACT-NATURAL-BRIEF.md). Not linked from
+    # the site. Its own block because PeerJS needs connect-src to its public server
+    # (0.peerjs.com), which the site's CSP blocks. An add_header here drops ALL the
+    # server-level headers, so they are repeated in full. Retire: delete this block and
+    # list the folder's files in .github/retired-files.txt.
+    location = /lab/act-natural {
+        return 301 /lab/act-natural/;
+    }
+    location ^~ /lab/act-natural/ {
+        expires -1;
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com; frame-ancestors 'none'" always;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()" always;
+        add_header Cross-Origin-Opener-Policy "same-origin" always;
+        add_header X-Robots-Tag "noindex, nofollow" always;
+        try_files $uri ${uri}index.html =404;
+    }
+
     # Pages, sitemap, robots.txt: always revalidate, so a deploy shows up at once.
     location / {
         expires -1;

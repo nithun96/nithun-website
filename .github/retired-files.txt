@@ -22,5 +22,3 @@ lab/act-natural/vendor/peerjs.min.js
 lab/act-natural/vendor/qrcode.js
 lab/act-natural/vendor/LICENSE-peerjs.txt
 lab/act-natural/turn.js
-lab/noise.html
-lab/noise.js

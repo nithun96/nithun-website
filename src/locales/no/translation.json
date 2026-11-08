@@ -4,7 +4,8 @@
     "silence": "Stillhet",
     "shelf": "Hylle",
     "about": "Om meg",
-    "toggleTheme": "Bytt tema",
+    "themeToLight": "Bytt til lyst tema",
+    "themeToDark": "Bytt til mørkt tema",
     "toggleLang": "English",
     "skip": "Hopp til innhold",
     "sections": "Seksjoner",
@@ -14,7 +15,7 @@
     "name": "Nithun Manoharan",
     "pyreBadge": "Bygger Pyre",
     "location": "Oslo, Norge",
-    "intro": "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, hvor vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
+    "intro": "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, der vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
     "donate": "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselsorganisasjonene som er nevnt på Stillhet-siden</5>.",
     "teasers": {
       "writing": {
@@ -24,7 +25,7 @@
       },
       "silence": {
         "label": "Stillhet",
-        "title": "Et tinnitus-verktøy",
+        "title": "Et tinnitusverktøy",
         "desc": "Søvn- og avslappingslyder."
       },
       "shelf": {
@@ -33,7 +34,7 @@
         "desc": "En logg over det jeg er fan av."
       },
       "about": {
-        "label": "Om",
+        "label": "Om meg",
         "title": "Om meg",
         "desc": "Bilder, og litt mer om hvem jeg er."
       }
@@ -51,7 +52,7 @@
   "writing": {
     "heading": "Skriverier",
     "headingTail": "underveis",
-    "subtitle": "Essays, kommentarer og enkle observasjoner.",
+    "subtitle": "Essays, kommentarer og en og annen observasjon.",
     "backWriting": "Skriverier",
     "footnote": "Fotnote",
     "closeFootnote": "Lukk fotnote",
@@ -135,13 +136,14 @@
   "footer": {
     "copyright": "© Nithun Manoharan",
     "elsewhere": "Andre steder",
+    "play": "Spill",
     "updated": "Oppdatert {{date}}"
   },
   "meta": {
     "homeTitle": "Nithun Manoharan | Produktsjef, AI og dataanalyse",
     "homeDescription": "Nithun Manoharan er produktsjef med spesialisering innen AI og dataanalyse, basert i Norge. Dette er hans personlige nettside.",
     "writingTitle": "Skriverier | Nithun Manoharan",
-    "writingDescription": "Essays, kommentarer og enkle observasjoner fra Nithun Manoharan.",
+    "writingDescription": "Essays, kommentarer og en og annen observasjon fra Nithun Manoharan.",
     "shelfTitle": "Hylle | Nithun Manoharan",
     "shelfDescription": "Bøker Nithun Manoharan har likt: en personlig logg over hva som har vært verdt tiden.",
     "silenceTitle": "Deafening Silence | Nithun Manoharan",
@@ -158,8 +160,8 @@
   "about": {
     "eyebrow": "Om",
     "bio1": "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av <0>Pyre</0>, et norsk programvareselskap jeg driver sammen med to venner. Utenom det <1>skriver jeg her</1> innimellom, har bygget <2>Deafening Silence</2> som et gratis verktøy for tinnituslydterapi, og holder en <3>hylle</3> med bøker jeg er fan av.",
-    "bio2": "Reising har også lært meg mye — som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
-    "portraitsCaption": "Fra turen min til Sør-Korea i år",
+    "bio2": "Reising har lært meg mye, som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
+    "portraitsCaption": "Fra en tur til Sør-Korea",
     "placeWroclaw": "Wrocław, Polen",
     "placeCopenhagen": "København, Danmark",
     "placeHeddal": "Heddal, Norge",

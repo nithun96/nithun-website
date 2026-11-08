@@ -174,7 +174,7 @@ nithun-website/
     │   └── global.css              # Tailwind import, dark mode variant, CSS custom properties, all component classes (incl. `.shell`, the shared 1200px page container)
     ├── components/
     │   ├── Navbar.jsx              # Top bar — purple-dot wordmark, links to the four sections, language + theme pills (links on a second row on phones)
-    │   ├── Footer.jsx              # Footer — LinkedIn, GitHub, Instagram, "Updated <build date>", © Nithun Manoharan
+    │   ├── Footer.jsx              # Footer — LinkedIn, GitHub, Instagram, Play (play.nithun.no, the games), "Updated <build date>", © Nithun Manoharan
     │   └── PyreMark.jsx            # Pyre triangle SVG logo — used on the homepage
     ├── sections/
     │   └── Hero.jsx                # Home page (contents page) — name, standfirst, 4 numbered section rows with thumbnails (Silence's plays brown noise), donate nudge
@@ -396,7 +396,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Pyre branding — triangle mark on the homepage, links to pyre.no
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`
 - [x] Footnote system — inline hover tooltips (desktop) / bottom-sheet panel (mobile)
-- [x] Footer — LinkedIn, GitHub, Instagram, build date, © Nithun Manoharan
+- [x] Footer — LinkedIn, GitHub, Instagram, a Play link to play.nithun.no (games, own repo nithun96/act-natural), build date, © Nithun Manoharan
 - [x] Top bar — wordmark, links to the four sections, theme/lang pills; page transitions; new pages open at the top, Back restores the scroll position
 - [x] Per-page HTML for link previews (`scripts/prerender.js`), RSS feed at `/rss.xml`, pages other than Home loaded on demand (`lazy` routes in `main.jsx`)
 - [x] SEO — per-page titles/descriptions/canonicals, Open Graph, JSON-LD (incl. Pyre + Instagram), robots.txt, auto-generated sitemap, noindex 404 page

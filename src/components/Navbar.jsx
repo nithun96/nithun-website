@@ -14,7 +14,7 @@ function ThemePill() {
   }, [dark])
 
   return (
-    <button type="button" className="pill" onClick={() => setDark(d => !d)} aria-label={t('nav.toggleTheme')}>
+    <button type="button" className="pill" onClick={() => setDark(d => !d)} aria-label={t(dark ? 'nav.themeToLight' : 'nav.themeToDark')}>
       {/* ︎ shows the sun as a plain symbol, not a yellow emoji, on iPhone */}
       {dark ? '☀︎' : '◐'}
     </button>

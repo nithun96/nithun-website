@@ -47,7 +47,7 @@ nithun-website/
     │   └── global.css              # Tailwind import, fonts, design tokens, all component classes (`.shell` aligns top bar, pages and footer)
     ├── components/
     │   ├── Navbar.jsx              # Top bar — wordmark, section links, language + theme pills
-    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, build date, ©
+    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, Play (play.nithun.no), build date, ©
     │   └── PyreMark.jsx            # Pyre triangle logo (SVG)
     ├── sections/
     │   └── Hero.jsx                # Home page — contents page: name, standfirst, 4 numbered section rows
@@ -94,11 +94,10 @@ nithun-website/
 | `/books` | → `/shelf` | Redirect |
 | anything else | `NotFoundPage` | Page not found (noindex) |
 
-### Outside the React app (`public/lab/`, not linked, noindex)
+### Old addresses
 
 | URL | What |
 |---|---|
-| `/lab/noise` | Throwaway test page: brown noise made live with Web Audio (Silence lab) |
 | `/lab/act-natural/` | **Act Natural** moved to its own repo, [github.com/nithun96/act-natural](https://github.com/nithun96/act-natural), and lives at [play.nithun.no/act-natural/](https://play.nithun.no/act-natural/). The old address redirects there (Nginx). |
 
 ---
@@ -210,7 +209,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Silence page (`/silence`) — sound rows and player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
-- [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, build date, ©
+- [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, a Play link to play.nithun.no, build date, ©
 - [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
 - [x] RSS feed at `/rss.xml`, linked at the bottom of `/writing` (moved from the footer, Oct 2026)
 - [x] Pages other than Home load on demand, so the first visit downloads about half as much script

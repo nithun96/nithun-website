@@ -1,9 +1,9 @@
 ---
-title: "Buss for Tog"
+title: "Buss for tog"
 date: "2026-05-18"
 slug: "buss-for-tog"
 language: "no"
-summary: 'A Norwegian exclusive "kåseri" regarding language confusion, Arsenal and the book "How to Blow Up A Pipeline" by Andreas Malm.'
+summary: 'A Norwegian-language kåseri about language confusion, Arsenal and the book "How to Blow Up a Pipeline" by Andreas Malm.'
 mastodon: ""
 spotify: "https://open.spotify.com/playlist/05UrvbxJWbY2dv4Kow93fW"
 ---

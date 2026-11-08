@@ -81,7 +81,7 @@
   --sage:  #8FAF6E;
   --dusty: #7090B0;
   --stone: #C4A882;
-  --honey: #FAEDCB;
+  --honey: #D9B35C;   /* 9:1 on bg; was #FAEDCB, too close to body text to read as a section colour */
   --wheat: #E8D49A;
   --purple: #8F5FD0;   /* 3.9:1 on bg: large text and marks only, never small text */
   --purple-tint: #8F5FD040;

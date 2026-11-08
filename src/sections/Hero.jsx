@@ -5,7 +5,7 @@ import { useTranslation, Trans } from 'react-i18next'
 import PyreMark from '../components/PyreMark'
 import { SECTIONS } from '../lib/sections'
 import { usePageMeta } from '../lib/usePageMeta'
-import { createLoopPlayer } from '../audio/loopPlayer'
+import { createNoisePlayer } from '../audio/noisePlayer'
 
 const post = __LATEST_POST__
 
@@ -19,7 +19,7 @@ function formatDate(dateStr, lang) {
 function SilenceThumb() {
   const { t } = useTranslation()
   const [playing, setPlaying] = useState(false)
-  const [player] = useState(() => createLoopPlayer(id => setPlaying(id !== null)))
+  const [player] = useState(() => createNoisePlayer(id => setPlaying(id !== null)))
   useEffect(() => () => player.stop(), [player])
 
   const toggle = () => {

@@ -101,12 +101,6 @@ server {
         expires 7d;
         try_files $uri =404;
     }
-    # Silence's audio files (scripts/makeSilenceSounds.js). A changed file needs a new name.
-    location /sounds/ {
-        expires 30d;
-        try_files $uri =404;
-    }
-
     # Unknown URLs get a real 404 (dist/404.html, written by scripts/prerender.js),
     # not the homepage with status 200, which search engines count as a "soft 404".
     error_page 404 /404.html;

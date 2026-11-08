@@ -15,13 +15,6 @@ map $request_uri $robots_tag {
     default             "";
 }
 
-# Act Natural's PeerJS proxy and relay (below) keep WebSockets open: "upgrade" when the browser
-# asks for one, "close" otherwise. Its own name, so it can't clash with a map elsewhere.
-map $http_upgrade $act_natural_connection {
-    default upgrade;
-    ''      close;
-}
-
 # Redirect nithunmanoharan.com to nithun.no
 server {
     listen 80;
@@ -135,66 +128,10 @@ server {
         try_files /index.html =404;
     }
 
-    # Act Natural, a party game for an AI workshop (ACT-NATURAL-BRIEF.md). Not linked from
-    # the site. Its own block because PeerJS needs connect-src to its public server
-    # (0.peerjs.com), which the site's CSP blocks. An add_header here drops ALL the
-    # server-level headers, so they are repeated in full. Retire: delete this block and
-    # list the folder's files in .github/retired-files.txt.
-    location = /lab/act-natural {
-        return 301 /lab/act-natural/;
-    }
-    # The introduction (signalling) server for Act Natural, forwarded to PeerJS's public one,
-    # for networks that block 0.peerjs.com. Only introductions pass through here (a few small
-    # messages per phone); game data goes directly between the devices over WebRTC.
-    # /lab/act-natural/peer/peerjs?… → https://0.peerjs.com/peerjs?…
-    # The name is looked up per request (resolver + variable), not when Nginx starts: a DNS
-    # hiccup at a deploy or reboot must not stop the whole site from starting.
-    location ^~ /lab/act-natural/peer/ {
-        resolver 1.1.1.1 9.9.9.9 valid=300s ipv6=off;
-        resolver_timeout 5s;
-        set $peerjs_upstream 0.peerjs.com;
-        rewrite ^/lab/act-natural/peer/(.*)$ /$1 break;
-        proxy_pass https://$peerjs_upstream;
-        proxy_http_version 1.1;
-        proxy_set_header Host 0.peerjs.com;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $act_natural_connection;
-        proxy_ssl_server_name on;
-        proxy_ssl_name 0.peerjs.com;
-        proxy_ssl_verify on;
-        proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
-        proxy_ssl_verify_depth 3;
-        proxy_read_timeout 1h;     # the TV keeps its connection open for the whole game
-        proxy_send_timeout 1h;
-        proxy_buffering off;
-        expires -1;
-    }
-    # Act Natural's encrypted relay: Mosquitto on this server (server/mqtt/README.md), which
-    # listens on 127.0.0.1:9001 only. Through here phones and the TV reach it on port 443.
-    # Everything passing through is end-to-end encrypted by the game. Until Mosquitto is
-    # installed this answers 502 and phones that can't link directly can't join.
-    location = /lab/act-natural/mqtt {
-        proxy_pass http://127.0.0.1:9001;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $act_natural_connection;
-        proxy_set_header Host $host;
-        proxy_read_timeout 1h;     # MQTT pings every 15 s; a game keeps the socket open
-        proxy_send_timeout 1h;
-        proxy_buffering off;
-        expires -1;
-    }
-    location ^~ /lab/act-natural/ {
-        expires -1;
-        add_header X-Frame-Options "SAMEORIGIN" always;
-        add_header X-Content-Type-Options "nosniff" always;
-        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-        add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' wss://nithun.no https://0.peerjs.com wss://0.peerjs.com; frame-ancestors 'none'" always;
-        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-        add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()" always;
-        add_header Cross-Origin-Opener-Policy "same-origin" always;
-        add_header X-Robots-Tag "noindex, nofollow" always;
-        try_files $uri ${uri}index.html =404;
+    # Act Natural moved to its own site (github.com/nithun96/act-natural). Old links and
+    # QR codes keep working: the rest of the path and the query string are carried over.
+    location ^~ /lab/act-natural {
+        rewrite ^/lab/act-natural/?(.*)$ https://play.nithun.no/act-natural/$1 permanent;
     }
 
     # Pages, sitemap, robots.txt: always revalidate, so a deploy shows up at once.

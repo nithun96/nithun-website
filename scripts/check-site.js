@@ -69,7 +69,7 @@ for (const file of sources) {
     const dir = path.slice(0, path.lastIndexOf('/', path.indexOf('${')) + 1)
     const pattern = new RegExp(`^${escapeRe(path).replace(/\$\{[^}]*\}/g, '.+')}$`)
     const found = existsSync(join(pub, dir)) && statSync(join(pub, dir)).isDirectory() &&
-      walk(join('public', dir)).some(f => pattern.test(`/${relative('public', f)}`))
+      walk(join('public', dir)).some(f => pattern.test(`/${relative('public', f).replaceAll('\\', '/')}`))
     if (!found) problems.add(`${file}: no file in public/ matches ${path}`)
   }
 }

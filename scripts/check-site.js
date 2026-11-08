@@ -5,9 +5,9 @@
 // 2. Pages: every route in src/main.jsx has its own per-page HTML in dist/
 //    (so it is in PAGES in scripts/prerender.js; without it the live site
 //    returns 404) and is listed in the sitemap.
-// 3. Files: every /images, /fonts or /sounds path (and the root icons) named in
+// 3. Files: every /images or /fonts path (and the root icons) named in
 //    src/, index.html and the manifest exists in public/. A path built from a
-//    variable (`/sounds/silence-${sound}-loop.m4a`) must match at least one
+//    variable (`/images/about/${name}.webp`) must match at least one
 //    file. Every spine photo in src/data/bookSpines.json exists.
 // 4. JSON-LD in every generated HTML page parses.
 //

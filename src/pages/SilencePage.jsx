@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { createLoopPlayer, canSetVolume } from '../audio/loopPlayer'
+import { createNoisePlayer } from '../audio/noisePlayer'
 import charitiesData from '../data/charities.json'
 import { usePageMeta } from '../lib/usePageMeta'
 
@@ -48,7 +48,7 @@ export default function SilencePage() {
   const waves = useMemo(() => Object.fromEntries(SOUNDS.map(id => [id, waveHeights(id)])), [])
 
   const [player] = useState(() => {
-    const p = createLoopPlayer(setPlaying)
+    const p = createNoisePlayer(setPlaying)
     p.setVolume(DEFAULT_VOLUME)
     return p
   })
@@ -169,19 +169,9 @@ export default function SilencePage() {
             </div>
           </div>
           <div>
-            {/* iPhones and iPads use their volume buttons instead */}
-            {canSetVolume ? (
-              <>
-                <label className="k" htmlFor="silence-volume">{t('silence.volume')}</label>
-                <input id="silence-volume" className="vol-slider" type="range" min="0" max="1" step="0.01"
-                  value={volume} onChange={handleVolumeChange} />
-              </>
-            ) : (
-              <>
-                <span className="k">{t('silence.volume')}</span>
-                <p className="player-note">{t('silence.iosVolume')}</p>
-              </>
-            )}
+            <label className="k" htmlFor="silence-volume">{t('silence.volume')}</label>
+            <input id="silence-volume" className="vol-slider" type="range" min="0" max="1" step="0.01"
+              value={volume} onChange={handleVolumeChange} />
             {audioError && <p className="player-note" role="alert">{t('silence.audioError')}</p>}
           </div>
         </div>

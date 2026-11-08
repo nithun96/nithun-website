@@ -99,7 +99,7 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - The site is a single-page app. `index.html` holds the **homepage's** title, description and Open Graph tags, plus the JSON-LD schema, and deliberately **no static canonical tag** (it is also the fallback for unknown URLs).
 - **Per-page HTML for link previews:** after `vite build`, `scripts/prerender.js` writes a copy of `index.html` for every page and post with that page's own title, description, canonical URL and Open Graph tags (`dist/about.html`, `dist/writing/<slug>.html`, …). Nginx serves them via `try_files $uri $uri.html =404`, so chat apps and LinkedIn show the right page without running JavaScript. React still renders the body. Any other URL gets `dist/404.html` with a real **404 status** (also written by `prerender.js`), so **a page missing from `PAGES` returns 404**. A trailing slash redirects (`/writing/` → `/writing`), and `/books` → `/shelf`. Posts also get BlogPosting JSON-LD (author, date) in their per-page HTML.
 - Each page calls `usePageMeta({ title, description, path })` from `src/lib/usePageMeta.js`, which sets its own title, description, canonical URL and Open Graph tags. Titles/descriptions live under `meta.*` in both translation files; posts use their frontmatter `title` and `summary`.
-- **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`, (4) add it to `PAGES` in `scripts/prerender.js`. `scripts/check-site.js` (the last step of `npm run build`) fails the build if a route misses step 3 or 4, a translation key is missing from one language, or a referenced image/font/sound file doesn't exist. Posts in `src/writing/` are added to the sitemap, the per-page HTML and the RSS feed automatically.
+- **When adding a new page:** (1) call `usePageMeta` in it, (2) add `meta.<page>Title` / `meta.<page>Description` to both translation files, (3) add the URL to `scripts/generate-sitemap.js`, (4) add it to `PAGES` in `scripts/prerender.js`. `scripts/check-site.js` (the last step of `npm run build`) fails the build if a route misses step 3 or 4, a translation key is missing from one language, or a referenced image or font file doesn't exist. Posts in `src/writing/` are added to the sitemap, the per-page HTML and the RSS feed automatically.
 - Shelf cover and spine art (other people's book art) must stay out of Google Images, where it used to appear in searches for Nithun's name. `/shelf` gets `noimageindex` twice: an `X-Robots-Tag` header from Nginx (a `map` on `$request_uri` in `nginx/nithun-website`) and a robots meta tag added by `ShelfPage.jsx`. Any new page that shows third-party images (e.g. Games/TV covers) needs the same.
 - Photos in posts live in `public/images/writing/<slug>/` as webp: a 1000px-wide copy for the page and a full-resolution `-full.webp` for the full-screen view, all metadata stripped (phone photos carry GPS location). Nginx sends `X-Robots-Tag: noindex` for everything under `/images/writing/` (same `map`), so they stay out of Google Images and searches for Nithun's name.
 - **Only photos of Nithun himself should appear in image search.** The six travel photos on About (`/images/about/photo-*`), the book spines and Shelf artwork (`/images/shelf/`) and the Silence artwork (`/images/silence/`) get the same `noindex` header. His own photos (portrait, headshot, flower field and their `-sm` copies) stay indexable and are listed as image entries in the sitemap (`IMAGES` in `scripts/generate-sitemap.js`), because the pages are rendered by JavaScript. A new photo of him: add it to `IMAGES`. A new photo that isn't of him: put it under `/images/writing/` or name it `photo-*` in `/images/about/`.
@@ -149,7 +149,6 @@ nithun-website/
 │   ├── check-site.js               # Last build step: fails the build if translation keys, pages (PAGES/sitemap), file paths or JSON-LD drift out of step
 │   ├── fetchBookCovers.js          # `npm run fetch-covers` — see Book Covers
 │   ├── finaliseBookCovers.js       # `npm run finalise-covers` — see Book Covers
-│   └── makeSilenceSounds.js        # `npm run make-sounds` — renders Silence's sound files (needs ffmpeg)
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
@@ -157,7 +156,6 @@ nithun-website/
 │   ├── apple-touch-icon.png        # iPhone home-screen icon (180px); icon-192/512 and icon-maskable-512 for Android
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files (see Fonts section)
-│   ├── sounds/                     # Silence's sound files — 30-day cache, so a changed file needs a new name
 │   └── images/
 │       ├── og-nithun.jpg           # Link-preview (Open Graph / Twitter) image
 │       ├── nithun.jpeg             # Old link-preview image — no longer referenced
@@ -188,7 +186,8 @@ nithun-website/
     ├── game/
     │   └── GameLevel1.jsx          # Game pilot (see GAME-BRIEF.md) — not imported or routed yet
     ├── audio/
-    │   └── loopPlayer.js           # Silence player — plays public/sounds/ with a 1 s crossfade (see README)
+    │   ├── noisePlayer.js          # Silence player — makes the sound live with the Web Audio API on the "playback" audio session (see README)
+    │   └── noiseRecipes.js         # The four sounds as recipes (brown, pink, rain, ocean), levelled to −20 LUFS
     ├── data/
     │   ├── shelf.json              # Shelf content — 58 books, 50 games, 8 TV entries
     │   ├── bookCovers.json         # Pre-fetched book cover URLs — generated, see Book Covers
@@ -244,7 +243,7 @@ This will build, upload to the server, update the Nginx config, and push to GitH
 
 The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
 
-**Compression and caching** are set in `nginx/nithun-website`: gzip for JS/CSS/JSON/SVG/XML; `/assets/` (hashed build files) cached 1 year, `/fonts/` and `/sounds/` 30 days, `/images/` 7 days; pages always revalidate. Because images and sounds are cached, give a replaced file a new filename rather than overwriting it.
+**Compression and caching** are set in `nginx/nithun-website`: gzip for JS/CSS/JSON/SVG/XML; `/assets/` (hashed build files) cached 1 year, `/fonts/` 30 days, `/images/` 7 days; pages always revalidate. Because images and sounds are cached, give a replaced file a new filename rather than overwriting it.
 
 **Removing a file from the site:** the upload only adds and overwrites files, so a file deleted from the repo stays on the server. List it in `.github/retired-files.txt` (path relative to `dist/`) and the next deploy deletes it. Each deploy also logs files on the server that the build doesn't have. Never list `assets/` files: old hashed builds stay so open tabs can still load them.
 
@@ -334,7 +333,7 @@ Alternatives considered: SteamGridDB (games — nicer curated "grid" art style, 
 `src/sw.js` is a service worker registered by `SilencePage.jsx` only, so visitors who never open Silence download nothing extra. `scripts/build-sw.js` copies it to `dist/sw.js` with the list of files to save (built files, fonts, Silence artwork, about 0.7 MB) and a version that changes with that list.
 
 - Pages always come from the network; offline it falls back to the saved `/` or `/silence`.
-- Each sound file is saved the first time it plays (3.7 MB each) and then played from the cache, answering the audio element's byte-range requests (status 206, which iPhones need).
+- There are no sound files to save: Silence makes its sound live (see README, Silence player). The worker deletes the old "sounds" cache from when it did play files.
 - Don't rename `/sw.js`, and keep it out of the long-cache locations in Nginx (it is served by `location /`, which always revalidates).
 - **To switch it off:** replace the body of `src/sw.js` with a worker that unregisters itself (the comment at the top of the file shows how) and deploy. Removing the file alone would leave the old worker running in visitors' browsers.
 
@@ -390,7 +389,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Redesign (Oct 2026) — editorial "contents page" homepage, purple identity colour, section colours, motion per Design Principles
 - [x] Homepage — name, standfirst, 4 numbered section rows with thumbnails (latest post, a Silence player, Shelf, About), donate nudge
 - [x] Shelf page (`/shelf`) — 58 books as a bookcase; 34 real spines photographed from Nithun's shelves, 24 drawn (see Shelf Spines); Games (50) and TV (8) hidden until they have cover art
-- [x] Silence page (`/silence`) — sound rows, player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on; works offline after a first visit (service worker)
+- [x] Silence page (`/silence`) — sound rows, player band with sleep timer; sound made live in the browser (no sound files); keeps playing on a locked iPhone and with the mute switch on; works offline after a first visit (service worker)
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed; posts turned into a tree at build time, so no Markdown parser ships to visitors
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
 - [x] Pyre branding — triangle mark on the homepage, links to pyre.no

@@ -124,7 +124,6 @@
     "paused": "{{sound}} (paused)",
     "playSound": "Play {{sound}}",
     "pauseSound": "Pause {{sound}}",
-    "iosVolume": "On iPhone and iPad, use the volume buttons.",
     "charities": {
       "hlf": "Norway's national hearing organisation",
       "efhoh": "European Federation of Hard of Hearing People",

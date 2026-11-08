@@ -124,7 +124,6 @@
     "paused": "{{sound}} (på pause)",
     "playSound": "Spill av {{sound}}",
     "pauseSound": "Sett {{sound}} på pause",
-    "iosVolume": "På iPhone og iPad bruker du volumknappene.",
     "charities": {
       "hlf": "Norges landsdekkende hørselsorganisasjon",
       "efhoh": "Den europeiske føderasjonen for hørselshemmede",

@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "fetch-covers": "node scripts/fetchBookCovers.js",
-    "finalise-covers": "node scripts/finaliseBookCovers.js",
-    "make-sounds": "node scripts/makeSilenceSounds.js"
+    "finalise-covers": "node scripts/finaliseBookCovers.js"
   },
   "dependencies": {
     "i18next": "^26.0.3",

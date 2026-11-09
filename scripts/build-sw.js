@@ -19,15 +19,13 @@ const precache = [
   '/manifest.webmanifest',
   '/icon-192.png',
 ]
-const sounds = list('sounds').filter(f => f.endsWith('.m4a'))
 
 const version = createHash('sha256').update(precache.join('\n')).digest('hex').slice(0, 12)
 const source = readFileSync(resolve(root, 'src/sw.js'), 'utf-8')
-  .replace('/* global VERSION, PRECACHE, SOUNDS */', [
+  .replace('/* global VERSION, PRECACHE */', [
     `const VERSION = ${JSON.stringify(version)}`,
     `const PRECACHE = ${JSON.stringify(precache)}`,
-    `const SOUNDS = ${JSON.stringify(sounds)}`,
   ].join('\n'))
 
 writeFileSync(resolve(dist, 'sw.js'), source)
-console.log(`build-sw: ${precache.length} files to save offline, ${sounds.length} sounds, version ${version}`)
+console.log(`build-sw: ${precache.length} files to save offline, version ${version}`)

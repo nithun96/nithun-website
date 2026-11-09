@@ -1,13 +1,20 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { createLoopPlayer, canSetVolume } from '../audio/loopPlayer'
+import { createNoisePlayer } from '../audio/noisePlayer'
 import charitiesData from '../data/charities.json'
 import { usePageMeta } from '../lib/usePageMeta'
 
 const SOUNDS = ['brown', 'pink', 'rain', 'ocean']
 const TIMER_OPTIONS = [null, 30, 60, 90]
-const DEFAULT_VOLUME = 0.6   // computers and Android; iPhones use their volume buttons
+// Full volume on iPhones and iPads, as before Nov 2026 (the old player couldn't change
+// volume there, so people set it with the volume buttons); a gentler start elsewhere.
+// iPads ask for desktop pages and say "Macintosh", but have a touch screen.
+const isIos = typeof navigator !== 'undefined' &&
+  (/iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1))
+const DEFAULT_VOLUME = isIos ? 1 : 0.6
 const charities = charitiesData.list
+// Tinnitus UK's sound therapy leaflet (the basis for the volume tip in the guide)
+const TINNITUS_UK_GUIDE = 'https://tinnitus.org.uk/wp-content/uploads/2024/08/Tinnitus-UK-Sound-Therapy-Leaflet.pdf'
 
 function formatRemaining(ms) {
   const total = Math.max(0, Math.ceil(ms / 1000))
@@ -48,7 +55,7 @@ export default function SilencePage() {
   const waves = useMemo(() => Object.fromEntries(SOUNDS.map(id => [id, waveHeights(id)])), [])
 
   const [player] = useState(() => {
-    const p = createLoopPlayer(setPlaying)
+    const p = createNoisePlayer(setPlaying)
     p.setVolume(DEFAULT_VOLUME)
     return p
   })
@@ -169,25 +176,35 @@ export default function SilencePage() {
             </div>
           </div>
           <div>
-            {/* iPhones and iPads use their volume buttons instead */}
-            {canSetVolume ? (
-              <>
-                <label className="k" htmlFor="silence-volume">{t('silence.volume')}</label>
-                <input id="silence-volume" className="vol-slider" type="range" min="0" max="1" step="0.01"
-                  value={volume} onChange={handleVolumeChange} />
-              </>
-            ) : (
-              <>
-                <span className="k">{t('silence.volume')}</span>
-                <p className="player-note">{t('silence.iosVolume')}</p>
-              </>
-            )}
+            <label className="k" htmlFor="silence-volume">{t('silence.volume')}</label>
+            <input id="silence-volume" className="vol-slider" type="range" min="0" max="1" step="0.01"
+              value={volume} onChange={handleVolumeChange} />
             {audioError && <p className="player-note" role="alert">{t('silence.audioError')}</p>}
           </div>
         </div>
       </section>
 
       <div className="shell">
+        <section className="guide" aria-labelledby="guide-title">
+          <div className="give-head">
+            <h2 id="guide-title">{t('silence.guide.heading')}</h2>
+            <p>{t('silence.guide.intro')}</p>
+          </div>
+          <ol className="tips">
+            <li>
+              <h3>{t('silence.guide.levelTitle')}</h3>
+              <p>{t('silence.guide.level')}</p>
+              <a className="text-link" href={TINNITUS_UK_GUIDE} target="_blank" rel="noopener noreferrer">{t('silence.guide.levelLink')}</a>
+            </li>
+            {['sleep', 'phone', 'care'].map(k => (
+              <li key={k}>
+                <h3>{t(`silence.guide.${k}Title`)}</h3>
+                <p>{t(`silence.guide.${k}`)}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         <section className="give" aria-labelledby="give-title">
           <div className="give-head">
             <h2 id="give-title">{t('silence.donationHeading')}</h2>

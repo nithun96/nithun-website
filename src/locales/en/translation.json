@@ -4,7 +4,8 @@
     "silence": "Silence",
     "shelf": "Shelf",
     "about": "About",
-    "toggleTheme": "Toggle theme",
+    "themeToLight": "Switch to light mode",
+    "themeToDark": "Switch to dark mode",
     "toggleLang": "Norsk",
     "skip": "Skip to content",
     "sections": "Sections",
@@ -51,7 +52,7 @@
   "writing": {
     "heading": "Writing",
     "headingTail": "as we go",
-    "subtitle": "Essays, commentary, and the occasional observation.",
+    "subtitle": "Essays, commentary and the occasional observation.",
     "backWriting": "Writing",
     "footnote": "Footnote",
     "closeFootnote": "Close footnote",
@@ -61,7 +62,11 @@
     "conversation": "Join the conversation on Mastodon",
     "spotifyCaption": "The playlist I was listening to while writing this:",
     "spotifyTitle": "Listening while writing",
-    "rssFollow": "Follow new posts in a feed reader:"
+    "rssFollow": "Follow new posts in a feed reader:",
+    "readWith": "Read with",
+    "readWithLabel": "Play a sound while you read",
+    "readWithPlaying": "{{sound}} is playing",
+    "readWithStop": "Stop"
   },
   "shelf": {
     "heading": "Shelf",
@@ -101,6 +106,19 @@
     "sleepTimer": "Sleep timer",
     "timerOff": "Off",
     "timerMinutes": "{{minutes}} min",
+    "guide": {
+      "heading": "How to use it",
+      "intro": "A few tips, from tinnitus organisations' advice and from how Silence works.",
+      "levelTitle": "Find the right level",
+      "level": "Start quiet and turn it up until the sound blends with your tinnitus without drowning it out. About as loud as your tinnitus, or a little quieter, is the usual advice.",
+      "levelLink": "Tinnitus UK on sound therapy (PDF)",
+      "sleepTitle": "For sleep",
+      "sleep": "Set a sleep timer and the sound fades out over its last minute. You can also leave it on low all night.",
+      "phoneTitle": "On your phone",
+      "phone": "It keeps playing with the screen locked, and on an iPhone the silent switch doesn't mute it. After your first visit it also works without a connection.",
+      "careTitle": "Not a treatment",
+      "care": "Silence is a comfort, not medical care. If your tinnitus changes or troubles you, talk to your doctor."
+    },
     "donationHeading": "Support hearing health",
     "donationIntro": "If Deafening Silence helps you, please consider donating to research and advocacy.",
     "audioError": "Audio couldn't start. Tap the sound again.",
@@ -114,7 +132,7 @@
       "brown": "A deep, low rumble.",
       "pink": "Softer and more even than white noise.",
       "rain": "Patter of rain over a low rumble.",
-      "ocean": "Slow waves, one about every 12 seconds."
+      "ocean": "Waves rolling in, about every 10 to 14 seconds."
     },
     "play": "Play",
     "playerLabel": "Player",
@@ -123,7 +141,6 @@
     "paused": "{{sound}} (paused)",
     "playSound": "Play {{sound}}",
     "pauseSound": "Pause {{sound}}",
-    "iosVolume": "On iPhone and iPad, use the volume buttons.",
     "charities": {
       "hlf": "Norway's national hearing organisation",
       "efhoh": "European Federation of Hard of Hearing People",
@@ -135,6 +152,7 @@
   "footer": {
     "copyright": "© Nithun Manoharan",
     "elsewhere": "Elsewhere",
+    "play": "Play",
     "updated": "Updated {{date}}"
   },
   "meta": {
@@ -158,8 +176,8 @@
   "about": {
     "eyebrow": "About",
     "bio1": "I'm a Product Manager specialising in AI and Data Analytics, and a co-founder of <0>Pyre</0>, a Norwegian software company I run with two friends. Outside of that, I <1>write here</1> occasionally, built <2>Deafening Silence</2> as a free tool for tinnitus sound therapy, and keep a <3>shelf</3> of books I've enjoyed.",
-    "bio2": "Travelling has also taught me valuable lessons such as how much people have in common, even on the other side of the globe. But mainly I travel for the food.",
-    "portraitsCaption": "From my trip to South Korea recently",
+    "bio2": "Travelling has taught me a lot, such as how much people have in common, even on the other side of the globe. But mainly I travel for the food.",
+    "portraitsCaption": "From a trip to South Korea, September 2026",
     "placeWroclaw": "Wrocław, Poland",
     "placeCopenhagen": "Copenhagen, Denmark",
     "placeHeddal": "Heddal, Norway",

@@ -6,3 +6,32 @@ silence-test.html
 sounds/silence-test-brown.m4a
 sounds/silence-test-soft.m4a
 sounds/silence-test-xfade.m4a
+
+# Act Natural moved to play.nithun.no/act-natural/ (Nov 2026); /lab/act-natural/ now redirects there
+lab/act-natural/art.js
+lab/act-natural/host.js
+lab/act-natural/how.html
+lab/act-natural/index.html
+lab/act-natural/maps.js
+lab/act-natural/net.js
+lab/act-natural/phone.js
+lab/act-natural/relay.js
+lab/act-natural/round.js
+lab/act-natural/sim.js
+lab/act-natural/vendor/peerjs.min.js
+lab/act-natural/vendor/qrcode.js
+lab/act-natural/vendor/LICENSE-peerjs.txt
+lab/act-natural/turn.js
+
+# Silence makes its sound live in the browser since Nov 2026 (src/audio/noisePlayer.js)
+sounds/silence-brown-end.m4a
+sounds/silence-brown-loop.m4a
+sounds/silence-ocean-end.m4a
+sounds/silence-ocean-loop.m4a
+sounds/silence-pink-end.m4a
+sounds/silence-pink-loop.m4a
+sounds/silence-rain-end.m4a
+sounds/silence-rain-loop.m4a
+# The Silence Web Audio test page, done (Nov 2026)
+lab/noise.html
+lab/noise.js

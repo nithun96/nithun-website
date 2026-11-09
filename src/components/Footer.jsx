@@ -21,6 +21,8 @@ export default function Footer() {
           {LINKS.map(({ label, href }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}</a>
           ))}
+          {/* Games live on their own site (github.com/nithun96/act-natural) */}
+          <a href="https://play.nithun.no/" target="_blank" rel="noopener noreferrer">{t('footer.play')}</a>
         </nav>
         <span>
           {t('footer.updated', { date: buildDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }) })}

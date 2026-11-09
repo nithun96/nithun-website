@@ -30,13 +30,11 @@ nithun-website/
 │   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
 │   ├── build-sw.js                 # After prerender: writes dist/sw.js (Silence offline) with the files to save
 │   ├── check-site.js               # Last build step: stops the build if translations, pages, file paths or JSON-LD drift out of step
-│   └── makeSilenceSounds.js        # `npm run make-sounds` — renders Silence's sound files (needs ffmpeg)
 ├── public/
 │   ├── favicon.svg                 # Custom NM favicon
 │   ├── robots.txt                  # Allows all crawlers, points to the sitemap
 │   ├── sitemap.xml                 # Generated at build time — do not edit manually
 │   ├── fonts/                      # Self-hosted DM Sans WOFF2 files
-│   ├── sounds/                     # Silence's sound files — a 5-minute loop and a fade-out version per sound
 │   └── images/                     # og-nithun.jpg (1200×630 link-preview crop of the archway portrait) + about/ (About page and hero photos) + writing/ (photos in posts, one folder per slug, noindex)
 └── src/
     ├── main.jsx                    # Bootstrap — i18n init + the routes (data router, lazy pages)
@@ -47,8 +45,9 @@ nithun-website/
     │   └── global.css              # Tailwind import, fonts, design tokens, all component classes (`.shell` aligns top bar, pages and footer)
     ├── components/
     │   ├── Navbar.jsx              # Top bar — wordmark, section links, language + theme pills
-    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, build date, ©
-    │   └── PyreMark.jsx            # Pyre triangle logo (SVG)
+    │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, Play (play.nithun.no), build date, ©
+    │   ├── PyreMark.jsx            # Pyre triangle logo (SVG)
+    │   └── ReadWithSound.jsx       # "Read with" row under a post's title: plays a Silence sound while reading
     ├── sections/
     │   └── Hero.jsx                # Home page — contents page: name, standfirst, 4 numbered section rows
     ├── pages/
@@ -59,7 +58,8 @@ nithun-website/
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Any unknown URL — "page not found", marked noindex
     ├── audio/
-    │   └── loopPlayer.js           # Silence player — plays the sound files in public/sounds/
+    │   ├── noisePlayer.js          # Silence player — makes the sound live (Web Audio)
+    │   └── noiseRecipes.js         # The four sounds as recipes, levelled to the same loudness
     ├── data/
     │   ├── shelf.json              # Shelf content — 58 books, 50 games, 8 TV entries
     │   ├── bookCovers.json         # Pre-fetched cover URLs (generated — see CLAUDE.md)
@@ -94,6 +94,12 @@ nithun-website/
 | `/books` | → `/shelf` | Redirect |
 | anything else | `NotFoundPage` | Page not found (noindex) |
 
+### Old addresses
+
+| URL | What |
+|---|---|
+| `/lab/act-natural/` | **Act Natural** moved to its own repo, [github.com/nithun96/act-natural](https://github.com/nithun96/act-natural), and lives at [play.nithun.no/act-natural/](https://play.nithun.no/act-natural/). The old address redirects there (Nginx). |
+
 ---
 
 ## How It Fits Together
@@ -117,12 +123,12 @@ A bookcase of the books Nithun recommends: one plank per series, labelled undern
 A large "About / Nithun Manoharan" heading, then the bio (linking Pyre, Writing, Silence and Shelf; first paragraph as a serif lead) beside two photos of Nithun with a caption, six travel photos with translated locations, and an Instagram link. Every photo has smaller copies (`-sm`, `-600`, `-700`) and `srcset`, so phones and laptops download only the size they need. Photos are © Nithun Manoharan, like everything else on the site.
 
 ### Silence (`SilencePage.jsx`)
-Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink noise, rain, ocean) that fill green while playing, a player band with a play/pause button, sleep timer countdown (30/60/90 min, 60-second fade-out) and volume, and hearing charity rows. The volume slider shows only where the browser can change volume (not on iPhone or iPad, which use their volume buttons).
+Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink noise, rain, ocean) that fill green while playing, a player band with a play/pause button, sleep timer countdown (30/60/90 min, 60-second fade-out) and volume, and hearing charity rows. The volume slider works everywhere, iPhone included. A short "How to use it" section (volume, sleep, phone, not a treatment) sits between the player and the charities; its volume tip follows Tinnitus UK's sound therapy leaflet, which it links to.
 
-### Player (`audio/loopPlayer.js`) and sounds (`public/sounds/`)
-Plays audio files with `<audio>` elements, which keep playing on a locked iPhone and ignore the mute switch (the Web Audio API it used before stops when the phone locks). Each sound is a 5-minute loop file with 1 s fades at both ends; a second copy starts 1 s before the first ends, so they crossfade with no gap. For the sleep timer the last copy is a version that fades out over 60 s. A tap shows the sound as playing at once, before the file has loaded; if another app takes over the sound (a video, a call), Silence counts that as stopped. `npm run make-sounds` (needs ffmpeg) renders the files with `scripts/makeSilenceSounds.js`: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (white noise under a slow wave swell), all at the same loudness. A changed file needs a new name, because Nginx lets browsers cache `/sounds/` for 30 days.
+### Player (`audio/noisePlayer.js`) and sounds (`audio/noiseRecipes.js`)
+The sound is made live in the browser with the Web Audio API: no sound files. Each sound is a 50-second loop built from a recipe in `noiseRecipes.js` when you tap it: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (waves of 9–14 s that build, break and wash out: a low-pass on pink noise that opens as each wave breaks, with foam and a low rumble; levelled so breaking waves peak under −1 dBFS). Slow rhythms repeat a whole number of times per loop and the last second is crossfaded into the first, so there is no seam or gap. Each is levelled to −20 LUFS (gains measured with ffmpeg). Before the sound starts the page sets `navigator.audioSession.type = "playback"` (Safari 16.4+), so on an iPhone it ignores the mute switch, keeps playing when locked and shows lock-screen controls (tested Nov 2026). The sleep timer runs on the audio clock: a 60-second fade, then stop, exactly on time even while the phone is locked. One audio engine is shared by the homepage and Silence. If another app takes over the sound (a call, a video), Silence counts that as stopped. Until Nov 2026 Silence played rendered sound files with several `<audio>` copies; the recipes are the same, so the sound is the same.
 
-**Offline:** after a first visit to Silence, a service worker (`src/sw.js`) keeps the page, its code and fonts, and every sound once it has played, so Silence works without a connection (e.g. on a plane). Tested on an iPhone in flight mode (Nov 2026). See CLAUDE.md, Silence Offline.
+**Offline:** after a first visit to Silence, a service worker (`src/sw.js`) keeps the page, its code and fonts, so Silence works without a connection (e.g. on a plane). Tested on an iPhone in flight mode (Nov 2026). See CLAUDE.md, Silence Offline.
 
 ### Writing (`WritingPage.jsx` + `WritingPostPage.jsx`)
 Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summary, tags, readTime, language, spotify). `parseFrontmatter.js` strips and parses frontmatter; `parseFootnotes.js` processes inline footnote syntax `[^N: type: text]` before markdown rendering. Posts are sorted by date. The Markdown (with GFM and raw HTML) is turned into a tree at build time by the `posts` plugin in `vite.config.js` and `lib/markdownPost.js`; the page only turns that tree into React elements (`hast-util-to-jsx-runtime`), so visitors don't download a Markdown parser.
@@ -130,6 +136,8 @@ Posts are `.md` files in `src/writing/` with YAML frontmatter (title, date, summ
 Footnote system: two types — `clarification` (quiet aside) and `wry` (warm left border). Desktop: hover or keyboard focus shows the tooltip, click or Enter/Space pins it, Escape closes it. Mobile: tap opens a bottom sheet portal rendered directly on `document.body`; it is a dialog that takes focus when opened, closes on Escape, returns focus to the marker, and is hidden from the tab order when closed.
 
 Language pill: each post carries a `language` field (`"en"` or `"no"`, defaults to `"en"`). Shown as a coloured pill on the list page and in the post header. The post's title and body are also marked with that `lang` attribute.
+
+Read with sound (`components/ReadWithSound.jsx`): under each post's title, a "Read with" row of four pills (Rain, Ocean, Brown noise, Pink noise) plays that Silence sound quietly (60% volume) while you read, made live by the same player as `/silence`. Tap a pill again to stop. Once the row has scrolled away, a small "Rain is playing · Stop" pill sits in the bottom-right corner (portalled to `document.body`). Leaving the post stops the sound.
 
 Photos: post images (raw HTML `<img>` with a `data-full` full-resolution file) open full screen on click via `ImageLightbox`; files live in `public/images/writing/<slug>/` and are kept out of image search by an Nginx `X-Robots-Tag: noindex`.
 
@@ -147,7 +155,7 @@ To add or edit a string:
 - `lib/usePageMeta.js` sets each page's own title, description, canonical URL and Open Graph tags when it loads. Page titles and descriptions live under `meta` in the translation files; posts use their frontmatter title and summary.
 - `public/robots.txt` points crawlers to the sitemap. `scripts/generate-sitemap.js` lists every page and post, plus image entries for the photos of Nithun, and runs on every build. Other images (Shelf covers, post photos, About travel photos) are kept out of image search by Nginx. **When adding a new page, add it to the sitemap script too.**
 - Unknown URLs show `NotFoundPage`, marked `noindex`.
-- The last step of `npm run build` is `scripts/check-site.js`. It stops the build (so a broken push fails in GitHub Actions instead of going live) if: a translation key is in `en` but not `no` or the other way round; a route in `src/main.jsx` has no per-page HTML (missing from `PAGES` in `prerender.js`) or is missing from the sitemap; an `/images`, `/fonts` or `/sounds` path (or a root icon) in `src/`, `index.html` or the manifest points to a file that doesn't exist, including paths built from a variable and the spine photos in `bookSpines.json`; or JSON-LD in a generated page doesn't parse. It prints what to fix.
+- The last step of `npm run build` is `scripts/check-site.js`. It stops the build (so a broken push fails in GitHub Actions instead of going live) if: a translation key is in `en` but not `no` or the other way round; a route in `src/main.jsx` has no per-page HTML (missing from `PAGES` in `prerender.js`) or is missing from the sitemap; an `/images` or `/fonts` path (or a root icon) in `src/`, `index.html` or the manifest points to a file that doesn't exist, including paths built from a variable and the spine photos in `bookSpines.json`; or JSON-LD in a generated page doesn't parse. It prints what to fix.
 
 ---
 
@@ -156,7 +164,7 @@ To add or edit a string:
 - **Contrast:** the accent colours (`--sage`, `--dusty`, `--stone`, `--honey`, `--wheat`) and the muted text colour (`--fgm`) are darker in light mode so text in them reaches 4.5:1 on both page backgrounds; dark mode uses the original lighter values. Check contrast when adding a new colour token.
 - **Focus:** a global `:focus-visible` outline in `global.css`. Don't add `outline: none` without a replacement.
 - **Motion:** `prefers-reduced-motion` switches off animations, transitions, page transitions and smooth scrolling, including their delays, so staggered entrances (homepage rows, Silence rows, Shelf spines) show at once instead of popping in.
-- **Known gaps:** The game prototype is English-only. On iPhone, the lock screen could show Silence as paused while it played; fixed Nov 2026 by starting the playing copy last (check after a 5-minute handover too).
+- **Known gaps:** The game prototype is English-only. Silence needs iOS 16.4 or later to keep playing when an iPhone is locked (older iPhones stop the sound when they lock).
 
 ---
 
@@ -200,14 +208,15 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Home page — name, standfirst, four numbered section rows with thumbnails (incl. a working brown-noise player), donation nudge
 - [x] Redesign (Oct 2026) — contents-page homepage, purple identity colour, section colours, motion that switches off with reduced motion
 - [x] Shelf page (`/shelf`) — bookcase of 58 books, 34 with real spines from Nithun's shelves; Games and TV hidden until they have covers
-- [x] Silence page (`/silence`) — sound rows and player band with sleep timer; keeps playing on a locked iPhone and with the mute switch on
-- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
+- [x] Silence page (`/silence`) — sound rows and player band with sleep timer; sound made live (no files); keeps playing on a locked iPhone and with the mute switch on
+- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds, "Read with" sound
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
-- [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, build date, ©
+- [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, a Play link to play.nithun.no, build date, ©
 - [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page
 - [x] RSS feed at `/rss.xml`, linked at the bottom of `/writing` (moved from the footer, Oct 2026)
 - [x] Pages other than Home load on demand, so the first visit downloads about half as much script
 - [x] WCAG AA accessibility — translated skip link, aria-labels, keyboard-accessible footnotes, visible focus, AA contrast in both themes, reduced-motion support, `<html lang>` follows the language (known gaps listed under Accessibility)
+- [x] Act Natural party game: moved to its own repo (github.com/nithun96/act-natural) and play.nithun.no/act-natural/ (Nov 2026); `/lab/act-natural/` redirects there
 - [x] Security headers on Nginx
 - [x] Deployed to Hetzner VPS — live at nithun.no
 - [x] SSL active (Let's Encrypt)

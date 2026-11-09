@@ -116,7 +116,8 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 - Skip-to-content link at top of page for screen readers
 - No content that depends solely on colour to convey meaning
   - Links inside running text (`.text-link`, `.wp-link`, the Pyre line on Home) are always underlined, with the underline at 3:1 or more against the background: their text colour is too close to the text around them to mark a link by itself. Audited for protanopia, deuteranopia, tritanopia and greyscale in Nov 2026.
-  - Section colours are never the only way to tell sections apart (each always has its name beside it); in light mode `--honey` and `--stone` are nearly the same colour, and `--sage`/`--honey`/`--stone` merge for red-green colour blindness.
+  - Section colours are never the only way to tell sections apart (each always has its name beside it); in light mode `--honey` and `--stone` are nearly the same colour, and `--sage`/`--honey`/`--stone` merge for red-green colour blindness (in dark, `--sage`/`--stone` merge, and the newer `--honey` #D9B35C sits close to both).
+  - On/off states always change shape or text as well as colour: e.g. a playing "Read with sound" pill fills its dot, a playing Silence row says "Pause".
 
 ---
 

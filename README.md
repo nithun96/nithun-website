@@ -46,7 +46,8 @@ nithun-website/
     ├── components/
     │   ├── Navbar.jsx              # Top bar — wordmark, section links, language + theme pills
     │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, Play (play.nithun.no), build date, ©
-    │   └── PyreMark.jsx            # Pyre triangle logo (SVG)
+    │   ├── PyreMark.jsx            # Pyre triangle logo (SVG)
+    │   └── ReadWithSound.jsx       # "Read with" row under a post's title: plays a Silence sound while reading
     ├── sections/
     │   └── Hero.jsx                # Home page — contents page: name, standfirst, 4 numbered section rows
     ├── pages/
@@ -136,6 +137,8 @@ Footnote system: two types — `clarification` (quiet aside) and `wry` (warm lef
 
 Language pill: each post carries a `language` field (`"en"` or `"no"`, defaults to `"en"`). Shown as a coloured pill on the list page and in the post header. The post's title and body are also marked with that `lang` attribute.
 
+Read with sound (`components/ReadWithSound.jsx`): under each post's title, a "Read with" row of four pills (Rain, Ocean, Brown noise, Pink noise) plays that Silence sound quietly (60% volume) while you read, made live by the same player as `/silence`. Tap a pill again to stop. Once the row has scrolled away, a small "Rain is playing · Stop" pill sits in the bottom-right corner (portalled to `document.body`). Leaving the post stops the sound.
+
 Photos: post images (raw HTML `<img>` with a `data-full` full-resolution file) open full screen on click via `ImageLightbox`; files live in `public/images/writing/<slug>/` and are kept out of image search by an Nginx `X-Robots-Tag: noindex`.
 
 Spotify embed: if a post has a `spotify` URL in its frontmatter, an embedded Spotify player is rendered below the post body with a translated caption (`writing.spotifyCaption`) and a translated title for screen readers (`writing.spotifyTitle`).
@@ -206,7 +209,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Redesign (Oct 2026) — contents-page homepage, purple identity colour, section colours, motion that switches off with reduced motion
 - [x] Shelf page (`/shelf`) — bookcase of 58 books, 34 with real spines from Nithun's shelves; Games and TV hidden until they have covers
 - [x] Silence page (`/silence`) — sound rows and player band with sleep timer; sound made live (no files); keeps playing on a locked iPhone and with the mute switch on
-- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds
+- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds, "Read with" sound
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
 - [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, a Play link to play.nithun.no, build date, ©
 - [x] SEO — per-page titles, descriptions and canonicals (also in prerendered per-page HTML, so link previews work); Open Graph; JSON-LD; robots.txt; auto-generated sitemap; noindex not-found page

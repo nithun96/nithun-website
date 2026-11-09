@@ -6,6 +6,7 @@ import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
 import { slugFromPath } from '../lib/parseFrontmatter'
 import { usePageMeta } from '../lib/usePageMeta'
+import ReadWithSound from '../components/ReadWithSound'
 
 // Each post arrives as a ready-made tree, turned from Markdown at build time
 // (the `posts` plugin in vite.config.js, src/lib/markdownPost.js)
@@ -307,6 +308,8 @@ export default function WritingPostPage() {
               <span key={tag}><span className="wp-tag-sep">·</span>{tag}</span>
             ))}
           </div>
+
+          <ReadWithSound />
         </div>
 
         {/* Body */}

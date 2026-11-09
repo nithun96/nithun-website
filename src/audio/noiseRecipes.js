@@ -4,7 +4,7 @@
 // removed Nov 2026). The page now makes the sound live (src/audio/noisePlayer.js),
 // so these run in the browser. Each returns `length` samples at `rate` Hz.
 
-export const LOOP_SECS = 50   // one buffer, looped. Every slow rhythm below repeats a
+export const LOOP_SECS = 100  // one buffer, looped. Every slow rhythm below repeats a
                               // whole number of times in it, so the loop has no seam.
 
 // Loudness: the gain (dB) that brings each sound to the same level (−20 LUFS),
@@ -110,12 +110,21 @@ export const RECIPES = {
   },
 }
 
+// The old sound files were AAC, which gently cut the very top of the sound; without
+// that the live sound is a little brighter. One Butterworth low-pass (Q −3 dB) at
+// TOP_HZ gives the same roll-off (within 0.5 dB up to 16 kHz, measured with ffmpeg).
+const TOP_HZ = 20000
+function softTop(d, rate) {
+  if (rate / 2 <= TOP_HZ) return d
+  return biquad(d, rate, 'lowpass', TOP_HZ, -3.01)
+}
+
 // One loop of a sound, levelled, whose end runs smoothly into its start: one
 // extra second is made and crossfaded (equal power) over the first second.
 export function makeLoop(id, rate) {
   const n = LOOP_SECS * rate
   const f = rate
-  const raw = RECIPES[id](rate, n + f)
+  const raw = softTop(RECIPES[id](rate, n + f), rate)
   const gain = Math.pow(10, GAIN_DB[id] / 20)
   const out = new Float32Array(n)
   for (let i = 0; i < n; i++) {

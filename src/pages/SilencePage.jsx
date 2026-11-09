@@ -6,7 +6,12 @@ import { usePageMeta } from '../lib/usePageMeta'
 
 const SOUNDS = ['brown', 'pink', 'rain', 'ocean']
 const TIMER_OPTIONS = [null, 30, 60, 90]
-const DEFAULT_VOLUME = 0.6   // computers and Android; iPhones use their volume buttons
+// Full volume on iPhones and iPads, as before Nov 2026 (the old player couldn't change
+// volume there, so people set it with the volume buttons); a gentler start elsewhere.
+// iPads ask for desktop pages and say "Macintosh", but have a touch screen.
+const isIos = typeof navigator !== 'undefined' &&
+  (/iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1))
+const DEFAULT_VOLUME = isIos ? 1 : 0.6
 const charities = charitiesData.list
 
 function formatRemaining(ms) {

@@ -477,9 +477,16 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
 .vol-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9.5px; border-radius: 50%; background: var(--on); }
 .vol-slider::-moz-range-thumb { width: 22px; height: 22px; border: 0; border-radius: 50%; background: var(--on); }
 .player-note { font-size: 15px; margin: 4px 0 0; }
+.guide { padding: 88px 0 0; }
+.tips { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; counter-reset: tip; border-top: 1.5px solid var(--fg); }
+.tips li { counter-increment: tip; padding: 28px 0 28px 44px; position: relative; border-bottom: 1px solid color-mix(in oklch, var(--fg) 12%, transparent); }
+.tips li::before { content: counter(tip, decimal-leading-zero); position: absolute; left: 0; top: 30px; font-family: Georgia, serif; font-size: 18px; color: var(--sage); }
+.tips h3 { font-family: Georgia, serif; font-weight: normal; font-size: 24px; line-height: 1.2; margin: 0 0 8px; }
+.tips p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--fg2); max-width: 520px; }
+.tips .text-link { display: inline-block; margin-top: 10px; font-size: 15px; padding: 4px 0; }
 .give { padding: 88px 0 0; }
 .give-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: end; margin-bottom: 32px; }
-.give h2 { font-family: Georgia, serif; font-weight: normal; font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em; margin: 0; }
+.give h2, .guide h2 { font-family: Georgia, serif; font-weight: normal; font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em; margin: 0; }
 .give-head p { margin: 0; font-size: 17px; color: var(--fg2); max-width: 460px; }
 .orgs { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--fg); }
 .org { display: grid; grid-template-columns: 88px minmax(0, 1fr) minmax(0, 1fr) 52px; gap: 24px; align-items: center; padding: 20px 16px 20px 0; border-bottom: 1.5px solid var(--fg); color: var(--fg); text-decoration: none;
@@ -494,6 +501,7 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
 .org:is(:hover, :focus-visible) .org-go { transform: rotate(-45deg); }
 @media (max-width: 860px) {
   .s-hero, .player-grid, .give-head { grid-template-columns: 1fr; }
+  .tips { grid-template-columns: 1fr; }
   .s-art { width: 260px; }
   .snd { grid-template-columns: 32px minmax(0, 1fr) 72px; gap: 12px; }
   .snd-desc { grid-column: 2 / -1; grid-row: 2; }

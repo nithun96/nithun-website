@@ -173,7 +173,8 @@ nithun-website/
     ├── components/
     │   ├── Navbar.jsx              # Top bar — purple-dot wordmark, links to the four sections, language + theme pills (links on a second row on phones)
     │   ├── Footer.jsx              # Footer — LinkedIn, GitHub, Instagram, Play (play.nithun.no, the games), "Updated <build date>", © Nithun Manoharan
-    │   └── PyreMark.jsx            # Pyre triangle SVG logo — used on the homepage
+    │   ├── PyreMark.jsx            # Pyre triangle SVG logo — used on the homepage
+    │   └── ReadWithSound.jsx       # "Read with" row under a post's title — plays a Silence sound while reading, Stop pill in the corner
     ├── sections/
     │   └── Hero.jsx                # Home page (contents page) — name, standfirst, 4 numbered section rows with thumbnails (Silence's plays brown noise), donate nudge
     ├── pages/
@@ -390,7 +391,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Homepage — name, standfirst, 4 numbered section rows with thumbnails (latest post, a Silence player, Shelf, About), donate nudge
 - [x] Shelf page (`/shelf`) — 58 books as a bookcase; 34 real spines photographed from Nithun's shelves, 24 drawn (see Shelf Spines); Games (50) and TV (8) hidden until they have cover art
 - [x] Silence page (`/silence`) — sound rows, player band with sleep timer; sound made live in the browser (no sound files); keeps playing on a locked iPhone and with the mute switch on; works offline after a first visit (service worker)
-- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed; posts turned into a tree at build time, so no Markdown parser ships to visitors
+- [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed, "Read with" a Silence sound; posts turned into a tree at build time, so no Markdown parser ships to visitors
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked
 - [x] Pyre branding — triangle mark on the homepage, links to pyre.no
 - [x] Self-hosted DM Sans fonts — Google Fonts removed; served from `public/fonts/`

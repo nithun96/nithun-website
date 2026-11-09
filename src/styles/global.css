@@ -593,6 +593,18 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
   background: color-mix(in oklch, var(--dusty) 15%, transparent); border: 1px solid color-mix(in oklch, var(--dusty) 40%, transparent); color: color-mix(in oklch, var(--dusty) 75%, var(--fg)); }
 .lang-pill.is-no { background: color-mix(in oklch, var(--honey) 15%, transparent); border-color: color-mix(in oklch, var(--honey) 40%, transparent); color: color-mix(in oklch, var(--wheat) 75%, var(--fg)); }
 
+/* Read with sound (ReadWithSound.jsx): Silence's sounds under a post, in Silence's colour */
+.rws { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 24px; font-size: 13px; letter-spacing: 0.04em; color: var(--fgm); }
+.rws-label { margin-right: 4px; }
+.rws-pill { font: inherit; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 999px; cursor: pointer; color: var(--fg2); background: none; border: 1px solid color-mix(in oklch, var(--fg) 18%, transparent); transition: color 0.2s, border-color 0.2s, background-color 0.2s; }
+.rws-pill:hover, .rws-pill:focus-visible { color: var(--fg); border-color: var(--fg); }
+.rws-pill[aria-pressed="true"] { color: var(--fg); border-color: var(--sage); background: color-mix(in oklch, var(--sage) 12%, transparent); }
+.rws-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid currentColor; box-sizing: border-box; flex: none; }
+.rws-pill[aria-pressed="true"] .rws-dot, .rws-dot.on { background: var(--sage); border-color: var(--sage); }
+.rws-dock { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 40; display: flex; align-items: center; gap: 12px; padding: 6px 6px 6px 16px; font-size: 13px; letter-spacing: 0.04em; color: var(--fg2); background: var(--bg2); border: 1px solid color-mix(in oklch, var(--fg) 18%, transparent); border-radius: 999px; box-shadow: 0 12px 32px var(--shadow); animation: fadeIn 0.3s ease both; }
+.rws-stop { font: inherit; min-height: 44px; padding: 0 16px; border-radius: 999px; cursor: pointer; color: var(--on); background: var(--sage-f); border: 0; }
+.rws-stop:hover, .rws-stop:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+
 .post-body { max-width: 740px; font-size: 18px; line-height: 1.75; color: var(--fg2); font-weight: 300; }
 .wp-p { margin-bottom: 1.5em; }
 .wp-h2 { font-family: Georgia, serif; font-size: 22px; font-weight: normal; color: var(--fg); margin: 2.5em 0 0.8em; line-height: 1.3; }

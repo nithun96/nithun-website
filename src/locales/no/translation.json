@@ -62,7 +62,11 @@
     "conversation": "Bli med i samtalen på Mastodon",
     "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:",
     "spotifyTitle": "Musikken jeg hørte på mens jeg skrev",
-    "rssFollow": "Følg nye innlegg i en RSS-leser:"
+    "rssFollow": "Følg nye innlegg i en RSS-leser:",
+    "readWith": "Les med",
+    "readWithLabel": "Spill av en lyd mens du leser",
+    "readWithPlaying": "{{sound}} spilles av",
+    "readWithStop": "Stopp"
   },
   "shelf": {
     "heading": "Hylle",

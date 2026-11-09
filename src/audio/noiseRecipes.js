@@ -9,7 +9,7 @@ export const LOOP_SECS = 100  // one buffer, looped. Every slow rhythm below rep
 
 // Loudness: the gain (dB) that brings each sound to the same level (−20 LUFS),
 // measured with ffmpeg's ebur128 on these recipes, as the old files were.
-export const GAIN_DB = { brown: -4.4, pink: -5.3, rain: 0.3, ocean: -9.9 }
+export const GAIN_DB = { brown: -4.4, pink: -5.3, rain: 0.3, ocean: -2.7 }   // ocean: peaks (breaking waves) kept under −1 dBFS, so about 2 dB quieter on average
 
 // Seeded random numbers, so a sound is the same every time
 function random(seed) {
@@ -84,10 +84,51 @@ export const RECIPES = {
   brown: (rate, n) => brown(random(1), n),
   pink:  (rate, n) => pink(random(2), n),
 
-  // White noise under a slow swell (0.08 Hz, one wave every 12.5 s)
+  // Waves on a beach (Nov 2026; until then a steady hiss under a regular swell,
+  // which Nithun found didn't sound like waves). Each wave lasts 9–14 s and has
+  // its own strength: it builds slowly, breaks, then washes out. As it breaks the
+  // sound gets louder and brighter (a low-pass on pink noise opens up), with a
+  // fizz of foam on top; a low rumble runs underneath. The waves fill the loop
+  // exactly, so the rhythm carries on across the seam.
   ocean: (rate, n) => {
-    const d = white(random(3), n)
-    for (let i = 0; i < n; i++) d[i] *= (sine(0.08, i, rate) * 0.4 + 0.6) * 0.55
+    const rand = random(3)
+    const r01 = () => (rand() + 1) / 2
+    const period = LOOP_SECS * rate
+
+    // Wave lengths, scaled to fill the loop exactly
+    const lens = []
+    let total = 0
+    while (total < LOOP_SECS - 9) { const l = 9 + r01() * 5; lens.push(l); total += l }
+    const wave = new Float32Array(period)   // 0 … 1: how much the wave is breaking
+    let pos = 0
+    lens.forEach((l, k) => {
+      const size = k === lens.length - 1 ? period - pos : Math.round(l / total * period)
+      const peak = 0.4 + r01() * 0.15          // where in the wave it breaks
+      const strength = 0.65 + r01() * 0.35
+      for (let j = 0; j < size; j++) {
+        const t = j / size
+        const e = t < peak ? Math.pow(t / peak, 2) : Math.exp(-(t - peak) / ((1 - peak) * 0.3))
+        wave[pos + j] = e * strength
+      }
+      pos += size
+    })
+    // Smooth the joins between waves (about 0.3 s)
+    const smooth = Math.exp(-1 / (0.3 * rate))
+    let s = wave[period - 1]
+    for (let k = 0; k < 2; k++) for (let i = 0; i < period; i++) { s = s * smooth + wave[i] * (1 - smooth); wave[i] = s }
+    const w = i => wave[i % period]
+
+    const body = pink(random(8), n)
+    const rumble = biquad(brown(random(9), n), rate, 'lowpass', 120, 0)
+    const foam = biquad(white(random(10), n), rate, 'highpass', 3000, 0)
+    const d = new Float32Array(n)
+    let y = 0, a = 0
+    for (let i = 0; i < n; i++) {
+      const e = w(i)
+      if (i % 32 === 0) a = Math.exp(-2 * Math.PI * (250 + 4500 * Math.pow(e, 1.5)) / rate)
+      y = (1 - a) * body[i] + a * y                 // the low-pass that opens as the wave breaks
+      d[i] = y * (0.25 + 1.6 * e) + foam[i] * 0.18 * e * e + rumble[i] * (0.35 + 0.25 * e)
+    }
     return d
   },
 

@@ -196,7 +196,7 @@ export default function SilencePage() {
               <p>{t('silence.guide.level')}</p>
               <a className="text-link" href={TINNITUS_UK_GUIDE} target="_blank" rel="noopener noreferrer">{t('silence.guide.levelLink')}</a>
             </li>
-            {['sleep', 'phone', 'care'].map(k => (
+            {['sleep', 'phone'].map(k => (
               <li key={k}>
                 <h3>{t(`silence.guide.${k}Title`)}</h3>
                 <p>{t(`silence.guide.${k}`)}</p>

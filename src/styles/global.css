@@ -484,6 +484,9 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
 .tips { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; counter-reset: tip; border-top: 1.5px solid var(--fg); }
 .tips li { counter-increment: tip; padding: 28px 0 28px 44px; position: relative; border-bottom: 1px solid color-mix(in oklch, var(--fg) 12%, transparent); }
 .tips li::before { content: counter(tip, decimal-leading-zero); position: absolute; left: 0; top: 30px; font-family: Georgia, serif; font-size: 18px; color: var(--sage); }
+/* An odd tip out spans both columns rather than sitting alone */
+.tips li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.tips li:last-child:nth-child(odd) p { max-width: 760px; }
 .tips h3 { font-family: Georgia, serif; font-weight: normal; font-size: 24px; line-height: 1.2; margin: 0 0 8px; }
 .tips p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--fg2); max-width: 520px; }
 .tips .text-link { display: inline-block; margin-top: 10px; font-size: 15px; padding: 4px 0; }

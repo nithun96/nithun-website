@@ -137,14 +137,14 @@ export default function SilencePage() {
             const on = playing === id
             return (
               <li key={id}>
-                <button type="button" className="snd" onClick={() => toggle(id)} aria-pressed={on} aria-label={name(id)}>
+                <button type="button" className="snd" onClick={() => toggle(id)} aria-pressed={on}>
                   <span className="snd-num" aria-hidden="true">0{i + 1}</span>
-                  <span className="snd-name" aria-hidden="true">{name(id)}</span>
-                  <span className="snd-desc" aria-hidden="true">{t(`silence.desc.${id}`)}</span>
+                  <span className="snd-name">{name(id)}</span>
+                  <span className="snd-desc">{t(`silence.desc.${id}`)}</span>
                   <span className={`wave wave-${id}`} aria-hidden="true">
                     {waves[id].map((b, j) => <i key={j} style={{ height: `${b.h}%`, animationDelay: `${b.d}s` }} />)}
                   </span>
-                  <span className="snd-state" aria-hidden="true">
+                  <span className="snd-state">
                     {on ? <><PauseIcon size={10} />{t('silence.pause')}</> : <><PlayIcon size={10} />{t('silence.play')}</>}
                   </span>
                 </button>

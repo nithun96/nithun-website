@@ -1,0 +1,446 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "Brown noise": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brun støy"
+          }
+        }
+      }
+    },
+    "Pink noise": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rosa støy"
+          }
+        }
+      }
+    },
+    "Rain": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regn"
+          }
+        }
+      }
+    },
+    "Ocean": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hav"
+          }
+        }
+      }
+    },
+    "A deep, low rumble.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En dyp, lav dur."
+          }
+        }
+      }
+    },
+    "Softer and more even than white noise.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mykere og jevnere enn hvit støy."
+          }
+        }
+      }
+    },
+    "Patter of rain over a low rumble.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regndrypp over en lav dur."
+          }
+        }
+      }
+    },
+    "Waves rolling in, about every 10 to 14 seconds.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bølger som ruller inn, omtrent hvert 10. til 14. sekund."
+          }
+        }
+      }
+    },
+    "Play": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av"
+          }
+        }
+      }
+    },
+    "Pause": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "Volume": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volum"
+          }
+        }
+      }
+    },
+    "Sleep timer": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sovetimer"
+          }
+        }
+      }
+    },
+    "Off": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Av"
+          }
+        }
+      }
+    },
+    "%lld min": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        }
+      }
+    },
+    "Now playing": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spilles nå"
+          }
+        }
+      }
+    },
+    "Nothing yet": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingenting ennå"
+          }
+        }
+      }
+    },
+    "%@ (paused)": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (på pause)"
+          }
+        }
+      }
+    },
+    "A small, free sound tool for tinnitus and sleep. Pick a sound, set a sleep timer, and it keeps playing with the screen locked.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Et lite, gratis lydverktøy for tinnitus og søvn. Velg en lyd, sett en sovetimer, og den fortsetter å spille med skjermen låst."
+          }
+        }
+      }
+    },
+    "Audio couldn't start. Tap the sound again.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyden startet ikke. Trykk på lyden igjen."
+          }
+        }
+      }
+    },
+    "Deafening ": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deafening "
+          }
+        }
+      }
+    },
+    "Silence": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silence"
+          }
+        }
+      }
+    },
+    "Your sound": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Din lyd"
+          }
+        }
+      }
+    },
+    "Tone": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klang"
+          }
+        }
+      }
+    },
+    "Darker": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mørkere"
+          }
+        }
+      }
+    },
+    "Brighter": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lysere"
+          }
+        }
+      }
+    },
+    "Focus on my pitch": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fokuser på tonen min"
+          }
+        }
+      }
+    },
+    "Around %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rundt %@"
+          }
+        }
+      }
+    },
+    "Match again": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finn tonen på nytt"
+          }
+        }
+      }
+    },
+    "Forget my pitch": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glem tonen min"
+          }
+        }
+      }
+    },
+    "Find the pitch of your tinnitus with a soft tone, and Silence can put more of its sound around it.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finn tonehøyden på tinnitusen din med en svak tone, så kan Silence legge mer av lyden rundt den."
+          }
+        }
+      }
+    },
+    "Match my tinnitus": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finn tonen til tinnitusen min"
+          }
+        }
+      }
+    },
+    "Silence isn't a medical device. If your tinnitus is new, changes, or is in one ear only, see a doctor.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silence er ikke medisinsk utstyr. Hvis tinnitusen er ny, endrer seg eller bare er i ett øre, bør du gå til lege."
+          }
+        }
+      }
+    },
+    "Privacy: Silence collects no data": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personvern: Silence samler ikke inn data"
+          }
+        }
+      }
+    },
+    "Turn your phone's volume down first. The tone starts very quietly; raise it until you can just hear it, then move the pitch until it sounds most like your tinnitus.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skru ned volumet på telefonen først. Tonen starter veldig svakt; skru den opp til du så vidt hører den, og flytt tonehøyden til den ligner mest på tinnitusen din."
+          }
+        }
+      }
+    },
+    "Stop if the tone is uncomfortable. Many people's tinnitus isn't a single tone, so close is good enough.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp hvis tonen er ubehagelig. Tinnitus er ofte ikke én enkelt tone, så omtrent er godt nok."
+          }
+        }
+      }
+    },
+    "Stop the tone": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp tonen"
+          }
+        }
+      }
+    },
+    "Play the tone": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av tonen"
+          }
+        }
+      }
+    },
+    "Pitch": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonehøyde"
+          }
+        }
+      }
+    },
+    "Lower": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lavere"
+          }
+        }
+      }
+    },
+    "Higher": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Høyere"
+          }
+        }
+      }
+    },
+    "Tone volume": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volum på tonen"
+          }
+        }
+      }
+    },
+    "Use this pitch": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bruk denne tonen"
+          }
+        }
+      }
+    },
+    "Your pitch is kept on this phone only.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonen din lagres bare på denne telefonen."
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avbryt"
+          }
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,8 @@ on:
       - 'README.md'
       - 'CLAUDE.md'
       - 'GAME-BRIEF.md'
+      - 'ios/**'                     # the iOS app isn't part of the site
+      - '.github/workflows/silence-sounds.yml'
   workflow_dispatch:
 
 concurrency:

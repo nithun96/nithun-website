@@ -255,16 +255,13 @@ The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no a
 
 **SSL certificates** are renewed automatically by certbot on the server (nginx authenticator). Every domain on a certificate must have a DNS record, or renewal fails for the whole certificate. That is what let the `.com` certificate expire in July 2026: it covered `www.nithunmanoharan.com`, which has no DNS record. Keep the `.com` redirect inside `location /` (not a server-level `return`) so certbot's temporary challenge location still works.
 
-To check or renew by hand, log in as root with your SSH key (no sudo password needed):
-```
-ssh root@204.168.209.150
-certbot certificates                                       # list certs, domains and expiry dates
-certbot renew --dry-run                                    # test renewal of all certs
-```
+To check or renew by hand: see **Server access** below.
 
 **Automatic deploys:** every push to `main` — including merging a pull request on GitHub, e.g. from a Cowork or cloud session — runs `.github/workflows/deploy.yml`, which builds the site, uploads it and updates Nginx (same steps as `deploy.sh`). Pushes that only change `README.md`, `CLAUDE.md` or `GAME-BRIEF.md` are skipped. Progress and failures show under the repo's **Actions** tab on GitHub, and GitHub emails on failure. A deploy can also be started by hand there ("Run workflow").
 
-It uses a GitHub-only SSH key (secret `DEPLOY_SSH_KEY`, created Oct 2026, comment `github-actions-deploy@nithun-website` in the server's `/home/deploy/.ssh/authorized_keys`) and the server's host keys (secret `DEPLOY_KNOWN_HOSTS`). The `deploy` user can only copy the Nginx config, test it and reload it via sudo. To revoke GitHub's access, delete that key's line from `authorized_keys`.
+It uses a GitHub-only SSH key and the server's host keys, both stored as GitHub secrets. The `deploy` user can only update the site and reload Nginx.
+
+**Server access:** how to log in to the server, and how the deploy key is set up or revoked, is kept out of this public repo, in the private doc `claude/server-ops.md` in Nithun's "Personal website" claude.ai project. Don't add login commands, account details or key locations to the repo; put them in that doc. (This repo is public: anything committed here is published.)
 
 **Cloud/Cowork sessions:** work on a branch and open a PR. Review the PR (or ask a local session to), then merge it — the site deploys itself. Don't push unreviewed changes straight to `main`.
 

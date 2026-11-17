@@ -1,0 +1,64 @@
+# Keeps the Silence iOS app (ios/) sounding the same as the website.
+# 1. Remakes ios/tools/golden.json from the website's src/audio/noiseRecipes.js and
+#    fails if it differs from the committed file: the site's sound changed and the
+#    app wasn't updated (see ios/README.md for the fix).
+# 2. Builds the app and runs its tests on a Mac, which compare the Swift sound
+#    with golden.json.
+# Doesn't deploy anything.
+name: Silence sounds
+
+on:
+  pull_request:
+    paths:
+      - 'src/audio/noiseRecipes.js'
+      - 'ios/**'
+      - '.github/workflows/silence-sounds.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/audio/noiseRecipes.js'
+      - 'ios/**'
+      - '.github/workflows/silence-sounds.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  same-sound:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Remake the reference samples from the website's recipes
+        run: node ios/tools/golden.mjs src/audio/noiseRecipes.js > ios/tools/golden.json
+      - name: Fail if the website's sound changed without the app
+        run: |
+          if ! git diff --exit-code ios/tools/golden.json; then
+            echo "::error::The website's Silence sounds changed. Run 'node ios/tools/golden.mjs src/audio/noiseRecipes.js > ios/tools/golden.json', commit it, and port the change to ios/Silence/Audio/NoiseRecipes.swift."
+            exit 1
+          fi
+
+  app-tests:
+    needs: same-sound
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Make the Xcode project
+        working-directory: ios
+        run: xcodegen
+      - name: Build and test on an iPhone simulator
+        working-directory: ios
+        run: |
+          # Use whichever iPhone simulator this runner has
+          ID=$(xcrun simctl list devices available -j | python3 -c "
+          import json, sys
+          d = json.load(sys.stdin)['devices']
+          print(next(x['udid'] for k, v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
+          xcodebuild test -project Silence.xcodeproj -scheme Silence \
+            -destination "id=$ID" CODE_SIGNING_ALLOWED=NO

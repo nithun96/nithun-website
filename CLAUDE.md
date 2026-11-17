@@ -144,6 +144,8 @@ nithun-website/
 ├── nginx/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── GAME-BRIEF.md                   # Brief for the point-and-click game pilot (see src/game/)
+├── ios/                            # Silence for iOS — native SwiftUI app (see Silence iOS app)
+├── .github/workflows/silence-sounds.yml  # Check: the app's sounds still match the website's
 ├── design-handoff/                 # Redesign handoff — README.md + nithun.html reference prototype
 ├── scripts/
 │   ├── generate-sitemap.js         # Auto-generates public/sitemap.xml at build time
@@ -257,7 +259,7 @@ The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no a
 
 To check or renew by hand: see **Server access** below.
 
-**Automatic deploys:** every push to `main` — including merging a pull request on GitHub, e.g. from a Cowork or cloud session — runs `.github/workflows/deploy.yml`, which builds the site, uploads it and updates Nginx (same steps as `deploy.sh`). Pushes that only change `README.md`, `CLAUDE.md` or `GAME-BRIEF.md` are skipped. Progress and failures show under the repo's **Actions** tab on GitHub, and GitHub emails on failure. A deploy can also be started by hand there ("Run workflow").
+**Automatic deploys:** every push to `main` — including merging a pull request on GitHub, e.g. from a Cowork or cloud session — runs `.github/workflows/deploy.yml`, which builds the site, uploads it and updates Nginx (same steps as `deploy.sh`). Pushes that only change `README.md`, `CLAUDE.md`, `GAME-BRIEF.md` or the iOS app (`ios/`) are skipped. Progress and failures show under the repo's **Actions** tab on GitHub, and GitHub emails on failure. A deploy can also be started by hand there ("Run workflow").
 
 It uses a GitHub-only SSH key and the server's host keys, both stored as GitHub secrets. The `deploy` user can only update the site and reload Nginx.
 
@@ -337,6 +339,23 @@ Alternatives considered: SteamGridDB (games — nicer curated "grid" art style, 
 - There are no sound files to save: Silence makes its sound live (see README, Silence player). The worker deletes the old "sounds" cache from when it did play files.
 - Don't rename `/sw.js`, and keep it out of the long-cache locations in Nginx (it is served by `location /`, which always revalidates).
 - **To switch it off:** replace the body of `src/sw.js` with a worker that unregisters itself (the comment at the top of the file shows how) and deploy. Removing the file alone would leave the old worker running in visitors' browsers.
+
+---
+
+## Silence iOS app (`ios/`)
+
+A native SwiftUI app of Silence, aiming for the App Store (free, no ads, no tracking,
+no accounts). Started Nov 2026. Details in `ios/README.md`, plans in `ios/ROADMAP.md`.
+
+- **One sound, two codebases:** `src/audio/noiseRecipes.js` and
+  `ios/Silence/Audio/NoiseRecipes.swift` are the same recipes. Change one, change the
+  other in the same PR. The **Silence sounds** check fails if the website's sound
+  changes without updating `ios/tools/golden.json` (fix in `ios/README.md`).
+- **Text:** the app's EN/NO strings (`ios/Silence/Localizable.xcstrings`) are copied
+  from `silence.*` in the translation files. Not checked automatically.
+- `ios/` changes don't deploy the site (`paths-ignore` in `deploy.yml`).
+- Built on Nithun's Mac with Xcode + XcodeGen (`cd ios && xcodegen`); cloud sessions
+  can't build it, but the check builds and tests it on a GitHub Mac runner.
 
 ---
 

@@ -262,7 +262,13 @@ To check or renew by hand: see **Server access** below.
 
 **Automatic deploys:** every push to `main` — including merging a pull request on GitHub, e.g. from a Cowork or cloud session — runs `.github/workflows/deploy.yml`, which builds the site, uploads it and updates Nginx (same steps as `deploy.sh`). Pushes that only change `README.md`, `CLAUDE.md`, `GAME-BRIEF.md` or the iOS app (`ios/`) are skipped. Progress and failures show under the repo's **Actions** tab on GitHub, and GitHub emails on failure. A deploy can also be started by hand there ("Run workflow").
 
-It builds in one job with no secrets, then a second job (which runs no npm code) copies the files using a GitHub-only SSH key and the server's host keys, both stored as GitHub secrets. The `deploy` user can only update the site and reload Nginx.
+It builds in one job with no secrets, then a second job (which runs no npm code) copies the files using a GitHub-only SSH key and the server's host keys, both stored as GitHub secrets. The `deploy` user can update the site files and, through sudo, install the Nginx config and reload Nginx.
+
+**The deploy key is effectively root (accepted, Nov 2026).** Whoever controls the Nginx config controls the server: Nginx runs as root and its config can make it write files anywhere. So anyone holding the deploy key could take over the server. Nithun chose to keep it this way rather than have Nginx changes applied by hand, which is common for a small server, on these conditions:
+- the key is only ever in GitHub secrets, and only the deploy job (which runs no npm code) can read it;
+- Nithun's GitHub account has two-factor login, and `main` changes only through reviewed PRs;
+- the hourly Site check runs, so a changed site is noticed within the hour.
+Revisit this (stop deploying the Nginx config from GitHub and remove the deploy user's sudo) if anyone else gets write access to the repo, the workflows start using third-party actions, or the server starts holding anything sensitive.
 
 **Site check:** `.github/workflows/site-check.yml` runs every hour (and by hand from Actions) and fails, so GitHub emails you, if any file on nithun.no differs from what the last successful deploy uploaded, or a security header differs from `nginx/nithun-website`. A failure you didn't cause means: look at the server now. It compares with the last deploy's files, kept 90 days; after 90 days without a deploy, run Deploy by hand. GitHub pauses scheduled workflows in a public repo after 60 days without commits and emails before it does.
 

@@ -13,6 +13,7 @@ on:
       - 'GAME-BRIEF.md'
       - 'ios/**'                     # the iOS app isn't part of the site
       - '.github/workflows/silence-sounds.yml'
+      - '.github/workflows/site-check.yml'
   workflow_dispatch:
 
 concurrency:
@@ -47,7 +48,7 @@ jobs:
         with:
           name: site
           path: dist/
-          retention-days: 1
+          retention-days: 90   # the hourly Site check compares the live site with these files
           if-no-files-found: error
 
   # Copies the built files to the server. Only this job sees the deploy key, and

@@ -13,6 +13,7 @@ on:
       - 'GAME-BRIEF.md'
       - 'ios/**'                     # the iOS app isn't part of the site
       - '.github/workflows/silence-sounds.yml'
+      - '.github/workflows/site-check.yml'
   workflow_dispatch:
 
 concurrency:
@@ -23,7 +24,10 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  # Installs packages and builds the site with no secrets in reach: npm packages
+  # run their own code at install and build time, so the deploy key is kept in a
+  # separate job that never runs npm.
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -39,6 +43,27 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist/
+          retention-days: 90   # the hourly Site check compares the live site with these files
+          if-no-files-found: error
+
+  # Copies the built files to the server. Only this job sees the deploy key, and
+  # it runs nothing from npm.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7   # for nginx/ and .github/retired-files.txt; runs no repo code
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist/
 
       - name: Set up SSH
         env:

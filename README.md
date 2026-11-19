@@ -23,7 +23,6 @@ Personal website for Nithun Manoharan. Built as a hobby project to learn modern 
 nithun-website/
 ├── index.html                      # Entry point — homepage meta, Open Graph, JSON-LD schema, dark mode init
 ├── vite.config.js                  # Vite config — React plugin, Tailwind plugin, build date injection
-├── deploy.sh                       # Deploy: build → scp to server → update Nginx → git commit + push
 ├── nginx/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── scripts/
@@ -182,17 +181,11 @@ The html background colour is also set in plain CSS (not just Tailwind) to preve
 
 ## Deploy
 
-```bash
-./deploy.sh "Your commit message"
-```
+Merge a pull request into `main`; `main` only accepts changes through PRs. Every push to `main` runs `.github/workflows/deploy.yml`, in order:
+1. **build** job (no secrets): `npm ci` and `npm run build` (including sitemap generation), then keeps `dist/` as an artifact
+2. **deploy** job (holds the deploy key, runs no npm code): uploads `dist/` to the Hetzner VPS via `scp`, removes retired files, copies `nginx/nithun-website` to the server, tests it and reloads Nginx, then checks the live site
 
-In order:
-1. Builds the project (`npm run build` + sitemap generation)
-2. Uploads `dist/` to the Hetzner VPS via `scp`
-3. Copies `nginx/nithun-website` to the server, tests it and reloads Nginx
-4. Commits and pushes all changes to GitHub
-
-**Automatic deploys:** every push to `main`, including merging a pull request on GitHub, runs `.github/workflows/deploy.yml` (same build, upload and Nginx steps). Docs-only pushes (`README.md`, `CLAUDE.md`) are skipped. Watch runs under the repo's **Actions** tab.
+An hourly **Site check** (`.github/workflows/site-check.yml`) compares the live site with the last deploy and fails if anything differs. Docs-only pushes (`README.md`, `CLAUDE.md`) are skipped. Watch runs under the repo's **Actions** tab.
 
 Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step picks up the per-page copies `scripts/prerender.js` writes after the build (each with its own title, description, canonical and Open Graph tags, for link previews; posts also get BlogPosting JSON-LD). Anything else gets `dist/404.html` with status 404, so every page needs an entry in `PAGES` in `prerender.js`. Trailing slashes redirect (`/writing/` → `/writing`) and `/books` → `/shelf`. www.nithun.no and nithunmanoharan.com both redirect to nithun.no. Security headers (CSP with a hash for the inline theme script, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, Cross-Origin-Opener-Policy) are configured in Nginx. Files removed from the site are deleted from the server via `.github/retired-files.txt`. `manifest.webmanifest` and the PNG icons give the site a proper icon and name when added to a home screen.
 

@@ -1,5 +1,5 @@
 # Builds and deploys nithun.no on every push to main, including merged PRs
-# (e.g. from Claude Cowork / cloud sessions). Mirrors deploy.sh.
+# (e.g. from Claude Cowork / cloud sessions). The only way the site is deployed.
 # Secrets: DEPLOY_SSH_KEY (private key for the `deploy` user, GitHub-only),
 #          DEPLOY_KNOWN_HOSTS (the server's host keys).
 name: Deploy

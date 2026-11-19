@@ -138,7 +138,6 @@ This is **not** a CV or portfolio. It is a personal brand and identity site.
 nithun-website/
 ├── index.html                      # Entry point — SEO meta, Open Graph, JSON-LD, dark mode init
 ├── vite.config.js                  # Vite config — React and Tailwind plugins, `posts` plugin (Markdown → tree at build time), build date injection
-├── deploy.sh                       # Deploy: build → scp to server → update Nginx → git commit + push
 ├── .github/workflows/deploy.yml    # Auto-deploy on every push to main (see Deployment)
 ├── .github/retired-files.txt       # Files the deploy deletes from the server (uploads never delete)
 ├── nginx/
@@ -240,13 +239,7 @@ If adding new weights or styles: download the WOFF2 from fonts.gstatic.com (fetc
 
 ## Deployment (Hetzner)
 
-To deploy changes, use the deploy script with a commit message:
-
-```
-./deploy.sh "Your commit message"
-```
-
-This will build, upload to the server, update the Nginx config, and push to GitHub in one command.
+To deploy a change: commit it on a branch, open a PR, review it and merge it. Merging to `main` deploys the site (see **Automatic deploys** below). `main` is protected by a GitHub ruleset (PRs only, no force pushes, no deletion, nobody on the bypass list), so there is no other way to deploy. The old `deploy.sh`, which deployed from the laptop and pushed straight to `main`, was removed in Nov 2026: the ruleset would have blocked its push after it had already changed the live site, and its `git add .` could commit stray files.
 
 The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no and nithunmanoharan.com redirects to nithun.no.
 
@@ -260,7 +253,7 @@ The site is live at **nithun.no** (primary domain). Traffic from www.nithun.no a
 
 To check or renew by hand: see **Server access** below.
 
-**Automatic deploys:** every push to `main` — including merging a pull request on GitHub, e.g. from a Cowork or cloud session — runs `.github/workflows/deploy.yml`, which builds the site, uploads it and updates Nginx (same steps as `deploy.sh`). Pushes that only change `README.md`, `CLAUDE.md`, `GAME-BRIEF.md` or the iOS app (`ios/`) are skipped. Progress and failures show under the repo's **Actions** tab on GitHub, and GitHub emails on failure. A deploy can also be started by hand there ("Run workflow").
+**Automatic deploys:** every push to `main` — including merging a pull request on GitHub, e.g. from a Cowork or cloud session — runs `.github/workflows/deploy.yml`, which builds the site, uploads it and updates Nginx. Pushes that only change `README.md`, `CLAUDE.md`, `GAME-BRIEF.md` or the iOS app (`ios/`) are skipped. Progress and failures show under the repo's **Actions** tab on GitHub, and GitHub emails on failure. A deploy can also be started by hand there ("Run workflow").
 
 It builds in one job with no secrets, then a second job (which runs no npm code) copies the files using a GitHub-only SSH key and the server's host keys, both stored as GitHub secrets. The `deploy` user can update the site files and, through sudo, install the Nginx config and reload Nginx.
 
@@ -276,7 +269,6 @@ Revisit this (stop deploying the Nginx config from GitHub and remove the deploy 
 
 **Cloud/Cowork sessions:** work on a branch and open a PR. Review the PR (or ask a local session to), then merge it — the site deploys itself. Don't push unreviewed changes straight to `main`.
 
-`./deploy.sh` still works for deploying from this laptop; it deploys directly, and its push to `main` then triggers the workflow, which redeploys the same commit (harmless).
 
 **After every deploy:** Update `README.md` to reflect the current state of the site — pages, routes, file structure, and the "What's Live" checklist. The README is the living reference for what exists; keep it accurate.
 
@@ -296,7 +288,7 @@ Covers are pre-fetched at dev-time and stored in `src/data/bookCovers.json` (com
    - Set value to a direct image URL (string) to override, or `null` to leave the card without a cover
 3. **`npm run finalise-covers`** — merges draft + overrides → writes `src/data/bookCovers.json`
 4. Commit `src/data/bookCovers.json` and `src/data/bookCoversOverride.json`
-5. Deploy: `./deploy.sh "Update book covers"`
+5. Open a PR with them and merge it (merging deploys)
 
 ### Google Books API key (optional but recommended)
 ```
@@ -336,7 +328,7 @@ Alternatives considered: SteamGridDB (games — nicer curated "grid" art style, 
 5. **Update `ShelfPage.jsx`**: it renders books only (a bookcase of spines). Add games and TV as their own sections below the books, reading from the new cover maps by title.
 6. **Update Nginx CSP** on the server (`img-src`) to allow the actual image CDN hosts once known (likely `media.rawg.io` and `image.tmdb.org` — confirm exact hosts from real API responses, don't guess).
 7. Update README/CLAUDE.md folder structure notes to mention the new data files and scripts.
-8. `./deploy.sh "Add cover art for games and TV"`.
+8. Open a PR and merge it (merging deploys).
 
 ---
 

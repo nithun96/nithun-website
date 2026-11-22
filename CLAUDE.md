@@ -185,7 +185,8 @@ nithun-website/
     ├── pages/
     │   ├── AboutPage.jsx           # /about — large heading, bio beside two portraits, travel photography grid, Instagram link
     │   ├── ShelfPage.jsx           # /shelf — bookcase: a plank per series, real spines where photographed, drawn spines otherwise; tap for details
-    │   ├── SilencePage.jsx         # /silence — sound rows, player band (timer, volume), hearing charities
+    │   ├── SilencePage.jsx         # /silence — sound rows, player band (timer, volume), hearing charities, privacy link
+    │   ├── SilencePrivacyPage.jsx  # /silence/privacy — Silence privacy policy (website + iOS app; App Store needs it). Text in privacy.*; change the "updated" date and the policy whenever Silence starts storing or sending anything new
     │   ├── WritingPage.jsx         # /writing — large heading, posts as rows (date, title, summary, language), RSS line
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Catch-all for unknown URLs — "page not found", marked noindex

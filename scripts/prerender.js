@@ -35,6 +35,7 @@ const PAGES = [
   { path: '/writing', title: 'writingTitle', description: 'writingDescription' },
   { path: '/shelf',   title: 'shelfTitle',   description: 'shelfDescription' },
   { path: '/silence', title: 'silenceTitle', description: 'silenceDescription' },
+  { path: '/silence/privacy', title: 'silencePrivacyTitle', description: 'silencePrivacyDescription' },
   { path: '/about',   title: 'aboutTitle',   description: 'aboutDescription' },
 ]
 

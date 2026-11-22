@@ -244,6 +244,15 @@ sup[data-footnote] {
 .pg-hero { padding: 48px 0 56px; border-bottom: 1.5px solid var(--fg); }
 .pg-name { font-size: clamp(56px, 9.5vw, 128px); }
 .pg-intro { font-family: Georgia, serif; font-size: clamp(19px, 2vw, 23px); line-height: 1.45; color: var(--fg2); margin: 24px 0 0; max-width: 620px; }
+/* Silence privacy policy (/silence/privacy): plain reading column */
+.policy-date { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fgm); margin: 20px 0 0; }
+.policy { max-width: 680px; padding: 16px 0 0; }
+.policy section { padding: 40px 0 0; }
+.policy h2 { font-family: Georgia, serif; font-weight: normal; font-size: clamp(24px, 3vw, 30px); line-height: 1.2; margin: 0 0 14px; }
+.policy p { font-size: 17px; line-height: 1.7; color: var(--fg2); margin: 0 0 16px; }
+.policy .text-link { display: inline-block; padding: 4px 0; }
+.privacy-line { padding: 48px 0 0; font-size: 15px; color: var(--fgm); }
+.privacy-line .text-link { display: inline-block; padding: 8px 0; }
 
 /* ── Writing list ──────────────────────────────────────────── */
 .posts { list-style: none; margin: 0; padding: 0; }

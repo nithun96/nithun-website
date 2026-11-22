@@ -480,6 +480,52 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
 .vol-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9.5px; border-radius: 50%; background: var(--on); }
 .vol-slider::-moz-range-thumb { width: 22px; height: 22px; border: 0; border-radius: 50%; background: var(--on); }
 .player-note { font-size: 15px; margin: 4px 0 0; }
+/* Your sound (components/YourSound.jsx): tone slider, tinnitus pitch, matching dialog */
+.ys { padding: 88px 0 0; }
+.ys h2 { font-family: Georgia, serif; font-weight: normal; font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em; margin: 0; }
+.ys-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; border-top: 1.5px solid var(--fg); }
+.ys-block { padding: 28px 0; border-bottom: 1px solid color-mix(in oklch, var(--fg) 12%, transparent); }
+.ys-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.ys-k { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: var(--sage); }
+.ys-val { font-family: Georgia, serif; font-size: 20px; font-variant-numeric: tabular-nums; }
+.ys-ends { display: flex; justify-content: space-between; font-size: 14px; color: var(--fg2); }
+.ys-p { margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: var(--fg2); max-width: 520px; }
+.ys-slider { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 44px; margin: 0; background: transparent; cursor: pointer; }
+.ys-slider::-webkit-slider-runnable-track { height: 3px; border-radius: 3px; background: color-mix(in oklch, var(--fg) 45%, transparent); }
+.ys-slider::-moz-range-track { height: 3px; border-radius: 3px; background: color-mix(in oklch, var(--fg) 45%, transparent); }
+.ys-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9.5px; border-radius: 50%; background: var(--sage); }
+.ys-slider::-moz-range-thumb { width: 22px; height: 22px; border: 0; border-radius: 50%; background: var(--sage); }
+.ys-slider:disabled { cursor: not-allowed; }
+.ys-btn { font: inherit; font-size: 15px; color: var(--fg); background: none; border: 1.5px solid var(--fg); border-radius: 999px; min-height: 44px; padding: 0 18px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+.ys-btn:hover, .ys-btn:focus-visible { background: var(--sage-f); border-color: var(--sage-f); color: var(--on); }
+.ys-btn:disabled { cursor: not-allowed; opacity: 0.45; background: none; border-color: var(--fg); color: var(--fg); }
+.ys-btn-main { border-color: var(--sage); }
+.ys-actions { display: flex; flex-wrap: wrap; gap: 8px 12px; margin-top: 16px; }
+/* On/off: the dot fills and the word changes, not just the colour */
+.ys-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid currentColor; flex: none; }
+[aria-pressed="true"] > .ys-dot, [aria-pressed="true"] .ys-state .ys-dot { background: currentColor; }
+.ys-switch { font: inherit; color: var(--fg); width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; text-align: left; background: none; border: 1.5px solid var(--fg); border-radius: 12px; padding: 14px 18px; min-height: 64px; cursor: pointer; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+.ys-switch[aria-pressed="true"] { background: var(--sage-f); border-color: var(--sage-f); color: var(--on); }
+.ys-switch:hover, .ys-switch:focus-visible { border-color: var(--sage); }
+.ys-switch-text { display: grid; gap: 2px; }
+.ys-switch-name { font-family: Georgia, serif; font-size: 22px; line-height: 1.2; }
+.ys-switch-sub { font-size: 14px; }
+.ys-state { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
+.ys-note { font-size: 14px; line-height: 1.6; color: var(--fgm); margin: 20px 0 0; max-width: 640px; }
+.ys-dialog { width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; padding: 28px; background: var(--bg); color: var(--fg); border: 1.5px solid var(--fg); border-radius: 16px; animation: fadeIn 0.3s ease both; }
+.ys-dialog::backdrop { background: rgba(0, 0, 0, 0.6); }
+.ys-dialog h2 { font-family: Georgia, serif; font-weight: normal; font-size: 32px; line-height: 1.1; margin: 0 0 16px; }
+.ys-dialog p { font-size: 16px; line-height: 1.6; margin: 0 0 12px; }
+.ys-dialog .ys-muted { color: var(--fg2); margin-bottom: 20px; }
+.ys-dialog .ys-note { margin: 16px 0 0; }
+.ys-fields { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+.ys-fields:disabled .ys-row, .ys-fields:disabled .ys-slider { opacity: 0.45; }
+.ys-steps { display: flex; justify-content: space-between; margin: 4px 0 20px; }
+.ys-step { width: 52px; justify-content: center; padding: 0; font-size: 22px; line-height: 1; }
+@media (max-width: 860px) {
+  .ys-grid { grid-template-columns: 1fr; }
+  .ys-dialog { padding: 22px; }
+}
 .guide { padding: 88px 0 0; }
 .tips { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; counter-reset: tip; border-top: 1.5px solid var(--fg); }
 .tips li { counter-increment: tip; padding: 28px 0 28px 44px; position: relative; border-bottom: 1px solid color-mix(in oklch, var(--fg) 12%, transparent); }

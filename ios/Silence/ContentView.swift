@@ -3,15 +3,11 @@ import SwiftUI
 // A working first screen, not the design. Layout, type and colour are Nithun's
 // call; this mirrors the website's structure (sounds list, then the player).
 
-extension Color {
-    /// The website's --sage (light #4F6B30, dark #8FAF6E)
-    static let sage = Color(UIColor { $0.userInterfaceStyle == .dark
-        ? UIColor(red: 0x8F/255, green: 0xAF/255, blue: 0x6E/255, alpha: 1)
-        : UIColor(red: 0x4F/255, green: 0x6B/255, blue: 0x30/255, alpha: 1) })
-}
+// Color.sage is in Shared/Colours.swift (the widgets use it too).
 
 struct ContentView: View {
-    @State private var model = SilenceModel()
+    /// The one shared model (SilenceModel.shared), also used by Siri and Shortcuts
+    @Bindable var model: SilenceModel
     @State private var showingMatch = false
     @Environment(\.openURL) private var openURL
 
@@ -96,7 +92,7 @@ struct ContentView: View {
                     Text(timerText).font(.body.monospacedDigit())
                 }
                 Picker("Sleep timer", selection: $model.timerMinutes) {
-                    ForEach(SilenceModel.timerOptions, id: \.self) { mins in
+                    ForEach(SilenceModel.timerOptions(including: model.timerMinutes), id: \.self) { mins in
                         if let mins { Text("\(mins) min").tag(mins as Int?) } else { Text("Off").tag(nil as Int?) }
                     }
                 }
@@ -184,4 +180,4 @@ struct ContentView: View {
     }
 }
 
-#Preview { ContentView() }
+#Preview { ContentView(model: .shared) }

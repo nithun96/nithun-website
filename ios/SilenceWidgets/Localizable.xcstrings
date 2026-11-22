@@ -1,0 +1,96 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "Sleep timer": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sovetimer"
+          }
+        }
+      }
+    },
+    "Stops in": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopper om"
+          }
+        }
+      }
+    },
+    "Stop": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp"
+          }
+        }
+      }
+    },
+    "Silence": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silence"
+          }
+        }
+      }
+    },
+    "Play or stop Silence": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av eller stopp Silence"
+          }
+        }
+      }
+    },
+    "Stop the sound": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp lyden"
+          }
+        }
+      }
+    },
+    "Stops whatever Silence is playing.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopper det Silence spiller."
+          }
+        }
+      }
+    },
+    "Play or stop": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av eller stopp"
+          }
+        }
+      }
+    },
+    "Plays your last sound, or stops it if one is playing.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spiller den siste lyden din, eller stopper den hvis noe spilles."
+          }
+        }
+      }
+    }
+  }
+}

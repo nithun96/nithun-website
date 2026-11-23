@@ -88,6 +88,8 @@
     "bookN": "Bok {{n}} · {{series}}",
     "by": "av {{author}}",
     "bookLabel": "{{title}} av {{author}}",
+    "pickOne": "Velg en for meg",
+    "pickOneHint": "Alltid en du kan begynne på: en frittstående bok eller den første i en serie.",
     "putBack": "Sett den tilbake",
     "selected": "Valgt bok",
     "spineAlt": "Bokryggen til {{title}}, fotografert i Nithuns hylle",

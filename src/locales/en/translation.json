@@ -88,6 +88,8 @@
     "bookN": "Book {{n}} · {{series}}",
     "by": "by {{author}}",
     "bookLabel": "{{title}} by {{author}}",
+    "pickOne": "Pick one for me",
+    "pickOneHint": "Always one you can start with: a standalone, or the first book of a series.",
     "putBack": "Put it back",
     "selected": "Selected book",
     "spineAlt": "The spine of {{title}}, photographed on Nithun's shelf",

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import shelfData from '../data/shelf.json'
 import spines from '../data/bookSpines.json'
@@ -40,11 +40,23 @@ function groupBooks(books) {
     .sort(([a, x], [b, y]) => (a.startsWith('Standalone') - b.startsWith('Standalone')) || y.length - x.length)
 }
 
+// "Pick one for me" only hands out books you can start with: any standalone,
+// and one book per series (book 1, or the first listed if it isn't numbered).
+function startingBooks(groups) {
+  return groups.flatMap(g => {
+    if (g.series.startsWith('Standalone')) return g.books
+    const numbered = g.books.filter(b => b.number >= 1).sort((a, b) => a.number - b.number)
+    return [numbered[0] || g.books[0]]
+  })
+}
+
 export default function ShelfPage() {
   const { t } = useTranslation()
   usePageMeta({ title: t('meta.shelfTitle'), description: t('meta.shelfDescription'), path: '/shelf' })
   const [selected, setSelected] = useState(null)   // book title
   const [coverFailed, setCoverFailed] = useState({})   // titles whose cover didn't load
+  const spineRefs = useRef(new Map())   // title → spine button, for "Pick one for me"
+  const picked = useRef(null)           // title picked by the button, scrolled to after render
 
   // Book spines and covers belong to their publishers: keep them out of image
   // search for Nithun's name. Nginx also sends this as a header.
@@ -78,6 +90,25 @@ export default function ShelfPage() {
     }))
   }, [t])
 
+  // After "Pick one for me": bring the chosen spine into view and give it focus,
+  // so keyboard users carry on from there. No smooth scroll under reduced motion.
+  useEffect(() => {
+    if (!selected || picked.current !== selected) return
+    picked.current = null
+    const el = spineRefs.current.get(selected)
+    if (!el) return
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: still ? 'auto' : 'smooth' })
+    el.focus({ preventScroll: true })
+  }, [selected])
+
+  const pickOne = () => {
+    const options = startingBooks(groups).filter(b => b.title !== selected)
+    const book = options[Math.floor(Math.random() * options.length)]
+    picked.current = book.title
+    setSelected(book.title)
+  }
+
   const pick = groups.flatMap(g => g.books.map(b => ({ ...b, group: g }))).find(b => b.title === selected)
   let line = ''
   if (pick) {
@@ -97,6 +128,12 @@ export default function ShelfPage() {
             <span className="l l2"><span>{t('shelf.headingTail')}</span></span>
           </h1>
           <p className="sh-intro enter">{t('shelf.intro')}</p>
+          <div className="sh-pick enter">
+            <button type="button" className="pill sh-pick-btn" onClick={pickOne} aria-describedby="sh-pick-hint">
+              <span className="sh-pick-dot" aria-hidden="true" />{t('shelf.pickOne')}
+            </button>
+            <p id="sh-pick-hint" className="sh-pick-hint">{t('shelf.pickOneHint')}</p>
+          </div>
         </div>
         <p className="sh-count enter"><b>{shelfData.books.length}</b><span>{t('shelf.books')}</span></p>
       </section>
@@ -108,6 +145,7 @@ export default function ShelfPage() {
               {g.books.map(b => (
                 <button
                   key={b.title}
+                  ref={el => { if (el) spineRefs.current.set(b.title, el); else spineRefs.current.delete(b.title) }}
                   type="button"
                   className={`spine${b.photo ? ' photo' : ''}`}
                   style={{ '--h': `${b.h}px`, '--w': `${b.w}px`, '--s': `var(--sp${b.colour})`, animationDelay: `${b.delay}s` }}

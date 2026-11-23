@@ -409,7 +409,7 @@ The `parseFrontmatter.js` parser handles all keys generically — no changes nee
 - [x] Dark/light theme toggle (no flash on load)
 - [x] Redesign (Oct 2026) — editorial "contents page" homepage, purple identity colour, section colours, motion per Design Principles
 - [x] Homepage — name, standfirst, 4 numbered section rows with thumbnails (latest post, a Silence player, Shelf, About), donate nudge
-- [x] Shelf page (`/shelf`) — 58 books as a bookcase; 34 real spines photographed from Nithun's shelves, 24 drawn (see Shelf Spines); Games (50) and TV (8) hidden until they have cover art
+- [x] Shelf page (`/shelf`) — 58 books as a bookcase; 34 real spines photographed from Nithun's shelves, 24 drawn (see Shelf Spines); a "Pick one for me" button hands out a standalone or a series' first book; Games (50) and TV (8) hidden until they have cover art
 - [x] Silence page (`/silence`) — sound rows, player band with sleep timer; sound made live in the browser (no sound files); keeps playing on a locked iPhone and with the mute switch on; works offline after a first visit (service worker)
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embed, "Read with" a Silence sound; posts turned into a tree at build time, so no Markdown parser ships to visitors
 - [x] About page (`/about`) — bio, portrait + flower field photo, 6 travel photos in grid; Instagram linked

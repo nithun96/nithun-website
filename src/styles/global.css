@@ -523,6 +523,11 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
 .sh-name { font-size: clamp(56px, 9.5vw, 128px); }
 .sh-intro { font-size: 17px; color: var(--fg2); margin: 24px 0 0; }
 .sh-count { text-align: right; margin: 0; }
+.sh-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 20px; }
+.sh-pick-btn { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); }
+.sh-pick-btn:hover, .sh-pick-btn:focus-visible { border-color: var(--honey); }
+.sh-pick-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--honey); }
+.sh-pick-hint { flex: 1 1 220px; margin: 0; font-size: 13px; color: var(--fgm); }
 .sh-count b { display: block; font-family: Georgia, serif; font-weight: normal; font-size: 96px; line-height: 0.9; color: var(--honey); font-variant-numeric: tabular-nums; }
 .sh-count span { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fgm); }
 .case { display: flex; flex-wrap: wrap; row-gap: 88px; padding: 72px 0 40px; }

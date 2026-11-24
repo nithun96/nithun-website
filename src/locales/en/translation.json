@@ -258,7 +258,7 @@
       "title": "Questions and answers",
       "stops": {
         "q": "Why did the sound stop?",
-        "a": "A call, another app playing, or headphones disconnecting stops it, so it doesn't carry on out loud. Tap the sound to start it again. If it stopped for any other reason, please email me what happened, so I can look into it."
+        "a": "A call, another app playing, or headphones disconnecting stops it, so it doesn't carry on out loud. Tap the sound to start it again. If it stopped for any other reason, please report it as a bug."
       },
       "match": {
         "q": "Is the matching tone safe?",

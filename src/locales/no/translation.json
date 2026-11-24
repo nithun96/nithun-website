@@ -258,7 +258,7 @@
       "title": "Spørsmål og svar",
       "stops": {
         "q": "Hvorfor stoppet lyden?",
-        "a": "En samtale, en annen app som spiller, eller hodetelefoner som kobles fra, stopper lyden, så den ikke fortsetter høyt. Trykk på lyden for å starte igjen. Stoppet den av en annen grunn, send meg gjerne en e-post om hva som skjedde, så jeg kan se på det."
+        "a": "En samtale, en annen app som spiller, eller hodetelefoner som kobles fra, stopper lyden, så den ikke fortsetter høyt. Trykk på lyden for å starte igjen. Stoppet den av en annen grunn, meld det gjerne som en feil."
       },
       "match": {
         "q": "Er tonen trygg?",

@@ -168,7 +168,7 @@
     "silencePrivacyTitle": "Silence privacy policy | Nithun Manoharan",
     "silencePrivacyDescription": "Silence, the free sound tool for tinnitus and sleep, collects no data. What the app and the website keep on your device, and what they don't.",
     "silenceSupportTitle": "Silence support | Nithun Manoharan",
-    "silenceSupportDescription": "Help with Silence, the free sound tool for tinnitus and sleep: how to get in touch, and answers about the sleep timer, the locked screen, offline use and your settings."
+    "silenceSupportDescription": "Help with Silence, the free sound tool for tinnitus and sleep: how to get in touch, and answers to common questions."
   },
   "notFound": {
     "heading": "Page not found",
@@ -252,42 +252,25 @@
     "contact": {
       "title": "Get in touch",
       "lead": "Questions, problems or ideas? Email me:",
-      "p2": "I read everything. Silence is free and made by one person, so a reply may take a few days."
-    },
-    "about": {
-      "title": "What Silence is",
-      "p1": "Silence plays four sounds for tinnitus and sleep: brown noise, pink noise, rain and ocean. They're made on your device as you listen, from the same recipes in the app and on the website, so both sound the same. It's free, with no ads, no accounts and no tracking."
+      "p2": "I read everything; replies may take a few days."
     },
     "faq": {
       "title": "Questions and answers",
       "stops": {
-        "q": "The sound stopped when I got a call or took my headphones out. Why?",
-        "a": "That's on purpose. In the app, the sound stops when a call comes in, when another app starts playing, or when your headphones disconnect, so it never carries on out loud through the speaker. Tap the sound to start it again. On the website, a call or another app taking over the sound stops it too."
-      },
-      "locked": {
-        "q": "Does it keep playing with the screen locked?",
-        "a": "Yes, in the app and on the website. You can pause it from the lock screen too, and on an iPhone the silent switch doesn't mute it."
-      },
-      "timer": {
-        "q": "How does the sleep timer work?",
-        "a": "Choose 30, 60 or 90 minutes. The sound plays as normal, then fades out gently over the last minute and stops. It works with the screen locked."
+        "q": "Why did the sound stop?",
+        "a": "On purpose: a call, another app playing, or headphones disconnecting stops it, so it never carries on out loud. Tap the sound to start it again."
       },
       "match": {
-        "q": "What is Match my tinnitus, and is the tone safe?",
-        "a": "It's in the app, under Your sound. A soft tone helps you find the pitch closest to your tinnitus, and Focus on my pitch then puts more of the sound around it.",
-        "a2": "Turn your phone's volume down before you start. The tone always starts very quietly and can only go so loud, but how loud it is in your ears still depends on your phone's volume and your headphones. Stop if it's uncomfortable at all."
+        "q": "Is the matching tone safe?",
+        "a": "It starts very quietly and has a volume cap, but your phone's volume and your headphones still decide how loud it is. Turn your volume down first, and stop if it's uncomfortable."
       },
       "settings": {
-        "q": "Where are my settings kept, and how do I reset them?",
-        "a": "In the app, your volume, sleep timer, last sound, Tone and matched pitch are kept on your phone only. Forget my pitch clears the pitch, and deleting the app removes everything. On the website, your browser keeps light or dark mode, your language and any Silence settings the page remembers, on your device only. To clear them, clear this site's data in your browser's settings."
+        "q": "How do I reset my settings?",
+        "a": "They're kept on your device only. In the app, Forget my pitch clears the pitch and deleting the app clears everything. On the website, clear this site's data in your browser."
       },
       "offline": {
-        "q": "Does it work without the internet?",
-        "a": "The app never needs a connection. The website works offline once you've opened Silence there one time."
-      },
-      "languages": {
-        "q": "Which languages is it in?",
-        "a": "English and Norwegian (Bokmål). The app follows your phone's language; on the website, use the language button at the top."
+        "q": "Does it work offline?",
+        "a": "The app, always. The website, once you've opened Silence there one time."
       }
     },
     "health": {

@@ -168,7 +168,7 @@
     "silencePrivacyTitle": "Personvern i Silence | Nithun Manoharan",
     "silencePrivacyDescription": "Silence, det gratis lydverktøyet for tinnitus og søvn, samler ikke inn data. Hva appen og nettsiden lagrer på enheten din, og hva de ikke lagrer.",
     "silenceSupportTitle": "Hjelp med Silence | Nithun Manoharan",
-    "silenceSupportDescription": "Hjelp med Silence, det gratis lydverktøyet for tinnitus og søvn: hvordan du kontakter meg, og svar om sovetimeren, låst skjerm, bruk uten nett og innstillingene dine."
+    "silenceSupportDescription": "Hjelp med Silence, det gratis lydverktøyet for tinnitus og søvn: slik tar du kontakt, og svar på vanlige spørsmål."
   },
   "notFound": {
     "heading": "Siden finnes ikke",
@@ -252,42 +252,25 @@
     "contact": {
       "title": "Ta kontakt",
       "lead": "Spørsmål, problemer eller ideer? Send meg en e-post:",
-      "p2": "Jeg leser alt. Silence er gratis og laget av én person, så det kan ta noen dager før du får svar."
-    },
-    "about": {
-      "title": "Hva Silence er",
-      "p1": "Silence spiller fire lyder for tinnitus og søvn: brun støy, rosa støy, regn og hav. Lydene lages på enheten din mens du lytter, etter de samme oppskriftene i appen og på nettsiden, så de høres like ut. Silence er gratis, uten reklame, kontoer eller sporing."
+      "p2": "Jeg leser alt, men svaret kan ta noen dager."
     },
     "faq": {
       "title": "Spørsmål og svar",
       "stops": {
-        "q": "Lyden stoppet da jeg fikk en telefon eller tok ut hodetelefonene. Hvorfor?",
-        "a": "Det er med vilje. I appen stopper lyden når det kommer en samtale, når en annen app begynner å spille, eller når hodetelefonene kobles fra, så den aldri fortsetter høyt gjennom høyttaleren. Trykk på lyden for å starte den igjen. På nettsiden stopper lyden også når en samtale eller en annen app tar over lyden."
-      },
-      "locked": {
-        "q": "Fortsetter lyden med skjermen låst?",
-        "a": "Ja, både i appen og på nettsiden. Du kan også pause den fra låseskjermen, og på iPhone demper ikke lydløs-bryteren den."
-      },
-      "timer": {
-        "q": "Hvordan virker sovetimeren?",
-        "a": "Velg 30, 60 eller 90 minutter. Lyden spiller som vanlig, toner så rolig ut det siste minuttet og stopper. Det virker også med skjermen låst."
+        "q": "Hvorfor stoppet lyden?",
+        "a": "Med vilje: en samtale, en annen app som spiller, eller hodetelefoner som kobles fra, stopper lyden, så den aldri fortsetter høyt. Trykk på lyden for å starte igjen."
       },
       "match": {
-        "q": "Hva er «Finn tonen til tinnitusen min», og er tonen trygg?",
-        "a": "Det finner du i appen, under Din lyd. En svak tone hjelper deg å finne tonehøyden som ligner mest på tinnitusen din, og «Fokuser på tonen min» legger så mer av lyden rundt den.",
-        "a2": "Skru ned volumet på telefonen før du begynner. Tonen starter alltid svært lavt og kan bare bli så høy, men hvor sterkt du hører den, avhenger fortsatt av volumet på telefonen og av hodetelefonene dine. Stopp hvis den føles det minste ubehagelig."
+        "q": "Er tonen trygg?",
+        "a": "Den starter svært lavt og har et volumtak, men volumet på telefonen og hodetelefonene avgjør fortsatt hvor sterk den er. Skru ned volumet først, og stopp hvis det er ubehagelig."
       },
       "settings": {
-        "q": "Hvor lagres innstillingene mine, og hvordan nullstiller jeg dem?",
-        "a": "I appen lagres volum, sovetimer, siste lyd, klang og tonen du fant, bare på telefonen din. «Glem tonen min» fjerner tonen, og sletter du appen, forsvinner alt. På nettsiden husker nettleseren lys eller mørk modus, språket ditt og eventuelle Silence-innstillinger siden tar vare på, bare på enheten din. Vil du fjerne dem, sletter du dataene for denne nettsiden i innstillingene til nettleseren."
+        "q": "Hvordan nullstiller jeg innstillingene?",
+        "a": "De lagres bare på enheten din. I appen fjerner «Glem tonen min» tonen, og sletter du appen, forsvinner alt. På nettsiden sletter du dataene for denne siden i nettleseren."
       },
       "offline": {
         "q": "Virker det uten nett?",
-        "a": "Appen trenger aldri nett. Nettsiden virker uten nett etter at du har åpnet Silence der én gang."
-      },
-      "languages": {
-        "q": "Hvilke språk finnes Silence på?",
-        "a": "Engelsk og norsk (bokmål). Appen følger språket på telefonen din; på nettsiden bytter du med språkknappen øverst."
+        "a": "Appen alltid. Nettsiden etter at du har åpnet Silence der én gang."
       }
     },
     "health": {

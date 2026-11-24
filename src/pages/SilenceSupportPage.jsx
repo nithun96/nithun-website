@@ -8,16 +8,9 @@ import { usePageMeta } from '../lib/usePageMeta'
 // what the app and the site actually do; the health note matches the app's.
 const EMAIL = 'nithun@tutamail.com'
 
-// Questions and answers: support.faq.<id>.q, .a (and .a2 where there is one)
-const FAQ = [
-  { id: 'stops',     paras: ['a'] },
-  { id: 'locked',    paras: ['a'] },
-  { id: 'timer',     paras: ['a'] },
-  { id: 'match',     paras: ['a', 'a2'] },
-  { id: 'settings',  paras: ['a'] },
-  { id: 'offline',   paras: ['a'] },
-  { id: 'languages', paras: ['a'] },
-]
+// Questions and answers (support.faq.<id>.q/.a). Keep it to what people
+// actually get stuck on; the intro and the app explain the rest.
+const FAQ = ['stops', 'match', 'settings', 'offline']
 
 export default function SilenceSupportPage() {
   const { t } = useTranslation()
@@ -41,17 +34,12 @@ export default function SilenceSupportPage() {
           <p>{t('support.contact.p2')}</p>
         </section>
 
-        <section aria-labelledby="support-about">
-          <h2 id="support-about">{t('support.about.title')}</h2>
-          <p>{t('support.about.p1')}</p>
-        </section>
-
         <section aria-labelledby="support-faq">
           <h2 id="support-faq">{t('support.faq.title')}</h2>
-          {FAQ.map(({ id, paras }) => (
+          {FAQ.map(id => (
             <div key={id} className="faq-item">
               <h3>{t(`support.faq.${id}.q`)}</h3>
-              {paras.map(p => <p key={p}>{t(`support.faq.${id}.${p}`)}</p>)}
+              <p>{t(`support.faq.${id}.a`)}</p>
             </div>
           ))}
         </section>

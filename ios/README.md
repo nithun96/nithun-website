@@ -1,6 +1,6 @@
 # Silence for iOS
 
-The iPhone and iPad app of Deafening Silence (nithun.no/silence): four sounds made
+Blanketing Silence, the iPhone and iPad companion to the Silence tool at nithun.no/silence. It has four sounds made
 from numbers, a sleep timer that fades out over its last minute, and playback that
 keeps going with the screen locked.
 

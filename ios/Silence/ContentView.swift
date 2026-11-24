@@ -33,7 +33,7 @@ struct ContentView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
-            (Text("Deafening ") + Text("Silence").italic().foregroundStyle(Color.sage))
+            (Text("Blanketing ") + Text("Silence").italic().foregroundStyle(Color.sage))
                 .font(.system(size: 44, weight: .regular, design: .serif))
                 .accessibilityAddTraits(.isHeader)
             Text("A small, free sound tool for tinnitus and sleep. Pick a sound, set a sleep timer, and it keeps playing with the screen locked.")

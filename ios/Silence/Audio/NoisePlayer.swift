@@ -1,4 +1,4 @@
-// Deafening Silence — player
+// Blanketing Silence — player
 //
 // Plays one 100-second loop per sound through AVAudioEngine. The loop is read
 // by an AVAudioSourceNode, which also applies the volume and the sleep timer's
@@ -297,7 +297,7 @@ final class NoisePlayer {
     private func setNowPlaying(title: String) {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyTitle: title,
-            MPMediaItemPropertyArtist: "Deafening Silence",
+            MPMediaItemPropertyArtist: "Blanketing Silence",
             MPNowPlayingInfoPropertyIsLiveStream: true,
             MPNowPlayingInfoPropertyPlaybackRate: 1.0,
         ]

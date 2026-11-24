@@ -1,4 +1,4 @@
-// Deafening Silence — the four sounds, made from numbers.
+// Blanketing Silence — the four sounds, made from numbers.
 //
 // A line-by-line port of the website's src/audio/noiseRecipes.js, so the app
 // sounds exactly like nithun.no/silence. The website stores every stage in a

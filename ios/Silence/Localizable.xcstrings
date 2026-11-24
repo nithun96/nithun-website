@@ -192,12 +192,12 @@
         }
       }
     },
-    "Deafening ": {
+    "Blanketing ": {
       "localizations": {
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deafening "
+            "value": "Blanketing "
           }
         }
       }

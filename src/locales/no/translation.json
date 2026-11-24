@@ -195,7 +195,11 @@
     "silenceDescription": "Et gratis lydverktøy for tinnitus og søvn: brun støy, rosa støy, regn og havlyder, med sovetimer.",
     "aboutTitle": "Om meg | Nithun Manoharan",
     "aboutDescription": "Om Nithun Manoharan, produktsjef og medgründer av Pyre, basert i Oslo. Pluss noen reisebilder.",
-    "notFoundTitle": "Siden finnes ikke | Nithun Manoharan"
+    "notFoundTitle": "Siden finnes ikke | Nithun Manoharan",
+    "silencePrivacyTitle": "Personvern i Silence | Nithun Manoharan",
+    "silencePrivacyDescription": "Silence, det gratis lydverktøyet for tinnitus og søvn, samler ikke inn data. Hva appen og nettsiden lagrer på enheten din, og hva de ikke lagrer.",
+    "silenceSupportTitle": "Hjelp med Silence | Nithun Manoharan",
+    "silenceSupportDescription": "Hjelp med Silence, det gratis lydverktøyet for tinnitus og søvn: slik tar du kontakt, og svar på vanlige spørsmål."
   },
   "notFound": {
     "heading": "Siden finnes ikke",
@@ -223,5 +227,91 @@
     "photoInariAlt": "En bronsestatue av en rev ved en helligdom i Kyoto, under et rødt tak",
     "photoRigaAlt": "En opplyst ortodoks katedral i murstein om natten i Riga",
     "instagram": "Mer på Instagram →"
+  },
+  "privacy": {
+    "back": "Silence",
+    "headingA": "Silence",
+    "headingB": "personvern",
+    "updated": "Sist oppdatert 23.11.2026",
+    "intro": "Silence samler ikke inn data om deg. Her er hva det betyr for appen og for Silence på denne nettsiden.",
+    "link": "Personvern: Silence samler ikke inn data",
+    "who": {
+      "title": "Hvem som er ansvarlig",
+      "p1": "Silence er laget av meg, Nithun Manoharan, i Oslo. Jeg er ansvarlig for denne erklæringen og for hvordan Silence håndterer opplysningene dine."
+    },
+    "app": {
+      "title": "Appen samler ikke inn data",
+      "p1": "Silence-appen samler ikke inn, sender eller deler noe om deg. Den har ingen kontoer, ingen analyseverktøy, ingen verktøy for krasjrapporter og ingen reklame, og den trenger ikke internett: Lydene lages på telefonen mens du lytter. Den bruker ikke mikrofonen, så ingenting blir tatt opp.",
+      "p2": "For at den skal åpne slik du forlot den, husker appen noen innstillinger: volumet, sovetimeren, den siste lyden du spilte, klangen og, hvis du har brukt «Finn tonen til tinnitusen min», tonen du valgte og om «Fokuser på tonen min» er på. De lagres bare på telefonen din. Jeg kan ikke se dem, og de sendes aldri til meg eller noen andre.",
+      "p3": "For å fjerne dem sletter du appen: Innstillingene forsvinner sammen med den. Som innstillingene til alle apper ligger de også i sikkerhetskopiene av telefonen (for eksempel iCloud-sikkerhetskopi) til de blir erstattet.",
+      "p4": "App Store drives av Apple, etter Apples egen personvernerklæring. Apple kan vise meg anonyme tall, som antall nedlastinger, og krasjrapporter fra folk som har valgt å dele dem med apputviklere. Ingenting av dette forteller meg hvem du er."
+    },
+    "web": {
+      "title": "Silence på denne nettsiden",
+      "p1": "Silence på nithun.no lager også lyden i nettleseren, så det du lytter til, forlater aldri enheten din. Nettsiden bruker ingen informasjonskapsler, ingen analyseverktøy og ingen sporing av noe slag.",
+      "p2": "Nettleseren din lagrer noen få ting på enheten din: om du valgte lys eller mørk modus, språket ditt og eventuelle Silence-innstillinger siden husker. Første gang du åpner Silence, lagrer den også en kopi av siden, så den virker uten nett. For å fjerne alt dette sletter du dataene for denne nettsiden i nettleserinnstillingene.",
+      "p3": "Nettsiden kjører på en server leid fra Hetzner, et tysk hostingselskap. Som nesten alle nettservere fører den vanlige tilgangslogger: IP-adressen din, siden du ba om, tidspunktet og navnet på nettleseren din. De brukes bare til å holde nettsiden i gang og sikker. De deles ikke og selges ikke, og de brukes ikke til å følge med på deg.",
+      "p4": "Lenker til andre nettsider, som veldedighetsorganisasjonene på Silence-siden, tar deg til steder med egne personvernerklæringer."
+    },
+    "none": {
+      "title": "Ingen sporing, ingen reklame, ingen kontoer",
+      "p1": "Silence har ingen reklame og ingen kontoer. Den sporer deg ikke, og jeg selger eller deler ikke data med noen. Det finnes ingenting å selge: Jeg har det ikke."
+    },
+    "children": {
+      "title": "Barn",
+      "p1": "Silence samler ikke inn data fra noen, heller ikke fra barn."
+    },
+    "changes": {
+      "title": "Endringer i denne erklæringen",
+      "p1": "Hvis Silence noen gang endrer hvordan den håndterer data, oppdaterer jeg denne siden før endringen når deg, og endrer datoen øverst."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "p1": "Bortsett fra serverloggene har jeg ingenting om deg, så det er ingenting å slå opp, rette eller slette. Hvis du har et spørsmål, eller mener at jeg har tatt feil, vil jeg gjerne høre det.",
+      "link": "Send meg en e-post:",
+      "p2": "Du kan også klage til Datatilsynet.",
+      "supportLead": "Trenger du hjelp med Silence?",
+      "supportLink": "Se hjelpesiden"
+    }
+  },
+  "support": {
+    "back": "Silence",
+    "headingA": "Silence",
+    "headingB": "hjelp",
+    "intro": "Hjelp med Silence, det gratis lydverktøyet for tinnitus og søvn, på iPhone og på denne nettsiden.",
+    "link": "Hjelp og spørsmål",
+    "contact": {
+      "title": "Ta kontakt",
+      "lead": "Spørsmål, problemer eller ideer? Send meg en e-post:",
+      "p2": "Jeg leser alt, men svaret kan ta noen dager."
+    },
+    "faq": {
+      "title": "Spørsmål og svar",
+      "stops": {
+        "q": "Hvorfor stoppet lyden?",
+        "a": "En samtale, en annen app som spiller, eller hodetelefoner som kobles fra, stopper lyden, så den ikke fortsetter høyt. Trykk på lyden for å starte igjen. Stoppet den av en annen grunn, meld det gjerne som en feil."
+      },
+      "match": {
+        "q": "Er tonen trygg?",
+        "a": "Den starter svært lavt og har et volumtak, men volumet på telefonen og hodetelefonene avgjør fortsatt hvor sterk den er. Skru ned volumet først, og stopp hvis det er ubehagelig."
+      },
+      "settings": {
+        "q": "Hvordan nullstiller jeg innstillingene?",
+        "a": "De lagres bare på enheten din. I appen fjerner «Glem tonen min» tonen, og sletter du appen, forsvinner alt. På nettsiden sletter du dataene for denne siden i nettleseren."
+      },
+      "offline": {
+        "q": "Virker det uten nett?",
+        "a": "Appen alltid. Nettsiden etter at du har åpnet Silence der én gang."
+      }
+    },
+    "health": {
+      "title": "Om helse",
+      "p1": "Silence er ikke medisinsk utstyr. Hvis tinnitusen er ny, endrer seg eller bare er i ett øre, bør du gå til lege."
+    },
+    "privacy": {
+      "title": "Personvern",
+      "p1": "Silence samler ikke inn data om deg.",
+      "link": "Les personvernerklæringen"
+    }
   }
 }

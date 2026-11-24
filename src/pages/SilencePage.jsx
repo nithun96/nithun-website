@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { createNoisePlayer } from '../audio/noisePlayer'
 import charitiesData from '../data/charities.json'
@@ -226,6 +227,11 @@ export default function SilencePage() {
             ))}
           </ul>
         </section>
+
+        <p className="privacy-line">
+          <Link to="/silence/support" viewTransition className="text-link">{t('support.link')}</Link>
+          <Link to="/silence/privacy" viewTransition className="text-link">{t('privacy.link')}</Link>
+        </p>
       </div>
     </div>
   )

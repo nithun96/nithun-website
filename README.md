@@ -54,6 +54,8 @@ nithun-website/
     │   ├── AboutPage.jsx           # /about — heading, bio beside portraits, travel photos, Instagram link
     │   ├── ShelfPage.jsx           # /shelf — bookcase of real and drawn spines (Games/TV hidden for now)
     │   ├── SilencePage.jsx         # /silence — sound rows, player band, Your sound, hearing charities
+    │   ├── SilencePrivacyPage.jsx  # /silence/privacy — privacy policy for Silence (website + iOS app)
+    │   ├── SilenceSupportPage.jsx  # /silence/support — help and contact for Silence (website + iOS app)
     │   ├── WritingPage.jsx         # /writing — heading, posts as rows, RSS line
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Any unknown URL — "page not found", marked noindex
@@ -90,6 +92,8 @@ nithun-website/
 | `/writing` | `WritingPage` | List of writing posts |
 | `/writing/:slug` | `WritingPostPage` | Individual writing post |
 | `/silence` | `SilencePage` | Tinnitus noise tool |
+| `/silence/privacy` | `SilencePrivacyPage` | Privacy policy for Silence; the iOS app and App Store Connect link here |
+| `/silence/support` | `SilenceSupportPage` | Support for Silence: contact email and Q&A; App Store Connect's Support URL |
 | `/shelf` | `ShelfPage` | Bookcase of recommended books |
 | `/about` | `AboutPage` | Bio and photography |
 | `/books` | → `/shelf` | Redirect |
@@ -205,6 +209,8 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Home page — name, standfirst, four numbered section rows with thumbnails (incl. a working brown-noise player), donation nudge
 - [x] Redesign (Oct 2026) — contents-page homepage, purple identity colour, section colours, motion that switches off with reduced motion
 - [x] Shelf page (`/shelf`) — bookcase of 58 books, 34 with real spines from Nithun's shelves; Games and TV hidden until they have covers
+- [x] Silence privacy policy (`/silence/privacy`) — linked from the bottom of the Silence page and from the iOS app
+- [x] Silence support page (`/silence/support`) — contact email, questions and answers, health note; linked from the Silence and privacy pages
 - [x] Silence page (`/silence`) — sound rows and player band with sleep timer; Your sound (tone, tinnitus pitch match, focus on that pitch, kept in the browser); sound made live (no files); keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds, "Read with" sound
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link

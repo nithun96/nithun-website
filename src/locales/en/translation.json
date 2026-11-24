@@ -195,7 +195,11 @@
     "silenceDescription": "A free sound tool for tinnitus and sleep: brown noise, pink noise, rain and ocean sounds, with a sleep timer.",
     "aboutTitle": "About | Nithun Manoharan",
     "aboutDescription": "About Nithun Manoharan, Product Manager and co-founder of Pyre, based in Oslo. Plus a few travel photos.",
-    "notFoundTitle": "Page not found | Nithun Manoharan"
+    "notFoundTitle": "Page not found | Nithun Manoharan",
+    "silencePrivacyTitle": "Silence privacy policy | Nithun Manoharan",
+    "silencePrivacyDescription": "Silence, the free sound tool for tinnitus and sleep, collects no data. What the app and the website keep on your device, and what they don't.",
+    "silenceSupportTitle": "Silence support | Nithun Manoharan",
+    "silenceSupportDescription": "Help with Silence, the free sound tool for tinnitus and sleep: how to get in touch, and answers to common questions."
   },
   "notFound": {
     "heading": "Page not found",
@@ -223,5 +227,91 @@
     "photoInariAlt": "A bronze fox statue at a shrine in Kyoto, framed under a red roof",
     "photoRigaAlt": "A brick Orthodox cathedral lit up at night in Riga",
     "instagram": "More on Instagram →"
+  },
+  "privacy": {
+    "back": "Silence",
+    "headingA": "Silence",
+    "headingB": "privacy",
+    "updated": "Last updated 23.11.2026",
+    "intro": "Silence collects no data about you. Here's what that means for the app and for Silence on this website.",
+    "link": "Privacy: Silence collects no data",
+    "who": {
+      "title": "Who is responsible",
+      "p1": "Silence is made by me, Nithun Manoharan, in Oslo, Norway. I'm responsible for this policy and for how Silence handles your information."
+    },
+    "app": {
+      "title": "The app collects no data",
+      "p1": "The Silence app doesn't collect, send or share anything about you. It has no accounts, no analytics, no crash-reporting tools and no ads, and it doesn't need the internet: the sounds are made on your phone as you listen. It doesn't use the microphone, so nothing is ever recorded.",
+      "p2": "So that it opens the way you left it, the app remembers a few settings: the volume, the sleep timer, the last sound you played, your tone and, if you've used Match my tinnitus, the pitch you chose and whether Focus on my pitch is on. They're stored on your phone only. I can't see them, and they're never sent to me or anyone else.",
+      "p3": "To remove them, delete the app: its settings go with it. Like every app's settings, they're also in your phone's backups (iCloud Backup, for example) until those backups are replaced.",
+      "p4": "The App Store is run by Apple, under Apple's own privacy policy. Apple may show me anonymous totals, such as the number of downloads, and crash reports from people who've chosen to share them with app developers. None of this tells me who you are."
+    },
+    "web": {
+      "title": "Silence on this website",
+      "p1": "Silence on nithun.no makes its sound in your browser too, so what you listen to never leaves your device. The site uses no cookies, no analytics and no tracking of any kind.",
+      "p2": "Your browser keeps a few things on your device: whether you chose light or dark mode, your language, and any Silence settings the page remembers. The first time you open Silence, it also saves a copy of the page so it works offline. To remove all of this, clear this site's data in your browser's settings.",
+      "p3": "The site runs on a server rented from Hetzner, a German hosting company. Like almost every web server, it keeps standard access logs: your IP address, the page you asked for, the time and your browser's name. They're used only to keep the site running and safe. They aren't shared or sold, and they aren't used to follow you around.",
+      "p4": "Links to other sites, such as the charities on the Silence page, take you to places with their own privacy policies."
+    },
+    "none": {
+      "title": "No tracking, no ads, no accounts",
+      "p1": "Silence has no ads and no accounts. It doesn't track you, and I don't sell or share data with anyone. There's nothing to sell: I don't have it."
+    },
+    "children": {
+      "title": "Children",
+      "p1": "Silence collects no data from anyone, children included."
+    },
+    "changes": {
+      "title": "Changes to this policy",
+      "p1": "If Silence ever changes how it handles data, I'll update this page before the change reaches you, and change the date at the top."
+    },
+    "contact": {
+      "title": "Contact",
+      "p1": "Apart from the server logs, I hold nothing about you, so there's nothing to look up, correct or delete. If you have a question, or think I've got something wrong, I'd like to hear it.",
+      "link": "Email me:",
+      "p2": "You can also complain to Datatilsynet, the Norwegian Data Protection Authority.",
+      "supportLead": "Need help using Silence?",
+      "supportLink": "See the support page"
+    }
+  },
+  "support": {
+    "back": "Silence",
+    "headingA": "Silence",
+    "headingB": "support",
+    "intro": "Help with Silence, the free sound tool for tinnitus and sleep, on iPhone and on this website.",
+    "link": "Support and questions",
+    "contact": {
+      "title": "Get in touch",
+      "lead": "Questions, problems or ideas? Email me:",
+      "p2": "I read everything; replies may take a few days."
+    },
+    "faq": {
+      "title": "Questions and answers",
+      "stops": {
+        "q": "Why did the sound stop?",
+        "a": "A call, another app playing, or headphones disconnecting stops it, so it doesn't carry on out loud. Tap the sound to start it again. If it stopped for any other reason, please report it as a bug."
+      },
+      "match": {
+        "q": "Is the matching tone safe?",
+        "a": "It starts very quietly and has a volume cap, but your phone's volume and your headphones still decide how loud it is. Turn your volume down first, and stop if it's uncomfortable."
+      },
+      "settings": {
+        "q": "How do I reset my settings?",
+        "a": "They're kept on your device only. In the app, Forget my pitch clears the pitch and deleting the app clears everything. On the website, clear this site's data in your browser."
+      },
+      "offline": {
+        "q": "Does it work offline?",
+        "a": "The app, always. The website, once you've opened Silence there one time."
+      }
+    },
+    "health": {
+      "title": "A note on health",
+      "p1": "Silence isn't a medical device. If your tinnitus is new, changes, or is in one ear only, see a doctor."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "p1": "Silence collects no data about you.",
+      "link": "Read the privacy policy"
+    }
   }
 }

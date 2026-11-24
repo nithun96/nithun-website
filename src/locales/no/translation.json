@@ -279,7 +279,7 @@
       },
       "settings": {
         "q": "Hvor lagres innstillingene mine, og hvordan nullstiller jeg dem?",
-        "a": "I appen lagres volum, sovetimer, siste lyd, klang og tonen du fant, bare på telefonen din. «Glem tonen min» fjerner tonen, og sletter du appen, forsvinner alt. Nettsiden lagrer ikke Silence-innstillingene dine: nettleseren husker bare lys eller mørk modus og språket ditt. Vil du fjerne det, sletter du dataene for denne nettsiden i innstillingene til nettleseren."
+        "a": "I appen lagres volum, sovetimer, siste lyd, klang og tonen du fant, bare på telefonen din. «Glem tonen min» fjerner tonen, og sletter du appen, forsvinner alt. På nettsiden husker nettleseren lys eller mørk modus, språket ditt og eventuelle Silence-innstillinger siden tar vare på, bare på enheten din. Vil du fjerne dem, sletter du dataene for denne nettsiden i innstillingene til nettleseren."
       },
       "offline": {
         "q": "Virker det uten nett?",

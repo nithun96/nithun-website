@@ -279,7 +279,7 @@
       },
       "settings": {
         "q": "Where are my settings kept, and how do I reset them?",
-        "a": "In the app, your volume, sleep timer, last sound, Tone and matched pitch are kept on your phone only. Forget my pitch clears the pitch, and deleting the app removes everything. The website doesn't keep your Silence settings: your browser only remembers light or dark mode and your language. To clear those, clear this site's data in your browser's settings."
+        "a": "In the app, your volume, sleep timer, last sound, Tone and matched pitch are kept on your phone only. Forget my pitch clears the pitch, and deleting the app removes everything. On the website, your browser keeps light or dark mode, your language and any Silence settings the page remembers, on your device only. To clear them, clear this site's data in your browser's settings."
       },
       "offline": {
         "q": "Does it work without the internet?",

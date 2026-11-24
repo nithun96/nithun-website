@@ -23,9 +23,14 @@ different"), not dilute it.
 
 ## 1.1 — Reach it without opening the app (native, small)
 
-- Siri and Shortcuts: "Play rain for 60 minutes" (App Intents)
-- Control Centre and lock-screen button (iOS 18 controls)
-- Sleep timer as a Live Activity on the lock screen
+- [x] Siri and Shortcuts (App Intents): "Play rain in Silence", "Play Silence for
+      an hour", "Stop Silence", in English and Norwegian. A Siri phrase can carry
+      one value, so sound and length together ("rain for 60 minutes") is a
+      Shortcuts action, not one Siri sentence
+- [x] Control Centre and lock-screen button (iOS 18 controls): play the last sound
+      or stop. A button, not an on/off switch (a switch needs an App Group)
+- [x] Sleep timer as a Live Activity on the lock screen and Dynamic Island, with Stop
+- [ ] Try all of the above on a real iPhone (written and built without one)
 These are cheap with App Intents and are the features a website can't offer.
 
 ## 1.2 — More of "your sound"

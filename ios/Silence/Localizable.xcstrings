@@ -441,6 +441,386 @@
           }
         }
       }
+    },
+    "Sound": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyd"
+          }
+        }
+      }
+    },
+    "Brown": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brun"
+          }
+        }
+      }
+    },
+    "Pink": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rosa"
+          }
+        }
+      }
+    },
+    "Rain sounds": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regnlyd"
+          }
+        }
+      }
+    },
+    "Sea": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sjø"
+          }
+        }
+      }
+    },
+    "Waves": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bølger"
+          }
+        }
+      }
+    },
+    "15 minutes": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "15 minutter"
+          }
+        }
+      }
+    },
+    "a quarter of an hour": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "et kvarter"
+          }
+        }
+      }
+    },
+    "30 minutes": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 minutter"
+          }
+        }
+      }
+    },
+    "half an hour": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "en halvtime"
+          }
+        }
+      }
+    },
+    "45 minutes": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "45 minutter"
+          }
+        }
+      }
+    },
+    "three quarters of an hour": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tre kvarter"
+          }
+        }
+      }
+    },
+    "1 hour": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 time"
+          }
+        }
+      }
+    },
+    "an hour": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "en time"
+          }
+        }
+      }
+    },
+    "one hour": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "én time"
+          }
+        }
+      }
+    },
+    "60 minutes": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "60 minutter"
+          }
+        }
+      }
+    },
+    "90 minutes": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90 minutter"
+          }
+        }
+      }
+    },
+    "an hour and a half": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "halvannen time"
+          }
+        }
+      }
+    },
+    "2 hours": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 timer"
+          }
+        }
+      }
+    },
+    "two hours": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "to timer"
+          }
+        }
+      }
+    },
+    "3 hours": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 timer"
+          }
+        }
+      }
+    },
+    "three hours": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tre timer"
+          }
+        }
+      }
+    },
+    "8 hours": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "8 timer"
+          }
+        }
+      }
+    },
+    "eight hours": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "åtte timer"
+          }
+        }
+      }
+    },
+    "all night": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hele natten"
+          }
+        }
+      }
+    },
+    "Silence couldn't start the sound. Open the app and try again.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silence fikk ikke startet lyden. Åpne appen og prøv igjen."
+          }
+        }
+      }
+    },
+    "Play a sound": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av en lyd"
+          }
+        }
+      }
+    },
+    "Plays one of Silence's sounds with your volume and tone from the app.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spiller en av lydene i Silence med volumet og klangen du har valgt i appen."
+          }
+        }
+      }
+    },
+    "Minutes": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minutter"
+          }
+        }
+      }
+    },
+    "Stops the sound after this many minutes (1 to 720). Leave it empty to use the sleep timer set in the app.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopper lyden etter så mange minutter (1 til 720). La feltet stå tomt for å bruke sovetimeren du har valgt i appen."
+          }
+        }
+      }
+    },
+    "Play ${sound}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av ${sound}"
+          }
+        }
+      }
+    },
+    "Play with a sleep timer": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av med sovetimer"
+          }
+        }
+      }
+    },
+    "Plays your last sound and stops it after the time you choose.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spiller den siste lyden din og stopper den etter tiden du velger."
+          }
+        }
+      }
+    },
+    "Play for ${length}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av i ${length}"
+          }
+        }
+      }
+    },
+    "Stop the sound": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp lyden"
+          }
+        }
+      }
+    },
+    "Stops whatever Silence is playing.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopper det Silence spiller."
+          }
+        }
+      }
+    },
+    "Play or stop": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av eller stopp"
+          }
+        }
+      }
+    },
+    "Plays your last sound, or stops it if one is playing.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spiller den siste lyden din, eller stopper den hvis noe spilles."
+          }
+        }
+      }
     }
   }
 }

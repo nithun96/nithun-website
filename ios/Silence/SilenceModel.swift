@@ -2,10 +2,22 @@ import SwiftUI
 
 /// The screen's state: what's playing, the timer, the volume and your sound.
 /// Settings are kept on the phone only (UserDefaults); nothing leaves it.
+///
+/// There is one, `shared`: the screen, Siri, Shortcuts and the Control Centre
+/// button all use it, so they drive the same player and see the same state.
 @MainActor
 @Observable
 final class SilenceModel {
+    static let shared = SilenceModel()
+
     static let timerOptions: [Int?] = [nil, 30, 60, 90]
+
+    /// The picker's choices, plus the current timer if Siri or Shortcuts set
+    /// one that isn't among them (e.g. 45 minutes).
+    static func timerOptions(including current: Int?) -> [Int?] {
+        guard let current, !timerOptions.contains(current) else { return timerOptions }
+        return (timerOptions + [current]).sorted { ($0 ?? 0) < ($1 ?? 0) }
+    }
 
     private(set) var playing: Sound?
     private(set) var last: Sound?
@@ -16,7 +28,10 @@ final class SilenceModel {
         didSet { player.setVolume(Float(volume)); store.set(volume, forKey: "volume") }
     }
     var timerMinutes: Int? {
-        didSet { player.setTimer(timerMinutes); store.set(timerMinutes ?? 0, forKey: "timerMinutes"); tick() }
+        didSet {
+            player.setTimer(timerMinutes); store.set(timerMinutes ?? 0, forKey: "timerMinutes")
+            tick(); updateActivity()
+        }
     }
 
     // Your sound
@@ -40,9 +55,10 @@ final class SilenceModel {
 
     @ObservationIgnored private let store = UserDefaults.standard
     private let player = NoisePlayer()
+    private let activity = SleepTimerActivity()
     private var ticker: Timer?
 
-    init() {
+    private init() {
         if store.object(forKey: "volume") != nil { volume = store.double(forKey: "volume") }
         let mins = store.integer(forKey: "timerMinutes"); timerMinutes = mins > 0 ? mins : nil
         tone = store.double(forKey: "tone")
@@ -65,28 +81,55 @@ final class SilenceModel {
     }
 
     func start(_ sound: Sound) {
+        Task { await play(sound) }
+    }
+
+    /// Start a sound and wait until it plays. False if the audio couldn't start.
+    @discardableResult
+    func play(_ sound: Sound) async -> Bool {
         audioError = false
         if matching { endMatching() }
         last = sound
         store.set(sound.rawValue, forKey: "last")
         preparing = sound
-        Task {
-            do {
-                try await player.play(sound, title: String(localized: sound.nameKey), timerMinutes: timerMinutes)
-                guard preparing == sound else { return }   // another tap came first
-                preparing = nil
-                playing = sound
-                startTicker()
-            } catch {
-                preparing = nil
-                audioError = true
+        do {
+            try await player.play(sound, title: String(localized: sound.nameKey), timerMinutes: timerMinutes)
+            guard preparing == sound else {
+                // Stopped while it was starting: don't leave it playing unseen
+                if preparing == nil && playing == nil { player.stop() }
+                return true                                  // or another tap came first
             }
+            preparing = nil
+            playing = sound
+            startTicker()
+            updateActivity()
+            return true
+        } catch {
+            preparing = nil
+            audioError = true
+            return false
         }
     }
 
     func stop() {
         player.stop()
         didStop()
+    }
+
+    /// Stop the sound and the matching tone (Siri, Shortcuts, the lock screen).
+    func stopEverything() {
+        endMatching()
+        if playing != nil || preparing != nil || player.isRunning { stop() }
+        preparing = nil
+    }
+
+    /// The Control Centre button: stop if playing, otherwise play the last sound.
+    func playOrStop() async throws {
+        if playing != nil || preparing != nil {
+            stopEverything()
+        } else {
+            guard await play(last ?? .brown) else { throw SilenceIntentError() }
+        }
     }
 
     // MARK: Matching
@@ -130,6 +173,14 @@ final class SilenceModel {
         remaining = nil
         ticker?.invalidate()
         ticker = nil
+        activity.end()
+    }
+
+    /// The lock-screen countdown: shown while a sound plays with a timer.
+    private func updateActivity() {
+        guard let playing, let secs = player.secondsRemaining else { activity.end(); return }
+        activity.show(soundName: String(localized: playing.nameKey),
+                      endDate: SleepTimerActivity.endDate(now: .now, secondsRemaining: secs))
     }
 
     // Once a second: the countdown, and stopping when the timer has run out

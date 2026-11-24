@@ -38,7 +38,33 @@ Text: the app's English and Norwegian text is in `Silence/Localizable.xcstrings`
 copied from `src/locales/*/translation.json` (`silence.*`). Not checked
 automatically; update both when wording changes.
 
-## Status (17.11.2026)
+## Structure
+
+- `Silence/` — the app. `SilenceModel.shared` is the one model: the screen, Siri,
+  Shortcuts and the Control Centre button all drive the same player.
+- `SilenceWidgets/` — widget extension: the sleep timer's Live Activity and the
+  iOS 18 Control Centre button. It only draws; sound always plays in the app.
+- `Shared/` — compiled into both: the Live Activity's data, the intents behind
+  its buttons, the sage colour. Code here that should run only in the app sits
+  inside `#if SILENCE_APP`.
+- Text: `Silence/Localizable.xcstrings` (app), `Silence/AppShortcuts.xcstrings`
+  (Siri phrases), `SilenceWidgets/Localizable.xcstrings` (extension).
+
+## Status (22.11.2026)
+
+1.1, reach it without opening the app (built and tested on the GitHub Mac, not yet
+on a phone):
+- Siri and Shortcuts: "Play rain in Silence", "Play Silence for an hour", "Stop
+  Silence" (and in Norwegian: "Spill regn i Silence", "Stopp Silence"). In the
+  Shortcuts app, "Play a sound" takes any sound and 1 to 720 minutes. A timer set
+  this way becomes the app's timer, as if picked on the screen.
+- Sleep timer on the lock screen and Dynamic Island (Live Activity) while a sound
+  plays with a timer, with a Stop button.
+- Control Centre / lock-screen button (iOS 18 and later): plays your last sound, or
+  stops it.
+The Norwegian Siri phrases and labels are Claude's draft; check them.
+
+1.0 (17.11.2026):
 
 Done: sound port, player (background audio, lock-screen controls, interruptions,
 headphones unplugged), sleep timer, volume, "Your sound" (tone slider, tinnitus
@@ -46,8 +72,7 @@ pitch match, focus on that pitch), doctor reminder, privacy link, settings kept 
 the phone, English and Norwegian (Bokmål) text, reference-sample test.
 Norwegian text for the new features is Claude's draft; check it.
 
-Not yet built or run: written without a Mac, so the first `xcodegen` + build will
-probably surface small compile errors.
+Builds and passes its tests on the GitHub Mac runner; not yet run on a phone.
 
 Still to do before the App Store:
 - App design (current screen is functional only), app icon

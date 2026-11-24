@@ -357,6 +357,9 @@ no accounts). Started Nov 2026. Details in `ios/README.md`, plans in `ios/ROADMA
 - **Text:** the app's EN/NO strings (`ios/Silence/Localizable.xcstrings`) are copied
   from `silence.*` in the translation files. Not checked automatically.
 - `ios/` changes don't deploy the site (`paths-ignore` in `deploy.yml`).
+- Two targets: the app (`ios/Silence/`) and a widget extension (`ios/SilenceWidgets/`:
+  sleep-timer Live Activity, iOS 18 Control Centre button); `ios/Shared/` is compiled
+  into both. Siri/Shortcuts phrases are in `ios/Silence/AppShortcuts.xcstrings`.
 - Built on Nithun's Mac with Xcode + XcodeGen (`cd ios && xcodegen`); cloud sessions
   can't build it, but the check builds and tests it on a GitHub Mac runner.
 

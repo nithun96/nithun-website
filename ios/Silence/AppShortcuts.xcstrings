@@ -1,0 +1,96 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "Play ${sound} in ${applicationName}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill ${sound} i ${applicationName}"
+          }
+        }
+      }
+    },
+    "Play ${sound} with ${applicationName}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av ${sound} med ${applicationName}"
+          }
+        }
+      }
+    },
+    "Start ${sound} in ${applicationName}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start ${sound} i ${applicationName}"
+          }
+        }
+      }
+    },
+    "Play ${applicationName}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av ${applicationName}"
+          }
+        }
+      }
+    },
+    "Play ${applicationName} for ${length}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill ${applicationName} i ${length}"
+          }
+        }
+      }
+    },
+    "Start ${applicationName} for ${length}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start ${applicationName} i ${length}"
+          }
+        }
+      }
+    },
+    "Stop ${applicationName}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp ${applicationName}"
+          }
+        }
+      }
+    },
+    "Turn off ${applicationName}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slå av ${applicationName}"
+          }
+        }
+      }
+    },
+    "Stop the sound in ${applicationName}": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp lyden i ${applicationName}"
+          }
+        }
+      }
+    }
+  }
+}

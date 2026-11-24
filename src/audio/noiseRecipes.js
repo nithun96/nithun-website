@@ -1,4 +1,4 @@
-// Deafening Silence — the four sounds, made from numbers.
+// Blanketing Silence — the four sounds, made from numbers.
 //
 // The same recipes the sound files used to be rendered from (scripts/makeSilenceSounds.js,
 // removed Nov 2026). The page now makes the sound live (src/audio/noisePlayer.js),

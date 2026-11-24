@@ -5,7 +5,7 @@ import { usePageMeta } from '../lib/usePageMeta'
 // /silence/privacy — the privacy policy for Silence (website and iOS app).
 // The App Store needs it: the app links here. Text lives under privacy.* in
 // the translation files; change the "updated" date there when the policy changes.
-const LINKEDIN = 'https://no.linkedin.com/in/nithunm'
+const EMAIL = 'nithun@tutamail.com'
 
 // Each section: a heading and its paragraphs (privacy.<id>.title, .p1, .p2 …)
 const SECTIONS = [
@@ -43,7 +43,7 @@ export default function SilencePrivacyPage() {
         <section aria-labelledby="policy-contact">
           <h2 id="policy-contact">{t('privacy.contact.title')}</h2>
           <p>{t('privacy.contact.p1')}</p>
-          <p><a className="text-link" href={LINKEDIN} target="_blank" rel="noopener noreferrer">{t('privacy.contact.link')}</a></p>
+          <p>{t('privacy.contact.link')} <a className="text-link" href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
           <p>{t('privacy.contact.p2')}</p>
         </section>
       </div>

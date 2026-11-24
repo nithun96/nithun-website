@@ -23,6 +23,7 @@ const router = createBrowserRouter([
       { path: 'writing/:slug', lazy: page(() => import('./pages/WritingPostPage')) },
       { path: 'silence',       lazy: page(() => import('./pages/SilencePage')) },
       { path: 'silence/privacy', lazy: page(() => import('./pages/SilencePrivacyPage')) },
+      { path: 'silence/support', lazy: page(() => import('./pages/SilenceSupportPage')) },
       { path: 'shelf',         lazy: page(() => import('./pages/ShelfPage')) },
       { path: 'about',         lazy: page(() => import('./pages/AboutPage')) },
       { path: 'books',         element: <Navigate to="/shelf" replace /> },

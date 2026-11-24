@@ -166,7 +166,9 @@
     "aboutDescription": "About Nithun Manoharan, Product Manager and co-founder of Pyre, based in Oslo. Plus a few travel photos.",
     "notFoundTitle": "Page not found | Nithun Manoharan",
     "silencePrivacyTitle": "Silence privacy policy | Nithun Manoharan",
-    "silencePrivacyDescription": "Silence, the free sound tool for tinnitus and sleep, collects no data. What the app and the website keep on your device, and what they don't."
+    "silencePrivacyDescription": "Silence, the free sound tool for tinnitus and sleep, collects no data. What the app and the website keep on your device, and what they don't.",
+    "silenceSupportTitle": "Silence support | Nithun Manoharan",
+    "silenceSupportDescription": "Help with Silence, the free sound tool for tinnitus and sleep: how to get in touch, and answers about the sleep timer, the locked screen, offline use and your settings."
   },
   "notFound": {
     "heading": "Page not found",
@@ -236,7 +238,66 @@
       "title": "Contact",
       "p1": "Apart from the server logs, I hold nothing about you, so there's nothing to look up, correct or delete. If you have a question, or think I've got something wrong, I'd like to hear it.",
       "link": "Email me:",
-      "p2": "You can also complain to Datatilsynet, the Norwegian Data Protection Authority."
+      "p2": "You can also complain to Datatilsynet, the Norwegian Data Protection Authority.",
+      "supportLead": "Need help using Silence?",
+      "supportLink": "See the support page"
+    }
+  },
+  "support": {
+    "back": "Silence",
+    "headingA": "Silence",
+    "headingB": "support",
+    "intro": "Help with Silence, the free sound tool for tinnitus and sleep, on iPhone and on this website.",
+    "link": "Support and questions",
+    "contact": {
+      "title": "Get in touch",
+      "lead": "Questions, problems or ideas? Email me:",
+      "p2": "I read everything. Silence is free and made by one person, so a reply may take a few days."
+    },
+    "about": {
+      "title": "What Silence is",
+      "p1": "Silence plays four sounds for tinnitus and sleep: brown noise, pink noise, rain and ocean. They're made on your device as you listen, from the same recipes in the app and on the website, so both sound the same. It's free, with no ads, no accounts and no tracking."
+    },
+    "faq": {
+      "title": "Questions and answers",
+      "stops": {
+        "q": "The sound stopped when I got a call or took my headphones out. Why?",
+        "a": "That's on purpose. In the app, the sound stops when a call comes in, when another app starts playing, or when your headphones disconnect, so it never carries on out loud through the speaker. Tap the sound to start it again. On the website, a call or another app taking over the sound stops it too."
+      },
+      "locked": {
+        "q": "Does it keep playing with the screen locked?",
+        "a": "Yes, in the app and on the website. You can pause it from the lock screen too, and on an iPhone the silent switch doesn't mute it."
+      },
+      "timer": {
+        "q": "How does the sleep timer work?",
+        "a": "Choose 30, 60 or 90 minutes. The sound plays as normal, then fades out gently over the last minute and stops. It works with the screen locked."
+      },
+      "match": {
+        "q": "What is Match my tinnitus, and is the tone safe?",
+        "a": "It's in the app, under Your sound. A soft tone helps you find the pitch closest to your tinnitus, and Focus on my pitch then puts more of the sound around it.",
+        "a2": "Turn your phone's volume down before you start. The tone always starts very quietly and can only go so loud, but how loud it is in your ears still depends on your phone's volume and your headphones. Stop if it's uncomfortable at all."
+      },
+      "settings": {
+        "q": "Where are my settings kept, and how do I reset them?",
+        "a": "In the app, your volume, sleep timer, last sound, Tone and matched pitch are kept on your phone only. Forget my pitch clears the pitch, and deleting the app removes everything. The website doesn't keep your Silence settings: your browser only remembers light or dark mode and your language. To clear those, clear this site's data in your browser's settings."
+      },
+      "offline": {
+        "q": "Does it work without the internet?",
+        "a": "The app never needs a connection. The website works offline once you've opened Silence there one time."
+      },
+      "languages": {
+        "q": "Which languages is it in?",
+        "a": "English and Norwegian (Bokmål). The app follows your phone's language; on the website, use the language button at the top."
+      }
+    },
+    "health": {
+      "title": "A note on health",
+      "p1": "Silence isn't a medical device. If your tinnitus is new, changes, or is in one ear only, see a doctor."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "p1": "Silence collects no data about you.",
+      "link": "Read the privacy policy"
     }
   }
 }

@@ -44,6 +44,7 @@ export default function SilencePrivacyPage() {
           <h2 id="policy-contact">{t('privacy.contact.title')}</h2>
           <p>{t('privacy.contact.p1')}</p>
           <p>{t('privacy.contact.link')} <a className="text-link" href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+          <p>{t('privacy.contact.supportLead')} <Link to="/silence/support" viewTransition className="text-link">{t('privacy.contact.supportLink')}</Link></p>
           <p>{t('privacy.contact.p2')}</p>
         </section>
       </div>

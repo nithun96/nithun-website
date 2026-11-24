@@ -226,6 +226,7 @@ export default function SilencePage() {
         </section>
 
         <p className="privacy-line">
+          <Link to="/silence/support" viewTransition className="text-link">{t('support.link')}</Link>
           <Link to="/silence/privacy" viewTransition className="text-link">{t('privacy.link')}</Link>
         </p>
       </div>

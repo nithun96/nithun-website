@@ -1,4 +1,4 @@
-// Deafening Silence — player
+// Blanketing Silence — player
 //
 // Makes the sound live with the Web Audio API (recipes in noiseRecipes.js): one
 // 50-second loop per sound, played without a gap. Before the audio starts, the
@@ -80,7 +80,7 @@ export function createNoisePlayer(onChange) {
 
   function setMediaSession() {
     if (!('mediaSession' in navigator)) return
-    navigator.mediaSession.metadata = sound ? new MediaMetadata({ title, artist: 'Deafening Silence' }) : null
+    navigator.mediaSession.metadata = sound ? new MediaMetadata({ title, artist: 'Blanketing Silence' }) : null
     navigator.mediaSession.playbackState = sound ? 'playing' : 'none'
     navigator.mediaSession.setActionHandler('pause', sound ? () => stop() : null)
     navigator.mediaSession.setActionHandler('stop', sound ? () => stop() : null)

@@ -48,10 +48,26 @@ final class SilenceModel {
         didSet { store.set(focusOn, forKey: "focusOn"); applyFocus() }
     }
 
-    // Matching (the sheet)
+    // Matching (the sheet). Limits from shared/silence-pitch-spec.json (PitchSpec).
     private(set) var matching = false
-    var matchHz: Double = 4000 { didSet { if matching { player.setMatch(hz: matchHz, levelDB: matchLevelDB) } } }
-    var matchLevelDB: Double = -50 { didSet { if matching { player.setMatch(hz: matchHz, levelDB: matchLevelDB) } } }
+    var matchHz: Double = PitchSpec.shared.startHz {
+        didSet {
+            let clamped = PitchSpec.shared.clampHz(matchHz)
+            if clamped != matchHz { matchHz = clamped }   // keep it in range
+            updateMatch()
+        }
+    }
+    var matchLevelDB: Double = PitchSpec.shared.levelStartDb {
+        didSet {
+            let clamped = PitchSpec.shared.clampLevel(matchLevelDB)
+            if clamped != matchLevelDB { matchLevelDB = clamped }
+            updateMatch()
+        }
+    }
+    /// The sound to compare with your tinnitus: a tone or a hiss. Remembered.
+    var matchSound: MatchSound = .tone {
+        didSet { store.set(matchSound.rawValue, forKey: "matchSound"); updateMatch() }
+    }
 
     @ObservationIgnored private let store = UserDefaults.standard
     private let player = NoisePlayer()
@@ -64,6 +80,7 @@ final class SilenceModel {
         tone = store.double(forKey: "tone")
         let hz = store.double(forKey: "matchedHz"); matchedHz = hz > 0 ? hz : nil
         focusOn = store.bool(forKey: "focusOn")
+        matchSound = store.string(forKey: "matchSound").flatMap(MatchSound.init(rawValue:)) ?? .tone
         if let s = store.string(forKey: "last") { last = Sound(rawValue: s) }
         player.setVolume(Float(volume))
         player.setTone(tone)
@@ -135,15 +152,29 @@ final class SilenceModel {
     // MARK: Matching
 
     func beginMatching() {
+        matchHz = matchedHz ?? PitchSpec.shared.startHz
+        matchLevelDB = PitchSpec.shared.levelStartDb   // always start very quietly
+        startMatchSound()
+    }
+
+    /// The octave check: play the sound at `hz`, at the level already set.
+    func playMatch(at hz: Double) {
+        matchHz = hz
+        if !matching { startMatchSound() }
+    }
+
+    private func startMatchSound() {
         if playing != nil { stop() }
-        matchHz = matchedHz ?? 4000
-        matchLevelDB = -50            // always start very quietly
         do {
-            try player.startMatching(hz: matchHz, levelDB: matchLevelDB)
+            try player.startMatching(hz: matchHz, levelDB: matchLevelDB, sound: matchSound)
             matching = true
         } catch {
             audioError = true
         }
+    }
+
+    private func updateMatch() {
+        if matching { player.setMatch(hz: matchHz, levelDB: matchLevelDB, sound: matchSound) }
     }
 
     func endMatching() {
@@ -152,9 +183,9 @@ final class SilenceModel {
         player.stopMatching()
     }
 
-    /// Keep the pitch you landed on and turn the focus on.
-    func useMatchedPitch() {
-        matchedHz = matchHz
+    /// Keep the pitch you landed on (or `hz`, from the octave check) and turn the focus on.
+    func useMatchedPitch(_ hz: Double? = nil) {
+        matchedHz = PitchSpec.shared.clampHz(hz ?? matchHz)
         focusOn = true
         endMatching()
     }

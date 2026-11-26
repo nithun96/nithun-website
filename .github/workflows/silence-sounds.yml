@@ -2,8 +2,10 @@
 # 1. Remakes ios/tools/golden.json from the website's src/audio/noiseRecipes.js and
 #    fails if it differs from the committed file: the site's sound changed and the
 #    app wasn't updated (see ios/README.md for the fix).
+#    Also checks the website's pitch helpers honour shared/silence-pitch-spec.json
+#    (scripts/test-pitch-spec.mjs).
 # 2. Builds the app and runs its tests on a Mac, which compare the Swift sound
-#    with golden.json.
+#    with golden.json and check the app reads the same pitch spec.
 # Doesn't deploy anything.
 name: Silence sounds
 
@@ -11,12 +13,18 @@ on:
   pull_request:
     paths:
       - 'src/audio/noiseRecipes.js'
+      - 'src/audio/yourSound.js'
+      - 'shared/**'
+      - 'scripts/test-pitch-spec.mjs'
       - 'ios/**'
       - '.github/workflows/silence-sounds.yml'
   push:
     branches: [main]
     paths:
       - 'src/audio/noiseRecipes.js'
+      - 'src/audio/yourSound.js'
+      - 'shared/**'
+      - 'scripts/test-pitch-spec.mjs'
       - 'ios/**'
       - '.github/workflows/silence-sounds.yml'
   workflow_dispatch:
@@ -40,6 +48,8 @@ jobs:
             echo "::error::The website's Silence sounds changed. Run 'node ios/tools/golden.mjs src/audio/noiseRecipes.js > ios/tools/golden.json', commit it, and port the change to ios/Silence/Audio/NoiseRecipes.swift."
             exit 1
           fi
+      - name: Check the website's pitch settings follow shared/silence-pitch-spec.json
+        run: node scripts/test-pitch-spec.mjs
 
   app-tests:
     needs: same-sound

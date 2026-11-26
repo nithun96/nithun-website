@@ -14,14 +14,14 @@
 // EQ that tilts it darker or brighter and, optionally, lifts the octave around the
 // pitch a visitor matched to their tinnitus. So the setting applies wherever
 // Silence plays: the Silence page, the homepage thumbnail and "Read with sound".
-// A separate quiet sine tone is used only while matching. Settings and maths are
-// in yourSound.js.
+// A separate quiet tone or hiss is used only while matching. Settings and maths
+// are in yourSound.js.
 
 import { makeLoop } from './noiseRecipes'
 import {
   LOW_SHELF_HZ, HIGH_SHELF_HZ, FOCUS_DB, FOCUS_Q,
   clampTone, clampHz, clampToneDb, dbToGain, shelfGains, headroomDb,
-  loadSettings, saveSettings,
+  HISS_Q, hissGain, cleanMatchSound, loadSettings, saveSettings,
 } from './yourSound'
 
 const FADE_SECS = 60
@@ -31,9 +31,9 @@ const SMOOTH = 0.03   // seconds: EQ and tone changes glide, so there are no cli
 // every visit to Silence or the homepage makes a new player
 let shared = null
 let eq = null              // { input, low, high, focus, headroom } on the shared engine
-let settings = null        // { tone, matchedHz, focusOn }, loaded on first use
+let settings = null        // { tone, matchedHz, focusOn, matchSound }, loaded on first use
 let playingCount = 0       // players making sound right now
-let matching = null        // the matching tone, while it plays
+let matching = null        // the matching sound (tone and hiss), while it plays
 
 function yourSound() {
   return settings ||= loadSettings()
@@ -84,7 +84,7 @@ function update(changes) {
   return settings
 }
 
-/** The visitor's sound settings: { tone, matchedHz, focusOn }. */
+/** The visitor's sound settings: { tone, matchedHz, focusOn, matchSound }. */
 export function getYourSound() {
   return yourSound()
 }
@@ -112,49 +112,86 @@ function releaseIfIdle() {
 }
 
 /**
- * The matching tone: a quiet sine the visitor moves to the pitch of their
- * tinnitus. It always starts at −50 dBFS and can never go above −20 dBFS. It
- * goes straight to the speakers: not through the EQ, and not the volume slider.
- * Stop any sound before starting it. `onEnd` is told if it stops by itself.
+ * The matching sound: a quiet sine tone, or a soft hiss (white noise through a
+ * band-pass one-third of an octave wide, centred on the pitch), that the visitor
+ * moves to the pitch of their tinnitus. Both are built and both run; only the
+ * chosen one is turned up, so switching is a short crossfade with no click. The
+ * hiss is amplified to be as loud as the tone at the same level (see hissGain in
+ * yourSound.js). The level always starts at −50 dBFS and can never go above
+ * −20 dBFS. It goes straight to the speakers: not through the EQ, and not the
+ * volume slider. Stop any sound before starting it. `onEnd` is told if it stops
+ * by itself.
  */
-export function startMatchTone(hz, levelDb, onEnd) {
+export function startMatchTone(hz, levelDb, onEnd, kind = 'tone') {
   stopMatchTone()
   if ('audioSession' in navigator) navigator.audioSession.type = 'playback'
   const c = engine()
   const resumed = c.resume()   // inside the tap
   const osc = c.createOscillator()
-  const gain = c.createGain()
+  const toneGain = c.createGain()
   osc.type = 'sine'
   osc.frequency.value = clampHz(hz)
-  gain.gain.value = 0          // fades in, no click
-  osc.connect(gain).connect(c.destination)
+  toneGain.gain.value = 0      // fades in, no click
+  osc.connect(toneGain).connect(c.destination)
+
+  // Two seconds of white noise, looped: noise has no pattern, so the seam can't be heard
+  const noise = c.createBuffer(1, c.sampleRate * 2, c.sampleRate)
+  const data = noise.getChannelData(0)
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1
+  const src = c.createBufferSource()
+  src.buffer = noise
+  src.loop = true
+  const band = c.createBiquadFilter()
+  band.type = 'bandpass'
+  band.Q.value = HISS_Q
+  band.frequency.value = clampHz(hz)
+  const hissGainNode = c.createGain()
+  hissGainNode.gain.value = 0
+  src.connect(band).connect(hissGainNode).connect(c.destination)
+
   osc.start()
+  src.start()
   const onState = () => { if (c.state === 'interrupted') stopMatchTone(true) }
   c.addEventListener('statechange', onState)
-  matching = { osc, gain, onState, onEnd }
-  setMatchTone(hz, levelDb)
+  matching = { osc, toneGain, src, band, hissGainNode, onState, onEnd }
+  setMatchTone(hz, levelDb, kind)
   return resumed
 }
 
-/** Move the matching tone's pitch (Hz) and level (dBFS, capped at −20). */
-export function setMatchTone(hz, levelDb) {
+/** Move the matching sound's pitch (Hz), level (dBFS, capped at −20) and kind ('tone' or 'hiss'). */
+export function setMatchTone(hz, levelDb, kind = 'tone') {
   if (!matching) return
   const now = shared.currentTime
-  matching.osc.frequency.setTargetAtTime(clampHz(hz), now, SMOOTH)
-  matching.gain.gain.setTargetAtTime(dbToGain(clampToneDb(levelDb)), now, SMOOTH)
+  const f = clampHz(hz)
+  const hiss = cleanMatchSound(kind) === 'hiss'
+  matching.osc.frequency.setTargetAtTime(f, now, SMOOTH)
+  matching.band.frequency.setTargetAtTime(f, now, SMOOTH)
+  matching.toneGain.gain.setTargetAtTime(hiss ? 0 : dbToGain(clampToneDb(levelDb)), now, SMOOTH)
+  matching.hissGainNode.gain.setTargetAtTime(hiss ? hissGain(f, shared.sampleRate, levelDb) : 0, now, SMOOTH)
 }
 
-/** Stop the matching tone. `tell` lets the page know (when a sound took over). */
+/** Stop the matching sound. `tell` lets the page know (when a sound took over). */
 export function stopMatchTone(tell = false) {
   if (!matching) return
-  const { osc, gain, onState, onEnd } = matching
+  const { osc, toneGain, src, band, hissGainNode, onState, onEnd } = matching
   matching = null
   shared.removeEventListener('statechange', onState)
   const now = shared.currentTime
-  gain.gain.setTargetAtTime(0, now, SMOOTH)   // fade out, then stop
+  toneGain.gain.setTargetAtTime(0, now, SMOOTH)   // fade out, then stop
+  hissGainNode.gain.setTargetAtTime(0, now, SMOOTH)
   osc.stop(now + 0.15)
-  osc.onended = () => { osc.disconnect(); gain.disconnect(); releaseIfIdle() }
+  src.stop(now + 0.15)
+  osc.onended = () => {
+    osc.disconnect(); toneGain.disconnect()
+    src.disconnect(); band.disconnect(); hissGainNode.disconnect()
+    releaseIfIdle()
+  }
   if (tell) onEnd?.()
+}
+
+/** Remember which sound to compare with ('tone' or 'hiss'). */
+export function setMatchSound(kind) {
+  return update({ matchSound: cleanMatchSound(kind) })
 }
 
 export function createNoisePlayer(onChange) {

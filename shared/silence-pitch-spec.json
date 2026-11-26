@@ -1,0 +1,13 @@
+{
+  "$about": "Silence 'Find your pitch' settings, one source of truth for the website (src/audio/yourSound.js imports this file) and the iOS app (bundled as a resource, decoded at startup in ios/Silence/PitchSpec.swift). Change a number here and both change; the 'Silence sounds' check tests both. Hz are frequencies, dB are dBFS (0 = full scale): the comparison sound always starts at levelStartDb and can never go above levelMaxDb. ladderHz and refineStepsSemitones are for the step-by-step guide (part 2). hissBandwidthOctaves is how wide the hiss is (one-third octave).",
+  "minHz": 250,
+  "maxHz": 12000,
+  "startHz": 4000,
+  "levelStartDb": -50,
+  "levelMinDb": -60,
+  "levelMaxDb": -20,
+  "ladderHz": [250, 500, 1000, 2000, 4000, 8000, 12000],
+  "refineStepsSemitones": [6, 3, 1.5, 1],
+  "octaveCheck": true,
+  "hissBandwidthOctaves": 0.3333
+}

@@ -262,12 +262,12 @@
         }
       }
     },
-    "Around %@": {
+    "Sound centred around %@": {
       "localizations": {
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rundt %@"
+            "value": "Lyd sentrert rundt %@"
           }
         }
       }
@@ -332,22 +332,22 @@
         }
       }
     },
-    "Turn your phone's volume down first. The tone starts very quietly; raise it until you can just hear it, then move the pitch until it sounds most like your tinnitus.": {
+    "Turn your phone's volume down first. The sound starts very quietly; raise it until you can just hear it, then move the pitch until it sounds most like your tinnitus.": {
       "localizations": {
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Skru ned volumet på telefonen først. Tonen starter veldig svakt; skru den opp til du så vidt hører den, og flytt tonehøyden til den ligner mest på tinnitusen din."
+            "value": "Skru ned volumet på telefonen først. Lyden starter veldig svakt; skru den opp til du så vidt hører den, og flytt tonehøyden til den ligner mest på tinnitusen din."
           }
         }
       }
     },
-    "Stop if the tone is uncomfortable. Many people's tinnitus isn't a single tone, so close is good enough.": {
+    "Stop if the sound is uncomfortable. Many people's tinnitus isn't a single tone, so close is good enough.": {
       "localizations": {
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stopp hvis tonen er ubehagelig. Tinnitus er ofte ikke én enkelt tone, så omtrent er godt nok."
+            "value": "Stopp hvis lyden er ubehagelig. Tinnitus er ofte ikke én enkelt tone, så omtrent er godt nok."
           }
         }
       }
@@ -398,16 +398,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Høyere"
-          }
-        }
-      }
-    },
-    "Tone volume": {
-      "localizations": {
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Volum på tonen"
           }
         }
       }
@@ -818,6 +808,180 @@
           "stringUnit": {
             "state": "translated",
             "value": "Spiller den siste lyden din, eller stopper den hvis noe spilles."
+          }
+        }
+      }
+    },
+    "Sound to compare": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyd å sammenligne med"
+          }
+        }
+      }
+    },
+    "Tone is a single clear note. Hiss is a soft rush of sound around the pitch; many people find it closer to their tinnitus.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tone er én klar tone. Sus er en myk susing rundt tonehøyden; mange synes den ligner mer på tinnitusen sin."
+          }
+        }
+      }
+    },
+    "Play the hiss": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av suset"
+          }
+        }
+      }
+    },
+    "Stop the hiss": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp suset"
+          }
+        }
+      }
+    },
+    "%lld dB": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dB"
+          }
+        }
+      }
+    },
+    "One more check: which is most like it?": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Én ting til: hvilken ligner mest?"
+          }
+        }
+      }
+    },
+    "It's easy to land on the right note in the wrong octave. Play each one and choose the closest.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det er lett å treffe riktig tone, men i feil oktav. Spill av hver av dem og velg den som ligner mest."
+          }
+        }
+      }
+    },
+    "This one": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denne"
+          }
+        }
+      }
+    },
+    "Stop": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp"
+          }
+        }
+      }
+    },
+    "Play %@, %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Stop %@, %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Choose": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Velg"
+          }
+        }
+      }
+    },
+    "Choose %@, %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Velg %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Skip": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hopp over"
+          }
+        }
+      }
+    },
+    "matchSound.tone": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tone"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tone"
+          }
+        }
+      }
+    },
+    "matchSound.hiss": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiss"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sus"
           }
         }
       }

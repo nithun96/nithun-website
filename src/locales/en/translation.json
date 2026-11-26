@@ -157,22 +157,42 @@
       "matchIntro": "Find the pitch of your tinnitus with a soft tone, and Silence can put more of its sound around it.",
       "match": "Match my tinnitus",
       "focus": "Focus on my pitch",
-      "around": "Around {{pitch}}",
+      "centred": "Sound centred around {{pitch}}",
       "on": "On",
       "off": "Off",
       "matchAgain": "Match again",
       "forget": "Forget my pitch",
       "medical": "Silence isn't a medical device. If your tinnitus is new, changes, or is in one ear only, see a doctor.",
-      "safety1": "Turn your volume down first. The tone starts very quietly; raise it until you can just hear it, then move the pitch until it sounds most like your tinnitus.",
-      "safety2": "Stop if the tone is uncomfortable. Many people's tinnitus isn't a single tone, so close is good enough.",
+      "safety1": "Turn your volume down first. The sound starts very quietly; raise it until you can just hear it, then move the pitch until it sounds most like your tinnitus.",
+      "safety2": "Stop if the sound is uncomfortable. Many people's tinnitus isn't a single tone, so close is good enough.",
+      "compare": "Sound to compare",
+      "toneSound": "Tone",
+      "hiss": "Hiss",
+      "compareHint": "Tone is a single clear note. Hiss is a soft rush of sound around the pitch; many people find it closer to their tinnitus.",
       "playTone": "Play the tone",
       "stopTone": "Stop the tone",
+      "playHiss": "Play the hiss",
+      "stopHiss": "Stop the hiss",
       "pitch": "Pitch",
       "lower": "Lower",
       "higher": "Higher",
-      "toneVolume": "Tone volume",
+      "soundVolume": "Volume",
       "levelValue": "{{db}} dB",
       "usePitch": "Use this pitch",
+      "octaveTitle": "One more check: which is most like it?",
+      "octaveHint": "It's easy to land on the right note in the wrong octave. Play each one and choose the closest.",
+      "octave": {
+        "lower": "Lower",
+        "this": "This one",
+        "higher": "Higher"
+      },
+      "play": "Play",
+      "stop": "Stop",
+      "playOption": "Play {{option}}, {{pitch}}",
+      "stopOption": "Stop {{option}}, {{pitch}}",
+      "choose": "Choose",
+      "chooseOption": "Choose {{option}}, {{pitch}}",
+      "skip": "Skip",
       "cancel": "Cancel",
       "kept": "Your pitch and tone are kept in this browser only."
     }
@@ -231,7 +251,7 @@
     "back": "Silence",
     "headingA": "Silence",
     "headingB": "privacy",
-    "updated": "Last updated 23.11.2026",
+    "updated": "Last updated 26.11.2026",
     "intro": "Silence collects no data about you. Here's what that means for the app and for Silence on this website.",
     "link": "Privacy: Silence collects no data",
     "who": {
@@ -241,7 +261,7 @@
     "app": {
       "title": "The app collects no data",
       "p1": "The Silence app doesn't collect, send or share anything about you. It has no accounts, no analytics, no crash-reporting tools and no ads, and it doesn't need the internet: the sounds are made on your phone as you listen. It doesn't use the microphone, so nothing is ever recorded.",
-      "p2": "So that it opens the way you left it, the app remembers a few settings: the volume, the sleep timer, the last sound you played, your tone and, if you've used Match my tinnitus, the pitch you chose and whether Focus on my pitch is on. They're stored on your phone only. I can't see them, and they're never sent to me or anyone else.",
+      "p2": "So that it opens the way you left it, the app remembers a few settings: the volume, the sleep timer, the last sound you played, your tone and, if you've used Match my tinnitus, the pitch you chose, whether you compared it with a tone or a hiss, and whether Focus on my pitch is on. They're stored on your phone only. I can't see them, and they're never sent to me or anyone else.",
       "p3": "To remove them, delete the app: its settings go with it. Like every app's settings, they're also in your phone's backups (iCloud Backup, for example) until those backups are replaced.",
       "p4": "The App Store is run by Apple, under Apple's own privacy policy. Apple may show me anonymous totals, such as the number of downloads, and crash reports from people who've chosen to share them with app developers. None of this tells me who you are."
     },
@@ -283,7 +303,7 @@
         "a": "A call, another app playing, or headphones disconnecting stops it, so it doesn't carry on out loud. Tap the sound to start it again. If it stopped for any other reason, please report it as a bug."
       },
       "match": {
-        "q": "Is the matching tone safe?",
+        "q": "Is the matching sound safe?",
         "a": "It starts very quietly and has a volume cap, but your phone's volume and your headphones still decide how loud it is. Turn your volume down first, and stop if it's uncomfortable."
       },
       "settings": {

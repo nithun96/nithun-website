@@ -34,6 +34,12 @@ After changing a sound on the website, from the repo root:
 
 then port the change to the Swift file until the check passes.
 
+Find your pitch: the limits for matching (pitch range, level start and −20 dBFS cap,
+hiss width, octave check) are in `../shared/silence-pitch-spec.json`, one file read
+by both the website (`src/audio/yourSound.js`) and the app (bundled as a resource,
+decoded by `Silence/PitchSpec.swift`). Change them there only. The same check runs
+`scripts/test-pitch-spec.mjs` for the website and `PitchSpecTests` for the app.
+
 Text: the app's English and Norwegian text is in `Silence/Localizable.xcstrings`,
 copied from `src/locales/*/translation.json` (`silence.*`). Not checked
 automatically; update both when wording changes.
@@ -68,7 +74,8 @@ The Norwegian Siri phrases and labels are Claude's draft; check them.
 
 Done: sound port, player (background audio, lock-screen controls, interruptions,
 headphones unplugged), sleep timer, volume, "Your sound" (tone slider, tinnitus
-pitch match, focus on that pitch), doctor reminder, privacy link, settings kept on
+pitch match with a tone or a ⅓-octave hiss and an octave check, focus on that
+pitch), doctor reminder, privacy link, settings kept on
 the phone, English and Norwegian (Bokmål) text, reference-sample test.
 Norwegian text for the new features is Claude's draft; check it.
 

@@ -639,8 +639,6 @@ button, .row, .org, .spines, .plank, .thumb, input[type="range"] {
 .wp-foot { max-width: 780px; margin-top: 72px; padding-top: 32px; border-top: 1px solid color-mix(in oklch, var(--fg) 8%, transparent);
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
 .wp-tag { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fgm); border: 1px solid color-mix(in oklch, var(--fgm) 35%, transparent); padding: 2px 7px; border-radius: 2px; }
-.wp-mastodon { font-size: 15px; color: var(--fgm); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s ease; }
-.wp-mastodon:hover { color: var(--fg2); }
 
 /* Footnote tooltip (desktop) */
 .fn-tip { display: block; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); max-width: 280px; width: max-content; z-index: 10; pointer-events: none; animation: fn-fade 0.15s ease;

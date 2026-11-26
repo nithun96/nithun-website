@@ -213,7 +213,7 @@ nithun-website/
     ├── writing/
     │   └── *.md                    # Writing posts — YAML frontmatter + markdown body
     │                               # Frontmatter fields:
-    │                               #   title, date, slug, summary, mastodon (all standard)
+    │                               #   title, date, slug, summary (all standard)
     │                               #   language: "en" | "no" (defaults to "en" if absent)
     │                               #   spotify: full Spotify URL (optional) — renders embed at post bottom
     └── locales/

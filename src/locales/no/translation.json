@@ -249,16 +249,8 @@
       "title": "Silence på denne nettsiden",
       "p1": "Silence på nithun.no lager også lyden i nettleseren, så det du lytter til, forlater aldri enheten din. Nettsiden bruker ingen informasjonskapsler, ingen analyseverktøy og ingen sporing av noe slag.",
       "p2": "Nettleseren din lagrer noen få ting på enheten din: om du valgte lys eller mørk modus, språket ditt og eventuelle Silence-innstillinger siden husker. Første gang du åpner Silence, lagrer den også en kopi av siden, så den virker uten nett. For å fjerne alt dette sletter du dataene for denne nettsiden i nettleserinnstillingene.",
-      "p3": "Nettsiden kjører på en server leid fra Hetzner, et tysk hostingselskap. Som nesten alle nettservere fører den vanlige tilgangslogger: IP-adressen din, siden du ba om, tidspunktet og navnet på nettleseren din. De brukes bare til å holde nettsiden i gang og sikker. De deles ikke og selges ikke, og de brukes ikke til å følge med på deg.",
+      "p3": "Nettsiden kjører på en server leid fra Hetzner, et tysk hostingselskap. Som nesten alle nettservere fører den vanlige tilgangslogger: IP-adressen din, siden du ba om, tidspunktet og navnet på nettleseren din. De brukes bare til å holde nettsiden i gang og sikker, og de deles eller selges ikke.",
       "p4": "Lenker til andre nettsider, som veldedighetsorganisasjonene på Silence-siden, tar deg til steder med egne personvernerklæringer."
-    },
-    "none": {
-      "title": "Ingen sporing, ingen reklame, ingen kontoer",
-      "p1": "Silence har ingen reklame og ingen kontoer. Den sporer deg ikke, og jeg selger eller deler ikke data med noen. Det finnes ingenting å selge: Jeg har det ikke."
-    },
-    "children": {
-      "title": "Barn",
-      "p1": "Silence samler ikke inn data fra noen, heller ikke fra barn."
     },
     "changes": {
       "title": "Endringer i denne erklæringen",

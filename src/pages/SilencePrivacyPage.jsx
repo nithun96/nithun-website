@@ -12,8 +12,6 @@ const SECTIONS = [
   { id: 'who',      paras: ['p1'] },
   { id: 'app',      paras: ['p1', 'p2', 'p3', 'p4'] },
   { id: 'web',      paras: ['p1', 'p2', 'p3', 'p4'] },
-  { id: 'none',     paras: ['p1'] },
-  { id: 'children', paras: ['p1'] },
   { id: 'changes',  paras: ['p1'] },
 ]
 

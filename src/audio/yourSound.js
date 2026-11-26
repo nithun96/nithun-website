@@ -78,6 +78,44 @@ export function octaveOptions(hz) {
   return options.filter(o => o.id === 'this' || (o.hz >= LOW_HZ && o.hz <= HIGH_HZ))
 }
 
+// ── The guide (step by step, the first time someone taps Match my tinnitus) ──
+// The rule is written out in shared/silence-pitch-spec.json (refineRule), and the
+// app has the same functions (ios/Silence/PitchSpec.swift). Both are tested
+// against the spec's examples, so the same answers give the same pitch.
+
+/** "Whistle or hiss?": a whistle is compared with the tone; a hiss, or not sure, with the hiss. */
+export const matchSoundFor = answer => (answer === 'whistle' ? 'tone' : 'hiss')
+
+/**
+ * Narrow it down, one round with step `s` semitones: option 1 is lower, option 2
+ * higher, each kept inside the range. An option that would be the same as the
+ * current pitch (it's already at the edge) is null, so it isn't shown.
+ */
+export function refineOptions(hz, s) {
+  const down = clampHz(hz * Math.pow(2, -s / 12))
+  const up = clampHz(hz * Math.pow(2, s / 12))
+  return { down: down === hz ? null : down, up: up === hz ? null : up }
+}
+
+/** The pitch after one round: 'down' (1 is closer), 'up' (2 is closer) or 'unsure' (keeps it). */
+export function refineStep(hz, s, answer) {
+  const o = refineOptions(hz, s)
+  return (answer === 'down' && o.down) || (answer === 'up' && o.up) || hz
+}
+
+/** The pitch after the octave check: 'lower', 'same' or 'higher'. A hidden option keeps the pitch. */
+export function octaveStep(hz, answer) {
+  const id = answer === 'same' ? 'this' : answer
+  return octaveOptions(hz).find(o => o.id === id)?.hz ?? hz
+}
+
+/** The guide's answers → the pitch it finds. Pure: the same answers always give the same pitch. */
+export function pitchFromAnswers({ ladderChoiceHz, refineAnswers = [], octaveAnswer = 'same' }) {
+  let hz = clampHz(ladderChoiceHz)
+  SPEC.refineStepsSemitones.forEach((s, i) => { hz = refineStep(hz, s, refineAnswers[i] ?? 'unsure') })
+  return octaveStep(hz, octaveAnswer)
+}
+
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v))
 
 export const clampTone = t => clamp(Number.isFinite(t) ? t : 0, -1, 1)
@@ -117,6 +155,7 @@ export function formatHz(hz, lang = 'en') {
 // ── Kept in this browser ──────────────────────────────────────
 
 const KEYS = { tone: 'silence.tone', matchedHz: 'silence.matchedHz', focusOn: 'silence.focusOn', matchSound: 'silence.matchSound' }
+const GUIDE_DONE = 'silence.pitchTutorialDone'
 
 function read(key) {
   try { return globalThis.localStorage?.getItem(key) ?? null } catch { return null }
@@ -138,6 +177,10 @@ export function loadSettings() {
   const matchSound = cleanMatchSound(read(KEYS.matchSound))
   return { tone, matchedHz, focusOn, matchSound }
 }
+
+/** Whether this browser has been through the guide (or skipped to the slider). */
+export const guideDone = () => read(GUIDE_DONE) === 'true'
+export const setGuideDone = () => write(GUIDE_DONE, true)
 
 export function saveSettings({ tone, matchedHz, focusOn, matchSound }) {
   write(KEYS.tone, tone)

@@ -6,8 +6,11 @@ import {
 } from '../audio/noisePlayer'
 import {
   SPEC, START_HZ, START_TONE_DB, MIN_TONE_DB, MAX_TONE_DB, MATCH_SOUNDS,
-  positionToHz, hzToPosition, semitoneUp, semitoneDown, formatHz, octaveOptions,
+  positionToHz, hzToPosition, semitoneUp, semitoneDown, formatHz,
+  guideDone, setGuideDone,
 } from '../audio/yourSound'
+import PitchGuide from './PitchGuide'
+import OctaveOptions from './OctaveOptions'
 
 // Your sound, as in the iOS app: a tone slider (darker … brighter) and "Match my
 // tinnitus", which finds the pitch of your tinnitus with a quiet tone or hiss so
@@ -20,6 +23,7 @@ export default function YourSound({ onStopSound }) {
   const { t, i18n } = useTranslation()
   const [s, setS] = useState(getYourSound)   // { tone, matchedHz, focusOn, matchSound }
   const [open, setOpen] = useState(false)
+  const [guide, setGuide] = useState(false)   // open the step-by-step guide, not the slider
   const openerRef = useRef(null)    // where focus goes back to when the dialog closes
   const focusRef = useRef(null)
   const matchRef = useRef(null)
@@ -30,8 +34,11 @@ export default function YourSound({ onStopSound }) {
   const toneText = amount === 0 ? t('silence.yourSound.toneNeutral')
     : t(s.tone < 0 ? 'silence.yourSound.toneDarker' : 'silence.yourSound.toneBrighter', { amount })
 
-  const openMatch = e => {
+  // The first tap of Match my tinnitus opens the guide; later taps (and Match
+  // again) open the slider, which has a "Guide me again" link
+  const openMatch = (e, withGuide = false) => {
     openerRef.current = e.currentTarget
+    setGuide(withGuide)
     setOpen(true)
   }
 
@@ -92,7 +99,7 @@ export default function YourSound({ onStopSound }) {
           ) : (
             <>
               <p className="ys-p">{t('silence.yourSound.matchIntro')}</p>
-              <button ref={matchRef} type="button" className="ys-btn ys-btn-main" onClick={openMatch}>{t('silence.yourSound.match')}</button>
+              <button ref={matchRef} type="button" className="ys-btn ys-btn-main" onClick={e => openMatch(e, !guideDone())}>{t('silence.yourSound.match')}</button>
             </>
           )}
         </div>
@@ -103,6 +110,7 @@ export default function YourSound({ onStopSound }) {
       {open && (
         <MatchDialog
           startHz={s.matchedHz ?? START_HZ}
+          startWithGuide={guide}
           startKind={s.matchSound}
           hz={hz}
           onKind={k => setS(setMatchSound(k))}
@@ -120,12 +128,15 @@ export default function YourSound({ onStopSound }) {
 // Safety: the sound always starts at −50 dBFS and can't go above −20 dBFS (both
 // from shared/silence-pitch-spec.json).
 //
-// Two steps: find the pitch, then (after "Use this pitch") an octave check,
-// because it's easy to pick the right note in the wrong octave.
-function MatchDialog({ startHz, startKind, hz, onStopSound, onKind, onUse, onClose }) {
+// Two views: the step-by-step guide (PitchGuide.jsx, the first time), and the
+// slider. With the slider: find the pitch, then (after "Use this pitch") an
+// octave check, because it's easy to pick the right note in the wrong octave.
+function MatchDialog({ startHz, startWithGuide, startKind, hz, onStopSound, onKind, onUse, onClose }) {
   const { t } = useTranslation()
   const ref = useRef(null)
   const octaveRef = useRef(null)
+  const sliderRef = useRef(null)
+  const [guiding, setGuiding] = useState(startWithGuide)
   const [pitch, setPitch] = useState(startHz)
   const [level, setLevel] = useState(START_TONE_DB)
   const [kind, setKind] = useState(startKind)
@@ -145,6 +156,22 @@ function MatchDialog({ startHz, startKind, hz, onStopSound, onKind, onUse, onClo
   useEffect(() => {
     if (chosen !== null) octaveRef.current?.focus()   // the new step's heading
   }, [chosen])
+
+  // From the guide to the slider (Skip to the slider, or Fine-tune), at `atHz`
+  const toSlider = atHz => {
+    setGuideDone()
+    setKind(getYourSound().matchSound)   // the guide may have changed it
+    setPitch(atHz)
+    setChosen(null)
+    setGuiding(false)
+    requestAnimationFrame(() => sliderRef.current?.focus())
+  }
+
+  const toGuide = () => {
+    stop()
+    setChosen(null)
+    setGuiding(true)
+  }
 
   // Start at `atLevel`. Start the sound first, then stop the other sound, so the
   // audio stays awake between
@@ -194,10 +221,15 @@ function MatchDialog({ startHz, startKind, hz, onStopSound, onKind, onUse, onClo
       onCancel={e => { e.preventDefault(); onClose() }} onClose={onClose}>
       <h2 id="ys-dialog-title">{t('silence.yourSound.match')}</h2>
 
-      {chosen === null ? (
+      {guiding ? (
+        <PitchGuide hz={hz} startKind={kind} onKind={onKind} onStopSound={onStopSound}
+          onUse={onUse} onSlider={toSlider} onClose={onClose} />
+      ) : chosen === null ? (
         <>
+          <h3 ref={sliderRef} tabIndex={-1} className="ys-step-title">{t('silence.yourSound.sliderTitle')}</h3>
           <p>{t('silence.yourSound.safety1')}</p>
           <p className="ys-muted">{t('silence.yourSound.safety2')}</p>
+          <p><button type="button" className="ys-link" onClick={toGuide}>{t('silence.yourSound.guide.again')}</button></p>
 
           <fieldset className="ys-choice">
             <legend className="ys-k">{t('silence.yourSound.compare')}</legend>
@@ -256,30 +288,8 @@ function MatchDialog({ startHz, startKind, hz, onStopSound, onKind, onUse, onClo
         <>
           <h3 ref={octaveRef} tabIndex={-1} className="ys-step-title">{t('silence.yourSound.octaveTitle')}</h3>
           <p className="ys-muted">{t('silence.yourSound.octaveHint')}</p>
-          <ul className="ys-options">
-            {octaveOptions(chosen).map(o => {
-              const name = t(`silence.yourSound.octave.${o.id}`)
-              const on = playing && pitch === o.hz
-              return (
-                <li key={o.id} className="ys-option">
-                  <button type="button" className="ys-btn ys-play" aria-pressed={on}
-                    aria-label={t(on ? 'silence.yourSound.stopOption' : 'silence.yourSound.playOption', { option: name, pitch: hz(o.hz) })}
-                    onClick={() => playOption(o)}>
-                    <span className="ys-dot" aria-hidden="true" />
-                    {t(on ? 'silence.yourSound.stop' : 'silence.yourSound.play')}
-                  </button>
-                  <span className="ys-option-name" aria-hidden="true">
-                    {name} <span className="ys-option-hz">{hz(o.hz)}</span>
-                  </span>
-                  <button type="button" className="ys-btn ys-btn-main"
-                    aria-label={t('silence.yourSound.chooseOption', { option: name, pitch: hz(o.hz) })}
-                    onClick={() => finish(o.hz)}>
-                    {t('silence.yourSound.choose')}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
+          <OctaveOptions chosen={chosen} hz={hz} playingHz={playing ? pitch : null}
+            onPlay={playOption} onChoose={finish} />
           <div className="ys-actions">
             <button type="button" className="ys-btn" onClick={() => finish(chosen)}>{t('silence.yourSound.skip')}</button>
             <button type="button" className="ys-btn" onClick={onClose}>{t('silence.yourSound.cancel')}</button>
@@ -290,3 +300,4 @@ function MatchDialog({ startHz, startKind, hz, onStopSound, onKind, onUse, onClo
     </dialog>
   )
 }
+

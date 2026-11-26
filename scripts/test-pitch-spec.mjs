@@ -9,6 +9,7 @@ import {
   SPEC, LOW_HZ, HIGH_HZ, START_HZ, MIN_TONE_DB, MAX_TONE_DB, START_TONE_DB,
   HISS_Q, NOISE_RMS, clampHz, clampToneDb, dbToGain, positionToHz, hzToPosition,
   semitoneUp, semitoneDown, hissGain, octaveOptions, cleanMatchSound,
+  matchSoundFor, refineOptions, refineStep, octaveStep, pitchFromAnswers,
 } from '../src/audio/yourSound.js'
 
 const file = JSON.parse(readFileSync(new URL('../shared/silence-pitch-spec.json', import.meta.url), 'utf8'))
@@ -18,7 +19,8 @@ const close = (a, b, tol, msg) => assert.ok(Math.abs(a - b) <= tol, `${msg}: ${a
 
 test('the spec has every field, with sensible values', () => {
   for (const k of ['minHz', 'maxHz', 'startHz', 'levelStartDb', 'levelMinDb', 'levelMaxDb',
-    'ladderHz', 'refineStepsSemitones', 'octaveCheck', 'hissBandwidthOctaves']) {
+    'ladderHz', 'refineStepsSemitones', 'refineRule', 'guidePlaySeconds', 'octaveCheck',
+    'hissBandwidthOctaves', 'examples']) {
     assert.ok(k in file, `missing ${k}`)
   }
   assert.ok(file.minHz < file.startHz && file.startHz < file.maxHz)
@@ -28,6 +30,8 @@ test('the spec has every field, with sensible values', () => {
   assert.equal(file.ladderHz.at(-1), file.maxHz)
   assert.ok(file.ladderHz.every((hz, i) => i === 0 || hz > file.ladderHz[i - 1]))
   assert.equal(typeof file.octaveCheck, 'boolean')
+  assert.ok(file.refineStepsSemitones.length > 0 && file.refineStepsSemitones.every(x => x > 0))
+  assert.ok(file.guidePlaySeconds > 0 && file.guidePlaySeconds <= 10)
 })
 
 test('the website uses the spec, not numbers of its own', () => {
@@ -116,6 +120,46 @@ test('the remembered sound is tone or hiss, tone by default', () => {
   assert.equal(cleanMatchSound('tone'), 'tone')
   assert.equal(cleanMatchSound(null), 'tone')
   assert.equal(cleanMatchSound('loud'), 'tone')
+})
+
+test('the guide: whistle → tone, hiss or not sure → hiss', () => {
+  assert.equal(matchSoundFor('whistle'), 'tone')
+  assert.equal(matchSoundFor('hiss'), 'hiss')
+  assert.equal(matchSoundFor('unsure'), 'hiss')
+})
+
+test('the guide: narrowing down follows refineRule', () => {
+  const o = refineOptions(1000, 6)
+  close(o.down, 1000 / Math.SQRT2, 1e-9, 'down half an octave')
+  close(o.up, 1000 * Math.SQRT2, 1e-9, 'up half an octave')
+  assert.equal(refineOptions(file.minHz, 6).down, null)          // already at the edge: hidden
+  assert.equal(refineOptions(file.maxHz, 1).up, null)
+  assert.equal(refineOptions(300, 6).down, file.minHz)           // clamped, still offered
+  assert.equal(refineStep(1000, 3, 'unsure'), 1000)
+  assert.equal(refineStep(file.minHz, 6, 'down'), file.minHz)     // a hidden option keeps the pitch
+  assert.equal(octaveStep(7000, 'higher'), 7000)                  // 14 kHz is hidden
+  assert.equal(octaveStep(2000, 'lower'), 1000)
+  assert.equal(octaveStep(2000, 'same'), 2000)
+  for (const hz of [file.minHz, 777, 4000, file.maxHz]) {
+    for (const s of file.refineStepsSemitones) {
+      for (const v of Object.values(refineOptions(hz, s))) if (v !== null) assert.ok(v >= file.minHz && v <= file.maxHz)
+    }
+  }
+})
+
+test('the guide: every example in the spec gives its expectedHz (within 0.5 Hz)', () => {
+  assert.ok(file.examples.length >= 6)
+  for (const e of file.examples) {
+    assert.ok(file.ladderHz.includes(e.ladderChoiceHz), `${e.ladderChoiceHz} isn't on the ladder`)
+    assert.equal(e.refineAnswers.length, file.refineStepsSemitones.length)
+    assert.ok(['tone', 'hiss'].includes(e.matchSound))
+    const hz = pitchFromAnswers(e)
+    close(hz, e.expectedHz, 0.5, `example ${JSON.stringify(e)}`)
+    assert.ok(hz >= file.minHz && hz <= file.maxHz)
+  }
+  // The examples must reach both edges
+  assert.ok(file.examples.some(e => e.expectedHz === file.minHz))
+  assert.ok(file.examples.some(e => e.expectedHz === file.maxHz))
 })
 
 console.log(`\n${passed} passed`)

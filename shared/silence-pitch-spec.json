@@ -1,5 +1,5 @@
 {
-  "$about": "Silence 'Find your pitch' settings, one source of truth for the website (src/audio/yourSound.js imports this file) and the iOS app (bundled as a resource, decoded at startup in ios/Silence/PitchSpec.swift). Change a number here and both change; the 'Silence sounds' check tests both. Hz are frequencies, dB are dBFS (0 = full scale): the comparison sound always starts at levelStartDb and can never go above levelMaxDb. ladderHz and refineStepsSemitones are for the step-by-step guide (part 2). hissBandwidthOctaves is how wide the hiss is (one-third octave).",
+  "$about": "Silence \"Find your pitch\" settings, one source of truth for the website (src/audio/yourSound.js imports this file) and the iOS app (bundled as a resource, decoded at startup in ios/Silence/PitchSpec.swift). Change a number here and both change; the \"Silence sounds\" check tests both. Hz are frequencies, dB are dBFS (0 = full scale): the comparison sound always starts at levelStartDb and can never go above levelMaxDb. hissBandwidthOctaves is how wide the hiss is (one-third octave). ladderHz, refineStepsSemitones, refineRule and guidePlaySeconds are for the step-by-step guide that opens the first time someone taps Match my tinnitus. examples are answers in the guide and the pitch they must give: both codebases test that their answers-to-pitch function (pitchFromAnswers in yourSound.js, PitchSpec.pitch(ladderChoiceHz:...) in Swift) gives expectedHz (within 0.5 Hz), which keeps the app and the website identical.",
   "minHz": 250,
   "maxHz": 12000,
   "startHz": 4000,
@@ -8,6 +8,84 @@
   "levelMaxDb": -20,
   "ladderHz": [250, 500, 1000, 2000, 4000, 8000, 12000],
   "refineStepsSemitones": [6, 3, 1.5, 1],
+  "refineRule": "Narrow it down: round k uses s = refineStepsSemitones[k]. Option 1 = current × 2^(−s/12) (lower), option 2 = current × 2^(+s/12) (higher), each clamped to minHz…maxHz. An option that, after clamping, equals the current pitch (it is already at the edge) is hidden. \"1 is closer\" (down) or \"2 is closer\" (up) moves the current pitch to that option; \"Not sure\" (unsure) keeps it. The guide starts from the ladder pitch chosen in Get close. Then the octave check: lower = current ÷ 2, higher = current × 2, hidden if outside minHz…maxHz (not clamped: it would no longer be an octave); same keeps the pitch.",
+  "guidePlaySeconds": 3,
   "octaveCheck": true,
-  "hissBandwidthOctaves": 0.3333
+  "hissBandwidthOctaves": 0.3333,
+  "examples": [
+    {
+      "matchSound": "tone",
+      "ladderChoiceHz": 4000,
+      "refineAnswers": ["up", "down", "up", "unsure"],
+      "octaveAnswer": "same",
+      "expectedHz": 5187.36
+    },
+    {
+      "matchSound": "hiss",
+      "ladderChoiceHz": 8000,
+      "refineAnswers": ["up", "up", "up", "up"],
+      "octaveAnswer": "same",
+      "expectedHz": 12000,
+      "note": "stops at maxHz (12 kHz)"
+    },
+    {
+      "matchSound": "tone",
+      "ladderChoiceHz": 250,
+      "refineAnswers": ["down", "down", "down", "down"],
+      "octaveAnswer": "same",
+      "expectedHz": 250,
+      "note": "stops at minHz (250 Hz): the guide hid every option 1"
+    },
+    {
+      "matchSound": "hiss",
+      "ladderChoiceHz": 250,
+      "refineAnswers": ["down", "up", "unsure", "up"],
+      "octaveAnswer": "higher",
+      "expectedHz": 629.96
+    },
+    {
+      "matchSound": "tone",
+      "ladderChoiceHz": 1000,
+      "refineAnswers": ["down", "down", "up", "down"],
+      "octaveAnswer": "lower",
+      "expectedHz": 306.01
+    },
+    {
+      "matchSound": "hiss",
+      "ladderChoiceHz": 12000,
+      "refineAnswers": ["down", "unsure", "down", "up"],
+      "octaveAnswer": "same",
+      "expectedHz": 8243.72
+    },
+    {
+      "matchSound": "tone",
+      "ladderChoiceHz": 2000,
+      "refineAnswers": ["unsure", "unsure", "unsure", "unsure"],
+      "octaveAnswer": "same",
+      "expectedHz": 2000
+    },
+    {
+      "matchSound": "hiss",
+      "ladderChoiceHz": 8000,
+      "refineAnswers": ["up", "up", "unsure", "unsure"],
+      "octaveAnswer": "higher",
+      "expectedHz": 12000,
+      "note": "higher (24 kHz) is outside the range, so hidden: the pitch stays"
+    },
+    {
+      "matchSound": "tone",
+      "ladderChoiceHz": 500,
+      "refineAnswers": ["down", "down", "down", "down"],
+      "octaveAnswer": "lower",
+      "expectedHz": 257.33,
+      "note": "lower (129 Hz) is outside the range, so hidden: the pitch stays"
+    },
+    {
+      "matchSound": "hiss",
+      "ladderChoiceHz": 4000,
+      "refineAnswers": ["up", "up", "up", "up"],
+      "octaveAnswer": "same",
+      "expectedHz": 7772.26
+    }
+  ]
 }

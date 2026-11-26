@@ -11,8 +11,9 @@ struct PitchSpec: Decodable, Equatable, Sendable {
     let levelStartDb: Double
     let levelMinDb: Double
     let levelMaxDb: Double
-    let ladderHz: [Double]               // for the step-by-step guide (part 2)
-    let refineStepsSemitones: [Double]   // ditto
+    let ladderHz: [Double]               // the guide's "Get close" sounds
+    let refineStepsSemitones: [Double]   // the guide's "Narrow it down" rounds (see refineRule in the file)
+    let guidePlaySeconds: Double         // how long each sound in the guide plays
     let octaveCheck: Bool
     let hissBandwidthOctaves: Double
 
@@ -63,6 +64,59 @@ struct PitchSpec: Decodable, Equatable, Sendable {
     func octaveOptions(for hz: Double) -> [OctaveOption] {
         [OctaveOption(octave: .lower, hz: hz / 2), OctaveOption(octave: .this, hz: hz), OctaveOption(octave: .higher, hz: hz * 2)]
             .filter { $0.octave == .this || ($0.hz >= minHz && $0.hz <= maxHz) }
+    }
+
+    // MARK: The guide
+    // The rule is written out in shared/silence-pitch-spec.json (refineRule), and
+    // the website has the same functions (src/audio/yourSound.js). Both are tested
+    // against the file's examples, so the same answers give the same pitch.
+
+    enum RefineAnswer: String, Decodable, Sendable { case down, up, unsure }
+    enum OctaveAnswer: String, Decodable, Sendable { case lower, same, higher }
+    enum SoundAnswer: String, Sendable { case whistle, hiss, unsure }
+
+    /// "Whistle or hiss?": a whistle is compared with the tone; a hiss, or not sure, with the hiss.
+    static func matchSound(for answer: SoundAnswer) -> MatchSound {
+        answer == .whistle ? .tone : .hiss
+    }
+
+    /// Narrow it down, one round with step `s` semitones: option 1 is lower, option 2
+    /// higher, each kept inside the range. An option that would be the same as the
+    /// current pitch (it's already at the edge) is nil, so it isn't shown.
+    func refineOptions(for hz: Double, step s: Double) -> (down: Double?, up: Double?) {
+        let down = clampHz(hz * pow(2, -s / 12))
+        let up = clampHz(hz * pow(2, s / 12))
+        return (down == hz ? nil : down, up == hz ? nil : up)
+    }
+
+    /// The pitch after one round. A hidden option keeps the pitch.
+    func refined(_ hz: Double, step s: Double, answer: RefineAnswer) -> Double {
+        let o = refineOptions(for: hz, step: s)
+        switch answer {
+        case .down: return o.down ?? hz
+        case .up: return o.up ?? hz
+        case .unsure: return hz
+        }
+    }
+
+    /// The pitch after the octave check. A hidden option keeps the pitch.
+    func octaveChecked(_ hz: Double, answer: OctaveAnswer) -> Double {
+        let octave: Octave
+        switch answer {
+        case .lower: octave = .lower
+        case .same: octave = .this
+        case .higher: octave = .higher
+        }
+        return octaveOptions(for: hz).first { $0.octave == octave }?.hz ?? hz
+    }
+
+    /// The guide's answers → the pitch it finds. Pure: the same answers always give the same pitch.
+    func pitch(ladderChoiceHz: Double, refineAnswers: [RefineAnswer], octaveAnswer: OctaveAnswer) -> Double {
+        var hz = clampHz(ladderChoiceHz)
+        for (i, s) in refineStepsSemitones.enumerated() {
+            hz = refined(hz, step: s, answer: i < refineAnswers.count ? refineAnswers[i] : .unsure)
+        }
+        return octaveChecked(hz, answer: octaveAnswer)
     }
 }
 

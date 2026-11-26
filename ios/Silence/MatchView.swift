@@ -4,14 +4,25 @@ import SwiftUI
 /// Safety: the sound always starts at −50 dBFS and can't go above −20 dBFS (both
 /// from shared/silence-pitch-spec.json, via PitchSpec).
 ///
-/// Two steps: find the pitch, then (after "Use this pitch") an octave check,
-/// because it's easy to pick the right note in the wrong octave.
+/// Two views: the step-by-step guide (PitchGuideView, the first time), and the
+/// slider. With the slider: find the pitch, then (after "Use this pitch") an
+/// octave check, because it's easy to pick the right note in the wrong octave.
 struct MatchView: View {
     @Bindable var model: SilenceModel
     @Environment(\.dismiss) private var dismiss
+    /// Showing the guide rather than the slider
+    @State private var guiding: Bool
+    /// Where the slider starts (from the guide's Fine-tune), or nil for the usual place
+    @State private var sliderStartHz: Double?
     /// The pitch from step 1, during the octave check
     @State private var chosenHz: Double?
     @AccessibilityFocusState private var octaveTitleFocused: Bool
+    @AccessibilityFocusState private var sliderTitleFocused: Bool
+
+    init(model: SilenceModel, guide: Bool = false) {
+        _model = Bindable(wrappedValue: model)
+        _guiding = State(initialValue: guide)
+    }
 
     private let spec = PitchSpec.shared
 
@@ -26,7 +37,9 @@ struct MatchView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if let chosenHz {
+                if guiding {
+                    PitchGuideView(model: model, onSlider: toSlider, onDone: { dismiss() })
+                } else if let chosenHz {
                     octaveCheck(chosenHz)
                 } else {
                     findPitch
@@ -42,14 +55,35 @@ struct MatchView: View {
         }
     }
 
+    /// From the guide to the slider (Skip to the slider, or Fine-tune), at `hz`
+    private func toSlider(_ hz: Double) {
+        model.endMatching()
+        model.pitchTutorialDone = true
+        model.matchHz = hz
+        sliderStartHz = hz
+        chosenHz = nil
+        guiding = false
+        sliderTitleFocused = true
+    }
+
     // MARK: Step 1: find the pitch
 
     private var findPitch: some View {
         Form {
             Section {
+                Text("Find it with the slider")
+                    .font(.headline)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityFocused($sliderTitleFocused)
                 Text("Turn your phone's volume down first. The sound starts very quietly; raise it until you can just hear it, then move the pitch until it sounds most like your tinnitus.")
                 Text("Stop if the sound is uncomfortable. Many people's tinnitus isn't a single tone, so close is good enough.")
                     .foregroundStyle(.secondary)
+                Button("Guide me again") {
+                    model.endMatching()
+                    chosenHz = nil
+                    guiding = true
+                }
+                .tint(Color.sage)
             }
 
             Section {
@@ -71,7 +105,7 @@ struct MatchView: View {
                         if model.matchSound == .hiss { Text("Stop the hiss") } else { Text("Stop the tone") }
                     }
                 } else {
-                    Button { model.beginMatching() } label: {
+                    Button { model.beginMatching(at: sliderStartHz) } label: {
                         if model.matchSound == .hiss { Text("Play the hiss") } else { Text("Play the tone") }
                     }
                 }
@@ -141,8 +175,9 @@ struct MatchView: View {
             }
 
             Section {
-                ForEach(spec.octaveOptions(for: chosen)) { option in
-                    octaveRow(option.octave, hz: option.hz)
+                OctaveOptionsList(model: model, chosen: chosen, burst: false) { hz in
+                    model.useMatchedPitch(hz)
+                    dismiss()
                 }
             }
 
@@ -158,13 +193,37 @@ struct MatchView: View {
         .onAppear { octaveTitleFocused = true }
     }
 
-    private func octaveRow(_ octave: PitchSpec.Octave, hz: Double) -> some View {
-        let name = Self.name(octave)
+    static func name(_ octave: PitchSpec.Octave) -> LocalizedStringResource {
+        switch octave {
+        case .lower: "Lower"
+        case .this: "This one"
+        case .higher: "Higher"
+        }
+    }
+}
+
+/// The octave check's options: the pitch, an octave lower and an octave higher
+/// (any outside the range left out), each with Play and Choose. Shared by the
+/// slider and the guide. `burst`: each sound stops by itself (the guide).
+struct OctaveOptionsList: View {
+    @Bindable var model: SilenceModel
+    let chosen: Double
+    var burst = false
+    let onChoose: (Double) -> Void
+
+    var body: some View {
+        ForEach(PitchSpec.shared.octaveOptions(for: chosen)) { option in
+            row(option.octave, hz: option.hz)
+        }
+    }
+
+    private func row(_ octave: PitchSpec.Octave, hz: Double) -> some View {
+        let name = MatchView.name(octave)
         let pitch = ContentView.format(hz)
         let on = model.matching && model.matchHz == hz
         return HStack(spacing: 14) {
             Button {
-                if on { model.endMatching() } else { model.playMatch(at: hz) }
+                if on { model.endMatching() } else if burst { model.playBurst(at: hz) } else { model.playMatch(at: hz) }
             } label: {
                 Group {
                     if on { Label("Stop", systemImage: "stop.fill") } else { Label("Play", systemImage: "play.fill") }
@@ -183,21 +242,10 @@ struct MatchView: View {
 
             Spacer()
 
-            Button("Choose") {
-                model.useMatchedPitch(hz)
-                dismiss()
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(Color.sage)
-            .accessibilityLabel(Text("Choose \(String(localized: name)), \(pitch)"))
-        }
-    }
-
-    static func name(_ octave: PitchSpec.Octave) -> LocalizedStringResource {
-        switch octave {
-        case .lower: "Lower"
-        case .this: "This one"
-        case .higher: "Higher"
+            Button("Choose") { onChoose(hz) }
+                .buttonStyle(.borderedProminent)
+                .tint(Color.sage)
+                .accessibilityLabel(Text("Choose \(String(localized: name)), \(pitch)"))
         }
     }
 }

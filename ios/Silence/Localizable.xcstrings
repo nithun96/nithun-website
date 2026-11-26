@@ -985,6 +985,346 @@
           }
         }
       }
+    },
+    "Find it with the slider": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finn den med glidebryteren"
+          }
+        }
+      }
+    },
+    "Guide me again": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veiled meg på nytt"
+          }
+        }
+      }
+    },
+    "Step %lld of %lld": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steg %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "Skip to the slider": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gå til glidebryteren"
+          }
+        }
+      }
+    },
+    "Before you start": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Før du begynner"
+          }
+        }
+      }
+    },
+    "Set a comfortable level": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finn et behagelig nivå"
+          }
+        }
+      }
+    },
+    "Whistle or hiss?": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plystring eller sus?"
+          }
+        }
+      }
+    },
+    "Get close": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kom nærmere"
+          }
+        }
+      }
+    },
+    "Narrow it down, round %lld of %lld": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snevre det inn, runde %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ferdig"
+          }
+        }
+      }
+    },
+    "Put on headphones if you have them, find a quiet room, and turn your phone's volume down.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta på hodetelefoner hvis du har, finn et stille rom, og skru ned volumet på telefonen."
+          }
+        }
+      }
+    },
+    "We'll play a few sounds; you pick the one closest to what you hear. It takes about two minutes.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vi spiller noen lyder, og du velger den som ligner mest på det du hører. Det tar omtrent to minutter."
+          }
+        }
+      }
+    },
+    "Start": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "A soft sound is playing. Raise it until you can just hear it.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En svak lyd spiller nå. Skru den opp til du så vidt hører den."
+          }
+        }
+      }
+    },
+    "Stop if the sound is uncomfortable.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp hvis lyden er ubehagelig."
+          }
+        }
+      }
+    },
+    "Next": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neste"
+          }
+        }
+      }
+    },
+    "Previous": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forrige"
+          }
+        }
+      }
+    },
+    "Is it more like a whistle, or more like a hiss?": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ligner det mest på en plystring eller på et sus?"
+          }
+        }
+      }
+    },
+    "Whistle": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plystring"
+          }
+        }
+      }
+    },
+    "Hiss": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sus"
+          }
+        }
+      }
+    },
+    "Not sure": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vet ikke"
+          }
+        }
+      }
+    },
+    "Listen to each sound and pick the one closest to what you hear.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lytt til hver lyd og velg den som ligner mest på det du hører."
+          }
+        }
+      }
+    },
+    "Sound %lld of %lld": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyd %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "Play again": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av igjen"
+          }
+        }
+      }
+    },
+    "This is closest": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denne ligner mest"
+          }
+        }
+      }
+    },
+    "Play both. Which is closer to what you hear?": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av begge. Hvilken ligner mest på det du hører?"
+          }
+        }
+      }
+    },
+    "Play 1": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av 1"
+          }
+        }
+      }
+    },
+    "Play 2": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spill av 2"
+          }
+        }
+      }
+    },
+    "Stop 1": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp 1"
+          }
+        }
+      }
+    },
+    "Stop 2": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopp 2"
+          }
+        }
+      }
+    },
+    "1 is closer": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 ligner mest"
+          }
+        }
+      }
+    },
+    "2 is closer": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 ligner mest"
+          }
+        }
+      }
+    },
+    "Fine-tune with the slider": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finjuster med glidebryteren"
+          }
+        }
+      }
+    },
+    "Start again": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begynn på nytt"
+          }
+        }
+      }
     }
   }
 }

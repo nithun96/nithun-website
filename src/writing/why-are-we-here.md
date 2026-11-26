@@ -4,7 +4,6 @@ date: "2026-05-02"
 slug: "why-are-we-here"
 language: "en"
 summary: "An introduction of sorts — why this website exists, how it was built, and whether I'll remember it after Berlin and Japan."
-mastodon: ""
 ---
 
 I am writing this because if you somehow were to end up on this website, you might wonder what is this, what is the purpose of it, and how do I get somewhere else? I can't help you with the last part, but I can tell you the rest. I have, like everyone else, seen the rapid development of AI tools pass me by, with me mainly using them to write e-mails and as a more complex Google search.[^1: clarification: This actually a small lie. I work with creating AI applications and have been following the industry and what is happening. However, I use the work tools, but not as much the almost sci-fi usages, at least not until recently]

@@ -15,7 +15,7 @@
     "name": "Nithun Manoharan",
     "pyreBadge": "Bygger Pyre",
     "location": "Oslo, Norge",
-    "intro": "Jeg er medgründer av Pyre, et norsk programvareselskap jeg driver sammen med to venner, der vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
+    "intro": "Jeg er medgründer og daglig leder i Pyre, et norsk programvareselskap jeg driver sammen med to venner, der vi bygger og drifter våre egne produkter. Ved siden av Pyre er dette hva jeg ellers holder på med:",
     "donate": "Hvis du finner noe her nyttig eller underholdende, oppfordrer jeg deg til å donere til organisasjoner som gjør en reell forskjell: <0>Røde Kors</0>, <1>Leger uten grenser</1>, <2>Spire</2>, <3>Utviklingsfondet</3>, <4>GiveWell</4> (global helse), og <5>hørselsorganisasjonene som er nevnt på Stillhet-siden</5>.",
     "teasers": {
       "writing": {
@@ -59,7 +59,6 @@
     "openImage": "Åpne bildet i fullskjerm: {{alt}}",
     "closeImage": "Lukk bildet",
     "noDate": "Udatert",
-    "conversation": "Bli med i samtalen på Mastodon",
     "spotifyCaption": "Spillelisten jeg hørte på mens jeg skrev dette:",
     "spotifyTitle": "Musikken jeg hørte på mens jeg skrev",
     "rssFollow": "Følg nye innlegg i en RSS-leser:",
@@ -163,7 +162,7 @@
     "silenceTitle": "Blanketing Silence | Nithun Manoharan",
     "silenceDescription": "Et gratis lydverktøy for tinnitus og søvn: brun støy, rosa støy, regn og havlyder, med sovetimer.",
     "aboutTitle": "Om meg | Nithun Manoharan",
-    "aboutDescription": "Om Nithun Manoharan, produktsjef og medgründer av Pyre, basert i Oslo. Pluss noen reisebilder.",
+    "aboutDescription": "Om Nithun Manoharan, produktsjef og medgründer og daglig leder i Pyre, basert i Oslo. Pluss noen reisebilder.",
     "notFoundTitle": "Siden finnes ikke | Nithun Manoharan",
     "silencePrivacyTitle": "Personvern i Silence | Nithun Manoharan",
     "silencePrivacyDescription": "Silence, det gratis lydverktøyet for tinnitus og søvn, samler ikke inn data. Hva appen og nettsiden lagrer på enheten din, og hva de ikke lagrer.",
@@ -177,7 +176,7 @@
   },
   "about": {
     "eyebrow": "Om",
-    "bio1": "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer av <0>Pyre</0>, et norsk programvareselskap jeg driver sammen med to venner. Utenom det <1>skriver jeg her</1> innimellom, har bygget <2>Blanketing Silence</2> som et gratis lydverktøy for tinnitus og søvn, og holder en <3>hylle</3> med bøker jeg er fan av.",
+    "bio1": "Jeg er produktsjef med spesialisering innen AI og dataanalyse, og medgründer og daglig leder i <0>Pyre</0>, et norsk programvareselskap jeg driver sammen med to venner. Utenom det <1>skriver jeg her</1> innimellom, har bygget <2>Blanketing Silence</2> som et gratis lydverktøy for tinnitus og søvn, og holder en <3>hylle</3> med bøker jeg er fan av.",
     "bio2": "Reising har lært meg mye, som hvor mye folk faktisk har til felles, selv på andre siden av kloden. Men stort sett reiser jeg vel for maten.",
     "portraitsCaption": "Fra en tur til Sør-Korea, september 2026",
     "placeWroclaw": "Wrocław, Polen",

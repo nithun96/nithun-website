@@ -15,7 +15,7 @@
     "name": "Nithun Manoharan",
     "pyreBadge": "Building Pyre",
     "location": "Oslo, Norway",
-    "intro": "I'm a co-founder of Pyre, a Norwegian software company I run with two friends, building and operating our own products. Beyond Pyre, here's what else I keep myself busy with:",
+    "intro": "I'm co-founder and CEO of Pyre, a Norwegian software company I run with two friends, building and operating our own products. Beyond Pyre, here's what else I keep myself busy with:",
     "donate": "If you find anything here useful or enjoyable, I'd encourage you to donate to organisations doing real good: <0>Red Cross</0>, <1>Doctors Without Borders</1>, <2>Spire</2>, <3>The Development Fund</3>, <4>GiveWell</4> (global health), and the <5>hearing charities listed on the Silence page</5>.",
     "teasers": {
       "writing": {
@@ -59,7 +59,6 @@
     "openImage": "Open image in full screen: {{alt}}",
     "closeImage": "Close image",
     "noDate": "Undated",
-    "conversation": "Join the conversation on Mastodon",
     "spotifyCaption": "The playlist I was listening to while writing this:",
     "spotifyTitle": "Listening while writing",
     "rssFollow": "Follow new posts in a feed reader:",
@@ -163,7 +162,7 @@
     "silenceTitle": "Blanketing Silence | Nithun Manoharan",
     "silenceDescription": "A free sound tool for tinnitus and sleep: brown noise, pink noise, rain and ocean sounds, with a sleep timer.",
     "aboutTitle": "About | Nithun Manoharan",
-    "aboutDescription": "About Nithun Manoharan, Product Manager and co-founder of Pyre, based in Oslo. Plus a few travel photos.",
+    "aboutDescription": "About Nithun Manoharan, Product Manager and co-founder and CEO of Pyre, based in Oslo. Plus a few travel photos.",
     "notFoundTitle": "Page not found | Nithun Manoharan",
     "silencePrivacyTitle": "Silence privacy policy | Nithun Manoharan",
     "silencePrivacyDescription": "Silence, the free sound tool for tinnitus and sleep, collects no data. What the app and the website keep on your device, and what they don't.",
@@ -177,7 +176,7 @@
   },
   "about": {
     "eyebrow": "About",
-    "bio1": "I'm a Product Manager specialising in AI and Data Analytics, and a co-founder of <0>Pyre</0>, a Norwegian software company I run with two friends. Outside of that, I <1>write here</1> occasionally, built <2>Blanketing Silence</2> as a free sound tool for tinnitus and sleep, and keep a <3>shelf</3> of books I've enjoyed.",
+    "bio1": "I'm a Product Manager specialising in AI and Data Analytics, and co-founder and CEO of <0>Pyre</0>, a Norwegian software company I run with two friends. Outside of that, I <1>write here</1> occasionally, built <2>Blanketing Silence</2> as a free sound tool for tinnitus and sleep, and keep a <3>shelf</3> of books I've enjoyed.",
     "bio2": "Travelling has taught me a lot, such as how much people have in common, even on the other side of the globe. But mainly I travel for the food.",
     "portraitsCaption": "From a trip to South Korea, September 2026",
     "placeWroclaw": "Wrocław, Poland",

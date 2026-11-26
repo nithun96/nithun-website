@@ -157,22 +157,42 @@
       "matchIntro": "Finn tonehøyden på tinnitusen din med en svak tone, så kan Silence legge mer av lyden rundt den.",
       "match": "Finn tonen til tinnitusen min",
       "focus": "Fokuser på tonen min",
-      "around": "Rundt {{pitch}}",
+      "centred": "Lyd sentrert rundt {{pitch}}",
       "on": "På",
       "off": "Av",
       "matchAgain": "Finn tonen på nytt",
       "forget": "Glem tonen min",
       "medical": "Silence er ikke medisinsk utstyr. Hvis tinnitusen er ny, endrer seg eller bare er i ett øre, bør du gå til lege.",
-      "safety1": "Skru ned volumet først. Tonen starter veldig svakt; skru den opp til du så vidt hører den, og flytt tonehøyden til den ligner mest på tinnitusen din.",
-      "safety2": "Stopp hvis tonen er ubehagelig. Tinnitus er ofte ikke én enkelt tone, så omtrent er godt nok.",
+      "safety1": "Skru ned volumet først. Lyden starter veldig svakt; skru den opp til du så vidt hører den, og flytt tonehøyden til den ligner mest på tinnitusen din.",
+      "safety2": "Stopp hvis lyden er ubehagelig. Tinnitus er ofte ikke én enkelt tone, så omtrent er godt nok.",
+      "compare": "Lyd å sammenligne med",
+      "toneSound": "Tone",
+      "hiss": "Sus",
+      "compareHint": "Tone er én klar tone. Sus er en myk susing rundt tonehøyden; mange synes den ligner mer på tinnitusen sin.",
       "playTone": "Spill av tonen",
       "stopTone": "Stopp tonen",
+      "playHiss": "Spill av suset",
+      "stopHiss": "Stopp suset",
       "pitch": "Tonehøyde",
       "lower": "Lavere",
       "higher": "Høyere",
-      "toneVolume": "Volum på tonen",
+      "soundVolume": "Volum",
       "levelValue": "{{db}} dB",
       "usePitch": "Bruk denne tonen",
+      "octaveTitle": "Én ting til: hvilken ligner mest?",
+      "octaveHint": "Det er lett å treffe riktig tone, men i feil oktav. Spill av hver av dem og velg den som ligner mest.",
+      "octave": {
+        "lower": "Lavere",
+        "this": "Denne",
+        "higher": "Høyere"
+      },
+      "play": "Spill av",
+      "stop": "Stopp",
+      "playOption": "Spill av {{option}}, {{pitch}}",
+      "stopOption": "Stopp {{option}}, {{pitch}}",
+      "choose": "Velg",
+      "chooseOption": "Velg {{option}}, {{pitch}}",
+      "skip": "Hopp over",
       "cancel": "Avbryt",
       "kept": "Tonen og klangen din lagres bare i denne nettleseren."
     }
@@ -231,7 +251,7 @@
     "back": "Silence",
     "headingA": "Silence",
     "headingB": "personvern",
-    "updated": "Sist oppdatert 23.11.2026",
+    "updated": "Sist oppdatert 26.11.2026",
     "intro": "Silence samler ikke inn data om deg. Her er hva det betyr for appen og for Silence på denne nettsiden.",
     "link": "Personvern: Silence samler ikke inn data",
     "who": {
@@ -241,7 +261,7 @@
     "app": {
       "title": "Appen samler ikke inn data",
       "p1": "Silence-appen samler ikke inn, sender eller deler noe om deg. Den har ingen kontoer, ingen analyseverktøy, ingen verktøy for krasjrapporter og ingen reklame, og den trenger ikke internett: Lydene lages på telefonen mens du lytter. Den bruker ikke mikrofonen, så ingenting blir tatt opp.",
-      "p2": "For at den skal åpne slik du forlot den, husker appen noen innstillinger: volumet, sovetimeren, den siste lyden du spilte, klangen og, hvis du har brukt «Finn tonen til tinnitusen min», tonen du valgte og om «Fokuser på tonen min» er på. De lagres bare på telefonen din. Jeg kan ikke se dem, og de sendes aldri til meg eller noen andre.",
+      "p2": "For at den skal åpne slik du forlot den, husker appen noen innstillinger: volumet, sovetimeren, den siste lyden du spilte, klangen og, hvis du har brukt «Finn tonen til tinnitusen min», tonen du valgte, om du sammenlignet med en tone eller et sus, og om «Fokuser på tonen min» er på. De lagres bare på telefonen din. Jeg kan ikke se dem, og de sendes aldri til meg eller noen andre.",
       "p3": "For å fjerne dem sletter du appen: Innstillingene forsvinner sammen med den. Som innstillingene til alle apper ligger de også i sikkerhetskopiene av telefonen (for eksempel iCloud-sikkerhetskopi) til de blir erstattet.",
       "p4": "App Store drives av Apple, etter Apples egen personvernerklæring. Apple kan vise meg anonyme tall, som antall nedlastinger, og krasjrapporter fra folk som har valgt å dele dem med apputviklere. Ingenting av dette forteller meg hvem du er."
     },
@@ -283,7 +303,7 @@
         "a": "En samtale, en annen app som spiller, eller hodetelefoner som kobles fra, stopper lyden, så den ikke fortsetter høyt. Trykk på lyden for å starte igjen. Stoppet den av en annen grunn, meld det gjerne som en feil."
       },
       "match": {
-        "q": "Er tonen trygg?",
+        "q": "Er lyden for å finne tonen trygg?",
         "a": "Den starter svært lavt og har et volumtak, men volumet på telefonen og hodetelefonene avgjør fortsatt hvor sterk den er. Skru ned volumet først, og stopp hvis det er ubehagelig."
       },
       "settings": {

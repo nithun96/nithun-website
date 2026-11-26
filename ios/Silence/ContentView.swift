@@ -131,7 +131,7 @@ struct ContentView: View {
                 Toggle(isOn: $model.focusOn) {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Focus on my pitch")
-                        Text("Around \(Self.format(hz))").font(.caption).foregroundStyle(.secondary)
+                        Text("Sound centred around \(Self.format(hz))").font(.caption).foregroundStyle(.secondary)
                     }
                 }
                 .tint(Color.sage)

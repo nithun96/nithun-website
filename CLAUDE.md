@@ -144,6 +144,7 @@ nithun-website/
 │   └── nithun-website              # Nginx site config — copied to the server on every deploy
 ├── GAME-BRIEF.md                   # Brief for the point-and-click game pilot (see src/game/)
 ├── ios/                            # Silence for iOS — native SwiftUI app (see Silence iOS app)
+├── shared/silence-pitch-spec.json  # Silence's Find-your-pitch limits, read by the website and the app
 ├── .github/workflows/silence-sounds.yml  # Check: the app's sounds still match the website's
 ├── .github/workflows/site-check.yml      # Hourly: the live site still matches the last deploy (see Deployment)
 ├── design-handoff/                 # Redesign handoff — README.md + nithun.html reference prototype
@@ -196,7 +197,7 @@ nithun-website/
     │   └── GameLevel1.jsx          # Game pilot (see GAME-BRIEF.md) — not imported or routed yet
     ├── audio/
     │   ├── noisePlayer.js          # Silence player — makes the sound live with the Web Audio API on the "playback" audio session (see README); one shared EQ for Your sound, and the matching tone
-    │   ├── yourSound.js            # Your sound's settings and maths (tone shelves, focus, headroom, pitch slider, −20 dBFS cap), kept in localStorage only
+    │   ├── yourSound.js            # Your sound's settings and maths (tone shelves, focus, headroom, pitch slider, hiss loudness, octave check), kept in localStorage only; limits from shared/silence-pitch-spec.json
     │   └── noiseRecipes.js         # The four sounds as recipes (brown, pink, rain, ocean), levelled to −20 LUFS
     ├── data/
     │   ├── shelf.json              # Shelf content — 58 books, 50 games, 8 TV entries
@@ -356,6 +357,11 @@ no accounts). Started Nov 2026. Details in `ios/README.md`, plans in `ios/ROADMA
   `ios/Silence/Audio/NoiseRecipes.swift` are the same recipes. Change one, change the
   other in the same PR. The **Silence sounds** check fails if the website's sound
   changes without updating `ios/tools/golden.json` (fix in `ios/README.md`).
+- **One pitch spec, two codebases:** the Find-your-pitch limits (pitch range,
+  level start and −20 dBFS cap, hiss width, octave check) are in
+  `shared/silence-pitch-spec.json`, read by `src/audio/yourSound.js` and bundled
+  into the app (`ios/Silence/PitchSpec.swift`). Change them there, not in code.
+  The Silence sounds check tests both sides.
 - **Text:** the app's EN/NO strings (`ios/Silence/Localizable.xcstrings`) are copied
   from `silence.*` in the translation files. Not checked automatically.
 - `ios/` changes don't deploy the site (`paths-ignore` in `deploy.yml`).

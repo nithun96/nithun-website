@@ -11,7 +11,8 @@
 //
 // Your sound: the loop passes through an EQ that tilts it darker or brighter and,
 // optionally, lifts the band around the pitch you matched to your tinnitus. A
-// separate quiet sine tone is used only while matching.
+// separate quiet sine tone or hiss is used only while matching (limits from
+// shared/silence-pitch-spec.json, via PitchSpec).
 
 import AVFoundation
 import MediaPlayer
@@ -35,13 +36,18 @@ private final class RenderState {
     var smoothing: Float = 0.9995
 }
 
-/// The matching tone, read on the audio thread (same caveat as RenderState).
+/// The matching sound, read on the audio thread (same caveat as RenderState).
+/// Both the tone and the hiss run; the mix crossfades between them, so switching
+/// is click-free and the level stays the same.
 private final class ToneState {
     var targetHz = 1000.0
     var hz = 1000.0
     var phase = 0.0
     var targetAmplitude: Float = 0
     var amplitude: Float = 0
+    var targetHissMix: Float = 0    // 0 = tone, 1 = hiss
+    var hissMix: Float = 0
+    var hiss = Hiss(q: PitchSpec.shared.hissQ)
 }
 
 @MainActor
@@ -164,20 +170,25 @@ final class NoisePlayer {
 
     // MARK: Matching your tinnitus
 
-    /// Start the matching tone. Stop any sound first. It starts very quietly.
-    func startMatching(hz: Double, levelDB: Double) throws {
+    /// Start the matching sound. Stop any sound first.
+    func startMatching(hz: Double, levelDB: Double, sound: MatchSound) throws {
         try activateSession()
         engine.stop()
         attachToneIfNeeded()
         tone.amplitude = 0
-        setMatch(hz: hz, levelDB: levelDB)
+        tone.hz = PitchSpec.shared.clampHz(hz)
+        tone.hissMix = sound == .hiss ? 1 : 0
+        setMatch(hz: hz, levelDB: levelDB, sound: sound)
         try engine.start()
     }
 
-    /// Change the tone's pitch (Hz) and level (dBFS, capped at −20).
-    func setMatch(hz: Double, levelDB: Double) {
-        tone.targetHz = hz
-        tone.targetAmplitude = Float(pow(10, min(-20, levelDB) / 20))
+    /// Change the matching sound's pitch (Hz), level (dBFS, capped by the spec at
+    /// −20) and kind (tone or hiss).
+    func setMatch(hz: Double, levelDB: Double, sound: MatchSound) {
+        let spec = PitchSpec.shared
+        tone.targetHz = spec.clampHz(hz)
+        tone.targetAmplitude = spec.amplitude(levelDB: levelDB)
+        tone.targetHissMix = sound == .hiss ? 1 : 0
     }
 
     func stopMatching() {
@@ -198,14 +209,20 @@ final class NoisePlayer {
         let t = tone
         let sr = Double(rate)
         let k = Float(exp(-1 / (0.05 * sr)))   // ~50 ms smoothing, no clicks
+        t.hiss.setPitch(t.hz, rate: sr)
         let node = AVAudioSourceNode(format: format) { _, _, frameCount, bufferList in
             let buffers = UnsafeMutableAudioBufferListPointer(bufferList)
             for frame in 0..<Int(frameCount) {
                 t.hz = t.hz * Double(k) + t.targetHz * Double(1 - k)
                 t.amplitude = t.amplitude * k + t.targetAmplitude * (1 - k)
+                t.hissMix = t.hissMix * k + t.targetHissMix * (1 - k)
+                // The hiss's band glides with the pitch (updated every 32 samples)
+                if frame % 32 == 0 { t.hiss.setPitch(t.hz, rate: sr) }
                 t.phase += 2 * Double.pi * t.hz / sr
                 if t.phase > 2 * Double.pi { t.phase -= 2 * Double.pi }
-                let v = Float(sin(t.phase)) * t.amplitude
+                let toneValue = Float(sin(t.phase)) * (1 - t.hissMix)
+                let hissValue = Float(t.hiss.next()) * t.hissMix
+                let v = (toneValue + hissValue) * t.amplitude
                 for b in buffers { b.mData!.assumingMemoryBound(to: Float.self)[frame] = v }
             }
             return noErr

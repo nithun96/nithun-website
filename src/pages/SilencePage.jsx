@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { createNoisePlayer } from '../audio/noisePlayer'
 import charitiesData from '../data/charities.json'
 import { usePageMeta } from '../lib/usePageMeta'
+import YourSound from '../components/YourSound'
 
 const SOUNDS = ['brown', 'pink', 'rain', 'ocean']
 const TIMER_OPTIONS = [null, 30, 60, 90]
@@ -186,6 +187,8 @@ export default function SilencePage() {
       </section>
 
       <div className="shell">
+        <YourSound onStopSound={() => player.stop()} />
+
         <section className="guide" aria-labelledby="guide-title">
           <div className="give-head">
             <h2 id="guide-title">{t('silence.guide.heading')}</h2>

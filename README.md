@@ -46,20 +46,22 @@ nithun-website/
     │   ├── Navbar.jsx              # Top bar — wordmark, section links, language + theme pills
     │   ├── Footer.jsx              # LinkedIn, GitHub, Instagram, Play (play.nithun.no), build date, ©
     │   ├── PyreMark.jsx            # Pyre triangle logo (SVG)
-    │   └── ReadWithSound.jsx       # "Read with" row under a post's title: plays a Silence sound while reading
+    │   ├── ReadWithSound.jsx       # "Read with" row under a post's title: plays a Silence sound while reading
+    │   └── YourSound.jsx           # Silence's "Your sound": tone slider, Match my tinnitus dialog, Focus on my pitch
     ├── sections/
     │   └── Hero.jsx                # Home page — contents page: name, standfirst, 4 numbered section rows
     ├── pages/
     │   ├── AboutPage.jsx           # /about — heading, bio beside portraits, travel photos, Instagram link
     │   ├── ShelfPage.jsx           # /shelf — bookcase of real and drawn spines (Games/TV hidden for now)
-    │   ├── SilencePage.jsx         # /silence — sound rows, player band, hearing charities
+    │   ├── SilencePage.jsx         # /silence — sound rows, player band, Your sound, hearing charities
     │   ├── SilencePrivacyPage.jsx  # /silence/privacy — privacy policy for Silence (website + iOS app)
     │   ├── SilenceSupportPage.jsx  # /silence/support — help and contact for Silence (website + iOS app)
     │   ├── WritingPage.jsx         # /writing — heading, posts as rows, RSS line
     │   ├── WritingPostPage.jsx     # /writing/:slug — individual post renderer
     │   └── NotFoundPage.jsx        # Any unknown URL — "page not found", marked noindex
     ├── audio/
-    │   ├── noisePlayer.js          # Silence player — makes the sound live (Web Audio)
+    │   ├── noisePlayer.js          # Silence player — makes the sound live (Web Audio), shared EQ, matching tone
+    │   ├── yourSound.js            # Your sound — tone/pitch settings, their maths, kept in localStorage
     │   └── noiseRecipes.js         # The four sounds as recipes, levelled to the same loudness
     ├── data/
     │   ├── shelf.json              # Shelf content — 58 books, 50 games, 8 TV entries
@@ -128,8 +130,10 @@ A large "About / Nithun Manoharan" heading, then the bio (linking Pyre, Writing,
 ### Silence (`SilencePage.jsx`)
 Sound tool for tinnitus and sleep: four large sound rows (brown noise, pink noise, rain, ocean) that fill green while playing, a player band with a play/pause button, sleep timer countdown (30/60/90 min, 60-second fade-out) and volume, and hearing charity rows. The volume slider works everywhere, iPhone included. A short "How to use it" section (volume, sleep, phone) sits between the player and the charities; its volume tip follows Tinnitus UK's sound therapy leaflet, which it links to.
 
+**Your sound** (`components/YourSound.jsx`, the same feature and wording as the iOS app) sits between the player band and "How to use it". A **Tone** slider tilts the sound from Darker to Brighter. **Match my tinnitus** opens a dialog with a quiet sine tone: a pitch slider (250 Hz–12 kHz, log scale) with one-semitone − and + buttons, and a tone volume slider that always starts at −50 dBFS and can't go above −20 dBFS. Playing the tone stops any sound; closing the dialog (Cancel, Escape) stops the tone. **Use this pitch** keeps it and turns on **Focus on my pitch**, which lifts the octave around it; **Match again** and **Forget my pitch** sit below. A line says Silence isn't a medical device and to see a doctor if tinnitus is new, changes or is in one ear only. Settings are kept in the browser only (`localStorage`: `silence.tone`, `silence.matchedHz`, `silence.focusOn`); nothing is sent anywhere.
+
 ### Player (`audio/noisePlayer.js`) and sounds (`audio/noiseRecipes.js`)
-The sound is made live in the browser with the Web Audio API: no sound files. Each sound is a 50-second loop built from a recipe in `noiseRecipes.js` when you tap it: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (waves of 9–14 s that build, break and wash out: a low-pass on pink noise that opens as each wave breaks, with foam and a low rumble; levelled so breaking waves peak under −1 dBFS). Slow rhythms repeat a whole number of times per loop and the last second is crossfaded into the first, so there is no seam or gap. Each is levelled to −20 LUFS (gains measured with ffmpeg). Before the sound starts the page sets `navigator.audioSession.type = "playback"` (Safari 16.4+), so on an iPhone it ignores the mute switch, keeps playing when locked and shows lock-screen controls (tested Nov 2026). The sleep timer runs on the audio clock: a 60-second fade, then stop, exactly on time even while the phone is locked. One audio engine is shared by the homepage and Silence. If another app takes over the sound (a call, a video), Silence counts that as stopped. Until Nov 2026 Silence played rendered sound files with several `<audio>` copies; the recipes are the same, so the sound is the same.
+The sound is made live in the browser with the Web Audio API: no sound files. Each sound is a 50-second loop built from a recipe in `noiseRecipes.js` when you tap it: brown noise (leaky integrator), pink noise (Paul Kellet filter), rain (three filtered layers with swell, patter and random drops) and ocean (waves of 9–14 s that build, break and wash out: a low-pass on pink noise that opens as each wave breaks, with foam and a low rumble; levelled so breaking waves peak under −1 dBFS). Slow rhythms repeat a whole number of times per loop and the last second is crossfaded into the first, so there is no seam or gap. Each is levelled to −20 LUFS (gains measured with ffmpeg). Before the sound starts the page sets `navigator.audioSession.type = "playback"` (Safari 16.4+), so on an iPhone it ignores the mute switch, keeps playing when locked and shows lock-screen controls (tested Nov 2026). The sleep timer runs on the audio clock: a 60-second fade, then stop, exactly on time even while the phone is locked. One audio engine is shared by the homepage and Silence. If another app takes over the sound (a call, a video), Silence counts that as stopped. Every sound goes through one shared EQ on that engine (`yourSound.js` has the numbers, the same as the app): a low shelf at 300 Hz (−6t dB) and a high shelf at 3 kHz (+6t dB) for the tone t (−1…1), a peaking filter at the matched pitch (+6 dB, one octave) for the focus, and a gain that takes back half the boost, and 4 dB more with the focus on, so nothing clips. Changes glide over a few milliseconds, so there are no clicks. So the settings apply on Silence, the homepage player and Read with sound alike. `noiseRecipes.js` is unchanged. Until Nov 2026 Silence played rendered sound files with several `<audio>` copies; the recipes are the same, so the sound is the same.
 
 **Offline:** after a first visit to Silence, a service worker (`src/sw.js`) keeps the page, its code and fonts, so Silence works without a connection (e.g. on a plane). Tested on an iPhone in flight mode (Nov 2026). See CLAUDE.md, Silence Offline.
 
@@ -207,7 +211,7 @@ Nginx serves `dist/` with `try_files $uri $uri.html =404`: the `.html` step pick
 - [x] Shelf page (`/shelf`) — bookcase of 58 books, 34 with real spines from Nithun's shelves; Games and TV hidden until they have covers
 - [x] Silence privacy policy (`/silence/privacy`) — linked from the bottom of the Silence page and from the iOS app
 - [x] Silence support page (`/silence/support`) — contact email, questions and answers, health note; linked from the Silence and privacy pages
-- [x] Silence page (`/silence`) — sound rows and player band with sleep timer; sound made live (no files); keeps playing on a locked iPhone and with the mute switch on
+- [x] Silence page (`/silence`) — sound rows and player band with sleep timer; Your sound (tone, tinnitus pitch match, focus on that pitch, kept in the browser); sound made live (no files); keeps playing on a locked iPhone and with the mute switch on
 - [x] Writing page (`/writing`) — markdown posts with language pills, footnotes, Spotify embeds, "Read with" sound
 - [x] About page (`/about`) — bio, portraits, travel photos, Instagram link
 - [x] Top bar with section links; page transitions; footer with LinkedIn, GitHub, Instagram, a Play link to play.nithun.no, build date, ©

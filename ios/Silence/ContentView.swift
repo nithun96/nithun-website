@@ -9,6 +9,8 @@ struct ContentView: View {
     /// The one shared model (SilenceModel.shared), also used by Siri and Shortcuts
     @Bindable var model: SilenceModel
     @State private var showingMatch = false
+    /// Open the step-by-step guide rather than the slider (the first tap of Match my tinnitus)
+    @State private var matchWithGuide = false
     @Environment(\.openURL) private var openURL
 
     /// Placeholder until the page exists on nithun.no
@@ -136,7 +138,7 @@ struct ContentView: View {
                 }
                 .tint(Color.sage)
                 HStack {
-                    Button("Match again") { showingMatch = true }
+                    Button("Match again") { matchWithGuide = false; showingMatch = true }
                     Spacer()
                     Button("Forget my pitch", role: .destructive) { model.forgetMatch() }
                 }
@@ -145,13 +147,16 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Find the pitch of your tinnitus with a soft tone, and Silence can put more of its sound around it.")
                         .font(.subheadline).foregroundStyle(.secondary)
-                    Button("Match my tinnitus") { showingMatch = true }
+                    Button("Match my tinnitus") {
+                        matchWithGuide = !model.pitchTutorialDone
+                        showingMatch = true
+                    }
                         .buttonStyle(.bordered).tint(Color.sage)
                 }
             }
         }
         .sheet(isPresented: $showingMatch, onDismiss: { model.endMatching() }) {
-            MatchView(model: model)
+            MatchView(model: model, guide: matchWithGuide)
         }
     }
 

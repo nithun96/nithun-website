@@ -40,6 +40,16 @@ by both the website (`src/audio/yourSound.js`) and the app (bundled as a resourc
 decoded by `Silence/PitchSpec.swift`). Change them there only. The same check runs
 `scripts/test-pitch-spec.mjs` for the website and `PitchSpecTests` for the app.
 
+The guide (`Silence/PitchGuideView.swift`): the first tap of Match my tinnitus opens
+seven steps instead of the slider: Before you start, Set a comfortable level,
+Whistle or hiss?, Get close (the seven `ladderHz` sounds, one at a time),
+Narrow it down (four rounds, `refineStepsSemitones`), the octave check, Done. The
+rule for each round (`refineRule`) and example answers with the pitch they must
+give (`examples`) are in the same spec file; `PitchGuideTests` and the website's
+test both check every example, so the same answers give the same pitch in both.
+Once you've finished or skipped it (`pitchTutorialDone` in UserDefaults), Match
+my tinnitus opens the slider, which has a "Guide me again" link.
+
 Text: the app's English and Norwegian text is in `Silence/Localizable.xcstrings`,
 copied from `src/locales/*/translation.json` (`silence.*`). Not checked
 automatically; update both when wording changes.
@@ -74,8 +84,8 @@ The Norwegian Siri phrases and labels are Claude's draft; check them.
 
 Done: sound port, player (background audio, lock-screen controls, interruptions,
 headphones unplugged), sleep timer, volume, "Your sound" (tone slider, tinnitus
-pitch match with a tone or a ⅓-octave hiss and an octave check, focus on that
-pitch), doctor reminder, privacy link, settings kept on
+pitch match with a tone or a ⅓-octave hiss and an octave check, a step-by-step
+guide the first time, focus on that pitch), doctor reminder, privacy link, settings kept on
 the phone, English and Norwegian (Bokmål) text, reference-sample test.
 Norwegian text for the new features is Claude's draft; check it.
 

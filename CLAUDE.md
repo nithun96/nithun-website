@@ -181,7 +181,9 @@ nithun-website/
     │   ├── Footer.jsx              # Footer — LinkedIn, GitHub, Instagram, Play (play.nithun.no, the games), "Updated <build date>", © Nithun Manoharan
     │   ├── PyreMark.jsx            # Pyre triangle SVG logo — used on the homepage
     │   ├── ReadWithSound.jsx       # "Read with" row under a post's title — plays a Silence sound while reading, Stop pill in the corner
-    │   └── YourSound.jsx           # Silence's "Your sound" (as in the iOS app) — tone slider, Match my tinnitus dialog, Focus on my pitch
+    │   ├── YourSound.jsx           # Silence's "Your sound" (as in the iOS app) — tone slider, Match my tinnitus dialog, Focus on my pitch
+    │   ├── PitchGuide.jsx          # Match my tinnitus step by step (first tap only; then the slider with "Guide me again")
+    │   └── OctaveOptions.jsx       # The octave check's options, used by the slider and the guide
     ├── sections/
     │   └── Hero.jsx                # Home page (contents page) — name, standfirst, 4 numbered section rows with thumbnails (Silence's plays brown noise), donate nudge
     ├── pages/
@@ -362,6 +364,10 @@ no accounts). Started Nov 2026. Details in `ios/README.md`, plans in `ios/ROADMA
   `shared/silence-pitch-spec.json`, read by `src/audio/yourSound.js` and bundled
   into the app (`ios/Silence/PitchSpec.swift`). Change them there, not in code.
   The Silence sounds check tests both sides.
+- **The guide** (Match my tinnitus, first tap; `PitchGuide.jsx` / `PitchGuideView.swift`):
+  its ladder, rounds and rule (`refineRule`) are in the same spec, with `examples`
+  (answers → expected pitch) that both codebases' functions (`pitchFromAnswers` in JS, `PitchSpec.pitch(ladderChoiceHz:…)` in Swift) are tested
+  against. Change the rule in the spec, both functions and the examples together.
 - **Text:** the app's EN/NO strings (`ios/Silence/Localizable.xcstrings`) are copied
   from `silence.*` in the translation files. Not checked automatically.
 - `ios/` changes don't deploy the site (`paths-ignore` in `deploy.yml`).

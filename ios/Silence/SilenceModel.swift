@@ -69,7 +69,14 @@ final class SilenceModel {
         didSet { store.set(matchSound.rawValue, forKey: "matchSound"); updateMatch() }
     }
 
+    /// Whether you've been through the guide (or skipped to the slider): the first
+    /// tap of Match my tinnitus opens the guide, later taps the slider. On the phone only.
+    var pitchTutorialDone = false {
+        didSet { store.set(pitchTutorialDone, forKey: "pitchTutorialDone") }
+    }
+
     @ObservationIgnored private let store = UserDefaults.standard
+    @ObservationIgnored private var burst: Task<Void, Never>?
     private let player = NoisePlayer()
     private let activity = SleepTimerActivity()
     private var ticker: Timer?
@@ -81,6 +88,7 @@ final class SilenceModel {
         let hz = store.double(forKey: "matchedHz"); matchedHz = hz > 0 ? hz : nil
         focusOn = store.bool(forKey: "focusOn")
         matchSound = store.string(forKey: "matchSound").flatMap(MatchSound.init(rawValue:)) ?? .tone
+        pitchTutorialDone = store.bool(forKey: "pitchTutorialDone")
         if let s = store.string(forKey: "last") { last = Sound(rawValue: s) }
         player.setVolume(Float(volume))
         player.setTone(tone)
@@ -151,16 +159,35 @@ final class SilenceModel {
 
     // MARK: Matching
 
-    func beginMatching() {
-        matchHz = matchedHz ?? PitchSpec.shared.startHz
+    /// The slider's Play: at `hz` (from the guide's Fine-tune), or the matched pitch, or startHz.
+    func beginMatching(at hz: Double? = nil) {
+        matchHz = hz ?? matchedHz ?? PitchSpec.shared.startHz
         matchLevelDB = PitchSpec.shared.levelStartDb   // always start very quietly
         startMatchSound()
     }
 
     /// The octave check: play the sound at `hz`, at the level already set.
     func playMatch(at hz: Double) {
+        burst?.cancel(); burst = nil
         matchHz = hz
         if !matching { startMatchSound() }
+    }
+
+    /// The guide: start the soft sound at startHz, always at levelStartDb, to set the level.
+    func beginGuide() {
+        matchHz = PitchSpec.shared.startHz
+        matchLevelDB = PitchSpec.shared.levelStartDb
+        playMatch(at: matchHz)
+    }
+
+    /// The guide: play the sound at `hz` for guidePlaySeconds, at the level already set.
+    func playBurst(at hz: Double) {
+        playMatch(at: hz)
+        burst = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(PitchSpec.shared.guidePlaySeconds))
+            guard !Task.isCancelled else { return }
+            self?.endMatching()
+        }
     }
 
     private func startMatchSound() {
@@ -178,6 +205,7 @@ final class SilenceModel {
     }
 
     func endMatching() {
+        burst?.cancel(); burst = nil
         guard matching else { return }
         matching = false
         player.stopMatching()
